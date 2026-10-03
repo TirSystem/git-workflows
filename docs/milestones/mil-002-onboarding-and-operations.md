@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
-| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Recorded verification results for task 2 | pending |
+| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Recorded verification results for task 2 | [7dcb9c4] |
 
 ---
 
@@ -74,3 +74,4 @@ a credential validation step in the workflow, and categorized failure messages.
 
 [BC-001]: ../business-case.md
 [4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
+[7dcb9c4]: https://git.tirsystem.com/TirSystem/github-action/commit/7dcb9c4dfce712572aced281d0dfdfa435283646
