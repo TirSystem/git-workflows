@@ -1,0 +1,24 @@
+name: Validate workflows
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Create a virtual environment and install test dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --quiet -r tests/requirements.txt
+
+      - name: Validate workflow files and run the offline tests
+        run: .venv/bin/python -m pytest -q tests

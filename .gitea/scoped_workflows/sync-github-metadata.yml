@@ -23,9 +23,11 @@ jobs:
           python3 - <<'PY'
           import json
           import os
+          import sys
           import urllib.error
           import urllib.parse
           import urllib.request
+
 
           def request_json(url, method="GET", headers=None, body=None):
               request = urllib.request.Request(
@@ -43,120 +45,151 @@ jobs:
                       f"API request failed with HTTP {error.code} ({error.reason})"
                   ) from None
 
-          raw_credentials = os.environ.get("GITHUB_CREDENTIALS", "").strip()
-          if not raw_credentials:
-              raise RuntimeError("CREDENTIALS_FOR_GITHUB is missing or empty.")
 
-          try:
-              credentials = json.loads(raw_credentials)
-          except json.JSONDecodeError:
-              raise RuntimeError(
-                  "CREDENTIALS_FOR_GITHUB must contain valid JSON."
-              ) from None
+          def parse_github_token(raw_credentials):
+              raw_credentials = (raw_credentials or "").strip()
+              if not raw_credentials:
+                  raise RuntimeError("CREDENTIALS_FOR_GITHUB is missing or empty.")
 
-          if not isinstance(credentials, dict):
-              raise RuntimeError(
-                  "CREDENTIALS_FOR_GITHUB must be a JSON object."
-              )
-
-          github_token = credentials.get("GITHUB_PAT")
-          if not isinstance(github_token, str) or not github_token.strip():
-              raise RuntimeError(
-                  "CREDENTIALS_FOR_GITHUB must contain a non-empty GITHUB_PAT."
-              )
-
-          raw_gitea_credentials = os.environ.get("GITEA_CREDENTIALS", "").strip()
-          if not raw_gitea_credentials:
-              raise RuntimeError("TOKEN_FOR_GITEA is missing or empty.")
-
-          try:
-              gitea_credentials = json.loads(raw_gitea_credentials)
-          except json.JSONDecodeError:
-              gitea_token = raw_gitea_credentials
-          else:
-              if isinstance(gitea_credentials, dict):
-                  gitea_token = gitea_credentials.get("GITEA_TOKEN")
-              elif isinstance(gitea_credentials, str):
-                  gitea_token = gitea_credentials
-              else:
-                  gitea_token = None
-
-          if not isinstance(gitea_token, str) or not gitea_token.strip():
-              raise RuntimeError(
-                  "TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN."
-              )
-          source_owner, separator, source_repo = os.environ[
-              "SOURCE_REPOSITORY"
-          ].partition("/")
-          if not separator or not source_owner or not source_repo:
-              raise RuntimeError("Could not determine the Gitea source repository.")
-
-          gitea_api_url = os.environ["GITEA_API_URL"].rstrip("/")
-          source_url = f"{gitea_api_url}/repos/{source_owner}/{source_repo}"
-          gitea_headers = {
-              "Authorization": f"token {gitea_token.strip()}",
-              "Accept": "application/json",
-          }
-          source = request_json(source_url, headers=gitea_headers)
-          mirrors = request_json(
-              f"{source_url}/push_mirrors",
-              headers=gitea_headers,
-          )
-          if not isinstance(mirrors, list):
-              print("Gitea returned an invalid push mirror list.")
-              exit 0
-
-          github_targets = []
-          for mirror in mirrors:
-              remote_address = mirror.get("remote_address", "")
-              if remote_address.startswith("git@github.com:"):
-                  mirror_path = remote_address.split(":", 1)[1]
-              else:
-                  parsed_remote = urllib.parse.urlsplit(remote_address)
-                  if parsed_remote.hostname != "github.com":
-                      continue
-                  mirror_path = parsed_remote.path.lstrip("/")
-
-              mirror_path = mirror_path.removesuffix(".git").strip("/")
-              path_parts = mirror_path.split("/")
-              if len(path_parts) != 2 or not all(path_parts):
+              try:
+                  credentials = json.loads(raw_credentials)
+              except json.JSONDecodeError:
                   raise RuntimeError(
-                      "Could not determine the GitHub owner and repository "
-                      "from a configured push mirror."
-                  )
-              github_targets.append(tuple(path_parts))
+                      "CREDENTIALS_FOR_GITHUB must contain valid JSON."
+                  ) from None
 
-          if len(github_targets) != 1:
-              raise RuntimeError(
-                  "Expected exactly one GitHub push mirror for this repository; "
-                  f"found {len(github_targets)}."
+              if not isinstance(credentials, dict):
+                  raise RuntimeError(
+                      "CREDENTIALS_FOR_GITHUB must be a JSON object."
+                  )
+
+              token = credentials.get("GITHUB_PAT")
+              if not isinstance(token, str) or not token.strip():
+                  raise RuntimeError(
+                      "CREDENTIALS_FOR_GITHUB must contain a non-empty GITHUB_PAT."
+                  )
+              return token.strip()
+
+
+          def parse_gitea_token(raw_credentials):
+              raw_credentials = (raw_credentials or "").strip()
+              if not raw_credentials:
+                  raise RuntimeError("TOKEN_FOR_GITEA is missing or empty.")
+
+              try:
+                  credentials = json.loads(raw_credentials)
+              except json.JSONDecodeError:
+                  token = raw_credentials
+              else:
+                  if isinstance(credentials, dict):
+                      token = credentials.get("GITEA_TOKEN")
+                  elif isinstance(credentials, str):
+                      token = credentials
+                  else:
+                      token = None
+
+              if not isinstance(token, str) or not token.strip():
+                  raise RuntimeError(
+                      "TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN."
+                  )
+              return token.strip()
+
+
+          def split_repository(full_name):
+              owner, separator, repo = (full_name or "").partition("/")
+              if not separator or not owner or not repo:
+                  raise RuntimeError("Could not determine the Gitea source repository.")
+              return owner, repo
+
+
+          def find_github_targets(mirrors):
+              targets = []
+              for mirror in mirrors:
+                  remote_address = mirror.get("remote_address", "")
+                  if remote_address.startswith("git@github.com:"):
+                      mirror_path = remote_address.split(":", 1)[1]
+                  else:
+                      parsed_remote = urllib.parse.urlsplit(remote_address)
+                      if parsed_remote.hostname != "github.com":
+                          continue
+                      mirror_path = parsed_remote.path.lstrip("/")
+
+                  mirror_path = mirror_path.removesuffix(".git").strip("/")
+                  path_parts = mirror_path.split("/")
+                  if len(path_parts) != 2 or not all(path_parts):
+                      raise RuntimeError(
+                          "Could not determine the GitHub owner and repository "
+                          "from a configured push mirror."
+                      )
+                  targets.append(tuple(path_parts))
+
+              if len(targets) != 1:
+                  raise RuntimeError(
+                      "Expected exactly one GitHub push mirror for this repository; "
+                      f"found {len(targets)}."
+                  )
+              return targets[0]
+
+
+          def main():
+              github_token = parse_github_token(os.environ.get("GITHUB_CREDENTIALS"))
+              gitea_token = parse_gitea_token(os.environ.get("GITEA_CREDENTIALS"))
+              source_owner, source_repo = split_repository(
+                  os.environ.get("SOURCE_REPOSITORY")
               )
 
-          github_owner, github_repo = github_targets[0]
-          github_api_url = (
-              "https://api.github.com/repos/"
-              f"{urllib.parse.quote(github_owner, safe='')}/"
-              f"{urllib.parse.quote(github_repo, safe='')}"
-          )
-          github_headers = {
-              "Authorization": f"Bearer {github_token.strip()}",
-              "Accept": "application/vnd.github+json",
-              "X-GitHub-Api-Version": "2022-11-28",
-              "Content-Type": "application/json",
-          }
+              gitea_api_url = os.environ["GITEA_API_URL"].rstrip("/")
+              source_url = f"{gitea_api_url}/repos/{source_owner}/{source_repo}"
+              gitea_headers = {
+                  "Authorization": f"token {gitea_token}",
+                  "Accept": "application/json",
+              }
+              source = request_json(source_url, headers=gitea_headers)
+              mirrors = request_json(
+                  f"{source_url}/push_mirrors",
+                  headers=gitea_headers,
+              )
+              if not isinstance(mirrors, list):
+                  print(
+                      "WARNING: Gitea returned an invalid push mirror list; "
+                      "GitHub metadata was not synced."
+                  )
+                  return 0
 
-          request_json(
-              github_api_url,
-              method="PATCH",
-              headers=github_headers,
-              body={"description": source.get("description") or ""},
-          )
-          request_json(
-              f"{github_api_url}/topics",
-              method="PUT",
-              headers=github_headers,
-              body={"names": source.get("topics") or []},
-          )
+              github_owner, github_repo = find_github_targets(mirrors)
+              github_api_url = (
+                  "https://api.github.com/repos/"
+                  f"{urllib.parse.quote(github_owner, safe='')}/"
+                  f"{urllib.parse.quote(github_repo, safe='')}"
+              )
+              github_headers = {
+                  "Authorization": f"Bearer {github_token}",
+                  "Accept": "application/vnd.github+json",
+                  "X-GitHub-Api-Version": "2022-11-28",
+                  "Content-Type": "application/json",
+              }
 
-          print(f"Synced description and topics to {github_owner}/{github_repo}.")
+              request_json(
+                  github_api_url,
+                  method="PATCH",
+                  headers=github_headers,
+                  body={"description": source.get("description") or ""},
+              )
+              request_json(
+                  f"{github_api_url}/topics",
+                  method="PUT",
+                  headers=github_headers,
+                  body={"names": source.get("topics") or []},
+              )
+
+              print(f"Synced description and topics to {github_owner}/{github_repo}.")
+              return 0
+
+
+          if __name__ == "__main__":
+              try:
+                  sys.exit(main())
+              except RuntimeError as error:
+                  print(f"ERROR: {error}", file=sys.stderr)
+                  sys.exit(1)
           PY

@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Rejected | Jens Tirsvad Nielsen | S01 | Initial version | [4de5438] |
 | 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
+| 2026-10-03 | Proposed | Jens Tirsvad Nielsen | S01 | Recorded decisions for tasks 1 and 3 | pending |
 
 ---
 
@@ -62,9 +62,9 @@ successful manual run on the Gitea instance.
 
 | # | Task | Summary | Needs its own Use Case/User Story? | Reference |
 | --- | --- | --- | --- | --- |
-| 1 | Decide behavior for an invalid push mirror response | The committed workflow fails with an error when Gitea returns a non-list push mirror response. The uncommitted scoped copy instead prints a message and tries to exit successfully, and the README diagram showed that. Choose fail or skip, record the decision, and align code and README. | No | |
+| 1 | Decide behavior for an invalid push mirror response | The committed workflow fails with an error when Gitea returns a non-list push mirror response. The uncommitted scoped copy instead prints a message and tries to exit successfully, and the README diagram showed that. Choose fail or skip, record the decision, and align code and README. Decision: skip with a visible warning and a successful run, following the maintainer's edit to the scoped copy; zero, several or malformed GitHub mirrors still fail. | No | |
 | 2 | Fix the Python syntax error in the scoped workflow | `exit 0` is not valid Python, so the whole embedded script fails to compile in the scoped copy. Replace it according to the decision in task 1 (`sys.exit(0)` also needs `import sys`). | No | |
-| 3 | Reduce the workflow to one canonical source | The same workflow exists in `src/` and `.gitea/scoped_workflows/` (and a legacy copy that is no longer documented), and the scoped copy has diverged. Choose the canonical location, and generate or remove the others. | No | |
+| 3 | Reduce the workflow to one canonical source | The same workflow exists in `src/` and `.gitea/scoped_workflows/` (and a legacy copy that is no longer documented), and the scoped copy has diverged. Choose the canonical location, and generate or remove the others. Decision: `.gitea/scoped_workflows/` is canonical because the script must be embedded in the YAML to work as a scoped workflow; the `src/` copy is removed. | No | |
 | 4 | Add static validation of workflow files | Parse each workflow YAML and compile its embedded Python in an automated check that runs on pull requests, so defects such as task 2 fail before merge. | No | |
 | 5 | Add offline unit tests for the sync logic | Move credential and mirror URL parsing into testable code and test bare token, JSON token, SSH and HTTPS mirror addresses, and zero or several mirrors. Replace `tests/test_.ps1`, which probes a hard-coded real repository and reads `.env`. | No | |
 | 6 | Keep the README accurate | Maintain the capability table (implemented, partial, planned), and align the sequence diagram with the final behavior from task 1. | No | |
