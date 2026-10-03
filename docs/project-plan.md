@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Rejected | Jens Tirsvad Nielsen | S01 | Initial version<br>Added use case candidates and prioritisation appendix | pending |
-| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Owner of every gateway is S05<br>Actors updated | pending |
+| 2026-10-03 | Rejected | Jens Tirsvad Nielsen | S01 | Initial version<br>Added use case candidates and prioritisation appendix | [4de5438] |
+| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Owner of every gateway is S05<br>Actors updated | [4de5438] |
 
 ---
 
@@ -245,3 +245,4 @@ no tests, no release process.
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
+[4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d

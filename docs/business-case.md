@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Rejected | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Added S05 to assumptions, risks and stakeholders | pending |
+| 2026-10-03 | Rejected | Jens Tirsvad Nielsen | S01 | Initial version | [4de5438] |
+| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Added S05 to assumptions, risks and stakeholders | [4de5438] |
 
 ---
 
@@ -148,3 +148,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 ---
 
 [SA-001]: ./stakeholder-analysis.md
+[4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d

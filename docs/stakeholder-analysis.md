@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Rejected | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Added S05 Michael Kragh (DevOps owner, maintainer, cyber security)<br>S01 stays Product Owner and maintainer | pending |
+| 2026-10-03 | Rejected | Jens Tirsvad Nielsen | S01 | Initial version | [4de5438] |
+| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Added S05 Michael Kragh (DevOps owner, maintainer, cyber security)<br>S01 stays Product Owner and maintainer | [4de5438] |
 
 ---
 
@@ -101,3 +101,4 @@ Pending review by S01 and S05.
 ---
 
 [BC-001]: ./business-case.md
+[4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
