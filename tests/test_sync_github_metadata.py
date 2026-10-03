@@ -119,23 +119,68 @@ class TestFindGithubTargets:
 
 
 class TestRequestJson:
-    def test_maps_http_error_without_leaking_the_response_body(self, sync, monkeypatch):
+    @staticmethod
+    def raise_http_error(sync, monkeypatch, code, reason):
         def fake_urlopen(request, timeout):
             raise urllib.error.HTTPError(
-                request.full_url, 403, "Forbidden", {}, io.BytesIO(b"secret detail")
+                request.full_url, code, reason, {}, io.BytesIO(b"secret detail")
             )
 
         monkeypatch.setattr(sync["urllib"].request, "urlopen", fake_urlopen)
+
+    @pytest.mark.parametrize(
+        ("code", "reason", "category"),
+        [
+            (401, "Unauthorized", "credentials"),
+            (403, "Forbidden", "permissions"),
+            (404, "Not Found", "configuration"),
+            (500, "Server Error", "api"),
+        ],
+    )
+    def test_categorizes_http_errors(self, sync, monkeypatch, code, reason, category):
+        self.raise_http_error(sync, monkeypatch, code, reason)
+        with pytest.raises(sync["WorkflowError"]) as caught:
+            sync["request_json"]("https://example.test/x")
+        assert caught.value.category == category
+        assert str(caught.value).startswith(f"[{category}] Gitea API request failed")
+        assert f"HTTP {code} ({reason})" in str(caught.value)
+
+    def test_does_not_leak_the_response_body(self, sync, monkeypatch):
+        self.raise_http_error(sync, monkeypatch, 403, "Forbidden")
         with pytest.raises(RuntimeError) as caught:
             sync["request_json"]("https://example.test/x")
-        assert str(caught.value) == "API request failed with HTTP 403 (Forbidden)"
+        assert "secret detail" not in str(caught.value)
+
+    def test_names_github_for_github_urls(self, sync, monkeypatch):
+        self.raise_http_error(sync, monkeypatch, 401, "Unauthorized")
+        with pytest.raises(RuntimeError, match="GitHub API request failed"):
+            sync["request_json"]("https://api.github.com/repos/Org/repo")
+
+    def test_reports_unreachable_service_as_api_failure(self, sync, monkeypatch):
+        def fake_urlopen(request, timeout):
+            raise urllib.error.URLError("name resolution failed")
+
+        monkeypatch.setattr(sync["urllib"].request, "urlopen", fake_urlopen)
+        with pytest.raises(sync["WorkflowError"]) as caught:
+            sync["request_json"]("https://example.test/x")
+        assert caught.value.category == "api"
+        assert "unreachable" in str(caught.value)
+
+
+class TestWorkflowError:
+    def test_configuration_errors_carry_their_category(self, sync):
+        with pytest.raises(sync["WorkflowError"]) as caught:
+            sync["parse_github_token"]("")
+        assert caught.value.category == "configuration"
+        assert str(caught.value).startswith("[configuration] ")
 
 
 class FakeApi:
     """Records calls and answers like the Gitea and GitHub REST APIs."""
 
-    def __init__(self, mirrors, source=None):
+    def __init__(self, mirrors, source=None, github=None):
         self.mirrors = mirrors
+        self.github = github if github is not None else {"permissions": {"admin": True}}
         self.source = source or {"description": "Desc", "topics": ["a", "b"]}
         self.calls = []
 
@@ -145,6 +190,8 @@ class FakeApi:
             return self.mirrors
         if url.startswith("https://git.example.test"):
             return self.source
+        if method == "GET" and url.startswith("https://api.github.com"):
+            return self.github
         return None
 
 
@@ -169,13 +216,14 @@ class TestMain:
         assert requests == [
             ("GET", "https://git.example.test/api/v1/repos/TirSystem/repo"),
             ("GET", "https://git.example.test/api/v1/repos/TirSystem/repo/push_mirrors"),
+            ("GET", "https://api.github.com/repos/Org/repo"),
             ("PATCH", "https://api.github.com/repos/Org/repo"),
             ("PUT", "https://api.github.com/repos/Org/repo/topics"),
         ]
         assert api.calls[0][2]["Authorization"] == "token gitea-token"
         assert api.calls[2][2]["Authorization"] == "Bearer gh-token"
-        assert api.calls[2][3] == {"description": "Desc"}
-        assert api.calls[3][3] == {"names": ["a", "b"]}
+        assert api.calls[3][3] == {"description": "Desc"}
+        assert api.calls[4][3] == {"names": ["a", "b"]}
         assert "Synced description and topics to Org/repo." in capsys.readouterr().out
 
     def test_sends_empty_values_when_gitea_has_none(self, sync, environment):
@@ -187,8 +235,8 @@ class TestMain:
 
         sync["main"]()
 
-        assert api.calls[2][3] == {"description": ""}
-        assert api.calls[3][3] == {"names": []}
+        assert api.calls[3][3] == {"description": ""}
+        assert api.calls[4][3] == {"names": []}
 
     def test_skips_with_a_warning_when_mirror_list_is_invalid(
         self, sync, environment, capsys
@@ -211,3 +259,28 @@ class TestMain:
         with pytest.raises(RuntimeError, match="CREDENTIALS_FOR_GITHUB"):
             sync["main"]()
         assert api.calls == []
+
+    def test_stops_before_any_change_when_github_token_cannot_administer(
+        self, sync, environment
+    ):
+        api = FakeApi(
+            [{"remote_address": "git@github.com:Org/repo.git"}],
+            github={"permissions": {"admin": False, "push": True}},
+        )
+        sync["request_json"] = api
+
+        with pytest.raises(sync["WorkflowError"]) as caught:
+            sync["main"]()
+
+        assert caught.value.category == "permissions"
+        assert all(call[0] == "GET" for call in api.calls)
+
+    def test_does_not_print_any_secret(self, sync, environment, capsys):
+        api = FakeApi([{"remote_address": "git@github.com:Org/repo.git"}])
+        sync["request_json"] = api
+
+        sync["main"]()
+
+        output = capsys.readouterr()
+        assert "gh-token" not in output.out + output.err
+        assert "gitea-token" not in output.out + output.err
