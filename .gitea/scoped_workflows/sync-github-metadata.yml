@@ -29,6 +29,25 @@ jobs:
           import urllib.request
 
 
+          class WorkflowError(RuntimeError):
+              """A failure with a category.
+
+              configuration: a secret or repository setting is missing or malformed.
+              credentials:   a service rejected the token (HTTP 401).
+              permissions:   the token is valid but not allowed (HTTP 403).
+              api:           any other API or network failure.
+              """
+
+              def __init__(self, category, message):
+                  super().__init__(f"[{category}] {message}")
+                  self.category = category
+
+
+          def service_name(url):
+              hostname = urllib.parse.urlsplit(url).hostname
+              return "GitHub" if hostname == "api.github.com" else "Gitea"
+
+
           def request_json(url, method="GET", headers=None, body=None):
               request = urllib.request.Request(
                   url,
@@ -36,37 +55,64 @@ jobs:
                   headers=headers or {},
                   method=method,
               )
+              service = service_name(url)
               try:
                   with urllib.request.urlopen(request, timeout=30) as response:
                       content = response.read()
                       return json.loads(content) if content else None
               except urllib.error.HTTPError as error:
-                  raise RuntimeError(
-                      f"API request failed with HTTP {error.code} ({error.reason})"
+                  detail = (
+                      f"{service} API request failed with HTTP "
+                      f"{error.code} ({error.reason})"
+                  )
+                  if error.code == 401:
+                      raise WorkflowError(
+                          "credentials", f"{detail}. The token was rejected."
+                      ) from None
+                  if error.code == 403:
+                      raise WorkflowError(
+                          "permissions",
+                          f"{detail}. The token lacks a required permission.",
+                      ) from None
+                  if error.code == 404:
+                      raise WorkflowError(
+                          "configuration",
+                          f"{detail}. The repository was not found or the "
+                          "token cannot see it.",
+                      ) from None
+                  raise WorkflowError("api", detail) from None
+              except (urllib.error.URLError, TimeoutError) as error:
+                  raise WorkflowError(
+                      "api", f"{service} API is unreachable ({error})."
                   ) from None
 
 
           def parse_github_token(raw_credentials):
               raw_credentials = (raw_credentials or "").strip()
               if not raw_credentials:
-                  raise RuntimeError("CREDENTIALS_FOR_GITHUB is missing or empty.")
+                  raise WorkflowError(
+                      "configuration", "CREDENTIALS_FOR_GITHUB is missing or empty."
+                  )
 
               try:
                   credentials = json.loads(raw_credentials)
               except json.JSONDecodeError:
-                  raise RuntimeError(
-                      "CREDENTIALS_FOR_GITHUB must contain valid JSON."
+                  raise WorkflowError(
+                      "configuration",
+                      "CREDENTIALS_FOR_GITHUB must contain valid JSON.",
                   ) from None
 
               if not isinstance(credentials, dict):
-                  raise RuntimeError(
-                      "CREDENTIALS_FOR_GITHUB must be a JSON object."
+                  raise WorkflowError(
+                      "configuration",
+                      "CREDENTIALS_FOR_GITHUB must be a JSON object.",
                   )
 
               token = credentials.get("GITHUB_PAT")
               if not isinstance(token, str) or not token.strip():
-                  raise RuntimeError(
-                      "CREDENTIALS_FOR_GITHUB must contain a non-empty GITHUB_PAT."
+                  raise WorkflowError(
+                      "configuration",
+                      "CREDENTIALS_FOR_GITHUB must contain a non-empty GITHUB_PAT.",
                   )
               return token.strip()
 
@@ -74,7 +120,9 @@ jobs:
           def parse_gitea_token(raw_credentials):
               raw_credentials = (raw_credentials or "").strip()
               if not raw_credentials:
-                  raise RuntimeError("TOKEN_FOR_GITEA is missing or empty.")
+                  raise WorkflowError(
+                      "configuration", "TOKEN_FOR_GITEA is missing or empty."
+                  )
 
               try:
                   credentials = json.loads(raw_credentials)
@@ -89,8 +137,9 @@ jobs:
                       token = None
 
               if not isinstance(token, str) or not token.strip():
-                  raise RuntimeError(
-                      "TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN."
+                  raise WorkflowError(
+                      "configuration",
+                      "TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN.",
                   )
               return token.strip()
 
@@ -98,7 +147,10 @@ jobs:
           def split_repository(full_name):
               owner, separator, repo = (full_name or "").partition("/")
               if not separator or not owner or not repo:
-                  raise RuntimeError("Could not determine the Gitea source repository.")
+                  raise WorkflowError(
+                      "configuration",
+                      "Could not determine the Gitea source repository.",
+                  )
               return owner, repo
 
 
@@ -117,16 +169,18 @@ jobs:
                   mirror_path = mirror_path.removesuffix(".git").strip("/")
                   path_parts = mirror_path.split("/")
                   if len(path_parts) != 2 or not all(path_parts):
-                      raise RuntimeError(
+                      raise WorkflowError(
+                          "configuration",
                           "Could not determine the GitHub owner and repository "
-                          "from a configured push mirror."
+                          "from a configured push mirror.",
                       )
                   targets.append(tuple(path_parts))
 
               if len(targets) != 1:
-                  raise RuntimeError(
+                  raise WorkflowError(
+                      "configuration",
                       "Expected exactly one GitHub push mirror for this repository; "
-                      f"found {len(targets)}."
+                      f"found {len(targets)}.",
                   )
               return targets[0]
 
@@ -168,6 +222,16 @@ jobs:
                   "X-GitHub-Api-Version": "2022-11-28",
                   "Content-Type": "application/json",
               }
+
+              github_repository = request_json(github_api_url, headers=github_headers)
+              permissions = (github_repository or {}).get("permissions")
+              if isinstance(permissions, dict) and not permissions.get("admin"):
+                  raise WorkflowError(
+                      "permissions",
+                      f"The GitHub token cannot administer {github_owner}/{github_repo}; "
+                      "editing the description and topics needs administration access.",
+                  )
+              print("Preflight passed: Gitea and GitHub accepted the credentials.")
 
               request_json(
                   github_api_url,

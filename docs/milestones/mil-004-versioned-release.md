@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [4de5438] |
-| 2026-10-03 | Proposed | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
+| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [4de5438] |
+| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
 
 ---
 

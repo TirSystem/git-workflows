@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [4de5438] |
-| 2026-10-03 | Proposed | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
+| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
+| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Recorded verification results for task 2 | [7dcb9c4] |
 
 ---
 
@@ -63,7 +63,7 @@ a credential validation step in the workflow, and categorized failure messages.
 | # | Task | Summary | Needs its own Use Case/User Story? | Reference |
 | --- | --- | --- | --- | --- |
 | 1 | Write brief use cases for the P1 candidates | Turn the DevOps use cases in the Project Plan appendix into use case documents under `docs/uc-NNN/`, after a use case diagram and user stories exist. | No | |
-| 2 | Verify scoped workflow support on the instance | The Business Case lists this as an unverified assumption. Check the Gitea version and how a scoped workflow reaches a repository, then record the result. | No | |
+| 2 | Verify scoped workflow support on the instance | The Business Case lists this as an unverified assumption. Check the Gitea version and how a scoped workflow reaches a repository, then record the result. Result: Gitea 1.27.3 runs the scoped sync workflow in this repository (run 16); delivery to other repositories is not yet verified and is recorded in `guides/onboarding.md`. | No | |
 | 3 | Write the repository onboarding steps | Describe how to consume the workflow (scoped or copied), which secrets to set and how to test the first run. | No | |
 | 4 | Document least-privilege tokens | Determine the minimum Gitea token scope and GitHub fine-grained token permission that the sync needs, and document them. | No | |
 | 5 | Add a credential preflight step | Before the sync, check that both tokens authenticate and have the needed access, and report the result without printing any secret. | No | |
@@ -74,3 +74,4 @@ a credential validation step in the workflow, and categorized failure messages.
 
 [BC-001]: ../business-case.md
 [4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
+[7dcb9c4]: https://git.tirsystem.com/TirSystem/github-action/commit/7dcb9c4dfce712572aced281d0dfdfa435283646

@@ -63,8 +63,8 @@ Only the first row is implemented. The rest is planned and tracked in the [Proje
 | Capability | Status |
 | --- | --- |
 | Synchronize repository metadata (Gitea to GitHub mirror) | Implemented in `.gitea/scoped_workflows/`, with offline tests and a validation workflow |
-| Configure and validate workflow credentials | Partial: secrets are checked for format only |
-| Onboard a repository, manage runners, diagnose failures | Planned (MIL-002) |
+| Configure and validate workflow credentials | Implemented for the sync workflow: preflight checks both tokens before any change ([guide](guides/credentials.md)) |
+| Onboard a repository, manage runners, diagnose failures | Guides written ([onboarding](guides/onboarding.md), [troubleshooting](guides/troubleshooting.md)); scoped delivery to other repositories not yet verified; brief use cases open (MIL-002) |
 | Shared quality checks | Planned (MIL-003) |
 | Versioned release and publishing | Planned (MIL-004) |
 
