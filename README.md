@@ -1,4 +1,4 @@
-# 🚀 TirSystem GitHub Actions
+# 🚀 TirSystem GitHub Actions sync github metadata
 
 Global, reusable GitHub Actions and workflows for TirSystem projects.
 
