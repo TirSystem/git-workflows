@@ -9,3 +9,8 @@
 #   .claude/skills/  <- same copy, for the standalone Claude Code CLI
 /.agents/
 /.claude/
+
+# Python virtual environment and caches
+.venv/
+__pycache__/
+.pytest_cache/

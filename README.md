@@ -43,7 +43,18 @@ Workflows run automatically on push to `main` and on the daily schedule. To run 
 
 ## 🧪 Tests
 
-There are no automated tests yet (planned in MIL-001). `tests/test_.ps1` is a manual probe, not a test. Verify changes by running the workflow manually and checking the description and topics on the GitHub mirror.
+The workflow files and the Python embedded in them are validated by offline tests that need no network access and no secrets:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate        # Windows PowerShell: .venv\Scripts\Activate.ps1
+python -m pip install -r tests/requirements.txt
+python -m pytest -q tests
+```
+
+The same checks run on every pull request and push to `main` through [`validate-workflows.yml`](.gitea/workflows/validate-workflows.yml). They parse every workflow as YAML, compile the embedded Python, require explicit job permissions, and test credential parsing, push mirror address parsing and the sync flow against a fake API.
+
+After a change to the sync workflow, also trigger **Sync GitHub mirror metadata** manually in Gitea and compare the description and topics on the GitHub mirror.
 
 ## 🟢 Capabilities
 
@@ -51,7 +62,7 @@ Only the first row is implemented. The rest is planned and tracked in the [Proje
 
 | Capability | Status |
 | --- | --- |
-| Synchronize repository metadata (Gitea to GitHub mirror) | Implemented in `.gitea/scoped_workflows/`; the script there currently has a syntax error (`exit 0`) that MIL-001 fixes |
+| Synchronize repository metadata (Gitea to GitHub mirror) | Implemented in `.gitea/scoped_workflows/`, with offline tests and a validation workflow |
 | Configure and validate workflow credentials | Partial: secrets are checked for format only |
 | Onboard a repository, manage runners, diagnose failures | Planned (MIL-002) |
 | Shared quality checks | Planned (MIL-003) |
@@ -99,7 +110,7 @@ Workflow -> Gitea: GET /repos/{owner}/{repo}/push_mirrors
 Gitea --> Workflow: Push mirror response
 
 alt mirrors is not a list
-    Workflow --> Trigger: Workflow fails\n"Gitea returned an invalid push mirror list."
+    Workflow --> Trigger: Log a warning and succeed\n(GitHub metadata not synced)
 else mirrors is a list
     Workflow -> Workflow: Find GitHub owner and repo from remote_address
 
