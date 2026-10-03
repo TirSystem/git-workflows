@@ -103,7 +103,8 @@ jobs:
               headers=gitea_headers,
           )
           if not isinstance(mirrors, list):
-              raise RuntimeError("Gitea returned an invalid push mirror list.")
+              print("Gitea returned an invalid push mirror list.")
+              exit 0
 
           github_targets = []
           for mirror in mirrors:

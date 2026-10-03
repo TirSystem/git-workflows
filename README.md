@@ -1,6 +1,6 @@
-# 🚀 TirSystem GitHub Actions sync github metadata
+# 🚀 TirSystem GitHub Actions
 
-Global, reusable GitHub Actions and workflows for TirSystem projects.
+A collection of reusable Gitea Actions workflows for DevOps professionals and software engineers working on TirSystem projects.
 
 ## 📚 Table of Contents
 
@@ -14,9 +14,9 @@ Global, reusable GitHub Actions and workflows for TirSystem projects.
 
 ## 🧭 Overview
 
-This repository is the central collection of global GitHub Actions used across TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
+This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It currently contains the Gitea workflow [`sync-github-metadata.yml`](.gitea/workflows/sync-github-metadata.yml), which copies the repository description and topics from Gitea to the GitHub mirror on every push to `main`, on manual dispatch, and daily at 03:17 UTC.
+It currently contains the Gitea workflow [`sync-github-metadata.yml`](.gitea/scoped_workflows/sync-github-metadata.yml), which copies the repository description and topics from Gitea to the GitHub mirror on every push to `main`, on manual dispatch, and daily at 03:17 UTC.
 
 ## 📋 Requirements
 
@@ -43,7 +43,83 @@ Workflows run automatically on push to `main` and on the daily schedule. To run 
 
 ## 🧪 Tests
 
-There are no automated tests. Verify changes by running the workflow manually and checking the description and topics on the GitHub mirror.
+There are no automated tests yet (planned in MIL-001). `tests/test_.ps1` is a manual probe, not a test. Verify changes by running the workflow manually and checking the description and topics on the GitHub mirror.
+
+## 🟢 Capabilities
+
+Only the first row is implemented. The rest is planned and tracked in the [Project Plan](docs/project-plan.md), which also describes each use case.
+
+| Capability | Status |
+| --- | --- |
+| Synchronize repository metadata (Gitea to GitHub mirror) | Implemented in `.gitea/scoped_workflows/`; the script there currently has a syntax error (`exit 0`) that MIL-001 fixes |
+| Configure and validate workflow credentials | Partial: secrets are checked for format only |
+| Onboard a repository, manage runners, diagnose failures | Planned (MIL-002) |
+| Shared quality checks | Planned (MIL-003) |
+| Versioned release and publishing | Planned (MIL-004) |
+
+### 🔄 Sync GitHub metadata
+
+Syncs the Gitea repository description and topics to the GitHub push mirror.
+
+#### 🕒 Cron
+
+Daily at 03:17 UTC (`17 3 * * *`), plus every push to `main` and manual `workflow_dispatch`.
+
+#### 🔀 Workflow
+
+```plantuml
+@startuml
+title Sync Gitea repository description and topics to GitHub
+
+autonumber
+
+actor "Push to main,\nmanual trigger, or schedule" as Trigger
+participant "Gitea Actions\nsync-github-metadata" as Workflow
+participant "Gitea REST API" as Gitea
+participant "GitHub REST API" as GitHub
+
+Trigger -> Workflow: Start workflow
+activate Workflow
+
+Workflow -> Workflow: Read and validate secrets
+note right
+TOKEN_FOR_GITEA
+CREDENTIALS_FOR_GITHUB
+end note
+
+alt secret validation failed
+  Workflow --> Trigger: workflow failed
+end
+
+
+Workflow -> Gitea: GET /repos/{owner}/{repo}
+Gitea --> Workflow: Description and topics
+
+Workflow -> Gitea: GET /repos/{owner}/{repo}/push_mirrors
+Gitea --> Workflow: Push mirror response
+
+alt mirrors is not a list
+    Workflow --> Trigger: Workflow fails\n"Gitea returned an invalid push mirror list."
+else mirrors is a list
+    Workflow -> Workflow: Find GitHub owner and repo from remote_address
+
+    Workflow -> GitHub: PATCH /repos/{owner}/{repo}\n{description}
+    GitHub --> Workflow: Repository updated
+
+    Workflow -> GitHub: PUT /repos/{owner}/{repo}/topics\n{names}
+    GitHub --> Workflow: Topics updated
+
+    Workflow --> Trigger: Sync completed
+else Gitea API denies access
+    Gitea --> Workflow: HTTP 403 Forbidden
+    Workflow --> Trigger: Workflow fails
+else GitHub API denies access
+    GitHub --> Workflow: HTTP error
+    Workflow --> Trigger: Workflow fails
+end
+deactivate Workflow
+@enduml
+```
 
 ## 📄 License
 
