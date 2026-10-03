@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
-| 2026-10-03 | Proposed | Jens Tirsvad Nielsen | S01 | Recorded decisions for tasks 1 and 3 | pending |
+| 2026-10-03 | Proposed | Jens Tirsvad Nielsen | S01 | Recorded decisions for tasks 1 and 3 | [cbb9688] |
 
 ---
 
@@ -74,3 +74,4 @@ successful manual run on the Gitea instance.
 
 [BC-001]: ../business-case.md
 [4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
+[cbb9688]: https://git.tirsystem.com/TirSystem/github-action/commit/cbb9688ed4217ee953d5843b846e2e79f22aaf45
