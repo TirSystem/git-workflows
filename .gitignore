@@ -1,0 +1,11 @@
+# Local secrets - never commit these
+.env
+.env.*
+!.env.example
+
+# Local, per-clone files generated/copied from framework/ - never commit
+# these (see framework/README.md "Using it in a project"):
+#   .agents/skills/  <- install-skills.sh's copy of framework/.agents/skills/
+#   .claude/skills/  <- same copy, for the standalone Claude Code CLI
+/.agents/
+/.claude/
