@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Owner of every gateway is S05<br>Actors updated | [4de5438] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | UC candidate 1: no GitHub mirror is a successful skip | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | UC candidate 1: no GitHub mirror is a successful skip | [0c06789] |
 
 ---
 
@@ -246,3 +246,4 @@ no tests, no release process.
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
+[0c06789]: https://git.tirsystem.com/TirSystem/github-action/commit/0c06789a2779382672712cd483f4964b28a0ebe9
