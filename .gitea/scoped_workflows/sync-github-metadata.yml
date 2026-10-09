@@ -176,17 +176,18 @@ jobs:
                       )
                   targets.append(tuple(path_parts))
 
+              if not targets:
+                  return None
               if len(targets) != 1:
                   raise WorkflowError(
                       "configuration",
-                      "Expected exactly one GitHub push mirror for this repository; "
+                      "Expected at most one GitHub push mirror for this repository; "
                       f"found {len(targets)}.",
                   )
               return targets[0]
 
 
           def main():
-              github_token = parse_github_token(os.environ.get("GITHUB_CREDENTIALS"))
               gitea_token = parse_gitea_token(os.environ.get("GITEA_CREDENTIALS"))
               source_owner, source_repo = split_repository(
                   os.environ.get("SOURCE_REPOSITORY")
@@ -210,7 +211,16 @@ jobs:
                   )
                   return 0
 
-              github_owner, github_repo = find_github_targets(mirrors)
+              target = find_github_targets(mirrors)
+              if target is None:
+                  print(
+                      "No GitHub push mirror configured for "
+                      f"{source_owner}/{source_repo}; nothing to sync."
+                  )
+                  return 0
+
+              github_token = parse_github_token(os.environ.get("GITHUB_CREDENTIALS"))
+              github_owner, github_repo = target
               github_api_url = (
                   "https://api.github.com/repos/"
                   f"{urllib.parse.quote(github_owner, safe='')}/"

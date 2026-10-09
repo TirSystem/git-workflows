@@ -29,8 +29,7 @@ never starts, or stops before the step) is a **runner** problem.
 | `TOKEN_FOR_GITEA is missing or empty.` | configuration | Add the secret |
 | `TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN.` | configuration | The JSON form needs a `GITEA_TOKEN` key |
 | `Could not determine the Gitea source repository.` | configuration | The run has no repository name; report as a defect |
-| `Expected exactly one GitHub push mirror ... found 0` | configuration | Add a GitHub push mirror in the repository settings |
-| `Expected exactly one GitHub push mirror ... found N` | configuration | Keep one GitHub push mirror |
+| `Expected at most one GitHub push mirror ... found N` | configuration | Keep one GitHub push mirror |
 | `Could not determine the GitHub owner and repository ...` | configuration | The mirror address must look like `https://github.com/<owner>/<repo>.git` |
 | `Gitea API request failed with HTTP 401` | credentials | Create a new Gitea token and update `TOKEN_FOR_GITEA` |
 | `GitHub API request failed with HTTP 401` | credentials | Create a new GitHub token and update `CREDENTIALS_FOR_GITHUB` |
@@ -42,6 +41,11 @@ never starts, or stops before the step) is a **runner** problem.
 | `... API is unreachable ...` | api | Network, DNS or proxy problem on the runner |
 
 ## Not an error
+
+`No GitHub push mirror configured for <repo>; nothing to sync.` The run
+succeeds. Not every Gitea repository has a GitHub mirror, so this is expected
+for those. If the repository should have one, add it in the repository
+settings.
 
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not
 synced.` The run succeeds but nothing was synced. Check that the Gitea

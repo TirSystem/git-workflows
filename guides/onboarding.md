@@ -20,9 +20,10 @@ Until delivery is verified, onboard a repository by copying the workflow (below)
 1. **Check the prerequisites** in the repository: Actions are enabled, and a
    runner with the label `ubuntu-latest` and `python3` is online (see
    [Runners](#runners)).
-2. **Configure exactly one GitHub push mirror** in the repository settings
+2. **Configure one GitHub push mirror** in the repository settings
    (Settings, Repository, Mirror settings, Push mirror). The workflow fails
-   when there are zero or several GitHub mirrors.
+   when there are several GitHub mirrors. With none, it succeeds without
+   syncing anything.
 3. **Add the two secrets** in the repository (or organization) settings,
    using the scopes in [credentials.md](credentials.md):
    - `TOKEN_FOR_GITEA`

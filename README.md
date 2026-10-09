@@ -21,7 +21,7 @@ It currently contains the Gitea workflow [`sync-github-metadata.yml`](.gitea/sco
 ## 📋 Requirements
 
 - A Gitea instance with Actions enabled and a runner providing `ubuntu-latest` with `python3`
-- A configured GitHub push mirror on the Gitea repository (exactly one)
+- A configured GitHub push mirror on the Gitea repository (at most one; repositories without a mirror are skipped successfully)
 - Repository secrets:
   - `TOKEN_FOR_GITEA`: Gitea API token (plain string, or JSON with `GITEA_TOKEN`)
   - `CREDENTIALS_FOR_GITHUB`: JSON object containing `GITHUB_PAT`, a GitHub personal access token allowed to edit the mirror repository
@@ -111,6 +111,8 @@ Gitea --> Workflow: Push mirror response
 
 alt mirrors is not a list
     Workflow --> Trigger: Log a warning and succeed\n(GitHub metadata not synced)
+else mirrors is a list with no GitHub mirror
+    Workflow --> Trigger: Log that there is nothing to sync and succeed
 else mirrors is a list
     Workflow -> Workflow: Find GitHub owner and repo from remote_address
 
