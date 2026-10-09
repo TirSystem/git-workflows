@@ -100,9 +100,8 @@ class TestFindGithubTargets:
             [{"remote_address": "https://gitlab.com/Org/other.git"}],
         ],
     )
-    def test_fails_when_no_github_mirror_exists(self, sync, mirrors):
-        with pytest.raises(RuntimeError, match="found 0"):
-            sync["find_github_targets"](mirrors)
+    def test_returns_none_when_no_github_mirror_exists(self, sync, mirrors):
+        assert sync["find_github_targets"](mirrors) is None
 
     def test_fails_when_several_github_mirrors_exist(self, sync):
         mirrors = [
@@ -249,16 +248,36 @@ class TestMain:
         assert all(call[0] == "GET" for call in api.calls)
         assert "WARNING" in capsys.readouterr().out
 
-    def test_fails_before_any_request_when_credentials_are_missing(
+    @pytest.mark.parametrize(
+        "mirrors",
+        [
+            [],
+            [{"remote_address": "https://gitlab.com/Org/other.git"}],
+        ],
+    )
+    def test_succeeds_without_changes_when_no_github_mirror_exists(
+        self, sync, environment, monkeypatch, capsys, mirrors
+    ):
+        monkeypatch.setenv("GITHUB_CREDENTIALS", "")
+        api = FakeApi(mirrors)
+        sync["request_json"] = api
+
+        assert sync["main"]() == 0
+
+        assert all(call[0] == "GET" for call in api.calls)
+        assert not any(call[1].startswith("https://api.github.com") for call in api.calls)
+        assert "No GitHub push mirror configured" in capsys.readouterr().out
+
+    def test_fails_before_any_change_when_github_credentials_are_missing(
         self, sync, environment, monkeypatch
     ):
         monkeypatch.setenv("GITHUB_CREDENTIALS", "")
-        api = FakeApi([])
+        api = FakeApi([{"remote_address": "git@github.com:Org/repo.git"}])
         sync["request_json"] = api
 
         with pytest.raises(RuntimeError, match="CREDENTIALS_FOR_GITHUB"):
             sync["main"]()
-        assert api.calls == []
+        assert all(call[0] == "GET" for call in api.calls)
 
     def test_stops_before_any_change_when_github_token_cannot_administer(
         self, sync, environment

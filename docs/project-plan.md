@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Rejected | Jens Tirsvad Nielsen | S01 | Initial version<br>Added use case candidates and prioritisation appendix | [4de5438] |
-| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Owner of every gateway is S05<br>Actors updated | [4de5438] |
+| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Owner of every gateway is S05<br>Actors updated | [4de5438] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | UC candidate 1: no GitHub mirror is a successful skip | pending |
 
 ---
 
@@ -117,10 +117,10 @@ no tests, no release process.
 
 - **Actor:** DevOps professional. **Goal:** the GitHub mirror shows the Gitea description and topics.
 - **Trigger:** push to `main`, manual dispatch, or daily at 03:17 UTC.
-- **Preconditions:** both secrets set; exactly one GitHub push mirror configured; runner available.
+- **Preconditions:** both secrets set; at most one GitHub push mirror configured (none: the run is skipped successfully); runner available.
 - **Success:** description and topics on GitHub equal those on Gitea.
-- **Main flow:** the workflow validates the secrets, reads description and topics from Gitea, finds the single GitHub mirror, updates the description, replaces the topics.
-- **Alternatives and failures:** missing or invalid secret: fail with a message; zero or several GitHub mirrors: fail; non-list mirror response: behavior undecided (MIL-001 task 1); Gitea or GitHub API error: fail with the HTTP code.
+- **Main flow:** the workflow validates the secrets, reads description and topics from Gitea, finds the GitHub mirror (if none, ends successfully without syncing), updates the description, replaces the topics.
+- **Alternatives and failures:** missing or invalid secret: fail with a message; no GitHub mirror: successful run, nothing synced; several GitHub mirrors: fail; non-list mirror response: behavior undecided (MIL-001 task 1); Gitea or GitHub API error: fail with the HTTP code.
 - **Dependencies:** none.
 
 ### UC candidate 2: Configure workflow credentials (P1)

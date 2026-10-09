@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Rejected | Jens Tirsvad Nielsen | S01 | Initial version | [4de5438] |
-| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Added S05 to assumptions, risks and stakeholders | [4de5438] |
+| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Added S05 to assumptions, risks and stakeholders | [4de5438] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | A mirrored repository has at most one GitHub push mirror; repositories without one are skipped | pending |
 
 ---
 
@@ -116,7 +116,7 @@ accepted plans.
 ## Assumptions
 
 - The Gitea instance has Actions enabled and an `ubuntu-latest` runner with `python3`.
-- Each mirrored repository has exactly one GitHub push mirror.
+- A mirrored repository has at most one GitHub push mirror. Repositories without a GitHub mirror are skipped successfully.
 - S01 (Product Owner) and S05 (DevOps owner and security authority) are both maintainers.
 
 ## Constraints

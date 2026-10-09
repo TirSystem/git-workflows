@@ -46,7 +46,8 @@ The workflow runs a preflight and writes nothing to GitHub unless it passes:
 
 1. Both secrets exist and have the expected shape.
 2. Gitea accepts the token and the repository is visible with it.
-3. Exactly one GitHub push mirror is configured.
+3. At most one GitHub push mirror is configured. With none, the run ends
+   successfully without syncing and the GitHub secret is not read.
 4. GitHub accepts the token for the mirror repository **and** the token
    reports administration access to it.
 
