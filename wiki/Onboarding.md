@@ -2,6 +2,8 @@
 
 > This page is generated from [`guides/onboarding.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/onboarding.md). Changes made here are overwritten the next time the wiki is published.
 
+English | [Dansk](Onboarding.da) | [Bahasa Melayu](Onboarding.ms)
+
 # Onboarding a repository
 
 How a DevOps professional makes a TirSystem repository use the shared

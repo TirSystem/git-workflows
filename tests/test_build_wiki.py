@@ -179,3 +179,91 @@ class TestWriteAndCheck:
 def test_committed_wiki_pages_are_current():
     """The pages in wiki/ match what README.md and guides/ produce."""
     assert build_wiki.check_pages() == []
+
+
+class TestLanguageSwitcher:
+    def test_english_page_links_to_the_translations(self):
+        assert build_wiki.language_switcher("Home") == (
+            "English | [Dansk](Home.da) | [Bahasa Melayu](Home.ms)"
+        )
+
+    def test_translation_does_not_link_to_itself(self):
+        assert build_wiki.language_switcher("Home", "da") == (
+            "[English](Home) | Dansk | [Bahasa Melayu](Home.ms)"
+        )
+
+
+class TestCheckTranslations:
+    @pytest.fixture()
+    def repo(self, tmp_path):
+        root = tmp_path / "repo"
+        root.mkdir()
+        _write_sources(root)
+        return root
+
+    @staticmethod
+    def write_translations(wiki, repo, only_hash=None):
+        english = build_wiki.build_all(repo)
+        wiki.mkdir(exist_ok=True)
+        for page in build_wiki.PAGES:
+            digest = only_hash or build_wiki.source_hash(
+                english[f"{page.name}.md"].encode("utf-8")
+            )
+            for code, _label in build_wiki.LANGUAGES:
+                (wiki / f"{page.name}.{code}.md").write_text(
+                    f"<!-- translation of {page.name}.md, source sha256 {digest} -->\n\nText\n",
+                    encoding="utf-8",
+                )
+
+    def test_current_translations_pass(self, repo, tmp_path):
+        wiki = tmp_path / "wiki"
+        self.write_translations(wiki, repo)
+        assert build_wiki.check_translations(wiki, repo) == []
+
+    def test_reports_missing_translations(self, repo, tmp_path):
+        wiki = tmp_path / "wiki"
+        self.write_translations(wiki, repo)
+        (wiki / "Home.ms.md").unlink()
+        assert build_wiki.check_translations(wiki, repo) == ["Home.ms.md: missing"]
+
+    def test_reports_a_stale_translation(self, repo, tmp_path):
+        wiki = tmp_path / "wiki"
+        self.write_translations(wiki, repo)
+        (repo / "guides" / "onboarding.md").write_text("# Changed\n", encoding="utf-8")
+        problems = build_wiki.check_translations(wiki, repo)
+        assert [p.split(":")[0] for p in problems] == ["Onboarding.da.md", "Onboarding.ms.md"]
+        assert all("stale" in problem for problem in problems)
+
+    def test_reports_a_missing_or_wrong_header(self, repo, tmp_path):
+        wiki = tmp_path / "wiki"
+        self.write_translations(wiki, repo)
+        (wiki / "Home.da.md").write_text("no header\n", encoding="utf-8")
+        assert build_wiki.check_translations(wiki, repo) == [
+            "Home.da.md: first line is not the translation header"
+        ]
+
+
+def _shape(text: str) -> dict:
+    lines = text.splitlines()
+    return {
+        "fences": sum(line.startswith("```") for line in lines),
+        "table_rows": sum(line.startswith("|") for line in lines),
+        "heading_levels": [
+            len(line) - len(line.lstrip("#")) for line in lines if line.startswith("#")
+        ],
+    }
+
+
+@pytest.mark.parametrize("page", [page.name for page in build_wiki.PAGES])
+@pytest.mark.parametrize("code", [code for code, _label in build_wiki.LANGUAGES])
+def test_committed_translations_follow_the_english_structure(page, code):
+    """A translation has the same code blocks, table rows and heading levels."""
+    wiki = REPO_ROOT / "wiki"
+    english = _shape((wiki / f"{page}.md").read_text(encoding="utf-8"))
+    translated = _shape((wiki / f"{page}.{code}.md").read_text(encoding="utf-8"))
+    assert translated == english
+
+
+def test_committed_translations_are_current():
+    """No translation follows an older version of its English page."""
+    assert build_wiki.check_translations() == []

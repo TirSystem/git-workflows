@@ -1,0 +1,62 @@
+<!-- translation of Troubleshooting.md, source sha256 060a822225e1 -->
+
+> Dette er en oversættelse af [`Troubleshooting`](Troubleshooting). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
+
+[English](Troubleshooting) | Dansk | [Bahasa Melayu](Troubleshooting.ms)
+
+# Fejlfinding af en mislykket kørsel
+
+Åbn kørslen i Gitea (Actions) og læs de sidste linjer i det trin, der fejler. Hver fejl fra synkroniseringsscriptet skrives som
+
+```
+ERROR: [<category>] <message>
+```
+
+Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet starter aldrig eller stopper før trinnet) er et **runner**-problem.
+
+| Kategori | Betydning | Første ting at kontrollere |
+| --- | --- | --- |
+| `configuration` | En secret eller en repository-indstilling mangler eller er forkert udformet | Secretnavne og format, opsætning af push-spejl |
+| `credentials` | En tjeneste afviste tokenet (HTTP 401) | Token er udløbet, tilbagekaldt eller forkert indtastet |
+| `permissions` | Tokenet er gyldigt, men har ikke tilladelse (HTTP 403, eller ingen GitHub-administrationsadgang) | Token-scopes og repository-adgang |
+| `api` | En anden HTTP-fejl, eller tjenesten kunne ikke nås | Tjenestens status, runnerens netværk |
+| runner | Ingen `ERROR:`-linje; kørslen venter, eller jobbet fejler før scriptet | Runner online, label, værktøjer |
+
+## Meddelelser og løsninger
+
+| Meddelelse (begyndelsen) | Kategori | Årsag og løsning |
+| --- | --- | --- |
+| `CREDENTIALS_FOR_GITHUB is missing or empty.` | configuration | Tilføj secreten |
+| `CREDENTIALS_FOR_GITHUB must contain valid JSON.` | configuration | Værdien skal være JSON, fx `{"GITHUB_PAT": "..."}` |
+| `CREDENTIALS_FOR_GITHUB must be a JSON object.` | configuration | Brug et objekt, ikke en liste eller en streng |
+| `CREDENTIALS_FOR_GITHUB must contain a non-empty GITHUB_PAT.` | configuration | Tilføj nøglen `GITHUB_PAT` med et token |
+| `TOKEN_FOR_GITEA is missing or empty.` | configuration | Tilføj secreten |
+| `TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN.` | configuration | JSON-formen kræver nøglen `GITEA_TOKEN` |
+| `Could not determine the Gitea source repository.` | configuration | Kørslen har intet repositorynavn; meld det som en defekt |
+| `Expected at most one GitHub push mirror ... found N` | configuration | Behold ét GitHub push-spejl |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Kun wiki-publicering: tilføj secreten (se [credentials.md](Credentials.da)) |
+| `The wiki is not enabled on <repo>` | configuration | Kun wiki-publicering: aktivér wikien i repositoryets indstillinger |
+| `The wiki source directory ... has no Markdown pages` | configuration | Kun wiki-publicering: `wiki/` er tom eller mangler; intet blev ændret |
+| `Could not determine the GitHub owner and repository ...` | configuration | Spejlets adresse skal se ud som `https://github.com/<owner>/<repo>.git` |
+| `Gitea API request failed with HTTP 401` | credentials | Opret et nyt Gitea-token, og opdatér `TOKEN_FOR_GITEA` |
+| `GitHub API request failed with HTTP 401` | credentials | Opret et nyt GitHub-token, og opdatér `CREDENTIALS_FOR_GITHUB` |
+| `... HTTP 403 ...` (Gitea) | permissions | Tokenet skal have `read:repository`, og dets bruger skal være administrator af repositoryet |
+| `... HTTP 403 ...` (GitHub) | permissions | Tokenet skal have Administration read and write på spejl-repositoryet |
+| `The GitHub token cannot administer <repo>` | permissions | Som ovenfor; tokenet kan læse repositoryet, men ikke redigere det |
+| `... HTTP 404 ...` | configuration | Repositoryet blev ikke fundet, eller tokenet kan ikke se det; kontroller spejlets adresse og tokenets adgang til repositoryet |
+| `... HTTP 5xx ...` | api | Problem hos tjenesten; kør igen senere |
+| `... API is unreachable ...` | api | Netværks-, DNS- eller proxyproblem på runneren |
+
+## Ikke en fejl
+
+`No GitHub push mirror configured for <repo>; nothing to sync.` Kørslen lykkes. Ikke alle Gitea-repositories har et GitHub-spejl, så det er forventet for dem. Hvis repositoryet skal have et, så tilføj det i repositoryets indstillinger.
+
+`WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not synced.` Kørslen lykkes, men intet blev synkroniseret. Kontroller, at Gitea-versionen understøtter push mirror-API'et, og kør igen.
+
+## Runner-problemer
+
+Se afsnittet [Runners](Onboarding.da#runners). Kort sagt: hvis kørslen bliver stående som `waiting`, har ingen online runner labelen; hvis jobbet fejler før scriptet, mangler runner-imaget et værktøj.
+
+## Ny kørsel
+
+Brug **Run workflow** (`workflow_dispatch`), når årsagen er rettet. Synkroniseringen kan trygt gentages: den overskriver GitHub-beskrivelsen og -emnerne med værdierne fra Gitea.

@@ -2,6 +2,8 @@
 
 > This page is generated from [`guides/troubleshooting.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/troubleshooting.md). Changes made here are overwritten the next time the wiki is published.
 
+English | [Dansk](Troubleshooting.da) | [Bahasa Melayu](Troubleshooting.ms)
+
 # Diagnosing a failed run
 
 Open the run in Gitea (Actions) and read the last lines of the failing step.
