@@ -60,6 +60,28 @@ credentials.` Failures start with a category such as `[credentials]` or
 `[permissions]`; see [troubleshooting.md](Troubleshooting). No secret value
 is ever printed.
 
+## Wiki publishing secret
+
+The workflow **Publish wiki** (this repository only) copies `wiki/` to the Gitea
+wiki when a change to `wiki/` is merged to `main`. It uses its own secret so
+that the metadata sync tokens never get write access.
+
+| Secret | Content | Used for |
+| --- | --- | --- |
+| `TOKEN_FOR_GITEA_WIKI` | A bare token, a JSON string, or JSON with `GITEA_TOKEN` | Writing the wiki pages of this repository |
+
+- A Gitea personal access token with scope `write:repository`. Gitea has no
+  wiki-only scope, so create the token for a dedicated user that has write
+  access to this repository only. S05 approves the scope and S03 stores the
+  secret.
+- Calls made: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`,
+  `GET`, `POST` and `PATCH /repos/{owner}/{repo}/wiki/...` and, for a page that
+  no longer exists in `wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}`.
+- The wiki must be enabled in the repository settings. The workflow refuses to
+  run when it is not.
+- The wiki always equals `wiki/`: pages edited or added in the Gitea web UI are
+  overwritten or removed on the next publish.
+
 ## Rotating a token
 
 1. Create the new token with the permissions above.
