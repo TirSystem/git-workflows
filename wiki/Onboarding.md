@@ -17,9 +17,9 @@ planned (see the [Project Plan](https://git.tirsystem.com/TirSystem/github-actio
 | --- | --- |
 | Gitea version | 1.27.3 |
 | `.gitea/scoped_workflows/sync-github-metadata.yml` runs in this repository | Verified: run 16, `workflow_dispatch`, succeeded |
-| The same workflow applies to other repositories automatically | **Not verified.** Confirm how scoped workflows are delivered on the instance (admin or organization settings) before relying on it. |
+| The same workflow applies to other repositories automatically | Verified on 2026-10-10: it ran, with no copy in the repository, in repositories of `TirSystem`, `TirSystem-BashScript`, `vl-staal` and `Tirsvad-Udemy-100-days-of-code` (for example `TirSystem/sqa-qc-checklists` and `TirSystem-BashScript/RepoFoundry`). The script it ran changed when this repository's changed. |
 
-Until delivery is verified, onboard a repository by copying the workflow (below).
+Delivery is automatic, so a repository needs no copy of the workflow. Secrets are not shared between organisations: each organisation needs its own (step 3).
 
 ## Steps
 
@@ -31,15 +31,16 @@ Until delivery is verified, onboard a repository by copying the workflow (below)
    when there are several GitHub mirrors. With none, it succeeds without
    syncing anything.
 3. **Add the two secrets** in the repository (or organization) settings,
-   using the scopes in [credentials.md](Credentials):
+   using the scopes in [credentials.md](Credentials). The workflow runs in
+   every repository of an organization, so store the secrets once per
+   organization; a repository in another organization does not see them:
    - `TOKEN_FOR_GITEA`
    - `PAT_FOR_GITHUB` (the GitHub token only)
-4. **Deliver the workflow:**
-   - *If scoped workflows apply to the repository:* nothing to copy.
-   - *Otherwise:* copy `.gitea/scoped_workflows/sync-github-metadata.yml`
-     from this repository to `.gitea/workflows/` in the target repository.
-     Pin the copy to a reviewed version of this repository and re-copy
-     when it changes.
+4. **Deliver the workflow:** scoped workflows apply to every repository on
+   this instance, so there is nothing to copy. Only where scoped delivery is
+   not set up, copy `.gitea/scoped_workflows/sync-github-metadata.yml` from
+   this repository to `.gitea/workflows/` in the target repository, pin the
+   copy to a reviewed version and re-copy when it changes.
 5. **Set a description and topics** on the Gitea repository, so there is
    something to sync.
 6. **Run it once manually:** Actions, **Sync GitHub mirror metadata**,
