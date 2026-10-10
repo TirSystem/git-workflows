@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S05 | Initial version | pending |
+| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S05 | Initial version | [c017c06] |
 
 ---
 
@@ -45,3 +45,4 @@ Go — all eight criteria pass. S01 gave the Go in chat on 2026-10-10 for the re
 
 [BC-001]: ../../business-case.md
 [QC-BC-001]: ../../../framework/qc/qc-business-case.md
+[c017c06]: https://git.tirsystem.com/TirSystem/github-action/commit/c017c06789424305b31f19e48238ad14231e8113
