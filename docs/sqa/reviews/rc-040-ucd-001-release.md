@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [044d8ba] |
 
 ---
 
@@ -45,3 +45,4 @@ Go - all eight criteria pass for the amendment (the use case of UC-006). S01 gav
 
 [UCD-001]: ../../use-case-diagram.md
 [QC-UCD-001]: ../../../framework/qc/qc-use-case-diagram.md
+[044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051

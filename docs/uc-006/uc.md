@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [044d8ba] |
 
 ---
 
@@ -42,3 +42,4 @@ When a change to the workflows or their scripts is ready on the default branch, 
 [US-001]: ../user-stories.md
 [SA-001]: ../stakeholder-analysis.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
+[044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051

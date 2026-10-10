@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-043): SemVer expanded at first use | pending |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [044d8ba] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-043): SemVer expanded at first use | [044d8ba] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -134,3 +134,4 @@ The rules that follow from it:
 [US-001]: ../user-stories.md
 [ADR-0004]: ./adr-0004-shared-wiki-publishing-opt-in.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
+[044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051

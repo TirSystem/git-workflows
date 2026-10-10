@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.09 and US-001.10 (quality checks, UC-005) | [385d2fb] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.11 to US-001.13 (releases, UC-006); US-001.13 traced to the epic (RC-041) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.11 to US-001.13 (releases, UC-006); US-001.13 traced to the epic (RC-041) | [044d8ba] |
 
 ---
 
@@ -217,3 +217,4 @@ behaviour is tested rather than built.
 [UC-005]: ./uc-005/uc.md
 [385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
 [UC-006]: ./uc-006/uc.md
+[044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051

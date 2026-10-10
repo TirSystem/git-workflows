@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the actor Software Engineer and the use case Run Project Quality Checks | [385d2fb] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added the use case Release a Reusable Workflow (UC-006) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added the use case Release a Reusable Workflow (UC-006) | [044d8ba] |
 
 ---
 
@@ -102,3 +102,4 @@ UC4 ..> UC1 : <<extend>>
 [UC-005]: ./uc-005/uc.md
 [385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
 [UC-006]: ./uc-006/uc.md
+[044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051
