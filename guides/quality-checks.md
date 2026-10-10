@@ -19,7 +19,7 @@ jobs:
   quality:
     permissions:
       contents: read
-    uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@main
+    uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1
     with:
       languages: python,shell
 ```
@@ -33,9 +33,10 @@ jobs:
 | `shellcheck-py-version` | `0.10.0.1` | Version of the shellcheck-py package (ShellCheck 0.10.0) |
 | `shfmt-py-version` | `3.11.0.2` | Version of the shfmt-py package (shfmt 3.11.0) |
 
-Reference the workflow at `main` or at a tag, never at the branch of a pull
-request: that branch is deleted when the pull request is merged and the
-reference stops working.
+Reference the workflow at the major tag (`@v1`) or at an exact tag
+(`@v1.0.0`), never at `main` and never at the branch of a pull request: that
+branch is deleted when the pull request is merged and the reference stops
+working. See the upgrade guide for what each choice receives.
 
 ## What is checked
 

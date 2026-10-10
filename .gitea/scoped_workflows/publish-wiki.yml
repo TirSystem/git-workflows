@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: TirSystem/github-action
-          ref: main
+          ref: v1
           path: shared-scripts
 
       - name: Publish the pages to the wiki

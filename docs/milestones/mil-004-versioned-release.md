@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-11-28 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added task 6 (embedded scripts to files) and Go/No-Go criterion 5; traceability adds O2 (RC-034) | [616c5d2] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added task 6 (embedded scripts to files) and Go/No-Go criterion 5; traceability adds O2 (RC-034) | [616c5d2] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added the verification results of the first release (v1.0.0) | [6933e91] |
 
 ---
 
@@ -71,10 +71,26 @@ reference that a release can pin, instead of Python embedded in their YAML.
 | 5 | Implement the reusable release workflow | Validate the version, build release notes from the changelog and publish to the chosen destination. | Yes | Use case candidate: publish a release |
 | 6 | Move the embedded scripts of the scoped workflows to files | The sync (`sync-github-metadata.yml`) and publish-wiki workflows embed 200 to 300 lines of Python in their YAML, which is hard to read, lint and review. Move the code to `tools/sync_github_metadata.py` and `tools/publish_wiki.py`; each scoped workflow then checks out `TirSystem/github-action` into its own folder with `actions/checkout` and runs the file, as verified on 2026-10-10 from repositories of two organizations. Keep the behaviour, the messages and the offline tests, which import the files instead of executing the YAML; use `ref: main` first, and let the release process of task 1 define how a consumer pins a tag. | No | |
 
+## Verification results
+
+The first release was cut on 2026-10-11 with the Release workflow (run 623 on
+`97ffa49`, after a dry run, run 622): the tag `v1.0.0`, the moving tag `v1`
+and the release page were created, and the job token was enough (ADR-0007).
+
+| # | Criterion | Result |
+| --- | --- | --- |
+| 1 | A release is validated before a tag is created | Go: `tools/release.py` refuses unless the status `Validate workflows / validate (push)` of the tip of `main` is success; tested for failed and missing runs |
+| 2 | Version tag and changelog entry that marks breaking changes | Go: `v1.0.0` and `CHANGELOG.md` `[1.0.0]`; `tools/changelog.py` checks the convention |
+| 3 | A consumer pinned to the previous version keeps working | Go: tags are never moved or deleted; the upgrade guide describes the way back; the first release has no previous version, so this is by construction until `v1.0.1` |
+| 4 | Publish destination decided, token scope documented | Go: ADR-0007 |
+| 5 | No embedded Python in the scoped workflows | Go: both run files of this repository, with offline tests that exercise the files (MIL-004 task 6) |
+
+After the release the two scoped workflows fetch their scripts at `ref: v1`
+(RC-043 action item).
+
 ---
 
 [BC-001]: ../business-case.md
-[4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
-[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
 [616c5d2]: https://git.tirsystem.com/TirSystem/github-action/commit/616c5d2e48f0d76399a6f78923891fc7f50c8e22
+[6933e91]: https://git.tirsystem.com/TirSystem/github-action/commit/6933e91c83075fb39b2dfbe41683cb2a0a0bce28

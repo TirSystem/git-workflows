@@ -1,4 +1,4 @@
-<!-- translation of QualityChecks.md, source sha256 84ed5e09689a -->
+<!-- translation of QualityChecks.md, source sha256 aa9c7296fa52 -->
 
 > Ini ialah terjemahan [`QualityChecks`](QualityChecks). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -22,7 +22,7 @@ jobs:
   quality:
     permissions:
       contents: read
-    uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@main
+    uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1
     with:
       languages: python,shell
 ```
@@ -36,7 +36,7 @@ jobs:
 | `shellcheck-py-version` | `0.10.0.1` | Versi pakej shellcheck-py (ShellCheck 0.10.0) |
 | `shfmt-py-version` | `3.11.0.2` | Versi pakej shfmt-py (shfmt 3.11.0) |
 
-Rujuk aliran kerja pada `main` atau pada tag, jangan sekali-kali pada cabang pull request: cabang itu dipadam apabila pull request digabungkan dan rujukan itu berhenti berfungsi.
+Rujuk aliran kerja pada tag major (`@v1`) atau pada tag tepat (`@v1.0.0`), jangan sekali-kali pada `main` dan jangan pada cabang pull request: cabang itu dipadam apabila pull request digabungkan dan rujukan itu berhenti berfungsi. Lihat panduan naik taraf untuk apa yang diterima oleh setiap pilihan.
 
 ## Perkara yang disemak
 
