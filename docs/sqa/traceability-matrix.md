@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Review records RC-001 to RC-007 are Accepted | [ba1c6be] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S01 stood in for S05<br>Independence of the review is still open | [0799b43] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | S01 stood in for S05<br>Independence of the review is still open | [0799b43] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-005 and RC-008 to RC-010 | [ae4e257] |
 
 ---
 
@@ -25,10 +25,10 @@ updated whenever an artifact instance is created or reviewed.
 | Artifact Instance | Type | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- |
 | [SA-001] | SA | - | [BC-001] | [RC-004] |
-| [BC-001] | BC | [SA-001] | [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004] | [RC-001] |
-| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004] | [RC-002] |
+| [BC-001] | BC | [SA-001] | [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005] | [RC-001], [RC-008] |
+| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005] | [RC-002], [RC-009] |
 | [MIL-001] | MIL | [BC-001], [PP-001] | [MIL-002] | [RC-003] |
-| [MIL-002] | MIL | [BC-001], [PP-001], [MIL-001] | [MIL-003] | [RC-005] |
+| [MIL-002] | MIL | [BC-001], [PP-001], [MIL-001] | [MIL-003], [MIL-005] | [RC-005] |
 | [MIL-003] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-004] | [RC-006] |
 | [MIL-004] | MIL | [BC-001], [PP-001], [MIL-003] | - | [RC-007] |
 | [RC-001] | RC | [BC-001] | - | - |
@@ -37,7 +37,11 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-004] | RC | [SA-001] | - | - |
 | [RC-005] | RC | [MIL-002] | - | - |
 | [RC-006] | RC | [MIL-003] | - | - |
+| [MIL-005] | MIL | [BC-001], [PP-001], [MIL-002] | - | [RC-010] |
 | [RC-007] | RC | [MIL-004] | - | - |
+| [RC-008] | RC | [BC-001] | - | - |
+| [RC-009] | RC | [PP-001] | - | - |
+| [RC-010] | RC | [MIL-005] | - | - |
 
 ## Coverage Notes
 
@@ -55,6 +59,7 @@ updated whenever an artifact instance is created or reviewed.
 [MIL-002]: ../milestones/mil-002-onboarding-and-operations.md
 [MIL-003]: ../milestones/mil-003-quality-checks.md
 [MIL-004]: ../milestones/mil-004-versioned-release.md
+[MIL-005]: ../milestones/mil-005-wiki-and-translations.md
 [RC-001]: ./reviews/rc-001-business-case.md
 [RC-002]: ./reviews/rc-002-project-plan.md
 [RC-003]: ./reviews/rc-003-mil-001.md
@@ -62,5 +67,8 @@ updated whenever an artifact instance is created or reviewed.
 [RC-005]: ./reviews/rc-005-mil-002.md
 [RC-006]: ./reviews/rc-006-mil-003.md
 [RC-007]: ./reviews/rc-007-mil-004.md
-[ba1c6be]: https://git.tirsystem.com/TirSystem/github-action/commit/ba1c6bea7491884899d55a3f86364c6a7811649a
+[RC-008]: ./reviews/rc-008-business-case-wiki-scope.md
+[RC-009]: ./reviews/rc-009-project-plan-mil-005.md
+[RC-010]: ./reviews/rc-010-mil-005.md
 [0799b43]: https://git.tirsystem.com/TirSystem/github-action/commit/0799b43888a1fef02fe135818a4a38eff3452a09
+[ae4e257]: https://git.tirsystem.com/TirSystem/github-action/commit/ae4e257236095e76132980fad1e9a661b1d082c7
