@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | S01 stood in for S05<br>Independence of the review is still open | [0799b43] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-005 and RC-008 to RC-010 | [ae4e257] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-005 and RC-008 to RC-010 | [ae4e257] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-011 for the MIL-005 amendment | [20361e8] |
 
 ---
 
@@ -37,11 +37,12 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-004] | RC | [SA-001] | - | - |
 | [RC-005] | RC | [MIL-002] | - | - |
 | [RC-006] | RC | [MIL-003] | - | - |
-| [MIL-005] | MIL | [BC-001], [PP-001], [MIL-002] | - | [RC-010] |
+| [MIL-005] | MIL | [BC-001], [PP-001], [MIL-002] | - | [RC-010], [RC-011] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
 | [RC-010] | RC | [MIL-005] | - | - |
+| [RC-011] | RC | [MIL-005] | - | - |
 
 ## Coverage Notes
 
@@ -70,5 +71,6 @@ updated whenever an artifact instance is created or reviewed.
 [RC-008]: ./reviews/rc-008-business-case-wiki-scope.md
 [RC-009]: ./reviews/rc-009-project-plan-mil-005.md
 [RC-010]: ./reviews/rc-010-mil-005.md
-[0799b43]: https://git.tirsystem.com/TirSystem/github-action/commit/0799b43888a1fef02fe135818a4a38eff3452a09
+[RC-011]: ./reviews/rc-011-mil-005-wiki-publishing.md
 [ae4e257]: https://git.tirsystem.com/TirSystem/github-action/commit/ae4e257236095e76132980fad1e9a661b1d082c7
+[20361e8]: https://git.tirsystem.com/TirSystem/github-action/commit/20361e881ebd0dc52e1d1c358ceb792c41b76c60
