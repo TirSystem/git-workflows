@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | Initial version | [aa3f088] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S01 stood in for S05<br>Independence of the review is still open | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S01 stood in for S05<br>Independence of the review is still open | [0799b43] |
 
 ---
 
@@ -48,3 +48,4 @@ Go — all eight criteria pass, with two follow-ups that do not affect the crite
 [SA-001]: ../../stakeholder-analysis.md
 [QC-SA-001]: ../../../framework/qc/qc-stakeholder-analysis.md
 [aa3f088]: https://git.tirsystem.com/TirSystem/github-action/commit/aa3f08876d55fa5f008e93f65176a496601c00ca
+[0799b43]: https://git.tirsystem.com/TirSystem/github-action/commit/0799b43888a1fef02fe135818a4a38eff3452a09
