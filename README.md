@@ -44,7 +44,7 @@ Workflows run automatically on push to `main` and on the daily schedule. To run 
 
 ## 🧪 Tests
 
-The workflow files and the Python embedded in them are validated by offline tests that need no network access and no secrets:
+The workflow files and the scripts in `tools/` are validated by offline tests that need no network access and no secrets:
 
 ```bash
 python3 -m venv .venv
@@ -53,7 +53,7 @@ python -m pip install -r tests/requirements.txt
 python -m pytest -q tests
 ```
 
-The same checks run on every pull request and push to `main` through [`validate-workflows.yml`](.gitea/workflows/validate-workflows.yml). They parse every workflow as YAML, compile the embedded Python, require explicit job permissions, and test credential parsing, push mirror address parsing and the sync flow against a fake API.
+The same checks run on every pull request and push to `main` through [`validate-workflows.yml`](.gitea/workflows/validate-workflows.yml). They parse every workflow as YAML, check that none embeds Python, compile the scripts in `tools/`, require explicit job permissions, and test credential parsing, push mirror address parsing and the sync and publish flows against a fake API.
 
 After a change to the sync workflow, also trigger **Sync GitHub mirror metadata** manually in Gitea and compare the description and topics on the GitHub mirror.
 

@@ -41,6 +41,17 @@ def test_sync_workflow_embeds_no_script_and_runs_the_file():
     assert steps[-1]["run"] == "python3 shared-scripts/tools/sync_github_metadata.py"
 
 
+def test_no_workflow_of_this_repository_embeds_python():
+    """MIL-004 Go/No-Go criterion 5: every script is a file under tools/."""
+    embedded = {path.name: len(embedded_python(path)) for path in WORKFLOWS}
+    assert {name: count for name, count in embedded.items() if count} == {}
+
+
+@pytest.mark.parametrize("script", sorted((REPO_ROOT / "tools").glob("*.py")), ids=lambda p: p.name)
+def test_every_tool_script_compiles(script):
+    ast.parse(script.read_text(encoding="utf-8"), filename=str(script))
+
+
 def test_sync_script_compiles_and_is_a_file_of_this_repository():
     source = SYNC_SCRIPT.read_text(encoding="utf-8")
     ast.parse(source, filename=str(SYNC_SCRIPT))
