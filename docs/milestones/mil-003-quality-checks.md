@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Target date 2026-11-14 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Task 1 verified: workflow_call and uses work from the same repository, the same organization and another organization (RC-033) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Task 1 verified: workflow_call and uses work from the same repository, the same organization and another organization (RC-033) | [b3f006f] |
 
 ---
 
@@ -91,3 +91,4 @@ private provider and tag references are for the release milestone (MIL-004).
 [BC-001]: ../business-case.md
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
+[b3f006f]: https://git.tirsystem.com/TirSystem/github-action/commit/b3f006f7a482392189a46c324ad4f28c4c3a2d2a

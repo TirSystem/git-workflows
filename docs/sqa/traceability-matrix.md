@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-026 to RC-032 (dates confirmed) | [ea06eaa] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-033 for MIL-003 | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-033 for MIL-003 | [b3f006f] |
 
 ---
 
@@ -139,3 +139,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-032]: ./reviews/rc-032-pp-001-dates.md
 [RC-033]: ./reviews/rc-033-mil-003-reusable-workflows.md
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
+[b3f006f]: https://git.tirsystem.com/TirSystem/github-action/commit/b3f006f7a482392189a46c324ad4f28c4c3a2d2a
