@@ -13,6 +13,7 @@ each document lives in *this* project and the next version to use.
 | MIL | Milestone / Gateway | docs/milestones/*.md | 006 |
 | RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 012 |
 | TM | Traceability Matrix | docs/sqa/traceability-matrix.md | 002 |
+| ADR | Architecture Decision Record | docs/adr/adr-NNNN-*.md | 0002 |
 
 ## Languages
 
@@ -25,8 +26,9 @@ each document lives in *this* project and the next version to use.
 The PO language is English, so no PO-language translations are kept.
 
 The Gitea wiki (MIL-005) is the one exception: its pages are kept in English
-(authoritative), Danish (`da`) and Bahasa Malaysia (`ms`). Each translated page
-names the English source version it follows.
+(authoritative), Danish (`da`) and Bahasa Malaysia (`ms`). A translation is named
+`<Page>.<lang>` (`Home.da`) and names the English source it follows; see
+`docs/adr/adr-0001-wiki-structure-and-languages.md`.
 
 | Artifact types | Register | Also kept as a PO-language file |
 | --- | --- | --- |
