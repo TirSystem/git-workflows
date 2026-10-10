@@ -10,6 +10,7 @@ Usage:
 """
 
 import argparse
+import hashlib
 import posixpath
 import re
 import sys
@@ -43,6 +44,13 @@ PAGES: tuple[Page, ...] = (
     Page("Credentials", "guides/credentials.md"),
     Page("Troubleshooting", "guides/troubleshooting.md"),
     Page("Capabilities", "README.md", ("Capabilities",)),
+)
+
+# Translations (ADR-0001): `<Page>.<code>` written by hand in wiki/.
+LANGUAGES: tuple[tuple[str, str], ...] = (("da", "Dansk"), ("ms", "Bahasa Melayu"))
+HASH_LENGTH = 12
+_TRANSLATION_HEADER = re.compile(
+    r"^<!-- translation of (?P<page>\S+)\.md, source sha256 (?P<hash>[0-9a-f]+) -->$"
 )
 
 # The page a link to a source file should point to. The README is the home page.
@@ -124,6 +132,22 @@ def split_h2_sections(text: str) -> tuple[list[str], dict[str, list[str]]]:
     return preamble, sections
 
 
+def language_switcher(page_name: str, current: str | None = None) -> str:
+    """Return the line that links a page to its other languages.
+
+    ``current`` is a language code, or None for the English page.
+    """
+    items = ["English" if current is None else f"[English]({page_name})"]
+    for code, label in LANGUAGES:
+        items.append(label if code == current else f"[{label}]({page_name}.{code})")
+    return " | ".join(items)
+
+
+def source_hash(content: bytes) -> str:
+    """Return the short content hash a translation records for its source."""
+    return hashlib.sha256(content).hexdigest()[:HASH_LENGTH]
+
+
 def render_page(page: Page, repo_root: Path = REPO_ROOT) -> str:
     """Return the full Markdown of one wiki page."""
     source_path = repo_root / page.source
@@ -150,6 +174,7 @@ def render_page(page: Page, repo_root: Path = REPO_ROOT) -> str:
         f"> This page is generated from [`{page.source}`]"
         f"({SOURCE_BASE_URL}/{page.source}). Changes made here are overwritten "
         "the next time the wiki is published.\n\n"
+        f"{language_switcher(page.name)}\n\n"
     )
     body = convert_markdown("\n".join(body_lines), page.source).strip("\n")
     return banner + body + "\n"
@@ -185,18 +210,59 @@ def check_pages(wiki_dir: Path = WIKI_DIR, repo_root: Path = REPO_ROOT) -> list[
     return problems
 
 
+def check_translations(
+    wiki_dir: Path = WIKI_DIR, repo_root: Path = REPO_ROOT
+) -> list[str]:
+    """Return a message for every translation that is missing or stale.
+
+    A translation is stale when the hash it records no longer matches the
+    English page it follows (the English page changed after it was written).
+    """
+    problems: list[str] = []
+    english = build_all(repo_root)
+    for page in PAGES:
+        current = source_hash(english[f"{page.name}.md"].encode("utf-8"))
+        for code, _label in LANGUAGES:
+            name = f"{page.name}.{code}.md"
+            path = wiki_dir / name
+            if not path.exists():
+                problems.append(f"{name}: missing")
+                continue
+            lines = path.read_text(encoding="utf-8").splitlines()
+            match = _TRANSLATION_HEADER.match(lines[0]) if lines else None
+            if match is None or match.group("page") != page.name:
+                problems.append(f"{name}: first line is not the translation header")
+            elif match.group("hash") != current:
+                problems.append(
+                    f"{name}: stale, follows {match.group('hash')} but "
+                    f"{page.name}.md is {current}"
+                )
+    return problems
+
+
 def main(argv: list[str] | None = None) -> int:
     """Run the generator; return the process exit code."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument(
         "--check",
         action="store_true",
-        help="report pages that differ from their sources and exit 1",
+        help="report pages that differ from their sources or stale translations, exit 1",
+    )
+    parser.add_argument(
+        "--hash",
+        metavar="PAGE",
+        help="print the source hash a translation of PAGE must record",
     )
     args = parser.parse_args(argv)
     try:
+        if args.hash:
+            content = build_all().get(f"{args.hash}.md")
+            if content is None:
+                raise WikiBuildError(f"unknown page '{args.hash}'")
+            print(source_hash(content.encode("utf-8")))
+            return 0
         if args.check:
-            problems = check_pages()
+            problems = check_pages() + check_translations()
             for problem in problems:
                 print(f"ERROR: wiki/{problem}", file=sys.stderr)
             if problems:

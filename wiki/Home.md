@@ -2,6 +2,8 @@
 
 > This page is generated from [`README.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/README.md). Changes made here are overwritten the next time the wiki is published.
 
+English | [Dansk](Home.da) | [Bahasa Melayu](Home.ms)
+
 # TirSystem GitHub Actions
 
 A collection of reusable Gitea Actions workflows for DevOps professionals and software engineers working on TirSystem projects.

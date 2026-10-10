@@ -2,6 +2,8 @@
 
 > This page is generated from [`README.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/README.md). Changes made here are overwritten the next time the wiki is published.
 
+English | [Dansk](Capabilities.da) | [Bahasa Melayu](Capabilities.ms)
+
 ## Capabilities
 
 Only the first row is implemented. The rest is planned and tracked in the [Project Plan](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/docs/project-plan.md), which also describes each use case.

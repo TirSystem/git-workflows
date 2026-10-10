@@ -2,6 +2,8 @@
 
 > This page is generated from [`guides/credentials.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/credentials.md). Changes made here are overwritten the next time the wiki is published.
 
+English | [Dansk](Credentials.da) | [Bahasa Melayu](Credentials.ms)
+
 # Workflow credentials
 
 The sync workflow uses two secrets. Give each the least privilege that works,
