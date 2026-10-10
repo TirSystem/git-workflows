@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 060a822225e1 -->
+<!-- translation of Troubleshooting.md, source sha256 d34495c26923 -->
 
 > Ini ialah terjemahan [`Troubleshooting`](Troubleshooting). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -34,7 +34,8 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 | `TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN.` | configuration | Bentuk JSON memerlukan kunci `GITEA_TOKEN` |
 | `Could not determine the Gitea source repository.` | configuration | Larian tiada nama repositori; laporkan sebagai kecacatan |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Kekalkan satu push mirror GitHub |
-| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Penerbitan wiki sahaja: tambah secret (lihat [credentials.md](Credentials.ms)) |
+| `No token for the wiki: set TOKEN_FOR_GITEA_WIKI, or TOKEN_FOR_GITEA.` | configuration | Penerbitan wiki sahaja: tambah salah satu secret (lihat [credentials.md](Credentials.ms)) |
+| `... HTTP 403 ...` semasa menerbitkan wiki | permissions | Penerbitan wiki sahaja: token memerlukan `write:repository` dan akses tulis kepada repositori ini |
 | `The wiki is not enabled on <repo>` | configuration | Penerbitan wiki sahaja: aktifkan wiki dalam tetapan repositori |
 | `The wiki source directory ... has no Markdown pages` | configuration | Penerbitan wiki sahaja: `wiki/` kosong atau tiada; tiada apa-apa diubah |
 | `Could not determine the GitHub owner and repository ...` | configuration | Alamat cermin mesti kelihatan seperti `https://github.com/<owner>/<repo>.git` |

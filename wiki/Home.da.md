@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 362c897f1425 -->
+<!-- translation of Home.md, source sha256 75c6a7722bf7 -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -23,7 +23,7 @@ Det indeholder i øjeblikket Gitea-workflowet [`sync-github-metadata.yml`](https
 - Repository-secrets:
   - `TOKEN_FOR_GITEA`: Gitea API-token (almindelig tekststreng eller JSON med `GITEA_TOKEN`)
   - `CREDENTIALS_FOR_GITHUB`: JSON-objekt med `GITHUB_PAT`, et GitHub personal access token, der må redigere spejl-repositoryet
-  - `TOKEN_FOR_GITEA_WIKI` (kun i dette repository, til workflowet **Publish wiki**): Gitea-token, der kan skrive til repositoryets wiki
+  - `TOKEN_FOR_GITEA_WIKI` (valgfri, kun i dette repository, til workflowet **Publish wiki**): Gitea-token, der kan skrive til repositoryets wiki; hvis den mangler, bruges `TOKEN_FOR_GITEA`, som så skal have skriveadgang
 
 
 ## Opsætning

@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 060a822225e1 -->
+<!-- translation of Troubleshooting.md, source sha256 d34495c26923 -->
 
 > Dette er en oversættelse af [`Troubleshooting`](Troubleshooting). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -34,7 +34,8 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 | `TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN.` | configuration | JSON-formen kræver nøglen `GITEA_TOKEN` |
 | `Could not determine the Gitea source repository.` | configuration | Kørslen har intet repositorynavn; meld det som en defekt |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Behold ét GitHub push-spejl |
-| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Kun wiki-publicering: tilføj secreten (se [credentials.md](Credentials.da)) |
+| `No token for the wiki: set TOKEN_FOR_GITEA_WIKI, or TOKEN_FOR_GITEA.` | configuration | Kun wiki-publicering: tilføj en af secrets (se [credentials.md](Credentials.da)) |
+| `... HTTP 403 ...` ved publicering af wikien | permissions | Kun wiki-publicering: tokenet skal have `write:repository` og skriveadgang til dette repository |
 | `The wiki is not enabled on <repo>` | configuration | Kun wiki-publicering: aktivér wikien i repositoryets indstillinger |
 | `The wiki source directory ... has no Markdown pages` | configuration | Kun wiki-publicering: `wiki/` er tom eller mangler; intet blev ændret |
 | `Could not determine the GitHub owner and repository ...` | configuration | Spejlets adresse skal se ud som `https://github.com/<owner>/<repo>.git` |

@@ -27,5 +27,6 @@ jobs:
         env:
           GITEA_API_URL: ${{ gitea.api_url }}
           SOURCE_REPOSITORY: ${{ gitea.repository }}
-          WIKI_CREDENTIALS: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
+          # TOKEN_FOR_GITEA_WIKI wins when it exists; otherwise TOKEN_FOR_GITEA is reused.
+          WIKI_CREDENTIALS: ${{ secrets.TOKEN_FOR_GITEA_WIKI || secrets.TOKEN_FOR_GITEA }}
         run: python3 tools/publish_wiki.py

@@ -16,6 +16,7 @@ Exit codes: 0 published or nothing to do, 1 failed (message names a category).
 import base64
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -43,6 +44,7 @@ class WorkflowError(RuntimeError):
     def __init__(self, category: str, message: str) -> None:
         super().__init__(f"[{category}] {message}")
         self.category = category
+        self.detail = message
 
 
 def request_json(
@@ -85,7 +87,10 @@ def parse_gitea_token(raw_credentials: str | None) -> str:
     """Return the token from a bare value, a JSON string or JSON with GITEA_TOKEN."""
     raw_credentials = (raw_credentials or "").strip()
     if not raw_credentials:
-        raise WorkflowError("configuration", "TOKEN_FOR_GITEA_WIKI is missing or empty.")
+        raise WorkflowError(
+            "configuration",
+            "No token for the wiki: set TOKEN_FOR_GITEA_WIKI, or TOKEN_FOR_GITEA.",
+        )
 
     token: Any
     try:
@@ -102,9 +107,31 @@ def parse_gitea_token(raw_credentials: str | None) -> str:
 
     if not isinstance(token, str) or not token.strip():
         raise WorkflowError(
-            "configuration", "TOKEN_FOR_GITEA_WIKI must contain a non-empty GITEA_TOKEN."
+            "configuration", "The wiki token must contain a non-empty GITEA_TOKEN."
         )
     return token.strip()
+
+
+def describe_token(token: str) -> str:
+    """Describe the shape of a token without revealing any of its characters.
+
+    Used when Gitea rejects the token, so a wrongly stored secret (the masked
+    text, ``NAME=value``, quotes) can be recognised from the log.
+    """
+    facts = [f"{len(token)} characters"]
+    if re.fullmatch(r"[0-9a-f]{40}", token):
+        facts.append("looks like a Gitea token (40 hexadecimal characters)")
+        return ", ".join(facts)
+    facts.append("a Gitea token has 40 hexadecimal characters")
+    if set(token) <= {"*", "x", "X", "•"}:
+        facts.append("only mask characters: the masked text was stored")
+    if "=" in token:
+        facts.append("contains '=': the secret name may be part of the value")
+    if re.search(r"[\"'`]", token):
+        facts.append("contains a quote character")
+    if re.search(r"\s", token):
+        facts.append("contains whitespace")
+    return ", ".join(facts)
 
 
 def split_repository(full_name: str | None) -> tuple[str, str]:
@@ -215,15 +242,22 @@ def main() -> int:
         "Content-Type": "application/json",
     }
 
-    repository = request_json(repository_url, headers=headers)
-    if isinstance(repository, dict) and repository.get("has_wiki") is False:
-        raise WorkflowError(
-            "configuration",
-            f"The wiki is not enabled on {owner}/{repo}. Enable it in the repository settings.",
-        )
-    print("Preflight passed: Gitea accepted the token and the wiki is enabled.")
+    try:
+        repository = request_json(repository_url, headers=headers)
+        if isinstance(repository, dict) and repository.get("has_wiki") is False:
+            raise WorkflowError(
+                "configuration",
+                f"The wiki is not enabled on {owner}/{repo}. Enable it in the repository settings.",
+            )
+        print("Preflight passed: Gitea accepted the token and the wiki is enabled.")
 
-    result = publish(pages, f"{repository_url}/wiki", headers, request_json)
+        result = publish(pages, f"{repository_url}/wiki", headers, request_json)
+    except WorkflowError as error:
+        if error.category == "credentials":
+            raise WorkflowError(
+                "credentials", f"{error.detail} Token shape: {describe_token(token)}."
+            ) from None
+        raise
     print(
         f"Published {len(pages)} page(s) to the wiki of {owner}/{repo}: "
         f"{len(result['created'])} created, {len(result['updated'])} updated, "
