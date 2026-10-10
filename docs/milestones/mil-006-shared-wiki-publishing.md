@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [6b8e36d] |
 
 ---
 
@@ -74,3 +74,4 @@ repository other than this one that publishes its wiki through it.
 ---
 
 [BC-001]: ../business-case.md
+[6b8e36d]: https://git.tirsystem.com/TirSystem/github-action/commit/6b8e36d67ac9af165b180bc0045289e41cfd1fc3

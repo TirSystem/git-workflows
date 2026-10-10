@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-015): JSON removed from the credential failures, answered MIL-001 decisions removed from Open Issues | [b282e10] |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Added gateway MIL-006 (shared wiki publishing) | pending |
+| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Added gateway MIL-006 (shared wiki publishing) | [6b8e36d] |
 
 ---
 
@@ -256,3 +256,4 @@ no tests, no release process.
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [b282e10]: https://git.tirsystem.com/TirSystem/github-action/commit/b282e107416a890d6df27e6bdf23ab8a65e17123
+[6b8e36d]: https://git.tirsystem.com/TirSystem/github-action/commit/6b8e36d67ac9af165b180bc0045289e41cfd1fc3
