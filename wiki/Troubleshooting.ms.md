@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 12672b3dde45 -->
+<!-- translation of Troubleshooting.md, source sha256 e8a34cbe7e93 -->
 
 > Ini ialah terjemahan [`Troubleshooting`](Troubleshooting). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -30,7 +30,8 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 | `TOKEN_FOR_GITEA is missing or empty.` | configuration | Tambah secret |
 | `Could not determine the Gitea source repository.` | configuration | Larian tiada nama repositori; laporkan sebagai kecacatan |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Kekalkan satu push mirror GitHub |
-| `No token for the wiki: set TOKEN_FOR_GITEA_WIKI, or TOKEN_FOR_GITEA.` | configuration | Penerbitan wiki sahaja: tambah salah satu secret (lihat [credentials.md](Credentials.ms)) |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Penerbitan wiki sahaja: repositori telah memilih menyertainya dengan `wiki/.publish` tetapi organisasinya tiada secret itu; simpannya (lihat [credentials.md](Credentials.ms)) |
+| `wiki/.publish may only be empty or contain the word 'prune'.` | configuration | Penerbitan wiki sahaja: biarkan penanda kosong, atau letakkan hanya perkataan `prune` di dalamnya |
 | `... HTTP 403 ...` semasa menerbitkan wiki | permissions | Penerbitan wiki sahaja: token memerlukan `write:repository` dan akses tulis kepada repositori ini |
 | `The wiki is not enabled on <repo>` | configuration | Penerbitan wiki sahaja: aktifkan wiki dalam tetapan repositori |
 | `The wiki source directory ... has no Markdown pages` | configuration | Penerbitan wiki sahaja: `wiki/` kosong atau tiada; tiada apa-apa diubah |
@@ -49,6 +50,10 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 `No GitHub push mirror configured for <repo>; nothing to sync.` Larian berjaya. Tidak semua repositori Gitea mempunyai cermin GitHub, jadi ini dijangka bagi repositori tersebut. Jika repositori itu sepatutnya mempunyainya, tambahkannya dalam tetapan repositori.
 
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not synced.` Larian berjaya tetapi tiada apa-apa disegerakkan. Semak bahawa versi Gitea menyokong API push mirror dan jalankan semula.
+
+`No wiki/.publish marker in <owner>/<repo>; wiki publishing is not enabled for this repository.` Larian Publish wiki berjaya dan tidak menulis apa-apa. Repositori belum memilih menyertainya; tambah `wiki/.publish` jika ia sepatutnya menerbitkan.
+
+`<n> page(s) are in the wiki but not in wiki/ and were kept; put the word 'prune' in wiki/.publish to delete them.` Larian berjaya. Halaman yang hanya ada dalam wiki dibiarkan melainkan penanda mengandungi `prune`.
 
 ## Masalah runner
 

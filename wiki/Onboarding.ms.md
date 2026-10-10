@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 17cf1b4c28c6 -->
+<!-- translation of Onboarding.md, source sha256 1d431898754e -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -29,6 +29,18 @@ Penghantaran adalah automatik, jadi repositori tidak memerlukan salinan aliran k
 5. **Tetapkan penerangan dan topik** pada repositori Gitea, supaya ada sesuatu untuk disegerakkan.
 6. **Jalankan sekali secara manual:** Actions, **Sync GitHub mirror metadata**, Run workflow. Log mesti berakhir dengan `Synced description and topics to <owner>/<repo>.` dan repositori GitHub mesti menunjukkan penerangan dan topik yang sama.
 7. Jika gagal, gunakan [troubleshooting.md](Troubleshooting.ms).
+
+## Menerbitkan wiki (pilihan)
+
+Aliran kerja **Publish wiki** menyalin halaman Markdown dalam `wiki/` ke wiki repositori apabila perubahan pada `wiki/` digabungkan ke `main`. Ia dihantar seperti aliran kerja penyegerakan, tetapi hanya menulis di tempat repositori telah memilih untuk menyertainya.
+
+1. Aktifkan wiki dalam tetapan repositori.
+2. Tambah halaman Markdown ke `wiki/`. Nama fail ialah nama halaman: `Home.md` ialah halaman utama.
+3. Tambah penanda `wiki/.publish`. Biarkan kosong untuk mencipta dan mengemas kini halaman sahaja. Letakkan satu perkataan `prune` di dalamnya untuk turut memadam halaman wiki yang tiada dalam `wiki/`, supaya wiki sentiasa sama dengan folder itu.
+4. Simpan `TOKEN_FOR_GITEA_WIKI` sebagai secret organisasi repositori, dengan skop yang tertera dalam [credentials.md](Credentials.ms).
+5. Gabungkan perubahan ke `main`. Log mesti berakhir dengan `Published <n> page(s) to the wiki of <owner>/<repo>`.
+
+Repositori tanpa `wiki/.publish` dilangkau dengan baris `No wiki/.publish marker in <owner>/<repo>`: tiada apa-apa ditulis dan tiada secret diperlukan.
 
 ## Runners
 

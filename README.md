@@ -25,7 +25,7 @@ It currently contains the Gitea workflow [`sync-github-metadata.yml`](.gitea/sco
 - Repository secrets:
   - `TOKEN_FOR_GITEA`: Gitea API token (the token only, no JSON)
   - `PAT_FOR_GITHUB`: a GitHub personal access token allowed to edit the mirror repository (the token only, no JSON)
-  - `TOKEN_FOR_GITEA_WIKI` (optional, only in this repository, for the **Publish wiki** workflow): Gitea token that can write the repository wiki; when it is absent, `TOKEN_FOR_GITEA` is used and needs write access
+  - `TOKEN_FOR_GITEA_WIKI` (only for repositories that publish a wiki, see the [onboarding guide](guides/onboarding.md)): a Gitea token that can write the wiki, stored as a secret of the repository's organization; there is no fallback to `TOKEN_FOR_GITEA`
 
 ## 🛠️ Setup
 
@@ -59,13 +59,14 @@ After a change to the sync workflow, also trigger **Sync GitHub mirror metadata*
 
 ## 🟢 Capabilities
 
-Only the first row is implemented. The rest is planned and tracked in the [Project Plan](docs/project-plan.md), which also describes each use case.
+Rows that say Implemented or Guides written exist today. The rest is planned and tracked in the [Project Plan](docs/project-plan.md), which also describes each use case.
 
 | Capability | Status |
 | --- | --- |
 | Synchronize repository metadata (Gitea to GitHub mirror) | Implemented in `.gitea/scoped_workflows/`, with offline tests and a validation workflow |
 | Configure and validate workflow credentials | Implemented for the sync workflow: preflight checks both tokens before any change ([guide](guides/credentials.md)) |
 | Onboard a repository, manage runners, diagnose failures | Guides written ([onboarding](guides/onboarding.md), [troubleshooting](guides/troubleshooting.md)); scoped delivery to other repositories not yet verified; brief use cases open (MIL-002) |
+| Publish a repository wiki from `wiki/` (opt-in, delivered to every organization) | Implemented in `.gitea/scoped_workflows/publish-wiki.yml`, with offline tests; the pilot in a second repository is pending (MIL-006) |
 | Shared quality checks | Planned (MIL-003) |
 | Versioned release and publishing | Planned (MIL-004) |
 
