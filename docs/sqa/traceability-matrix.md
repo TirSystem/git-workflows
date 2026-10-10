@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [ADR-0001] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [ADR-0001], [ADR-0002], [ADR-0003] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-011 for the MIL-005 amendment | [20361e8] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0001 and RC-012 | [d0618d9] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added ADR-0001 and RC-012 | [d0618d9] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0002, ADR-0003 and RC-013, RC-014 | pending |
 
 ---
 
@@ -42,9 +42,13 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
 | [RC-010] | RC | [MIL-005] | - | - |
-| [ADR-0001] | ADR | [BC-001], [MIL-005] | - | [RC-012] |
+| [ADR-0001] | ADR | [BC-001], [MIL-005] | [ADR-0003] | [RC-012] |
+| [ADR-0002] | ADR | [SA-001], [RC-001] | - | [RC-013] |
+| [ADR-0003] | ADR | [MIL-005], [ADR-0001], [RC-011] | - | [RC-014] |
 | [RC-011] | RC | [MIL-005] | - | - |
 | [RC-012] | RC | [ADR-0001] | - | - |
+| [RC-013] | RC | [ADR-0002] | - | - |
+| [RC-014] | RC | [ADR-0003] | - | - |
 
 ## Coverage Notes
 
@@ -76,5 +80,8 @@ updated whenever an artifact instance is created or reviewed.
 [RC-011]: ./reviews/rc-011-mil-005-wiki-publishing.md
 [RC-012]: ./reviews/rc-012-adr-0001.md
 [ADR-0001]: ../adr/adr-0001-wiki-structure-and-languages.md
-[20361e8]: https://git.tirsystem.com/TirSystem/github-action/commit/20361e881ebd0dc52e1d1c358ceb792c41b76c60
+[ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
+[ADR-0003]: ../adr/adr-0003-wiki-publish-token.md
+[RC-013]: ./reviews/rc-013-adr-0002.md
+[RC-014]: ./reviews/rc-014-adr-0003.md
 [d0618d9]: https://git.tirsystem.com/TirSystem/github-action/commit/d0618d929f2ec274d30b10bb1be306e1f04c31ee
