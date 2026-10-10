@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | Initial version | [c017c06] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Independence action item closed | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Independence action item closed | [ba1c6be] |
 
 ---
 
@@ -47,3 +47,4 @@ Go — all eight criteria pass. S01 gave the Go in chat on 2026-10-10 for the re
 [BC-001]: ../../business-case.md
 [QC-BC-001]: ../../../framework/qc/qc-business-case.md
 [c017c06]: https://git.tirsystem.com/TirSystem/github-action/commit/c017c06789424305b31f19e48238ad14231e8113
+[ba1c6be]: https://git.tirsystem.com/TirSystem/github-action/commit/ba1c6bea7491884899d55a3f86364c6a7811649a

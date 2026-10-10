@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | Initial version | [aa3f088] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Review records RC-001 to RC-007 are Accepted | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Review records RC-001 to RC-007 are Accepted | [ba1c6be] |
 
 ---
 
@@ -63,3 +63,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-006]: ./reviews/rc-006-mil-003.md
 [RC-007]: ./reviews/rc-007-mil-004.md
 [aa3f088]: https://git.tirsystem.com/TirSystem/github-action/commit/aa3f08876d55fa5f008e93f65176a496601c00ca
+[ba1c6be]: https://git.tirsystem.com/TirSystem/github-action/commit/ba1c6bea7491884899d55a3f86364c6a7811649a
