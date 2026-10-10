@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [20361e8] |
 
 ---
 
@@ -44,3 +44,4 @@ Go - all six criteria pass for the amendment that records how the wiki is publis
 
 [MIL-005]: ../../milestones/mil-005-wiki-and-translations.md
 [QC-MIL-001]: ../../../framework/qc/qc-milestones-gateways.md
+[20361e8]: https://git.tirsystem.com/TirSystem/github-action/commit/20361e881ebd0dc52e1d1c358ceb792c41b76c60

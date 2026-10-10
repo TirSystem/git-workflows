@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-005 and RC-008 to RC-010 | [ae4e257] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-011 for the MIL-005 amendment | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-011 for the MIL-005 amendment | [20361e8] |
 
 ---
 
@@ -73,3 +73,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-010]: ./reviews/rc-010-mil-005.md
 [RC-011]: ./reviews/rc-011-mil-005-wiki-publishing.md
 [ae4e257]: https://git.tirsystem.com/TirSystem/github-action/commit/ae4e257236095e76132980fad1e9a661b1d082c7
+[20361e8]: https://git.tirsystem.com/TirSystem/github-action/commit/20361e881ebd0dc52e1d1c358ceb792c41b76c60
