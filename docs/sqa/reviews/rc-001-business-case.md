@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | Initial version | [c017c06] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Independence action item closed | [ba1c6be] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Independence action item closed | [ba1c6be] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S01 stood in for S05<br>Independence of the review is still open | pending |
 
 ---
 
@@ -34,17 +34,16 @@
 
 ## Overall Verdict
 
-Go — all eight criteria pass. S01 gave the Go in chat on 2026-10-10 for the revision that changes the mirror assumption to at most one GitHub push mirror. The author and the approving reviewer are the same person (S01); S05 completed the independent review on 2026-10-10 (reported by S01).
+Go — all eight criteria pass. S01 gave the Go in chat on 2026-10-10 for the revision that changes the mirror assumption to at most one GitHub push mirror. The author and the approving reviewer are the same person (S01); S01 stood in for S05 on 2026-10-10; this is not an independent review because the author and S01 are the same person.
 
 ## Action Items
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Independent review of this record and of BC-001 by a person other than the author (the rule that the reviewer must not be the author) | S05 | Done 2026-10-10 |
+| Independent review of this record and of BC-001 by a person other than the author (the rule that the reviewer must not be the author) | S05 | 2026-10-17 |
 
 ---
 
 [BC-001]: ../../business-case.md
 [QC-BC-001]: ../../../framework/qc/qc-business-case.md
-[c017c06]: https://git.tirsystem.com/TirSystem/github-action/commit/c017c06789424305b31f19e48238ad14231e8113
 [ba1c6be]: https://git.tirsystem.com/TirSystem/github-action/commit/ba1c6bea7491884899d55a3f86364c6a7811649a

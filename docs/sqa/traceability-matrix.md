@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | Initial version | [aa3f088] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Review records RC-001 to RC-007 are Accepted | [ba1c6be] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Review records RC-001 to RC-007 are Accepted | [ba1c6be] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S01 stood in for S05<br>Independence of the review is still open | pending |
 
 ---
 
@@ -44,7 +44,7 @@ updated whenever an artifact instance is created or reviewed.
 - `-` in Upstream means foundational (SA-001 has no prerequisite). In Downstream it means nothing is built on the instance yet. In Last Reviewed it means no `RC-*` exists (review records are not themselves reviewed).
 - Types with no instance yet: KPI, BMC, BPMN, UCD, US, UC, SSD, DM, OC, SD, DCD, ERD, ADR, GOV, DICT. The Project Plan lists use case candidates, but the formal use cases wait for a use case diagram and user stories.
 - PP-001 and TM-001 have no QC checklist; RC-002 validated PP-001 against its Business Case constraints and the milestone Go / No-Go criteria. TM-001 has no review record.
-- All review records are `Accepted` after the S05 review (reported by S01 on 2026-10-10); the author and S01 are the same person, so S05 is the independent reviewer.
+- All review records are `Accepted` after S01 stood in for S05 on 2026-10-10. The author and S01 are the same person, so an independent review by S05 is still open (see RC-001).
 
 ---
 
@@ -62,5 +62,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-005]: ./reviews/rc-005-mil-002.md
 [RC-006]: ./reviews/rc-006-mil-003.md
 [RC-007]: ./reviews/rc-007-mil-004.md
-[aa3f088]: https://git.tirsystem.com/TirSystem/github-action/commit/aa3f08876d55fa5f008e93f65176a496601c00ca
 [ba1c6be]: https://git.tirsystem.com/TirSystem/github-action/commit/ba1c6bea7491884899d55a3f86364c6a7811649a

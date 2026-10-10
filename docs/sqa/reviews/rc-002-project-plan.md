@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | Initial version | [c017c06] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | Initial version | [c017c06] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S01 stood in for S05<br>Independence of the review is still open | pending |
 
 ---
 
@@ -32,7 +33,7 @@
 
 ## Overall Verdict
 
-Go — S01 gave the Go in chat on 2026-10-10 for the revision to UC candidate 1. One stale entry in Open Issues does not affect the schedule or the changed use case; it is recorded as an action item. The author and the approving reviewer are the same person (S01); the independent S05 review is recorded in RC-001 and applies here too.
+Go — S01 gave the Go in chat on 2026-10-10 for the revision to UC candidate 1. One stale entry in Open Issues does not affect the schedule or the changed use case; it is recorded as an action item. The author and the approving reviewer are the same person (S01); the S05 stand-in review is recorded in RC-001 and applies here too; independence is still open.
 
 ## Action Items
 
