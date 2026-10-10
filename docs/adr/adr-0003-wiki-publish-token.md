@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [bc3bd07] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -68,3 +68,4 @@ write access to this repository only; the workflow falls back to
 [MIL-005]: ../milestones/mil-005-wiki-and-translations.md
 [ADR-0001]: ./adr-0001-wiki-structure-and-languages.md
 [RC-011]: ../sqa/reviews/rc-011-mil-005-wiki-publishing.md
+[bc3bd07]: https://git.tirsystem.com/TirSystem/github-action/commit/bc3bd07b29a0a3dcf45045b9baac64c36144c6d1

@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added ADR-0001 and RC-012 | [d0618d9] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0002, ADR-0003 and RC-013, RC-014 | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0002, ADR-0003 and RC-013, RC-014 | [bc3bd07] |
 
 ---
 
@@ -85,3 +85,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-013]: ./reviews/rc-013-adr-0002.md
 [RC-014]: ./reviews/rc-014-adr-0003.md
 [d0618d9]: https://git.tirsystem.com/TirSystem/github-action/commit/d0618d929f2ec274d30b10bb1be306e1f04c31ee
+[bc3bd07]: https://git.tirsystem.com/TirSystem/github-action/commit/bc3bd07b29a0a3dcf45045b9baac64c36144c6d1

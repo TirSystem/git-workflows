@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [bc3bd07] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -67,3 +67,4 @@ right; that person's review then replaces the stand-in for later changes.
 
 [SA-001]: ../stakeholder-analysis.md
 [RC-001]: ../sqa/reviews/rc-001-business-case.md
+[bc3bd07]: https://git.tirsystem.com/TirSystem/github-action/commit/bc3bd07b29a0a3dcf45045b9baac64c36144c6d1
