@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | A mirrored repository has at most one GitHub push mirror; repositories without one are skipped | [0c06789] |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Scope: wiki pages in English, Danish and Bahasa Malaysia | [08ef26a] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | A mirrored repository has at most one GitHub push mirror; repositories without one are skipped | [0c06789] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Scope: wiki pages in English, Danish and Bahasa Malaysia | [08ef26a] |
 
 ---
 
