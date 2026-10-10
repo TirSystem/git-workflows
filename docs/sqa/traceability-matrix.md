@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-017 for PP-001 | [676a262] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0004 and RC-018 | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0004 and RC-018 | [b22a2cd] |
 
 ---
 
@@ -97,3 +97,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-017]: ./reviews/rc-017-project-plan-mil-006.md
 [RC-018]: ./reviews/rc-018-adr-0004.md
 [676a262]: https://git.tirsystem.com/TirSystem/github-action/commit/676a26240563338307c0454c3bf15b960bdb58ca
+[b22a2cd]: https://git.tirsystem.com/TirSystem/github-action/commit/b22a2cd59235078656c4440b945b787f88fbd345
