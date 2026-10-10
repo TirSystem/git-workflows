@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | UCD-001 |
-| CrossReference | [SA-001], [BC-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005] |
+| CrossReference | [SA-001], [BC-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2bf2d4] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added the actor Software Engineer and the use case Run Project Quality Checks | [385d2fb] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the actor Software Engineer and the use case Run Project Quality Checks | [385d2fb] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added the use case Release a Reusable Workflow (UC-006) | [044d8ba] |
 
 ---
 
@@ -44,12 +44,14 @@ rectangle "Reusable Workflow Collection" <<System>> {
   usecase "Onboard a Repository" as UC3
   usecase "Diagnose a Failed Workflow" as UC4
   usecase "Run Project Quality Checks" as UC5
+  usecase "Release a Reusable Workflow" as UC6
 }
 
 DevOps --> UC1
 DevOps --> UC2
 DevOps --> UC3
 DevOps --> UC4
+DevOps --> UC6
 Operator --> UC2
 Operator --> UC4
 Engineer --> UC5
@@ -64,7 +66,7 @@ UC4 ..> UC1 : <<extend>>
 
 | Actor | Stereotype | Stakeholder ID (SA) | Goals (use cases) |
 | --- | --- | --- | --- |
-| DevOps Professional | `<<Actor>>` | S05 | Synchronize Repository Metadata, Configure Workflow Credentials, Onboard a Repository, Diagnose a Failed Workflow |
+| DevOps Professional | `<<Actor>>` | S05 | Synchronize Repository Metadata, Configure Workflow Credentials, Onboard a Repository, Diagnose a Failed Workflow, Release a Reusable Workflow |
 | Platform Operator | `<<Actor>>` | S03 | Configure Workflow Credentials, Diagnose a Failed Workflow |
 | Software Engineer | `<<Actor>>` | S02 | Run Project Quality Checks |
 | Gitea Instance | `<<System>>` | - | Synchronize Repository Metadata (source of description and topics) |
@@ -79,6 +81,7 @@ UC4 ..> UC1 : <<extend>>
 | Onboard a Repository | DevOps Professional | A repository consumes the shared workflows |
 | Diagnose a Failed Workflow | DevOps Professional, Platform Operator | The cause of a failed run is found and placed in a category |
 | Run Project Quality Checks | Software Engineer | Lint, format and type checks run on every change and report a pass or a fail |
+| Release a Reusable Workflow | DevOps Professional | A validated, versioned update that consumers can pin |
 
 ## Relationships
 
@@ -96,6 +99,7 @@ UC4 ..> UC1 : <<extend>>
 [UC-002]: ./uc-002/uc.md
 [UC-003]: ./uc-003/uc.md
 [UC-004]: ./uc-004/uc.md
-[a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
 [UC-005]: ./uc-005/uc.md
 [385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
+[UC-006]: ./uc-006/uc.md
+[044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051
