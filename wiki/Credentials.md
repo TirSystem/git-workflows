@@ -65,17 +65,19 @@ is ever printed.
 ## Wiki publishing secret
 
 The workflow **Publish wiki** (this repository only) copies `wiki/` to the Gitea
-wiki when a change to `wiki/` is merged to `main`. It uses its own secret so
-that the metadata sync tokens never get write access.
+wiki when a change to `wiki/` is merged to `main`. It uses `TOKEN_FOR_GITEA_WIKI`
+when that secret exists and otherwise reuses `TOKEN_FOR_GITEA`.
 
 | Secret | Content | Used for |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA_WIKI` | A bare token, a JSON string, or JSON with `GITEA_TOKEN` | Writing the wiki pages of this repository |
+| `TOKEN_FOR_GITEA_WIKI` (optional) | A bare token, a JSON string, or JSON with `GITEA_TOKEN` | Writing the wiki pages of this repository |
 
-- A Gitea personal access token with scope `write:repository`. Gitea has no
-  wiki-only scope, so create the token for a dedicated user that has write
-  access to this repository only. S05 approves the scope and S03 stores the
-  secret.
+- The token that is used needs scope `write:repository`, and its user needs
+  write access to this repository. Gitea has no wiki-only scope.
+- `TOKEN_FOR_GITEA` is documented above with `read:repository` only. Reusing it
+  for the wiki means raising its scope, which also gives the metadata sync
+  write access. A separate `TOKEN_FOR_GITEA_WIKI` for a dedicated user keeps
+  the sync token read-only. S05 decides which, and S03 stores the secret.
 - Calls made: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`,
   `GET`, `POST` and `PATCH /repos/{owner}/{repo}/wiki/...` and, for a page that
   no longer exists in `wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}`.

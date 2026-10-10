@@ -41,7 +41,7 @@ class TestParseGiteaToken:
         with pytest.raises(publish_wiki.WorkflowError) as caught:
             publish_wiki.parse_gitea_token(raw)
         assert caught.value.category == "configuration"
-        assert "TOKEN_FOR_GITEA_WIKI" in str(caught.value)
+        assert "TOKEN_FOR_GITEA" in str(caught.value) or "wiki token" in str(caught.value)
 
 
 class TestReadPages:
@@ -172,7 +172,7 @@ class TestMain:
         monkeypatch.setenv("WIKI_CREDENTIALS", "")
         gitea = FakeGitea()
 
-        with pytest.raises(publish_wiki.WorkflowError, match="TOKEN_FOR_GITEA_WIKI"):
+        with pytest.raises(publish_wiki.WorkflowError, match="No token for the wiki"):
             run_main(monkeypatch, gitea)
 
         assert gitea.calls == []
@@ -258,5 +258,7 @@ class TestWorkflow:
         assert text.count("secrets.TOKEN_FOR_GITEA_WIKI") == 1
         steps = document["jobs"]["publish-wiki"]["steps"]
         publish_step = steps[-1]
-        assert publish_step["env"]["WIKI_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_WIKI }}"
+        assert publish_step["env"]["WIKI_CREDENTIALS"] == (
+            "${{ secrets.TOKEN_FOR_GITEA_WIKI || secrets.TOKEN_FOR_GITEA }}"
+        )
         assert "secrets" not in publish_step["run"]

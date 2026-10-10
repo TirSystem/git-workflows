@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 59f87b6dca4b -->
+<!-- translation of Credentials.md, source sha256 57f66acfdc0a -->
 
 > Dette er en oversættelse af [`Credentials`](Credentials). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -52,13 +52,14 @@ Ved succes står der i loggen `Preflight passed: Gitea and GitHub accepted the c
 
 ## Secret til publicering af wiki
 
-Workflowet **Publish wiki** (kun dette repository) kopierer `wiki/` til Gitea-wikien, når en ændring af `wiki/` flettes til `main`. Det bruger sin egen secret, så synkroniseringstokens aldrig får skriveadgang.
+Workflowet **Publish wiki** (kun dette repository) kopierer `wiki/` til Gitea-wikien, når en ændring af `wiki/` flettes til `main`. Det bruger `TOKEN_FOR_GITEA_WIKI`, hvis den secret findes, og genbruger ellers `TOKEN_FOR_GITEA`.
 
 | Secret | Indhold | Bruges til |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA_WIKI` | Et almindeligt token, en JSON-streng eller JSON med `GITEA_TOKEN` | At skrive wikisiderne for dette repository |
+| `TOKEN_FOR_GITEA_WIKI` (valgfri) | Et almindeligt token, en JSON-streng eller JSON med `GITEA_TOKEN` | At skrive wikisiderne for dette repository |
 
-- Et Gitea personal access token med scope `write:repository`. Gitea har intet scope kun til wikien, så opret tokenet til en dedikeret bruger, der kun har skriveadgang til dette repository. S05 godkender scopet, og S03 gemmer secreten.
+- Det token, der bruges, skal have scope `write:repository`, og dets bruger skal have skriveadgang til dette repository. Gitea har intet scope kun til wikien.
+- `TOKEN_FOR_GITEA` er beskrevet ovenfor med kun `read:repository`. Hvis det genbruges til wikien, skal dets scope hæves, hvilket også giver metadatasynkroniseringen skriveadgang. En separat `TOKEN_FOR_GITEA_WIKI` til en dedikeret bruger holder synkroniseringstokenet skrivebeskyttet. S05 beslutter hvilket, og S03 gemmer secreten.
 - Kald, der foretages: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`, `GET`, `POST` og `PATCH /repos/{owner}/{repo}/wiki/...` og, for en side, der ikke længere findes i `wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}`.
 - Wikien skal være aktiveret i repositoryets indstillinger. Workflowet nægter at køre, hvis den ikke er det.
 - Wikien er altid lig med `wiki/`: sider, der er redigeret eller tilføjet i Gitea's weboverflade, overskrives eller fjernes ved næste publicering.

@@ -85,7 +85,10 @@ def parse_gitea_token(raw_credentials: str | None) -> str:
     """Return the token from a bare value, a JSON string or JSON with GITEA_TOKEN."""
     raw_credentials = (raw_credentials or "").strip()
     if not raw_credentials:
-        raise WorkflowError("configuration", "TOKEN_FOR_GITEA_WIKI is missing or empty.")
+        raise WorkflowError(
+            "configuration",
+            "No token for the wiki: set TOKEN_FOR_GITEA_WIKI, or TOKEN_FOR_GITEA.",
+        )
 
     token: Any
     try:
@@ -102,7 +105,7 @@ def parse_gitea_token(raw_credentials: str | None) -> str:
 
     if not isinstance(token, str) or not token.strip():
         raise WorkflowError(
-            "configuration", "TOKEN_FOR_GITEA_WIKI must contain a non-empty GITEA_TOKEN."
+            "configuration", "The wiki token must contain a non-empty GITEA_TOKEN."
         )
     return token.strip()
 

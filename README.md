@@ -25,7 +25,7 @@ It currently contains the Gitea workflow [`sync-github-metadata.yml`](.gitea/sco
 - Repository secrets:
   - `TOKEN_FOR_GITEA`: Gitea API token (plain string, or JSON with `GITEA_TOKEN`)
   - `CREDENTIALS_FOR_GITHUB`: JSON object containing `GITHUB_PAT`, a GitHub personal access token allowed to edit the mirror repository
-  - `TOKEN_FOR_GITEA_WIKI` (only in this repository, for the **Publish wiki** workflow): Gitea token that can write the repository wiki
+  - `TOKEN_FOR_GITEA_WIKI` (optional, only in this repository, for the **Publish wiki** workflow): Gitea token that can write the repository wiki; when it is absent, `TOKEN_FOR_GITEA` is used and needs write access
 
 ## 🛠️ Setup
 
