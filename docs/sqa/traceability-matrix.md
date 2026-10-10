@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added UC-005, ADR-0005 and RC-035 to RC-038 | [385d2fb] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-039 for MIL-003 | [3b8681d] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-039 for MIL-003 | [3b8681d] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added UC-006, ADR-0006 and RC-040 to RC-043 | pending |
 
 ---
 
@@ -55,14 +55,16 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-016] | RC | [MIL-006] | - | - |
 | [RC-017] | RC | [PP-001] | - | - |
 | [RC-018] | RC | [ADR-0004] | - | - |
-| [UCD-001] | UCD | [SA-001], [BC-001] | [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005] | [RC-019], [RC-035] |
-| [US-001] | US | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003] | [UC-001], [UC-002], [UC-003], [UC-004], [UC-005] | [RC-020], [RC-036] |
+| [UCD-001] | UCD | [SA-001], [BC-001] | [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006] | [RC-019], [RC-035], [RC-040] |
+| [US-001] | US | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004] | [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006] | [RC-020], [RC-036], [RC-041] |
 | [UC-001] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-021] |
 | [UC-002] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-022] |
 | [UC-003] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-023] |
 | [UC-004] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-024] |
 | [UC-005] | UC | [UCD-001], [US-001], [SA-001] | [ADR-0005] | [RC-037] |
 | [ADR-0005] | ADR | [MIL-003], [UC-005], [US-001], [ADR-0004] | - | [RC-038] |
+| [UC-006] | UC | [UCD-001], [US-001], [SA-001] | [ADR-0006] | [RC-042] |
+| [ADR-0006] | ADR | [MIL-004], [UC-006], [US-001], [ADR-0004], [ADR-0005] | - | [RC-043] |
 | [RC-019] | RC | [UCD-001] | - | - |
 | [RC-020] | RC | [US-001] | - | - |
 | [RC-021] | RC | [UC-001] | - | - |
@@ -84,6 +86,10 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-037] | RC | [UC-005] | - | - |
 | [RC-038] | RC | [ADR-0005] | - | - |
 | [RC-039] | RC | [MIL-003] | - | - |
+| [RC-040] | RC | [UCD-001] | - | - |
+| [RC-041] | RC | [US-001] | - | - |
+| [RC-042] | RC | [UC-006] | - | - |
+| [RC-043] | RC | [ADR-0006] | - | - |
 
 ## Coverage Notes
 
@@ -152,7 +158,12 @@ updated whenever an artifact instance is created or reviewed.
 [RC-037]: ./reviews/rc-037-uc-005.md
 [RC-038]: ./reviews/rc-038-adr-0005.md
 [RC-039]: ./reviews/rc-039-mil-003-adoption.md
+[RC-040]: ./reviews/rc-040-ucd-001-release.md
+[RC-041]: ./reviews/rc-041-us-001-release.md
+[RC-042]: ./reviews/rc-042-uc-006.md
+[RC-043]: ./reviews/rc-043-adr-0006.md
+[UC-006]: ../uc-006/uc.md
+[ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
-[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
 [3b8681d]: https://git.tirsystem.com/TirSystem/github-action/commit/3b8681d0236c669b794ffbba725433fff600a2d2

@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | US-001 |
-| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005] |
+| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2bf2d4] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.09 and US-001.10 (quality checks, UC-005) | [385d2fb] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.09 and US-001.10 (quality checks, UC-005) | [385d2fb] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.11 to US-001.13 (releases, UC-006); US-001.13 traced to the epic (RC-041) | pending |
 
 ---
 
@@ -19,7 +19,7 @@
 These stories cover the P1 use cases of the Project Plan that MIL-002 delivers
 (O1 to O3 of [BC-001]): keeping the mirror metadata correct, configuring
 credentials, onboarding a repository and diagnosing a failed run. Roles are the
-actors of [UCD-001]. Stories for quality checks and releases (MIL-004) and for the wiki (MIL-005, MIL-006) are not written yet.
+actors of [UCD-001]. Stories for quality checks and releases (the consumer's update, MIL-004) and for the wiki (MIL-005, MIL-006) are not written yet.
 
 ## Story List
 
@@ -153,9 +153,48 @@ actors of [UCD-001]. Stories for quality checks and releases (MIL-004) and for t
 | --- | --- | --- |
 | [UC-005], [MIL-003] | fits one iteration | none |
 
+### US-001.11 — Only validated commits are released
+
+**As a** DevOps Professional, **I want** a release to be created only from a commit whose validation run is green, **so that** consumers never receive an unchecked version.
+
+**Acceptance Criteria**
+
+- Given a commit whose validation run failed, when a release is attempted, then no version tag is created.
+- Given a green commit and a changelog entry for the version, when the release is created, then the version tag, the major tag and the release page exist.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-006], [MIL-004] | fits one iteration | none |
+
+### US-001.12 — A release says whether it is breaking
+
+**As a** DevOps Professional, **I want** every release to say whether it is breaking, **so that** consumers know whether they must act.
+
+**Acceptance Criteria**
+
+- Given a change that renames a workflow, an input or a secret, or can turn a passing consumer red, when it is released, then the changelog marks it as breaking and a new major version is created.
+- Given a compatible change, when it is released, then the major tag moves to it and consumers pinned to that major version receive it.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-006], [MIL-004] | fits one iteration | none |
+
+### US-001.13 — A pin that does not move
+
+**As a** Software Engineer, **I want** to pin the shared workflows to a version that does not change under me, **so that** a release cannot break my pipeline by surprise.
+
+**Acceptance Criteria**
+
+- Given a repository that calls a shared workflow at an exact version tag, when a new release is made, then its runs use the same code as before.
+- Given a repository that calls a shared workflow at a major tag, when a compatible release is made, then it receives the release and a breaking release is not delivered to it.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [MIL-004] (epic; its use case, Consume a Workflow Update, is not written yet) | fits one iteration | none |
+
 ## INVEST Check
 
-All ten stories are independent of each other except that US-001.05 and
+All thirteen stories are independent of each other except that US-001.05 and
 US-001.06 build on US-001.04 (the secrets must exist before a repository can
 run the workflow). Each states one goal and can be negotiated, delivers value
 to the named role, is small enough for one iteration, and has acceptance
@@ -170,10 +209,11 @@ behaviour is tested rather than built.
 [MIL-001]: ./milestones/mil-001-stabilise-metadata-sync.md
 [MIL-002]: ./milestones/mil-002-onboarding-and-operations.md
 [MIL-003]: ./milestones/mil-003-quality-checks.md
+[MIL-004]: ./milestones/mil-004-versioned-release.md
 [UC-001]: ./uc-001/uc.md
 [UC-002]: ./uc-002/uc.md
 [UC-003]: ./uc-003/uc.md
 [UC-004]: ./uc-004/uc.md
-[a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
 [UC-005]: ./uc-005/uc.md
 [385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
+[UC-006]: ./uc-006/uc.md
