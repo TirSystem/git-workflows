@@ -11,7 +11,8 @@ each document lives in *this* project and the next version to use.
 | SA | Stakeholder Analysis | docs/stakeholder-analysis.md | 002 |
 | PP | Project Plan | docs/project-plan.md | 002 |
 | MIL | Milestone / Gateway | docs/milestones/*.md | 005 |
-| RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 001 |
+| RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 008 |
+| TM | Traceability Matrix | docs/sqa/traceability-matrix.md | 002 |
 
 ## Languages
 
