@@ -4,12 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | US-001 |
-| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [UC-001], [UC-002], [UC-003], [UC-004] |
+| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [a2bf2d4] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2bf2d4] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.09 and US-001.10 (quality checks, UC-005) | [385d2fb] |
 
 ---
 
@@ -18,8 +19,7 @@
 These stories cover the P1 use cases of the Project Plan that MIL-002 delivers
 (O1 to O3 of [BC-001]): keeping the mirror metadata correct, configuring
 credentials, onboarding a repository and diagnosing a failed run. Roles are the
-actors of [UCD-001]. Stories for quality checks and releases (MIL-003,
-MIL-004) and for the wiki (MIL-005, MIL-006) are not written yet.
+actors of [UCD-001]. Stories for quality checks and releases (MIL-004) and for the wiki (MIL-005, MIL-006) are not written yet.
 
 ## Story List
 
@@ -127,9 +127,35 @@ MIL-004) and for the wiki (MIL-005, MIL-006) are not written yet.
 | --- | --- | --- |
 | [UC-004], [MIL-002] | fits one iteration | none |
 
+### US-001.09 — Same checks on every change
+
+**As a** Software Engineer, **I want** every pull request to run the same quality checks for the languages of my repository, **so that** a defect is found before review without me writing a pipeline.
+
+**Acceptance Criteria**
+
+- Given a repository that calls the shared workflow and has Python files, when a pull request is opened, then lint, format and type checks run and the status is pass or fail.
+- Given a repository that has shell scripts, when a pull request is opened, then lint and format checks run for them and the status is pass or fail.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-005], [MIL-003] | fits one iteration | none |
+
+### US-001.10 — A failure says what to fix
+
+**As a** Software Engineer, **I want** a failed check to show the tool, the file, the line and the message, **so that** I can fix it without reading the workflow.
+
+**Acceptance Criteria**
+
+- Given a file with a finding, when the check runs, then the job fails and the log shows the tool name with `path:line` and the tool's message.
+- Given a language that has no files in the repository, when the check runs, then it passes and the log says that nothing was checked.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-005], [MIL-003] | fits one iteration | none |
+
 ## INVEST Check
 
-All eight stories are independent of each other except that US-001.05 and
+All ten stories are independent of each other except that US-001.05 and
 US-001.06 build on US-001.04 (the secrets must exist before a repository can
 run the workflow). Each states one goal and can be negotiated, delivers value
 to the named role, is small enough for one iteration, and has acceptance
@@ -143,8 +169,11 @@ behaviour is tested rather than built.
 [BC-001]: ./business-case.md
 [MIL-001]: ./milestones/mil-001-stabilise-metadata-sync.md
 [MIL-002]: ./milestones/mil-002-onboarding-and-operations.md
+[MIL-003]: ./milestones/mil-003-quality-checks.md
 [UC-001]: ./uc-001/uc.md
 [UC-002]: ./uc-002/uc.md
 [UC-003]: ./uc-003/uc.md
 [UC-004]: ./uc-004/uc.md
 [a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
+[UC-005]: ./uc-005/uc.md
+[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7

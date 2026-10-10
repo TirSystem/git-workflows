@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-033 for MIL-003 | [b3f006f] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-034 for MIL-004 | [616c5d2] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-034 for MIL-004 | [616c5d2] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added UC-005, ADR-0005 and RC-035 to RC-038 | [385d2fb] |
 
 ---
 
@@ -55,12 +55,14 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-016] | RC | [MIL-006] | - | - |
 | [RC-017] | RC | [PP-001] | - | - |
 | [RC-018] | RC | [ADR-0004] | - | - |
-| [UCD-001] | UCD | [SA-001], [BC-001] | [US-001], [UC-001], [UC-002], [UC-003], [UC-004] | [RC-019] |
-| [US-001] | US | [UCD-001], [BC-001], [MIL-001], [MIL-002] | [UC-001], [UC-002], [UC-003], [UC-004] | [RC-020] |
+| [UCD-001] | UCD | [SA-001], [BC-001] | [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005] | [RC-019], [RC-035] |
+| [US-001] | US | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003] | [UC-001], [UC-002], [UC-003], [UC-004], [UC-005] | [RC-020], [RC-036] |
 | [UC-001] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-021] |
 | [UC-002] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-022] |
 | [UC-003] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-023] |
 | [UC-004] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-024] |
+| [UC-005] | UC | [UCD-001], [US-001], [SA-001] | [ADR-0005] | [RC-037] |
+| [ADR-0005] | ADR | [MIL-003], [UC-005], [US-001], [ADR-0004] | - | [RC-038] |
 | [RC-019] | RC | [UCD-001] | - | - |
 | [RC-020] | RC | [US-001] | - | - |
 | [RC-021] | RC | [UC-001] | - | - |
@@ -77,6 +79,10 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-032] | RC | [PP-001] | - | - |
 | [RC-033] | RC | [MIL-003] | - | - |
 | [RC-034] | RC | [MIL-004] | - | - |
+| [RC-035] | RC | [UCD-001] | - | - |
+| [RC-036] | RC | [US-001] | - | - |
+| [RC-037] | RC | [UC-005] | - | - |
+| [RC-038] | RC | [ADR-0005] | - | - |
 
 ## Coverage Notes
 
@@ -140,5 +146,11 @@ updated whenever an artifact instance is created or reviewed.
 [RC-032]: ./reviews/rc-032-pp-001-dates.md
 [RC-033]: ./reviews/rc-033-mil-003-reusable-workflows.md
 [RC-034]: ./reviews/rc-034-mil-004-scripts.md
-[b3f006f]: https://git.tirsystem.com/TirSystem/github-action/commit/b3f006f7a482392189a46c324ad4f28c4c3a2d2a
+[RC-035]: ./reviews/rc-035-ucd-001.md
+[RC-036]: ./reviews/rc-036-us-001.md
+[RC-037]: ./reviews/rc-037-uc-005.md
+[RC-038]: ./reviews/rc-038-adr-0005.md
+[UC-005]: ../uc-005/uc.md
+[ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [616c5d2]: https://git.tirsystem.com/TirSystem/github-action/commit/616c5d2e48f0d76399a6f78923891fc7f50c8e22
+[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
