@@ -14,6 +14,7 @@ WORKFLOW_DIRS = (
 SYNC_WORKFLOW = WORKFLOW_DIRS[0] / "sync-github-metadata.yml"
 SYNC_SCRIPT = REPO_ROOT / "tools" / "sync_github_metadata.py"
 PUBLISH_WORKFLOW = WORKFLOW_DIRS[0] / "publish-wiki.yml"
+PUBLISH_SCRIPT = REPO_ROOT / "tools" / "publish_wiki.py"
 
 _HEREDOC = re.compile(
     r"^[ \t]*python3 - <<'PY'\r?\n(?P<code>.*?)^[ \t]*PY[ \t]*\r?$",
@@ -77,26 +78,6 @@ def load_sync_module(name: str = "sync_github_metadata") -> ModuleView:
     return load_script(SYNC_SCRIPT, name)
 
 
-class ScriptNamespace(dict):
-    """The globals of an embedded script, readable and writable as attributes.
-
-    Functions of the script look names up in this dict, so a test that sets
-    `namespace.request_json = fake` changes what the script calls.
-    """
-
-    def __getattr__(self, name: str) -> Any:
-        try:
-            return self[name]
-        except KeyError:
-            raise AttributeError(name) from None
-
-    def __setattr__(self, name: str, value: Any) -> None:
-        self[name] = value
-
-
-def load_publish_module(name: str = "embedded_publish") -> ScriptNamespace:
-    """Execute the embedded publish script without running `main`."""
-    (source,) = embedded_python(PUBLISH_WORKFLOW)
-    namespace = ScriptNamespace({"__name__": name})
-    exec(compile(source, str(PUBLISH_WORKFLOW), "exec"), namespace)
-    return namespace
+def load_publish_module(name: str = "publish_wiki") -> ModuleView:
+    """Import tools/publish_wiki.py."""
+    return load_script(PUBLISH_SCRIPT, name)

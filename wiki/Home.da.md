@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 758940401ac1 -->
+<!-- translation of Home.md, source sha256 eedaeddbea3e -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -45,7 +45,7 @@ Workflows kører automatisk ved push til `main` og efter den daglige tidsplan. F
 
 ## Tests
 
-Workflow-filerne og den Python-kode, der er indlejret i dem, valideres af offline-tests, som hverken kræver netværksadgang eller secrets:
+Workflow-filerne og scripts i `tools/` valideres af offline-tests, som hverken kræver netværksadgang eller secrets:
 
 ```bash
 python3 -m venv .venv
@@ -54,6 +54,6 @@ python -m pip install -r tests/requirements.txt
 python -m pytest -q tests
 ```
 
-De samme kontroller kører ved hver pull request og hvert push til `main` gennem [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml). De parser alle workflows som YAML, kompilerer den indlejrede Python-kode, kræver eksplicitte jobtilladelser og tester parsing af credentials, parsing af push-spejlets adresse og synkroniseringsforløbet mod et falsk API.
+De samme kontroller kører ved hver pull request og hvert push til `main` gennem [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml). De parser alle workflows som YAML, kontrollerer at ingen indlejrer Python, kompilerer scripts i `tools/`, kræver eksplicitte jobtilladelser og tester parsing af credentials, parsing af push-spejlets adresse og synkroniserings- og publiceringsforløbene mod et falsk API.
 
 Efter en ændring af synkroniseringsworkflowet skal du også starte **Sync GitHub mirror metadata** manuelt i Gitea og sammenligne beskrivelsen og emnerne på GitHub-spejlet.

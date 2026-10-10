@@ -1,4 +1,4 @@
-"""Offline tests for the scoped publish-wiki workflow and its embedded script."""
+"""Offline tests for tools/publish_wiki.py and the scoped publish-wiki workflow."""
 
 import base64
 import io
@@ -461,11 +461,18 @@ class TestWorkflow:
         assert publish_step["env"]["WIKI_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_WIKI }}"
         assert "secrets" not in publish_step["run"]
 
-    def test_the_workflow_has_one_source_and_needs_nothing_from_tools(self):
+    def test_the_workflow_has_one_source_and_runs_the_script_file(self, document):
         assert not (REPO_ROOT / ".gitea" / "workflows" / "publish-wiki.yml").exists()
-        assert not (REPO_ROOT / "tools" / "publish_wiki.py").exists()
-        script = PUBLISH_WORKFLOW.read_text(encoding="utf-8").split("python3 - <<'PY'", 1)[1]
-        assert "tools/" not in script
+        assert (REPO_ROOT / "tools" / "publish_wiki.py").is_file()
+        steps = document["jobs"]["publish-wiki"]["steps"]
+        assert "python3 - <<" not in PUBLISH_WORKFLOW.read_text(encoding="utf-8")
+        assert steps[0]["uses"].startswith("actions/checkout@")
+        assert steps[1]["with"] == {
+            "repository": "TirSystem/github-action",
+            "ref": "main",
+            "path": "shared-scripts",
+        }
+        assert steps[-1]["run"] == "python3 shared-scripts/tools/publish_wiki.py"
 
 
 def test_this_repository_opts_in_and_prunes():
