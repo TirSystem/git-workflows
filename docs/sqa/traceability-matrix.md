@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [ADR-0001], [ADR-0002], [ADR-0003] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [ADR-0001], [ADR-0002], [ADR-0003] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added ADR-0002, ADR-0003 and RC-013, RC-014 | [bc3bd07] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-015 for PP-001 | [b282e10] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-006 and RC-016 | [676a262] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-017 for PP-001 | [676a262] |
 
 ---
 
@@ -25,8 +25,8 @@ updated whenever an artifact instance is created or reviewed.
 | Artifact Instance | Type | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- |
 | [SA-001] | SA | - | [BC-001] | [RC-004] |
-| [BC-001] | BC | [SA-001] | [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005] | [RC-001], [RC-008] |
-| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005] | [RC-002], [RC-009], [RC-015] |
+| [BC-001] | BC | [SA-001] | [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] | [RC-001], [RC-008] |
+| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] | [RC-002], [RC-009], [RC-015], [RC-017] |
 | [MIL-001] | MIL | [BC-001], [PP-001] | [MIL-002] | [RC-003] |
 | [MIL-002] | MIL | [BC-001], [PP-001], [MIL-001] | [MIL-003], [MIL-005] | [RC-005] |
 | [MIL-003] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-004] | [RC-006] |
@@ -37,7 +37,8 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-004] | RC | [SA-001] | - | - |
 | [RC-005] | RC | [MIL-002] | - | - |
 | [RC-006] | RC | [MIL-003] | - | - |
-| [MIL-005] | MIL | [BC-001], [PP-001], [MIL-002] | - | [RC-010], [RC-011] |
+| [MIL-005] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-006] | [RC-010], [RC-011] |
+| [MIL-006] | MIL | [BC-001], [PP-001], [MIL-002], [MIL-005] | - | [RC-016] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
@@ -50,6 +51,8 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-013] | RC | [ADR-0002] | - | - |
 | [RC-014] | RC | [ADR-0003] | - | - |
 | [RC-015] | RC | [PP-001] | - | - |
+| [RC-016] | RC | [MIL-006] | - | - |
+| [RC-017] | RC | [PP-001] | - | - |
 
 ## Coverage Notes
 
@@ -68,6 +71,7 @@ updated whenever an artifact instance is created or reviewed.
 [MIL-003]: ../milestones/mil-003-quality-checks.md
 [MIL-004]: ../milestones/mil-004-versioned-release.md
 [MIL-005]: ../milestones/mil-005-wiki-and-translations.md
+[MIL-006]: ../milestones/mil-006-shared-wiki-publishing.md
 [RC-001]: ./reviews/rc-001-business-case.md
 [RC-002]: ./reviews/rc-002-project-plan.md
 [RC-003]: ./reviews/rc-003-mil-001.md
@@ -86,5 +90,6 @@ updated whenever an artifact instance is created or reviewed.
 [RC-013]: ./reviews/rc-013-adr-0002.md
 [RC-014]: ./reviews/rc-014-adr-0003.md
 [RC-015]: ./reviews/rc-015-project-plan-pat.md
-[bc3bd07]: https://git.tirsystem.com/TirSystem/github-action/commit/bc3bd07b29a0a3dcf45045b9baac64c36144c6d1
-[b282e10]: https://git.tirsystem.com/TirSystem/github-action/commit/b282e107416a890d6df27e6bdf23ab8a65e17123
+[RC-016]: ./reviews/rc-016-mil-006.md
+[RC-017]: ./reviews/rc-017-project-plan-mil-006.md
+[676a262]: https://git.tirsystem.com/TirSystem/github-action/commit/676a26240563338307c0454c3bf15b960bdb58ca

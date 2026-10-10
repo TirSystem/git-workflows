@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [6b8e36d] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [6b8e36d] |
 
 ---
 
