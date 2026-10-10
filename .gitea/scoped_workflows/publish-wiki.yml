@@ -142,9 +142,27 @@ jobs:
               return owner, repo
 
 
+          def page_key(title):
+              """Return the identity of a page: Gitea stores a space as a hyphen.
+
+              The page "Home da" is the file Home-da.md and its address is Home-da, so
+              both spellings must name the same page.
+              """
+              return str(title).replace(" ", "-")
+
+
           def read_pages(wiki_dir):
-              """Return {page title: content} for every Markdown file in wiki_dir."""
-              pages = {path.stem: path.read_bytes() for path in sorted(wiki_dir.glob("*.md"))}
+              """Return {page key: content} for every Markdown file in wiki_dir."""
+              pages = {}
+              for path in sorted(wiki_dir.glob("*.md")):
+                  key = page_key(path.stem)
+                  if key in pages:
+                      raise WorkflowError(
+                          "configuration",
+                          f"Two files in {wiki_dir} name the wiki page {key}; a space and "
+                          "a hyphen are the same in a page name.",
+                      )
+                  pages[key] = path.read_bytes()
               if not pages:
                   # Publishing an empty directory would delete the whole wiki.
                   raise WorkflowError(
@@ -154,7 +172,10 @@ jobs:
 
 
           def list_wiki_titles(wiki_url, headers, send):
-              """Return the titles of the pages that exist in the wiki.
+              """Return the keys of the pages that exist in the wiki.
+
+              The key is the address Gitea reports (sub_url), or the title with its
+              spaces replaced by hyphens.
 
               Gitea answers 404 for a wiki that has never been written to; that is an
               empty wiki, not a failure.
@@ -171,7 +192,11 @@ jobs:
                       raise
                   if not isinstance(batch, list):
                       raise WorkflowError("api", "Gitea returned an invalid wiki page list.")
-                  titles.update(str(item.get("title", "")) for item in batch)
+                  titles.update(
+                      urllib.parse.unquote(str(item.get("sub_url") or ""))
+                      or page_key(item.get("title", ""))
+                      for item in batch
+                  )
                   if len(batch) < PAGE_LIMIT:
                       return titles
                   page += 1

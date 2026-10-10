@@ -67,6 +67,27 @@ class TestReadPages:
             publish_wiki.read_pages(tmp_path)
 
 
+class TestPageKey:
+    @pytest.mark.parametrize(
+        ("name", "key"),
+        [("Home", "Home"), ("Home da", "Home-da"), ("Home-da", "Home-da"), ("Home.da", "Home.da"),
+         ("AI Prompt Template ms", "AI-Prompt-Template-ms"), ("_Sidebar", "_Sidebar")],
+    )
+    def test_a_space_and_a_hyphen_are_the_same_page(self, publish_wiki, name, key):
+        assert publish_wiki.page_key(name) == key
+
+    def test_file_names_with_spaces_and_hyphens_are_keyed_the_same(self, publish_wiki, tmp_path):
+        (tmp_path / "Home da.md").write_bytes(b"hjem")
+        (tmp_path / "_Sidebar.md").write_bytes(b"menu")
+        assert publish_wiki.read_pages(tmp_path) == {"Home-da": b"hjem", "_Sidebar": b"menu"}
+
+    def test_two_files_for_one_page_are_refused(self, publish_wiki, tmp_path):
+        (tmp_path / "Home da.md").write_bytes(b"one")
+        (tmp_path / "Home-da.md").write_bytes(b"two")
+        with pytest.raises(publish_wiki.WorkflowError, match="name the wiki page Home-da"):
+            publish_wiki.read_pages(tmp_path)
+
+
 class FakeGitea:
     """Answers like the Gitea repository and wiki endpoints."""
 
@@ -84,7 +105,7 @@ class FakeGitea:
         if url.startswith(f"{WIKI_URL}/pages"):
             if not self.wiki_initialised:
                 raise self.error("configuration", "404")
-            return [{"title": title} for title in self.wiki]
+            return [{"title": key.replace("-", " "), "sub_url": key} for key in self.wiki]
         if method == "POST" and url == f"{WIKI_URL}/new":
             self.wiki[body["title"]] = body["content_base64"]
             return None
@@ -263,6 +284,64 @@ class TestPublish:
 
         assert gitea.calls == []
         assert gitea.wiki == {"Home": b64("keep me")}
+
+
+class TestPageIdentity:
+    """A wiki that already has pages named with spaces, as Gitea stores them."""
+
+    def test_a_file_named_with_a_space_updates_the_existing_page(
+        self, publish_wiki, environment
+    ):
+        (environment / "Home.md").unlink()
+        (environment / "Credentials.md").unlink()
+        (environment / ".publish").write_text("", encoding="utf-8")
+        (environment / "Home da.md").write_text("hjem v2", encoding="utf-8")
+        gitea = FakeGitea(publish_wiki, wiki={"Home-da": b64("hjem v1")})
+
+        assert run_main(publish_wiki, gitea) == 0
+
+        assert gitea.wiki == {"Home-da": b64("hjem v2")}
+        assert [call[0] for call in gitea.calls].count("POST") == 0
+        assert ("PATCH", f"{WIKI_URL}/page/Home-da") in [(c[0], c[1]) for c in gitea.calls]
+
+    def test_identical_pages_with_spaces_are_a_no_op(self, publish_wiki, environment):
+        (environment / "Home.md").unlink()
+        (environment / "Credentials.md").unlink()
+        (environment / "Home da.md").write_text("hjem", encoding="utf-8")
+        (environment / "_Sidebar.md").write_text("menu", encoding="utf-8")
+        gitea = FakeGitea(
+            publish_wiki, wiki={"Home-da": b64("hjem"), "_Sidebar": b64("menu")}
+        )
+
+        assert run_main(publish_wiki, gitea) == 0
+
+        assert gitea.writes == []
+
+    def test_prune_does_not_delete_a_page_that_is_in_the_folder_under_another_spelling(
+        self, publish_wiki, environment
+    ):
+        (environment / "Home.md").unlink()
+        (environment / "Credentials.md").unlink()
+        (environment / "Install ms.md").write_text("pasang", encoding="utf-8")
+        gitea = FakeGitea(
+            publish_wiki, wiki={"Install-ms": b64("pasang"), "Old-page": b64("x")}
+        )
+
+        assert run_main(publish_wiki, gitea) == 0
+
+        assert gitea.wiki == {"Install-ms": b64("pasang")}
+
+    def test_the_address_wins_over_the_title_and_is_decoded(self, publish_wiki):
+        def listing(url, headers=None, **kwargs):
+            return [
+                {"title": "Whatever", "sub_url": "Real-Address"},
+                {"title": "Only title"},
+                {"title": "Encoded", "sub_url": "Caf%C3%A9"},
+            ]
+
+        keys = publish_wiki.list_wiki_titles(WIKI_URL, {}, listing)
+
+        assert keys == {"Real-Address", "Only-title", "Café"}
 
 
 class TestDescribeToken:
