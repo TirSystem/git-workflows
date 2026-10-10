@@ -96,7 +96,7 @@ def _write_sources(root: Path) -> None:
         "### 🔄 Sync\nDetails.\n\n## 📄 License\nMIT.\n",
         encoding="utf-8",
     )
-    for name in ("onboarding", "credentials", "troubleshooting"):
+    for name in ("onboarding", "credentials", "troubleshooting", "quality-checks"):
         (root / "guides" / f"{name}.md").write_text(
             f"# {name.title()}\nBody.\n", encoding="utf-8"
         )

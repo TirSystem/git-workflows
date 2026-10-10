@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 737481cd7e09 -->
+<!-- translation of Capabilities.md, source sha256 c55376110b0c -->
 
 > Ini ialah terjemahan [`Capabilities`](Capabilities). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -14,7 +14,7 @@ Baris yang menyatakan Dilaksanakan atau Panduan telah ditulis wujud hari ini. Se
 | Mengkonfigur dan mengesahkan kelayakan (credentials) aliran kerja | Dilaksanakan untuk aliran kerja penyegerakan: semakan awal (preflight) memeriksa kedua-dua token sebelum sebarang perubahan ([panduan](Credentials.ms)) |
 | Menyertakan repositori, mengurus runner, mendiagnosis kegagalan | Panduan telah ditulis ([menyertakan repositori](Onboarding.ms), [diagnosis](Troubleshooting.ms)); penghantaran scoped ke repositori lain belum disahkan; use case ringkas masih terbuka (MIL-002) |
 | Menerbitkan wiki repositori daripada `wiki/` (pilih menyertai, dihantar ke setiap organisasi) | Dilaksanakan dalam `.gitea/scoped_workflows/publish-wiki.yml`, dengan ujian luar talian; juruterbang dalam repositori kedua belum dibuat (MIL-006) |
-| Semakan kualiti bersama | Dirancang (MIL-003) |
+| Semakan kualiti bersama (Python dan shell) | Dilaksanakan sebagai aliran kerja boleh guna semula `.gitea/workflows/quality-checks.yml`, dengan ujian luar talian dan percubaan dalam organisasi kedua; penerimaan dalam RepoFoundry sedang disemak ([panduan](QualityChecks.ms)) |
 | Keluaran dan penerbitan berversi | Dirancang (MIL-004) |
 
 ### Menyegerakkan metadata GitHub

@@ -67,7 +67,7 @@ Rows that say Implemented or Guides written exist today. The rest is planned and
 | Configure and validate workflow credentials | Implemented for the sync workflow: preflight checks both tokens before any change ([guide](guides/credentials.md)) |
 | Onboard a repository, manage runners, diagnose failures | Guides written ([onboarding](guides/onboarding.md), [troubleshooting](guides/troubleshooting.md)); scoped delivery to other repositories not yet verified; brief use cases open (MIL-002) |
 | Publish a repository wiki from `wiki/` (opt-in, delivered to every organization) | Implemented in `.gitea/scoped_workflows/publish-wiki.yml`, with offline tests; the pilot in a second repository is pending (MIL-006) |
-| Shared quality checks | Planned (MIL-003) |
+| Shared quality checks (Python and shell) | Implemented as the reusable workflow `.gitea/workflows/quality-checks.yml`, with offline tests and a trial in a second organization; adoption in RepoFoundry is in review ([guide](guides/quality-checks.md)) |
 | Versioned release and publishing | Planned (MIL-004) |
 
 ### 🔄 Sync GitHub metadata
