@@ -191,6 +191,57 @@ class TestMain:
         assert gitea.wiki == {"Home": b64("keep me")}
 
 
+class TestDescribeToken:
+    def test_recognises_a_gitea_token_shape(self):
+        description = publish_wiki.describe_token("a1b2c3d4e5" * 4)
+        assert "40 characters" in description
+        assert "looks like a Gitea token" in description
+
+    @pytest.mark.parametrize(
+        ("token", "expected"),
+        [
+            ("*******", "only mask characters"),
+            ("TOKEN_FOR_GITEA_WIKI=" + "a" * 40, "contains '='"),
+            ('"' + "a" * 40 + '"', "quote character"),
+            ("abc def", "whitespace"),
+        ],
+    )
+    def test_names_the_likely_mistake_without_echoing_the_token(self, token, expected):
+        description = publish_wiki.describe_token(token)
+        assert expected in description
+        assert token not in description
+
+
+class TestRejectedToken:
+    def test_rejection_adds_the_token_shape_but_not_the_token(self, monkeypatch, environment):
+        monkeypatch.setenv("WIKI_CREDENTIALS", "*******")
+
+        def reject(url, method="GET", headers=None, body=None):
+            raise publish_wiki.WorkflowError("credentials", "Gitea rejected the token.")
+
+        monkeypatch.setattr(publish_wiki, "request_json", reject)
+
+        with pytest.raises(publish_wiki.WorkflowError) as caught:
+            publish_wiki.main()
+
+        message = str(caught.value)
+        assert caught.value.category == "credentials"
+        assert "Token shape: 7 characters" in message
+        assert "only mask characters" in message
+        assert "*******" not in message.split("Token shape:")[0]
+
+    def test_other_categories_are_not_changed(self, monkeypatch, environment):
+        def forbid(url, method="GET", headers=None, body=None):
+            raise publish_wiki.WorkflowError("permissions", "Forbidden.")
+
+        monkeypatch.setattr(publish_wiki, "request_json", forbid)
+
+        with pytest.raises(publish_wiki.WorkflowError) as caught:
+            publish_wiki.main()
+
+        assert str(caught.value) == "[permissions] Forbidden."
+
+
 class TestRequestJson:
     @staticmethod
     def raise_http_error(monkeypatch, code, reason):
