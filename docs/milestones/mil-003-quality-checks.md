@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Target date 2026-11-14 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Task 1 verified: workflow_call and uses work from the same repository, the same organization and another organization (RC-033) | [b3f006f] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Task 1 verified: workflow_call and uses work from the same repository, the same organization and another organization (RC-033) | [b3f006f] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Task 4 recorded: adoption in RepoFoundry, the shfmt .editorconfig gap and the other findings (RC-039) | [3b8681d] |
 
 ---
 
@@ -63,7 +63,7 @@ other repository, and a guide for reading its results.
 | 1 | Verify reusable workflow support | Check whether this Gitea version supports `workflow_call` and cross-repository `uses`; if not, choose a copied template instead. Verified on 2026-10-10: supported, so no copied template is needed (see Verification results). | No | Verification results |
 | 2 | Define the quality-check contract | Decide the inputs (language, tool versions, working directory) and what a pass and a fail mean. Start with Python and shell. This is something an engineer does, so it needs a use case first. | Yes | Use case candidate: run project quality checks |
 | 3 | Implement the reusable quality workflow | Create the workflow in the canonical location with pinned tool versions and least-privilege permissions. | No | |
-| 4 | Adopt it in one other repository | Onboard a real project and fix the gaps in the guide that appear. | No | |
+| 4 | Adopt it in one other repository | Onboard a real project and fix the gaps in the guide that appear. Adopted in `TirSystem-BashScript/RepoFoundry` (its PR 76, run passes); see Adoption in a real repository. | No | Adoption in a real repository |
 | 5 | Write the guide for reading results | Explain status checks, logs and typical fixes so an engineer can make a failing check pass. | No | |
 
 ## Verification results
@@ -86,9 +86,39 @@ provider here is public), passing secrets to a called workflow
 branch. The quality checks of this milestone need none of the secrets; a
 private provider and tag references are for the release milestone (MIL-004).
 
+## Adoption in a real repository (task 4)
+
+On 2026-10-10 the workflow was run against `TirSystem-BashScript/RepoFoundry`
+(another organization; 39 shell files, no Python), first on a throwaway
+branch and then as a pull request, RepoFoundry PR 76.
+
+| Run | `shellcheck` | `shfmt -d` | Python |
+| --- | --- | --- | --- |
+| Unchanged repository | PASS on all 39 files | FAIL on 10 files | skipped with a notice (no files) |
+| With `switch_case_indent = true` under `[*.sh]` in `.editorconfig` | PASS | PASS | skipped |
+| The pull request itself (`languages: shell`) | PASS | PASS | not selected |
+
+What the run showed:
+
+- **`shellcheck` needs no help** when the project has a `.shellcheckrc`: the
+  workflow runs from the repository root, so the project's own settings
+  (`external-sources`, `source-path=SCRIPTDIR`) applied and files that share
+  variables across `src/lib/*.sh` produced no false positives.
+- **`shfmt` follows the project's style only through `.editorconfig`.** All ten
+  differences were the indentation of `case` patterns: the workflow uses shfmt
+  defaults, the project's own check is `shfmt -i 2 -ci`. One `.editorconfig`
+  line fixed it without changing a script. A shell project with its own shfmt
+  flags should expect a first formatting failure and express the flags there.
+- **Paths in the log are relative to `working-directory`**, and a caller must
+  reference the workflow at `main` or a tag, not at a branch that is deleted
+  when its pull request merges (the first trial lost its reference that way).
+
+The task closes when RepoFoundry PR 76 is merged. The gaps above are for the
+guide of task 5 (issue #19).
+
 ---
 
 [BC-001]: ../business-case.md
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
-[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
 [b3f006f]: https://git.tirsystem.com/TirSystem/github-action/commit/b3f006f7a482392189a46c324ad4f28c4c3a2d2a
+[3b8681d]: https://git.tirsystem.com/TirSystem/github-action/commit/3b8681d0236c669b794ffbba725433fff600a2d2
