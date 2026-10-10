@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 8e755cad4918 -->
+<!-- translation of Onboarding.md, source sha256 17cf1b4c28c6 -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -14,20 +14,18 @@ Sådan får en DevOps-professionel et TirSystem-repository til at bruge det fæl
 | --- | --- |
 | Gitea-version | 1.27.3 |
 | `.gitea/scoped_workflows/sync-github-metadata.yml` kører i dette repository | Verificeret: kørsel 16, `workflow_dispatch`, gennemført |
-| Samme workflow gælder automatisk for andre repositories | **Ikke verificeret.** Bekræft, hvordan scoped workflows leveres på instansen (admin- eller organisationsindstillinger), før du stoler på det. |
+| Samme workflow gælder automatisk for andre repositories | Verificeret 2026-10-10: det kørte, uden en kopi i repositoryet, i repositories i `TirSystem`, `TirSystem-BashScript`, `vl-staal` og `Tirsvad-Udemy-100-days-of-code` (fx `TirSystem/sqa-qc-checklists` og `TirSystem-BashScript/RepoFoundry`). Scriptet, det kørte, ændrede sig, når dette repositorys script ændrede sig. |
 
-Indtil leveringen er verificeret, tilsluttes et repository ved at kopiere workflowet (se nedenfor).
+Leveringen er automatisk, så et repository behøver ingen kopi af workflowet. Secrets deles ikke mellem organisationer: hver organisation skal have sine egne (trin 3).
 
 ## Trin
 
 1. **Kontroller forudsætningerne** i repositoryet: Actions er aktiveret, og en runner med labelen `ubuntu-latest` og `python3` er online (se [Runners](#runners)).
 2. **Konfigurer ét GitHub push-spejl** i repositoryets indstillinger (Settings, Repository, Mirror settings, Push mirror). Workflowet fejler, hvis der er flere GitHub-spejle. Hvis der ingen er, lykkes det uden at synkronisere noget.
-3. **Tilføj de to secrets** i repositoryets (eller organisationens) indstillinger med de scopes, der står i [credentials.md](Credentials.da):
+3. **Tilføj de to secrets** i repositoryets (eller organisationens) indstillinger med de scopes, der står i [credentials.md](Credentials.da). Workflowet kører i alle organisationens repositories, så gem secrets én gang pr. organisation; et repository i en anden organisation kan ikke se dem:
    - `TOKEN_FOR_GITEA`
    - `PAT_FOR_GITHUB` (kun GitHub-tokenet)
-4. **Lever workflowet:**
-   - *Hvis scoped workflows gælder for repositoryet:* der er intet at kopiere.
-   - *Ellers:* kopier `.gitea/scoped_workflows/sync-github-metadata.yml` fra dette repository til `.gitea/workflows/` i mål-repositoryet. Fastlås kopien til en gennemgået version af dette repository, og kopier igen, når den ændres.
+4. **Lever workflowet:** scoped workflows gælder for alle repositories på denne instans, så der er intet at kopiere. Kun hvor scoped levering ikke er sat op, kopieres `.gitea/scoped_workflows/sync-github-metadata.yml` fra dette repository til `.gitea/workflows/` i mål-repositoryet; fastlås kopien til en gennemgået version, og kopier igen, når den ændres.
 5. **Angiv en beskrivelse og emner** på Gitea-repositoryet, så der er noget at synkronisere.
 6. **Kør det én gang manuelt:** Actions, **Sync GitHub mirror metadata**, Run workflow. Loggen skal slutte med `Synced description and topics to <owner>/<repo>.`, og GitHub-repositoryet skal vise samme beskrivelse og emner.
 7. Hvis det fejler, brug [troubleshooting.md](Troubleshooting.da).

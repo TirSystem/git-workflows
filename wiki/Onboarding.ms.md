@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 8e755cad4918 -->
+<!-- translation of Onboarding.md, source sha256 17cf1b4c28c6 -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -14,20 +14,18 @@ Cara seorang profesional DevOps menjadikan repositori TirSystem menggunakan alir
 | --- | --- |
 | Versi Gitea | 1.27.3 |
 | `.gitea/scoped_workflows/sync-github-metadata.yml` berjalan dalam repositori ini | Disahkan: larian 16, `workflow_dispatch`, berjaya |
-| Aliran kerja yang sama terpakai pada repositori lain secara automatik | **Belum disahkan.** Sahkan cara scoped workflow dihantar pada instans (tetapan pentadbir atau organisasi) sebelum bergantung padanya. |
+| Aliran kerja yang sama terpakai pada repositori lain secara automatik | Disahkan pada 2026-10-10: ia berjalan, tanpa salinan dalam repositori, dalam repositori `TirSystem`, `TirSystem-BashScript`, `vl-staal` dan `Tirsvad-Udemy-100-days-of-code` (contohnya `TirSystem/sqa-qc-checklists` dan `TirSystem-BashScript/RepoFoundry`). Skrip yang dijalankannya berubah apabila skrip repositori ini berubah. |
 
-Selagi penghantaran belum disahkan, sertakan repositori dengan menyalin aliran kerja (lihat di bawah).
+Penghantaran adalah automatik, jadi repositori tidak memerlukan salinan aliran kerja. Rahsia (secret) tidak dikongsi antara organisasi: setiap organisasi memerlukan rahsianya sendiri (langkah 3).
 
 ## Langkah
 
 1. **Semak prasyarat** dalam repositori: Actions diaktifkan, dan runner dengan label `ubuntu-latest` dan `python3` berada dalam talian (lihat [Runners](#runners)).
 2. **Konfigurasikan satu push mirror GitHub** dalam tetapan repositori (Settings, Repository, Mirror settings, Push mirror). Aliran kerja gagal jika terdapat beberapa cermin GitHub. Jika tiada, ia berjaya tanpa menyegerakkan apa-apa.
-3. **Tambah dua rahsia (secret)** dalam tetapan repositori (atau organisasi), dengan skop yang tertera dalam [credentials.md](Credentials.ms):
+3. **Tambah dua rahsia (secret)** dalam tetapan repositori (atau organisasi), dengan skop yang tertera dalam [credentials.md](Credentials.ms). Aliran kerja berjalan dalam setiap repositori sesebuah organisasi, jadi simpan rahsia sekali bagi setiap organisasi; repositori dalam organisasi lain tidak melihatnya:
    - `TOKEN_FOR_GITEA`
    - `PAT_FOR_GITHUB` (token GitHub sahaja)
-4. **Hantar aliran kerja:**
-   - *Jika scoped workflow terpakai pada repositori:* tiada apa yang perlu disalin.
-   - *Jika tidak:* salin `.gitea/scoped_workflows/sync-github-metadata.yml` dari repositori ini ke `.gitea/workflows/` dalam repositori sasaran. Sematkan salinan itu pada versi repositori ini yang telah disemak, dan salin semula apabila ia berubah.
+4. **Hantar aliran kerja:** scoped workflow terpakai pada setiap repositori dalam instans ini, jadi tiada apa yang perlu disalin. Hanya jika penghantaran scoped tidak disediakan, salin `.gitea/scoped_workflows/sync-github-metadata.yml` dari repositori ini ke `.gitea/workflows/` dalam repositori sasaran, sematkan salinan itu pada versi yang telah disemak dan salin semula apabila ia berubah.
 5. **Tetapkan penerangan dan topik** pada repositori Gitea, supaya ada sesuatu untuk disegerakkan.
 6. **Jalankan sekali secara manual:** Actions, **Sync GitHub mirror metadata**, Run workflow. Log mesti berakhir dengan `Synced description and topics to <owner>/<repo>.` dan repositori GitHub mesti menunjukkan penerangan dan topik yang sama.
 7. Jika gagal, gunakan [troubleshooting.md](Troubleshooting.ms).
