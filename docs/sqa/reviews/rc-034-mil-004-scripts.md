@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [616c5d2] |
 
 ---
 
@@ -43,3 +43,4 @@ Go - all six criteria pass; the one finding (criterion 4) was fixed during the r
 
 [MIL-004]: ../../milestones/mil-004-versioned-release.md
 [QC-MIL-001]: ../../../framework/qc/qc-milestones-gateways.md
+[616c5d2]: https://git.tirsystem.com/TirSystem/github-action/commit/616c5d2e48f0d76399a6f78923891fc7f50c8e22
