@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [08ef26a] |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Decided how the wiki is published: source in `wiki/`, published by a workflow on merge<br>Added task 8 | [77c5277] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [08ef26a] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Decided how the wiki is published: source in `wiki/`, published by a workflow on merge<br>Added task 8 | [77c5277] |
 
 ---
 
