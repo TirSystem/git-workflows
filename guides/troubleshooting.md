@@ -30,6 +30,9 @@ never starts, or stops before the step) is a **runner** problem.
 | `TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN.` | configuration | The JSON form needs a `GITEA_TOKEN` key |
 | `Could not determine the Gitea source repository.` | configuration | The run has no repository name; report as a defect |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Keep one GitHub push mirror |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Wiki publishing only: add the secret (see [credentials.md](credentials.md)) |
+| `The wiki is not enabled on <repo>` | configuration | Wiki publishing only: enable the wiki in the repository settings |
+| `The wiki source directory ... has no Markdown pages` | configuration | Wiki publishing only: `wiki/` is empty or missing; nothing was changed |
 | `Could not determine the GitHub owner and repository ...` | configuration | The mirror address must look like `https://github.com/<owner>/<repo>.git` |
 | `Gitea API request failed with HTTP 401` | credentials | Create a new Gitea token and update `TOKEN_FOR_GITEA` |
 | `GitHub API request failed with HTTP 401` | credentials | Create a new GitHub token and update `CREDENTIALS_FOR_GITHUB` |
