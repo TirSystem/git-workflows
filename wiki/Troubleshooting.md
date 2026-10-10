@@ -32,7 +32,8 @@ never starts, or stops before the step) is a **runner** problem.
 | `TOKEN_FOR_GITEA is missing or empty.` | configuration | Add the secret |
 | `Could not determine the Gitea source repository.` | configuration | The run has no repository name; report as a defect |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Keep one GitHub push mirror |
-| `No token for the wiki: set TOKEN_FOR_GITEA_WIKI, or TOKEN_FOR_GITEA.` | configuration | Wiki publishing only: add one of the secrets (see [credentials.md](Credentials)) |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Wiki publishing only: the repository opted in with `wiki/.publish` but its organization has no such secret; store it (see [credentials.md](Credentials)) |
+| `wiki/.publish may only be empty or contain the word 'prune'.` | configuration | Wiki publishing only: leave the marker empty, or put only the word `prune` in it |
 | `... HTTP 403 ...` while publishing the wiki | permissions | Wiki publishing only: the token needs `write:repository` and write access to this repository |
 | `The wiki is not enabled on <repo>` | configuration | Wiki publishing only: enable the wiki in the repository settings |
 | `The wiki source directory ... has no Markdown pages` | configuration | Wiki publishing only: `wiki/` is empty or missing; nothing was changed |
@@ -56,6 +57,14 @@ settings.
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not
 synced.` The run succeeds but nothing was synced. Check that the Gitea
 version supports the push mirror API and re-run.
+
+`No wiki/.publish marker in <owner>/<repo>; wiki publishing is not enabled for
+this repository.` The Publish wiki run succeeds and writes nothing. The
+repository has not opted in; add `wiki/.publish` if it should publish.
+
+`<n> page(s) are in the wiki but not in wiki/ and were kept; put the word
+'prune' in wiki/.publish to delete them.` The run succeeds. Pages that exist
+only in the wiki are left alone unless the marker contains `prune`.
 
 ## Runner problems
 

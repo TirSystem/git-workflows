@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 59273bf92278 -->
+<!-- translation of Home.md, source sha256 758940401ac1 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -23,7 +23,7 @@ Buat masa ini ia mengandungi aliran kerja Gitea [`sync-github-metadata.yml`](htt
 - Rahsia (secret) repositori:
   - `TOKEN_FOR_GITEA`: token API Gitea (token sahaja, tanpa JSON)
   - `PAT_FOR_GITHUB`: personal access token GitHub yang dibenarkan mengubah suai repositori cermin (token sahaja, tanpa JSON)
-  - `TOKEN_FOR_GITEA_WIKI` (pilihan, hanya dalam repositori ini, untuk aliran kerja **Publish wiki**): token Gitea yang boleh menulis ke wiki repositori; jika tiada, `TOKEN_FOR_GITEA` digunakan dan mesti mempunyai akses tulis
+  - `TOKEN_FOR_GITEA_WIKI` (hanya untuk repositori yang menerbitkan wiki, lihat [panduan menyertakan repositori](Onboarding.ms)): token Gitea yang boleh menulis ke wiki, disimpan sebagai secret organisasi repositori; tiada sandaran kepada `TOKEN_FOR_GITEA`
 
 
 ## Persediaan

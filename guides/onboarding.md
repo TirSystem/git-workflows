@@ -43,6 +43,27 @@ Delivery is automatic, so a repository needs no copy of the workflow. Secrets ar
    and topics.
 7. If it fails, use [troubleshooting.md](troubleshooting.md).
 
+## Publish a wiki (optional)
+
+The **Publish wiki** workflow copies the Markdown pages in `wiki/` to the
+repository wiki when a change to `wiki/` is merged to `main`. It is delivered
+like the sync workflow, but it writes only where a repository opts in.
+
+1. Enable the wiki in the repository settings.
+2. Add Markdown pages to `wiki/`. The file name is the page name: `Home.md` is
+   the home page.
+3. Add the marker `wiki/.publish`. Leave it empty to create and update pages
+   only. Put the single word `prune` in it to also delete wiki pages that are
+   not in `wiki/`, so the wiki always equals the folder.
+4. Store `TOKEN_FOR_GITEA_WIKI` as a secret of the repository's organization,
+   using the scope in [credentials.md](credentials.md).
+5. Merge the change to `main`. The log must end with `Published <n> page(s) to
+   the wiki of <owner>/<repo>`.
+
+A repository without `wiki/.publish` is skipped with the line `No
+wiki/.publish marker in <owner>/<repo>`: nothing is written and no secret is
+needed.
+
 ## Runners
 
 | Item | Value |

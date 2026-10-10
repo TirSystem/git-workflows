@@ -62,27 +62,29 @@ is ever printed.
 
 ## Wiki publishing secret
 
-The workflow **Publish wiki** (this repository only) copies `wiki/` to the Gitea
-wiki when a change to `wiki/` is merged to `main`. It uses `TOKEN_FOR_GITEA_WIKI`
-when that secret exists and otherwise reuses `TOKEN_FOR_GITEA`.
+The workflow **Publish wiki** copies `wiki/` to the Gitea wiki of a repository
+that has opted in with `wiki/.publish` (see [onboarding.md](Onboarding)). It
+uses its own secret, so the metadata sync token stays read-only.
 
 | Secret | Content | Used for |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA_WIKI` (optional) | The Gitea token, nothing else | Writing the wiki pages of this repository |
+| `TOKEN_FOR_GITEA_WIKI` | The Gitea token, nothing else | Writing the wiki pages of the repositories of an organization that opt in |
 
-- The token that is used needs scope `write:repository`, and its user needs
-  write access to this repository. Gitea has no wiki-only scope.
-- `TOKEN_FOR_GITEA` is documented above with `read:repository` only. Reusing it
-  for the wiki means raising its scope, which also gives the metadata sync
-  write access. A separate `TOKEN_FOR_GITEA_WIKI` for a dedicated user keeps
-  the sync token read-only. S05 decides which, and S03 stores the secret.
+- Store it as a secret of the organization of each repository that publishes.
+  There is no fallback to `TOKEN_FOR_GITEA`: a repository that opted in and has
+  no such secret fails with a configuration error, and a repository that did
+  not opt in does not need it.
+- The token needs scope `write:repository`, and its user needs write access to
+  the repositories. Gitea has no wiki-only scope, so create the token for a
+  dedicated user. S05 approves the scope and S03 stores the secret.
 - Calls made: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`,
   `GET`, `POST` and `PATCH /repos/{owner}/{repo}/wiki/...` and, for a page that
   no longer exists in `wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}`.
 - The wiki must be enabled in the repository settings. The workflow refuses to
   run when it is not.
-- The wiki always equals `wiki/`: pages edited or added in the Gitea web UI are
-  overwritten or removed on the next publish.
+- Pages that are in `wiki/` are always overwritten from it, so a change made
+  in the Gitea web UI is lost on the next publish. Pages that are only in the
+  wiki are removed only when `wiki/.publish` contains the word `prune`.
 
 ## Rotating a token
 

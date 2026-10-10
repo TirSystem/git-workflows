@@ -6,13 +6,14 @@ English | [Dansk](Capabilities.da) | [Bahasa Melayu](Capabilities.ms)
 
 ## Capabilities
 
-Only the first row is implemented. The rest is planned and tracked in the [Project Plan](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/docs/project-plan.md), which also describes each use case.
+Rows that say Implemented or Guides written exist today. The rest is planned and tracked in the [Project Plan](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/docs/project-plan.md), which also describes each use case.
 
 | Capability | Status |
 | --- | --- |
 | Synchronize repository metadata (Gitea to GitHub mirror) | Implemented in `.gitea/scoped_workflows/`, with offline tests and a validation workflow |
 | Configure and validate workflow credentials | Implemented for the sync workflow: preflight checks both tokens before any change ([guide](Credentials)) |
 | Onboard a repository, manage runners, diagnose failures | Guides written ([onboarding](Onboarding), [troubleshooting](Troubleshooting)); scoped delivery to other repositories not yet verified; brief use cases open (MIL-002) |
+| Publish a repository wiki from `wiki/` (opt-in, delivered to every organization) | Implemented in `.gitea/scoped_workflows/publish-wiki.yml`, with offline tests; the pilot in a second repository is pending (MIL-006) |
 | Shared quality checks | Planned (MIL-003) |
 | Versioned release and publishing | Planned (MIL-004) |
 

@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 17cf1b4c28c6 -->
+<!-- translation of Onboarding.md, source sha256 1d431898754e -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -29,6 +29,18 @@ Leveringen er automatisk, så et repository behøver ingen kopi af workflowet. S
 5. **Angiv en beskrivelse og emner** på Gitea-repositoryet, så der er noget at synkronisere.
 6. **Kør det én gang manuelt:** Actions, **Sync GitHub mirror metadata**, Run workflow. Loggen skal slutte med `Synced description and topics to <owner>/<repo>.`, og GitHub-repositoryet skal vise samme beskrivelse og emner.
 7. Hvis det fejler, brug [troubleshooting.md](Troubleshooting.da).
+
+## Publicér en wiki (valgfrit)
+
+Workflowet **Publish wiki** kopierer Markdown-siderne i `wiki/` til repositoryets wiki, når en ændring af `wiki/` flettes til `main`. Det leveres som synkroniseringsworkflowet, men skriver kun, hvor et repository har meldt sig til.
+
+1. Aktivér wikien i repositoryets indstillinger.
+2. Tilføj Markdown-sider til `wiki/`. Filnavnet er sidens navn: `Home.md` er forsiden.
+3. Tilføj markøren `wiki/.publish`. Lad den være tom for kun at oprette og opdatere sider. Skriv det ene ord `prune` i den for også at slette wiki-sider, der ikke findes i `wiki/`, så wikien altid er lig med mappen.
+4. Gem `TOKEN_FOR_GITEA_WIKI` som en secret i repositoryets organisation med det scope, der står i [credentials.md](Credentials.da).
+5. Flet ændringen til `main`. Loggen skal slutte med `Published <n> page(s) to the wiki of <owner>/<repo>`.
+
+Et repository uden `wiki/.publish` springes over med linjen `No wiki/.publish marker in <owner>/<repo>`: intet bliver skrevet, og der skal ingen secret til.
 
 ## Runners
 
