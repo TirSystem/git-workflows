@@ -25,6 +25,10 @@ tagged the workflows are delivered from `main` and are not pinned.
 
 ### Added
 
+- Workflow `release.yml`: started by hand with a version, it releases only the tip of
+  `main` whose validation run is green and whose changelog entry exists, creates
+  the version tag, the release page and the major tag, and does nothing but
+  check until `dry_run` is set to `false`.
 - Scoped workflow `sync-github-metadata.yml`: copies the description and topics
   of a Gitea repository to its GitHub push mirror on every push to `main`, by
   hand and daily at 03:17 UTC. A repository without a GitHub mirror is skipped

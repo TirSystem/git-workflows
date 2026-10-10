@@ -5,7 +5,8 @@ is validated, versioned and announced, and how consumers pin a version. The
 decisions are in ADR-0006; this guide is the checklist. It is not published
 on the wiki.
 
-Until the release workflow exists (MIL-004 task 5) the steps are done by hand.
+Steps 5 and 6 are done by the **Release** workflow (`.gitea/workflows/release.yml`,
+`tools/release.py`); the manual commands below are the fallback.
 
 ## What a version is
 
@@ -34,17 +35,26 @@ Until the release workflow exists (MIL-004 task 5) the steps are done by hand.
    new major version, and a new major version needs a Breaking entry.
 4. **Get the approval** of S01 for the release, in the pull request that adds
    the changelog entry.
-5. **Tag.** Create `vMAJOR.MINOR.PATCH` on the approved commit, then move
-   `vMAJOR` to it:
+5. **Run the Release workflow in dry-run mode.** In the Actions tab of this
+   repository start **Release** on `main` with the version and `dry_run`
+   `true`. It checks that the commit is the tip of `main`, that its validation
+   run is green, that the changelog has an entry for the version and that the
+   tag does not exist, and writes nothing.
+6. **Release.** Start **Release** again with `dry_run` `false`. It creates the
+   tag `vMAJOR.MINOR.PATCH`, the release page with the text of
+   `python tools/changelog.py notes x.y.z`, and moves `vMAJOR` to the commit
+   when this is the highest version of its major. The page on Gitea is the
+   only destination (ADR-0007); nothing is attached to it. The workflow uses
+   the token of its own run; if Gitea refuses it, store `TOKEN_FOR_GITEA_RELEASE`
+   as a secret with write access to this repository only.
+
+   By hand, the same steps are:
    ```bash
    git tag -a v1.2.0 -m "v1.2.0" <commit>
    git push origin v1.2.0
    git tag -f v1 <commit> && git push -f origin v1
    ```
-6. **Announce.** Create the release page for the tag with the text of
-   `python tools/changelog.py notes x.y.z`, and say whether consumers must act.
-   The release page of this repository on Gitea is the only destination
-   (ADR-0007); nothing is attached to it.
+   and create the release page with the notes of the changelog entry.
 7. **Verify.** One repository pinned to the previous exact tag still runs the
    same code; one repository on the major tag receives the release.
 

@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 c1d5b1f173ef -->
+<!-- translation of Capabilities.md, source sha256 94af1c3e6949 -->
 
 > Ini ialah terjemahan [`Capabilities`](Capabilities). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -15,7 +15,7 @@ Baris yang menyatakan Dilaksanakan atau Panduan telah ditulis wujud hari ini. Se
 | Menyertakan repositori, mengurus runner, mendiagnosis kegagalan | Panduan telah ditulis ([menyertakan repositori](Onboarding.ms), [diagnosis](Troubleshooting.ms)); penghantaran scoped ke repositori lain belum disahkan; use case ringkas masih terbuka (MIL-002) |
 | Menerbitkan wiki repositori daripada `wiki/` (pilih menyertai, dihantar ke setiap organisasi) | Dilaksanakan dalam `.gitea/scoped_workflows/publish-wiki.yml`, dengan ujian luar talian; juruterbang dalam repositori kedua belum dibuat (MIL-006) |
 | Semakan kualiti bersama (Python dan shell) | Dilaksanakan sebagai aliran kerja boleh guna semula `.gitea/workflows/quality-checks.yml`, dengan ujian luar talian dan percubaan dalam organisasi kedua; penerimaan dalam RepoFoundry sedang disemak ([panduan](QualityChecks.ms)) |
-| Keluaran berversi dan penerbitan | Proses keluaran, changelog dan panduan naik taraf telah ditakrifkan; keluaran pertama `v1.0.0` dan aliran kerja keluaran belum ada (MIL-004) ([panduan](Upgrading.ms)) |
+| Keluaran berversi dan penerbitan | Proses keluaran, changelog dan panduan naik taraf telah ditakrifkan; aliran kerja keluaran sudah ada; keluaran pertama `v1.0.0` belum ada (MIL-004) ([panduan](Upgrading.ms)) |
 
 ### Menyegerakkan metadata GitHub
 
