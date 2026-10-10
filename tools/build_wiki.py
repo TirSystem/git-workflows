@@ -44,6 +44,7 @@ PAGES: tuple[Page, ...] = (
     Page("Credentials", "guides/credentials.md"),
     Page("Troubleshooting", "guides/troubleshooting.md"),
     Page("QualityChecks", "guides/quality-checks.md"),
+    Page("Upgrading", "guides/upgrading.md"),
     Page("Capabilities", "README.md", ("Capabilities",)),
 )
 
@@ -61,6 +62,7 @@ _PAGE_FOR_SOURCE = {
     "guides/credentials.md": "Credentials",
     "guides/troubleshooting.md": "Troubleshooting",
     "guides/quality-checks.md": "QualityChecks",
+    "guides/upgrading.md": "Upgrading",
 }
 
 

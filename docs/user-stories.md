@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | US-001 |
-| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006] |
+| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.09 and US-001.10 (quality checks, UC-005) | [385d2fb] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.11 to US-001.13 (releases, UC-006); US-001.13 traced to the epic (RC-041) | [044d8ba] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.11 to US-001.13 (releases, UC-006); US-001.13 traced to the epic (RC-041) | [044d8ba] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.14 and US-001.15 (UC-007); US-001.13 traced to UC-007 (RC-046) | pending |
 
 ---
 
@@ -19,7 +19,7 @@
 These stories cover the P1 use cases of the Project Plan that MIL-002 delivers
 (O1 to O3 of [BC-001]): keeping the mirror metadata correct, configuring
 credentials, onboarding a repository and diagnosing a failed run. Roles are the
-actors of [UCD-001]. Stories for quality checks and releases (the consumer's update, MIL-004) and for the wiki (MIL-005, MIL-006) are not written yet.
+actors of [UCD-001]. Stories for quality checks and releases (MIL-004) and for the wiki (MIL-005, MIL-006) are not written yet.
 
 ## Story List
 
@@ -190,11 +190,37 @@ actors of [UCD-001]. Stories for quality checks and releases (the consumer's upd
 
 | Traces to | Size | INVEST exceptions |
 | --- | --- | --- |
-| [MIL-004] (epic; its use case, Consume a Workflow Update, is not written yet) | fits one iteration | none |
+| [UC-007], [MIL-004] | fits one iteration | none |
+
+### US-001.14 — A changelog says whether to act
+
+**As a** Software Engineer, **I want** to see in a changelog entry whether a release is breaking, **so that** I know whether I must change my pipeline.
+
+**Acceptance Criteria**
+
+- Given a release page or a changelog entry, when it is read, then the groups Breaking, Added, Changed and Fixed are visible and a breaking change is the first group.
+- Given a breaking release, when the entry is read, then it names what changed and what to do.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-007], [MIL-004] | fits one iteration | none |
+
+### US-001.15 — Try an update in one place and go back
+
+**As a** Software Engineer, **I want** to try a new version in one repository and return to the previous one, **so that** an update cannot harm all my pipelines at once.
+
+**Acceptance Criteria**
+
+- Given a branch that changes the pinned version in one repository, when its pull request runs, then the result of the new version is visible before any other repository changes.
+- Given a failing update, when the pin is set back to the previous exact tag, then the pipeline runs the previous code unchanged.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-007], [MIL-004] | fits one iteration | none |
 
 ## INVEST Check
 
-All thirteen stories are independent of each other except that US-001.05 and
+All fifteen stories are independent of each other except that US-001.05 and
 US-001.06 build on US-001.04 (the secrets must exist before a repository can
 run the workflow). Each states one goal and can be negotiated, delivers value
 to the named role, is small enough for one iteration, and has acceptance
@@ -215,6 +241,6 @@ behaviour is tested rather than built.
 [UC-003]: ./uc-003/uc.md
 [UC-004]: ./uc-004/uc.md
 [UC-005]: ./uc-005/uc.md
-[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
 [UC-006]: ./uc-006/uc.md
 [044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051
+[UC-007]: ./uc-007/uc.md
