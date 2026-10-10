@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Task 1 decision amended: zero GitHub mirrors is a successful skip<br>Task 5 tests cover zero or several mirrors accordingly | [0c06789] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-10-17 confirmed on 2026-10-10 by S01 (stand-in for S05) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-10-17 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
 
 ---
 
@@ -75,3 +75,4 @@ successful manual run on the Gitea instance.
 [BC-001]: ../business-case.md
 [0c06789]: https://git.tirsystem.com/TirSystem/github-action/commit/0c06789a2779382672712cd483f4964b28a0ebe9
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
+[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63

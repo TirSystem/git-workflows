@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added UCD-001, US-001, UC-001 to UC-004 and RC-019 to RC-025 | [a2bf2d4] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-026 to RC-032 (dates confirmed) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-026 to RC-032 (dates confirmed) | [ea06eaa] |
 
 ---
 
@@ -137,3 +137,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-031]: ./reviews/rc-031-mil-006-date.md
 [RC-032]: ./reviews/rc-032-pp-001-dates.md
 [a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
+[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63

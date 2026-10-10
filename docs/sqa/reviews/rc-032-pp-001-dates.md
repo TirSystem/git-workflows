@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [ea06eaa] |
 
 ---
 
@@ -44,3 +44,4 @@ Go - all seven criteria pass. S01 gave the Go in chat on 2026-10-10, standing in
 
 [PP-001]: ../../project-plan.md
 [BC-001]: ../../business-case.md
+[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63

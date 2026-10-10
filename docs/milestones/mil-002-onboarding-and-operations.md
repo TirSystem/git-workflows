@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Recorded verification results for task 2 | [7dcb9c4] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-10-31 confirmed on 2026-10-10 by S01 (stand-in for S05) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-10-31 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
 
 ---
 
@@ -75,3 +75,4 @@ a credential validation step in the workflow, and categorized failure messages.
 [BC-001]: ../business-case.md
 [7dcb9c4]: https://git.tirsystem.com/TirSystem/github-action/commit/7dcb9c4dfce712572aced281d0dfdfa435283646
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
+[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63

@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | P1 use cases written and accepted (UCD-001, US-001, UC-001 to UC-004): Open Issues updated | [a2bf2d4] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Dates confirmed by S01 (stand-in for S05); the confirmation item is removed from Open Issues | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Dates confirmed by S01 (stand-in for S05); the confirmation item is removed from Open Issues | [ea06eaa] |
 
 ---
 
@@ -258,3 +258,4 @@ no tests, no release process.
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [Milestone MIL-006]: https://git.tirsystem.com/TirSystem/github-action/milestone/94
 [a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
+[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63

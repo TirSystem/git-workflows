@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-11-14 confirmed on 2026-10-10 by S01 (stand-in for S05) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-11-14 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
 
 ---
 
@@ -71,3 +71,4 @@ other repository, and a guide for reading its results.
 [BC-001]: ../business-case.md
 [4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
+[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
