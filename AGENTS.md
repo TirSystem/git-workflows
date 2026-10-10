@@ -51,3 +51,11 @@ Rules that apply to every document:
    `framework/scripts/resolve-pending-commits.sh` and commit the result before
    opening the PR (no amend). Never ask for or perform the merge: a reviewer
    merges.
+8. Keep the wiki current. A PR that changes a workflow under `.gitea/`, a file
+   in `guides/` or `README.md` also updates the matching pages in `wiki/`:
+   run `python tools/build_wiki.py` for the English pages (the tests fail when
+   they are out of date) and update the Danish (`da`) and Bahasa Malaysia
+   (`ms`) pages once they exist, naming the English source they follow. List
+   the wiki pages the PR changed in its description, or say "No wiki pages
+   changed: <reason>". Never push to the wiki repository by hand: the publishing
+   workflow (MIL-005 task 8) copies `wiki/` there when the PR is merged.
