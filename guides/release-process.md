@@ -26,9 +26,12 @@ Until the release workflow exists (MIL-004 task 5) the steps are done by hand.
 2. **Check the commit.** The validation run (`validate-workflows`) on the exact
    commit of `main` to be released is green; do not release from a red or
    unchecked commit.
-3. **Write the changelog entry** in `CHANGELOG.md`: the version, the date, and
-   the changes in the groups Breaking, Added, Changed and Fixed. A change that
-   touches credentials, tokens or permissions says so.
+3. **Write the changelog entry** in `CHANGELOG.md`: move the items of
+   `[Unreleased]` under `## [x.y.z] - date` in the groups Breaking, Added,
+   Changed and Fixed. A change that touches credentials, tokens or permissions
+   says so. Check it with
+   `python tools/changelog.py check --version x.y.z`; a Breaking entry needs a
+   new major version, and a new major version needs a Breaking entry.
 4. **Get the approval** of S01 for the release, in the pull request that adds
    the changelog entry.
 5. **Tag.** Create `vMAJOR.MINOR.PATCH` on the approved commit, then move
@@ -38,8 +41,8 @@ Until the release workflow exists (MIL-004 task 5) the steps are done by hand.
    git push origin v1.2.0
    git tag -f v1 <commit> && git push -f origin v1
    ```
-6. **Announce.** Create the release page for the tag with the changelog entry
-   as its text, and say whether consumers must act.
+6. **Announce.** Create the release page for the tag with the text of
+   `python tools/changelog.py notes x.y.z`, and say whether consumers must act.
 7. **Verify.** One repository pinned to the previous exact tag still runs the
    same code; one repository on the major tag receives the release.
 
