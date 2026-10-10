@@ -43,6 +43,8 @@ Until the release workflow exists (MIL-004 task 5) the steps are done by hand.
    ```
 6. **Announce.** Create the release page for the tag with the text of
    `python tools/changelog.py notes x.y.z`, and say whether consumers must act.
+   The release page of this repository on Gitea is the only destination
+   (ADR-0007); nothing is attached to it.
 7. **Verify.** One repository pinned to the previous exact tag still runs the
    same code; one repository on the major tag receives the release.
 
