@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [a2bf2d4] |
 
 ---
 
@@ -147,3 +147,4 @@ behaviour is tested rather than built.
 [UC-002]: ./uc-002/uc.md
 [UC-003]: ./uc-003/uc.md
 [UC-004]: ./uc-004/uc.md
+[a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd

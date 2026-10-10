@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added ADR-0004 and RC-018 | [b22a2cd] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added UCD-001, US-001, UC-001 to UC-004 and RC-019 to RC-025 | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added UCD-001, US-001, UC-001 to UC-004 and RC-019 to RC-025 | [a2bf2d4] |
 
 ---
 
@@ -123,3 +123,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-024]: ./reviews/rc-024-uc-004.md
 [RC-025]: ./reviews/rc-025-pp-001-use-cases.md
 [b22a2cd]: https://git.tirsystem.com/TirSystem/github-action/commit/b22a2cd59235078656c4440b945b787f88fbd345
+[a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd

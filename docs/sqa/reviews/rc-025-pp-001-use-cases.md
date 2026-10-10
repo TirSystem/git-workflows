@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [a2bf2d4] |
 
 ---
 
@@ -44,3 +44,4 @@ Go - all seven criteria pass; the one finding was fixed during the review. S01 g
 
 [PP-001]: ../../project-plan.md
 [BC-001]: ../../business-case.md
+[a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd

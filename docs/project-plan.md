@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added gateway MIL-006 (shared wiki publishing) | [6b8e36d] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | P1 use cases written and accepted (UCD-001, US-001, UC-001 to UC-004): Open Issues updated | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | P1 use cases written and accepted (UCD-001, US-001, UC-001 to UC-004): Open Issues updated | [a2bf2d4] |
 
 ---
 
@@ -258,3 +258,4 @@ no tests, no release process.
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [Milestone MIL-006]: https://git.tirsystem.com/TirSystem/github-action/milestone/94
 [6b8e36d]: https://git.tirsystem.com/TirSystem/github-action/commit/6b8e36d67ac9af165b180bc0045289e41cfd1fc3
+[a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
