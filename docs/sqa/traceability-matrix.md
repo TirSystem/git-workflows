@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added ADR-0004 and RC-018 | [b22a2cd] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added UCD-001, US-001, UC-001 to UC-004 and RC-019 to RC-025 | [a2bf2d4] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added UCD-001, US-001, UC-001 to UC-004 and RC-019 to RC-025 | [a2bf2d4] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-026 to RC-032 (dates confirmed) | [ea06eaa] |
 
 ---
 
@@ -26,19 +26,19 @@ updated whenever an artifact instance is created or reviewed.
 | --- | --- | --- | --- | --- |
 | [SA-001] | SA | - | [BC-001], [UCD-001] | [RC-004] |
 | [BC-001] | BC | [SA-001] | [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] | [RC-001], [RC-008] |
-| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [US-001] | [RC-002], [RC-009], [RC-015], [RC-017], [RC-025] |
-| [MIL-001] | MIL | [BC-001], [PP-001] | [MIL-002] | [RC-003] |
-| [MIL-002] | MIL | [BC-001], [PP-001], [MIL-001] | [MIL-003], [MIL-005] | [RC-005] |
-| [MIL-003] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-004] | [RC-006] |
-| [MIL-004] | MIL | [BC-001], [PP-001], [MIL-003] | - | [RC-007] |
+| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [US-001] | [RC-002], [RC-009], [RC-015], [RC-017], [RC-025], [RC-032] |
+| [MIL-001] | MIL | [BC-001], [PP-001] | [MIL-002] | [RC-003], [RC-026] |
+| [MIL-002] | MIL | [BC-001], [PP-001], [MIL-001] | [MIL-003], [MIL-005] | [RC-005], [RC-027] |
+| [MIL-003] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-004] | [RC-006], [RC-028] |
+| [MIL-004] | MIL | [BC-001], [PP-001], [MIL-003] | - | [RC-007], [RC-029] |
 | [RC-001] | RC | [BC-001] | - | - |
 | [RC-002] | RC | [PP-001] | - | - |
 | [RC-003] | RC | [MIL-001] | - | - |
 | [RC-004] | RC | [SA-001] | - | - |
 | [RC-005] | RC | [MIL-002] | - | - |
 | [RC-006] | RC | [MIL-003] | - | - |
-| [MIL-005] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-006] | [RC-010], [RC-011] |
-| [MIL-006] | MIL | [BC-001], [PP-001], [MIL-002], [MIL-005] | - | [RC-016] |
+| [MIL-005] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-006] | [RC-010], [RC-011], [RC-030] |
+| [MIL-006] | MIL | [BC-001], [PP-001], [MIL-002], [MIL-005] | - | [RC-016], [RC-031] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
@@ -68,6 +68,13 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-023] | RC | [UC-003] | - | - |
 | [RC-024] | RC | [UC-004] | - | - |
 | [RC-025] | RC | [PP-001] | - | - |
+| [RC-026] | RC | [MIL-001] | - | - |
+| [RC-027] | RC | [MIL-002] | - | - |
+| [RC-028] | RC | [MIL-003] | - | - |
+| [RC-029] | RC | [MIL-004] | - | - |
+| [RC-030] | RC | [MIL-005] | - | - |
+| [RC-031] | RC | [MIL-006] | - | - |
+| [RC-032] | RC | [PP-001] | - | - |
 
 ## Coverage Notes
 
@@ -122,5 +129,12 @@ updated whenever an artifact instance is created or reviewed.
 [RC-023]: ./reviews/rc-023-uc-003.md
 [RC-024]: ./reviews/rc-024-uc-004.md
 [RC-025]: ./reviews/rc-025-pp-001-use-cases.md
-[b22a2cd]: https://git.tirsystem.com/TirSystem/github-action/commit/b22a2cd59235078656c4440b945b787f88fbd345
+[RC-026]: ./reviews/rc-026-mil-001-date.md
+[RC-027]: ./reviews/rc-027-mil-002-date.md
+[RC-028]: ./reviews/rc-028-mil-003-date.md
+[RC-029]: ./reviews/rc-029-mil-004-date.md
+[RC-030]: ./reviews/rc-030-mil-005-date.md
+[RC-031]: ./reviews/rc-031-mil-006-date.md
+[RC-032]: ./reviews/rc-032-pp-001-dates.md
 [a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
+[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63

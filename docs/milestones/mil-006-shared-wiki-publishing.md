@@ -4,12 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-006 |
-| CrossReference | [BC-001], [MIL-005], [ADR-0003] |
+| CrossReference | [BC-001], [MIL-005], [ADR-0003], [ADR-0002] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [6b8e36d] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [6b8e36d] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-12-26 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
 
 ---
 
@@ -59,7 +60,7 @@ repository other than this one that publishes its wiki through it.
 
 ## Target Date
 
-2026-12-26 — proposed; to be confirmed by S01 and S05 (the Business Case sets no deadline).
+2026-12-26 — confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002); the Business Case sets no deadline.
 
 ## Tasks
 
@@ -75,3 +76,5 @@ repository other than this one that publishes its wiki through it.
 
 [BC-001]: ../business-case.md
 [6b8e36d]: https://git.tirsystem.com/TirSystem/github-action/commit/6b8e36d67ac9af165b180bc0045289e41cfd1fc3
+[ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
+[ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63

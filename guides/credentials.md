@@ -11,16 +11,21 @@ leaves.
 
 ## Minimum permissions
 
-These come from the Gitea and GitHub documentation and the API calls the
-workflow makes. They have **not been confirmed with a minimal token on this
-instance yet**; S05 should confirm them when the tokens are created.
+These were checked on 2026-10-10 against the Gitea source (the route
+definitions in `routers/api/v1/api.go`, `main` branch) and the GitHub page
+"Permissions required for fine-grained personal access tokens", for every API
+call the workflows make. S01, standing in for S05 (ADR-0002), approved them on
+2026-10-10. They have **not been tested on this instance with a token that
+holds only these permissions**; the checks at the end of this section are the
+way to do that.
 
 **Gitea token** (a personal access token of a user, not a deploy key; deploy
 keys do not work for the REST API):
 
-- scope `read:repository`
-- the user must be allowed to read the repository's push mirrors, which
-  Gitea limits to repository administrators
+- scope `read:repository`: every `/repos/...` route needs the repository
+  scope, and the calls below only read
+- the user must be an administrator of the repository: the `push_mirrors`
+  routes require repository administration in addition to the token scope
 
 Calls made: `GET /repos/{owner}/{repo}` and `GET /repos/{owner}/{repo}/push_mirrors`.
 
@@ -28,11 +33,32 @@ Calls made: `GET /repos/{owner}/{repo}` and `GET /repos/{owner}/{repo}/push_mirr
 
 - Resource owner: the owner of the mirror repository
 - Repository access: only the mirror repository
-- Repository permission: **Administration: Read and write** (no other permission)
+- Repository permission: **Administration: Read and write** (no other
+  permission); it is needed for `PATCH /repos/{owner}/{repo}` and
+  `PUT /repos/{owner}/{repo}/topics`. `Metadata: Read` is added automatically
+  and covers `GET /repos/{owner}/{repo}`.
 - Set an expiry date
 
 Calls made: `GET /repos/{owner}/{repo}`, `PATCH /repos/{owner}/{repo}` (description)
 and `PUT /repos/{owner}/{repo}/topics`.
+
+**Gitea token for the wiki** (see "Wiki publishing secret" below): scope
+`write:repository`, because writing a page (`POST`, `PATCH`, `DELETE` under
+`/repos/{owner}/{repo}/wiki`) needs the repository scope with write access, and
+the user needs write access to the repository's wiki. Listing and reading
+pages needs only the read scope.
+
+**Testing the permissions on the instance (optional)**
+
+1. In the Gitea settings of the user, the token stored as `TOKEN_FOR_GITEA`
+   lists only `read:repository`, the user is an administrator of the
+   repository, and a run still ends with `Preflight passed`.
+2. The GitHub token lists only the mirror repository and
+   `Administration: Read and write` (plus the automatic `Metadata: Read`), and
+   a run ends with `Preflight passed` and `Synced description and topics`.
+3. A throwaway token that lacks one of these permissions makes the run fail
+   with `[permissions]` (or HTTP 403 for Gitea) and names the category,
+   without printing the token.
 
 Format of `PAT_FOR_GITHUB`: only the token string (for example
 `github_pat_...`), as clear text. The workflow only checks that it is not empty;

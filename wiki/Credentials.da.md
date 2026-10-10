@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 2660f2095b78 -->
+<!-- translation of Credentials.md, source sha256 10a051e910de -->
 
 > Dette er en oversættelse af [`Credentials`](Credentials). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -15,12 +15,12 @@ Synkroniseringsworkflowet bruger to secrets. Giv hver af dem de mindste rettighe
 
 ## Mindste rettigheder
 
-Disse kommer fra dokumentationen til Gitea og GitHub og fra de API-kald, workflowet foretager. De er **endnu ikke bekræftet med et minimalt token på denne instans**; S05 bør bekræfte dem, når tokens oprettes.
+Disse blev kontrolleret den 2026-10-10 mod Gitea-kildekoden (rutedefinitionerne i `routers/api/v1/api.go`, `main`-grenen) og GitHub-siden "Permissions required for fine-grained personal access tokens" for hvert API-kald, workflows foretager. S01 godkendte dem som stedfortræder for S05 (ADR-0002) den 2026-10-10. De er **ikke afprøvet på denne instans med et token, der kun har disse rettigheder**; kontrollerne i slutningen af dette afsnit er måden at gøre det på.
 
 **Gitea-token** (et personal access token for en bruger, ikke en deploy key; deploy keys virker ikke til REST API'et):
 
-- scope `read:repository`
-- brugeren skal have lov til at læse repositoryets push-spejle, hvilket Gitea begrænser til repository-administratorer
+- scope `read:repository`: hver `/repos/...`-rute kræver repository-scopet, og kaldene nedenfor læser kun
+- brugeren skal være administrator af repositoryet: `push_mirrors`-rutene kræver repository-administration ud over token-scopet
 
 Kald, der foretages: `GET /repos/{owner}/{repo}` og `GET /repos/{owner}/{repo}/push_mirrors`.
 
@@ -28,10 +28,18 @@ Kald, der foretages: `GET /repos/{owner}/{repo}` og `GET /repos/{owner}/{repo}/p
 
 - Resource owner: ejeren af spejl-repositoryet
 - Repository access: kun spejl-repositoryet
-- Repository permission: **Administration: Read and write** (ingen andre tilladelser)
+- Repository permission: **Administration: Read and write** (ingen andre tilladelser); den kræves til `PATCH /repos/{owner}/{repo}` og `PUT /repos/{owner}/{repo}/topics`. `Metadata: Read` tilføjes automatisk og dækker `GET /repos/{owner}/{repo}`.
 - Angiv en udløbsdato
 
 Kald, der foretages: `GET /repos/{owner}/{repo}`, `PATCH /repos/{owner}/{repo}` (beskrivelse) og `PUT /repos/{owner}/{repo}/topics`.
+
+**Gitea-token til wikien** (se "Secret til publicering af wiki" nedenfor): scope `write:repository`, fordi skrivning af en side (`POST`, `PATCH`, `DELETE` under `/repos/{owner}/{repo}/wiki`) kræver repository-scopet med skriveadgang, og brugeren skal have skriveadgang til repositoryets wiki. Oplistning og læsning af sider kræver kun læse-scopet.
+
+**Afprøvning af rettighederne på instansen (valgfrit)**
+
+1. I brugerens Gitea-indstillinger viser det token, der er gemt som `TOKEN_FOR_GITEA`, kun `read:repository`, brugeren er administrator af repositoryet, og en kørsel slutter stadig med `Preflight passed`.
+2. GitHub-tokenet viser kun spejl-repositoryet og `Administration: Read and write` (plus den automatiske `Metadata: Read`), og en kørsel slutter med `Preflight passed` og `Synced description and topics`.
+3. Et midlertidigt token, der mangler én af disse rettigheder, får kørslen til at fejle med `[permissions]` (eller HTTP 403 for Gitea) og navngive kategorien uden at udskrive tokenet.
 
 Format for `PAT_FOR_GITHUB`: kun token-strengen (fx `github_pat_...`) som almindelig tekst. Workflowet tjekker kun, at den ikke er tom; GitHub afviser en forkert værdi (HTTP 401).
 
