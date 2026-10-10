@@ -66,6 +66,9 @@ def parse(text: str) -> list[Release]:
             continue
         if group is not None and line.startswith("- "):
             releases[-1].groups[group].append(line[2:].strip())
+        elif group is not None and line.startswith("  ") and releases[-1].groups[group]:
+            # a wrapped item: the lines that continue it belong to the same item
+            releases[-1].groups[group][-1] += " " + line.strip()
     return releases
 
 

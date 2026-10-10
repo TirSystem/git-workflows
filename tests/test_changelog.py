@@ -132,3 +132,9 @@ def test_the_changelog_of_this_repository_follows_the_convention():
     text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     assert changelog.validate(text) == []
     assert changelog.parse(text)[0].is_unreleased
+
+
+def test_wrapped_item_is_one_item_in_the_notes():
+    text = "## [Unreleased]\n\n## [1.0.0] - 2026-10-10\n\n### Added\n\n- A long item that\n  continues here.\n- Next.\n"
+    assert changelog.parse(text)[1].groups["Added"] == ["A long item that continues here.", "Next."]
+    assert "- A long item that continues here.\n" in changelog.notes(text, "1.0.0")
