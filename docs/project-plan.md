@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] |
+| CrossReference | [BC-001], [SA-001], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Reviewed (RC-015): JSON removed from the credential failures, answered MIL-001 decisions removed from Open Issues | [b282e10] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added gateway MIL-006 (shared wiki publishing) | [6b8e36d] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added gateway MIL-006 (shared wiki publishing) | [6b8e36d] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | P1 use cases written and accepted (UCD-001, US-001, UC-001 to UC-004): Open Issues updated | [a2bf2d4] |
 
 ---
 
@@ -86,7 +86,7 @@ A No-Go moves every later window by the rework time of the failed milestone.
 
 - Confirm the proposed dates and the start week (S01 and S05).
 - No QC checklist exists for the Project Plan.
-- Formal use cases need a use case diagram and user stories first; neither exists yet.
+- The P1 candidates are written as brief use cases (UC-001 to UC-004) with a use case diagram (UCD-001) and user stories (US-001). The P2 and P3 candidates have no use case document yet.
 
 ## Appendix: Use Case Candidates and Prioritisation
 
@@ -244,6 +244,7 @@ no tests, no release process.
 
 [BC-001]: ./business-case.md
 [SA-001]: ./stakeholder-analysis.md
+[US-001]: ./user-stories.md
 [MIL-001]: ./milestones/mil-001-stabilise-metadata-sync.md
 [MIL-002]: ./milestones/mil-002-onboarding-and-operations.md
 [MIL-003]: ./milestones/mil-003-quality-checks.md
@@ -256,5 +257,5 @@ no tests, no release process.
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [Milestone MIL-006]: https://git.tirsystem.com/TirSystem/github-action/milestone/94
-[b282e10]: https://git.tirsystem.com/TirSystem/github-action/commit/b282e107416a890d6df27e6bdf23ab8a65e17123
 [6b8e36d]: https://git.tirsystem.com/TirSystem/github-action/commit/6b8e36d67ac9af165b180bc0045289e41cfd1fc3
+[a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
