@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S05 | Initial version | pending |
+| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S05 | Initial version | [aa3f088] |
 
 ---
 
@@ -61,3 +61,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-005]: ./reviews/rc-005-mil-002.md
 [RC-006]: ./reviews/rc-006-mil-003.md
 [RC-007]: ./reviews/rc-007-mil-004.md
+[aa3f088]: https://git.tirsystem.com/TirSystem/github-action/commit/aa3f08876d55fa5f008e93f65176a496601c00ca
