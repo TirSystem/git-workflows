@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Last decision date is 2026-12-12 after adding MIL-005 | [ae4e257] |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | UC candidate 2 names the secret PAT_FOR_GITHUB | pending |
+| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | UC candidate 2 names the secret PAT_FOR_GITHUB | [a26a491] |
 
 ---
 
@@ -253,3 +253,4 @@ no tests, no release process.
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [ae4e257]: https://git.tirsystem.com/TirSystem/github-action/commit/ae4e257236095e76132980fad1e9a661b1d082c7
+[a26a491]: https://git.tirsystem.com/TirSystem/github-action/commit/a26a49173718b89785ea4a6e4c8bdbfb9aca975d
