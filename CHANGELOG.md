@@ -20,15 +20,17 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
-Everything below is what the first release, `1.0.0`, will contain. Until it is
-tagged the workflows are delivered from `main` and are not pinned.
+## [1.0.0] - 2026-10-10
+
+First release. The reusable workflow can be pinned at `v1` or `v1.0.0`. The
+scoped workflows are delivered by the instance from `main` and cannot be pinned.
 
 ### Added
 
-- Workflow `release.yml`: started by hand with a version, it releases only the tip of
-  `main` whose validation run is green and whose changelog entry exists, creates
-  the version tag, the release page and the major tag, and does nothing but
-  check until `dry_run` is set to `false`.
+- Workflow `release.yml`: started by hand with a version, it releases only the
+  tip of `main` whose validation run is green and whose changelog entry exists,
+  creates the version tag, the release page and the major tag, and does nothing
+  but check until `dry_run` is set to `false`.
 - Scoped workflow `sync-github-metadata.yml`: copies the description and topics
   of a Gitea repository to its GitHub push mirror on every push to `main`, by
   hand and daily at 03:17 UTC. A repository without a GitHub mirror is skipped
