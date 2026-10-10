@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-006 and RC-016 | pending |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-017 for PP-001 | pending |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-006 and RC-016 | [676a262] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-017 for PP-001 | [676a262] |
 
 ---
 
@@ -92,3 +92,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-015]: ./reviews/rc-015-project-plan-pat.md
 [RC-016]: ./reviews/rc-016-mil-006.md
 [RC-017]: ./reviews/rc-017-project-plan-mil-006.md
+[676a262]: https://git.tirsystem.com/TirSystem/github-action/commit/676a26240563338307c0454c3bf15b960bdb58ca
