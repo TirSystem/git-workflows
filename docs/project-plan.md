@@ -35,7 +35,7 @@ workflows. The Business Case sets no deadline, so the dates are proposals.
 | Shared quality checks | [MIL-003] | 2026-11-02 to 2026-11-14 | 2026-11-14 | S05 | None yet | Reusable quality-check workflow | [Milestone MIL-003] |
 | Versioned release and publishing | [MIL-004] | 2026-11-16 to 2026-11-28 | 2026-11-28 | S05 | None yet | Release process and reusable release workflow | [Milestone MIL-004] |
 | Wiki and translations | [MIL-005] | 2026-11-30 to 2026-12-12 | 2026-12-12 | S05 | None yet | Wiki pages in English, Danish and Bahasa Malaysia, kept current by every pull request | [Milestone MIL-005] |
-| Shared wiki publishing | [MIL-006] | 2026-12-14 to 2026-12-26 | 2026-12-26 | S05 | None yet | Scoped publish-wiki workflow with opt-in, piloted in one other repository | Not created yet |
+| Shared wiki publishing | [MIL-006] | 2026-12-14 to 2026-12-26 | 2026-12-26 | S05 | None yet | Scoped publish-wiki workflow with opt-in, piloted in one other repository | [Milestone MIL-006] |
 
 ```plantuml
 @startgantt
@@ -255,5 +255,6 @@ no tests, no release process.
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
+[Milestone MIL-006]: https://git.tirsystem.com/TirSystem/github-action/milestone/94
 [b282e10]: https://git.tirsystem.com/TirSystem/github-action/commit/b282e107416a890d6df27e6bdf23ab8a65e17123
 [6b8e36d]: https://git.tirsystem.com/TirSystem/github-action/commit/6b8e36d67ac9af165b180bc0045289e41cfd1fc3

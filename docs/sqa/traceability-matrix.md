@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [ADR-0001], [ADR-0002], [ADR-0003] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-006 and RC-016 | [676a262] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-017 for PP-001 | [676a262] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-017 for PP-001 | [676a262] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0004 and RC-018 | [b22a2cd] |
 
 ---
 
@@ -45,7 +45,8 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-010] | RC | [MIL-005] | - | - |
 | [ADR-0001] | ADR | [BC-001], [MIL-005] | [ADR-0003] | [RC-012] |
 | [ADR-0002] | ADR | [SA-001], [RC-001] | - | [RC-013] |
-| [ADR-0003] | ADR | [MIL-005], [ADR-0001], [RC-011] | - | [RC-014] |
+| [ADR-0003] | ADR | [MIL-005], [ADR-0001], [RC-011] | [ADR-0004] | [RC-014] |
+| [ADR-0004] | ADR | [MIL-006], [ADR-0003], [ADR-0002] | - | [RC-018] |
 | [RC-011] | RC | [MIL-005] | - | - |
 | [RC-012] | RC | [ADR-0001] | - | - |
 | [RC-013] | RC | [ADR-0002] | - | - |
@@ -53,6 +54,7 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-015] | RC | [PP-001] | - | - |
 | [RC-016] | RC | [MIL-006] | - | - |
 | [RC-017] | RC | [PP-001] | - | - |
+| [RC-018] | RC | [ADR-0004] | - | - |
 
 ## Coverage Notes
 
@@ -87,9 +89,12 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0001]: ../adr/adr-0001-wiki-structure-and-languages.md
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [ADR-0003]: ../adr/adr-0003-wiki-publish-token.md
+[ADR-0004]: ../adr/adr-0004-shared-wiki-publishing-opt-in.md
 [RC-013]: ./reviews/rc-013-adr-0002.md
 [RC-014]: ./reviews/rc-014-adr-0003.md
 [RC-015]: ./reviews/rc-015-project-plan-pat.md
 [RC-016]: ./reviews/rc-016-mil-006.md
 [RC-017]: ./reviews/rc-017-project-plan-mil-006.md
+[RC-018]: ./reviews/rc-018-adr-0004.md
 [676a262]: https://git.tirsystem.com/TirSystem/github-action/commit/676a26240563338307c0454c3bf15b960bdb58ca
+[b22a2cd]: https://git.tirsystem.com/TirSystem/github-action/commit/b22a2cd59235078656c4440b945b787f88fbd345
