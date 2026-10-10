@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added task 6 (embedded scripts to files) and Go/No-Go criterion 5; traceability adds O2 (RC-034) | [616c5d2] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added the verification results of the first release (v1.0.0) | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added the verification results of the first release (v1.0.0) | [6933e91] |
 
 ---
 
@@ -93,3 +93,4 @@ After the release the two scoped workflows fetch their scripts at `ref: v1`
 [BC-001]: ../business-case.md
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [616c5d2]: https://git.tirsystem.com/TirSystem/github-action/commit/616c5d2e48f0d76399a6f78923891fc7f50c8e22
+[6933e91]: https://git.tirsystem.com/TirSystem/github-action/commit/6933e91c83075fb39b2dfbe41683cb2a0a0bce28
