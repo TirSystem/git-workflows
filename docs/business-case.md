@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Added S05 to assumptions, risks and stakeholders | [4de5438] |
 | 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | A mirrored repository has at most one GitHub push mirror; repositories without one are skipped | [0c06789] |
+| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Scope: wiki pages in English, Danish and Bahasa Malaysia | pending |
 
 ---
 
@@ -66,6 +66,7 @@ made once.
 
 - Gitea Actions workflows (and GitHub-compatible syntax where it is the same).
 - Documentation for DevOps professionals and software engineers.
+- A Gitea wiki with the same documentation in English, Danish and Bahasa Malaysia (MIL-005).
 - Validation of workflow files and their documentation.
 
 ### Out of Scope
@@ -148,5 +149,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 ---
 
 [SA-001]: ./stakeholder-analysis.md
-[4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
 [0c06789]: https://git.tirsystem.com/TirSystem/github-action/commit/0c06789a2779382672712cd483f4964b28a0ebe9
