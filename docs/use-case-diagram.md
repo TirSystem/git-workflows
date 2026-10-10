@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | UCD-001 |
-| CrossReference | [SA-001], [BC-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006] |
+| CrossReference | [SA-001], [BC-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the actor Software Engineer and the use case Run Project Quality Checks | [385d2fb] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added the use case Release a Reusable Workflow (UC-006) | [044d8ba] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the use case Release a Reusable Workflow (UC-006) | [044d8ba] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added the use case Consume a Workflow Update (UC-007) (RC-045) | [4cf52af] |
 
 ---
 
@@ -45,6 +45,7 @@ rectangle "Reusable Workflow Collection" <<System>> {
   usecase "Diagnose a Failed Workflow" as UC4
   usecase "Run Project Quality Checks" as UC5
   usecase "Release a Reusable Workflow" as UC6
+  usecase "Consume a Workflow Update" as UC7
 }
 
 DevOps --> UC1
@@ -55,6 +56,7 @@ DevOps --> UC6
 Operator --> UC2
 Operator --> UC4
 Engineer --> UC5
+Engineer --> UC7
 UC1 --> Gitea
 UC1 --> GitHub
 UC3 ..> UC2 : <<include>>
@@ -68,7 +70,7 @@ UC4 ..> UC1 : <<extend>>
 | --- | --- | --- | --- |
 | DevOps Professional | `<<Actor>>` | S05 | Synchronize Repository Metadata, Configure Workflow Credentials, Onboard a Repository, Diagnose a Failed Workflow, Release a Reusable Workflow |
 | Platform Operator | `<<Actor>>` | S03 | Configure Workflow Credentials, Diagnose a Failed Workflow |
-| Software Engineer | `<<Actor>>` | S02 | Run Project Quality Checks |
+| Software Engineer | `<<Actor>>` | S02 | Run Project Quality Checks, Consume a Workflow Update |
 | Gitea Instance | `<<System>>` | - | Synchronize Repository Metadata (source of description and topics) |
 | GitHub | `<<System>>` | S04 (audience of the mirror) | Synchronize Repository Metadata (target) |
 
@@ -82,6 +84,7 @@ UC4 ..> UC1 : <<extend>>
 | Diagnose a Failed Workflow | DevOps Professional, Platform Operator | The cause of a failed run is found and placed in a category |
 | Run Project Quality Checks | Software Engineer | Lint, format and type checks run on every change and report a pass or a fail |
 | Release a Reusable Workflow | DevOps Professional | A validated, versioned update that consumers can pin |
+| Consume a Workflow Update | Software Engineer | A new version is adopted safely, one repository first |
 
 ## Relationships
 
@@ -100,6 +103,7 @@ UC4 ..> UC1 : <<extend>>
 [UC-003]: ./uc-003/uc.md
 [UC-004]: ./uc-004/uc.md
 [UC-005]: ./uc-005/uc.md
-[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
 [UC-006]: ./uc-006/uc.md
 [044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051
+[UC-007]: ./uc-007/uc.md
+[4cf52af]: https://git.tirsystem.com/TirSystem/github-action/commit/4cf52afe00f546c6b20424fb8dfc12796ffd9296

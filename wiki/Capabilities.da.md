@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 c55376110b0c -->
+<!-- translation of Capabilities.md, source sha256 c1d5b1f173ef -->
 
 > Dette er en oversættelse af [`Capabilities`](Capabilities). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -15,7 +15,7 @@ Rækker, der siger Implementeret eller Vejledninger er skrevet, findes i dag. Re
 | Tilslutning af et repository, administration af runners, fejlfinding | Vejledninger er skrevet ([tilslutning](Onboarding.da), [fejlfinding](Troubleshooting.da)); scoped levering til andre repositories er ikke verificeret endnu; korte use cases er åbne (MIL-002) |
 | Publicering af et repositorys wiki fra `wiki/` (tilmelding, leveres til alle organisationer) | Implementeret i `.gitea/scoped_workflows/publish-wiki.yml`, med offline-tests; pilotforsøget i et andet repository afventer (MIL-006) |
 | Fælles kvalitetskontrol (Python og shell) | Implementeret som det genbrugelige workflow `.gitea/workflows/quality-checks.yml`, med offline-tests og et forsøg i en anden organisation; tilslutningen i RepoFoundry er til gennemgang ([vejledning](QualityChecks.da)) |
-| Versioneret udgivelse og publicering | Planlagt (MIL-004) |
+| Versioneret udgivelse og publicering | Udgivelsesproces, changelog og opgraderingsvejledning er defineret; den første udgivelse `v1.0.0` og udgivelsesworkflowet mangler (MIL-004) ([vejledning](Upgrading.da)) |
 
 ### Synkronisering af GitHub-metadata
 
