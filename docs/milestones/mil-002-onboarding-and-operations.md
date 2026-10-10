@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-002 |
-| CrossReference | [BC-001] |
+| CrossReference | [BC-001], [ADR-0002] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
-| 2026-10-03 | Accepted | Jens Tirsvad Nielsen | S01 | Recorded verification results for task 2 | [7dcb9c4] |
+| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Recorded verification results for task 2 | [7dcb9c4] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-10-31 confirmed on 2026-10-10 by S01 (stand-in for S05) | pending |
 
 ---
 
@@ -56,7 +56,7 @@ a credential validation step in the workflow, and categorized failure messages.
 
 ## Target Date
 
-2026-10-31 — proposed; to be confirmed by S01 and S05.
+2026-10-31 — confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002); the Business Case sets no deadline.
 
 ## Tasks
 
@@ -73,5 +73,5 @@ a credential validation step in the workflow, and categorized failure messages.
 ---
 
 [BC-001]: ../business-case.md
-[4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
 [7dcb9c4]: https://git.tirsystem.com/TirSystem/github-action/commit/7dcb9c4dfce712572aced281d0dfdfa435283646
+[ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md

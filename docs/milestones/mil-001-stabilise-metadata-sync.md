@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-001 |
-| CrossReference | [BC-001] |
+| CrossReference | [BC-001], [ADR-0002] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Recorded decisions for tasks 1 and 3 | [cbb9688] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Task 1 decision amended: zero GitHub mirrors is a successful skip<br>Task 5 tests cover zero or several mirrors accordingly | [0c06789] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Task 1 decision amended: zero GitHub mirrors is a successful skip<br>Task 5 tests cover zero or several mirrors accordingly | [0c06789] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-10-17 confirmed on 2026-10-10 by S01 (stand-in for S05) | pending |
 
 ---
 
@@ -56,7 +56,7 @@ successful manual run on the Gitea instance.
 
 ## Target Date
 
-2026-10-17 — proposed; to be confirmed by S01 and S05 (the Business Case sets no deadline).
+2026-10-17 — confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002); the Business Case sets no deadline.
 
 ## Tasks
 
@@ -73,5 +73,5 @@ successful manual run on the Gitea instance.
 ---
 
 [BC-001]: ../business-case.md
-[cbb9688]: https://git.tirsystem.com/TirSystem/github-action/commit/cbb9688ed4217ee953d5843b846e2e79f22aaf45
 [0c06789]: https://git.tirsystem.com/TirSystem/github-action/commit/0c06789a2779382672712cd483f4964b28a0ebe9
+[ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md

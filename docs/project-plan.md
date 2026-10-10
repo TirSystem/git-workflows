@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added gateway MIL-006 (shared wiki publishing) | [6b8e36d] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | P1 use cases written and accepted (UCD-001, US-001, UC-001 to UC-004): Open Issues updated | [a2bf2d4] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | P1 use cases written and accepted (UCD-001, US-001, UC-001 to UC-004): Open Issues updated | [a2bf2d4] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Dates confirmed by S01 (stand-in for S05); the confirmation item is removed from Open Issues | pending |
 
 ---
 
@@ -18,13 +18,13 @@
 
 This plan schedules six milestones that move the repository from one
 workflow with known defects to a documented, versioned collection of shared
-workflows. The Business Case sets no deadline, so the dates are proposals.
+workflows. The Business Case sets no deadline, so the dates are the plan's own; they were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
 ## Planning Assumptions
 
 - Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26.
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
-- Dates are proposed by the author and need confirmation by S01 and S05.
+- Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
 ## Gateway Schedule
 
@@ -84,7 +84,6 @@ A No-Go moves every later window by the rework time of the failed milestone.
 
 ## Open Issues
 
-- Confirm the proposed dates and the start week (S01 and S05).
 - No QC checklist exists for the Project Plan.
 - The P1 candidates are written as brief use cases (UC-001 to UC-004) with a use case diagram (UCD-001) and user stories (US-001). The P2 and P3 candidates have no use case document yet.
 
@@ -245,6 +244,7 @@ no tests, no release process.
 [BC-001]: ./business-case.md
 [SA-001]: ./stakeholder-analysis.md
 [US-001]: ./user-stories.md
+[ADR-0002]: ./adr/adr-0002-s01-approves-as-stand-in.md
 [MIL-001]: ./milestones/mil-001-stabilise-metadata-sync.md
 [MIL-002]: ./milestones/mil-002-onboarding-and-operations.md
 [MIL-003]: ./milestones/mil-003-quality-checks.md
@@ -257,5 +257,4 @@ no tests, no release process.
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [Milestone MIL-006]: https://git.tirsystem.com/TirSystem/github-action/milestone/94
-[6b8e36d]: https://git.tirsystem.com/TirSystem/github-action/commit/6b8e36d67ac9af165b180bc0045289e41cfd1fc3
 [a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd

@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-005 |
-| CrossReference | [BC-001] |
+| CrossReference | [BC-001], [ADR-0002] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [08ef26a] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Decided how the wiki is published: source in `wiki/`, published by a workflow on merge<br>Added task 8 | [77c5277] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Decided how the wiki is published: source in `wiki/`, published by a workflow on merge<br>Added task 8 | [77c5277] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-12-12 confirmed on 2026-10-10 by S01 (stand-in for S05) | pending |
 
 ---
 
@@ -61,7 +61,7 @@ to `main`, and a pull request rule in `AGENTS.md` keeps the wiki current.
 
 ## Target Date
 
-2026-12-12 — proposed; to be confirmed by S01 and S05.
+2026-12-12 — confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002); the Business Case sets no deadline.
 
 ## Tasks
 
@@ -79,5 +79,5 @@ to `main`, and a pull request rule in `AGENTS.md` keeps the wiki current.
 ---
 
 [BC-001]: ../business-case.md
-[08ef26a]: https://git.tirsystem.com/TirSystem/github-action/commit/08ef26a6d3eb98c066b45634c2271e578e6c0a0b
 [77c5277]: https://git.tirsystem.com/TirSystem/github-action/commit/77c52779c46bca35dee4d73e587ca7b611373790
+[ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md

@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 2660f2095b78 -->
+<!-- translation of Credentials.md, source sha256 10a051e910de -->
 
 > Ini ialah terjemahan [`Credentials`](Credentials). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -15,12 +15,12 @@ Aliran kerja penyegerakan menggunakan dua rahsia (secret). Beri setiap satu keis
 
 ## Kebenaran minimum
 
-Ini datang daripada dokumentasi Gitea dan GitHub serta panggilan API yang dibuat oleh aliran kerja. Ia **belum disahkan dengan token minimum pada instans ini**; S05 harus mengesahkannya apabila token dicipta.
+Ini disemak pada 2026-10-10 terhadap kod sumber Gitea (definisi laluan dalam `routers/api/v1/api.go`, cabang `main`) dan halaman GitHub "Permissions required for fine-grained personal access tokens", bagi setiap panggilan API yang dibuat oleh aliran kerja. S01 meluluskannya sebagai pengganti S05 (ADR-0002) pada 2026-10-10. Ia **belum diuji pada instans ini dengan token yang hanya mempunyai kebenaran ini**; semakan di hujung bahagian ini ialah cara untuk melakukannya.
 
 **Token Gitea** (personal access token seorang pengguna, bukan deploy key; deploy key tidak berfungsi untuk REST API):
 
-- skop `read:repository`
-- pengguna mesti dibenarkan membaca push mirror repositori, yang dihadkan oleh Gitea kepada pentadbir repositori
+- skop `read:repository`: setiap laluan `/repos/...` memerlukan skop repositori, dan panggilan di bawah hanya membaca
+- pengguna mesti pentadbir repositori: laluan `push_mirrors` memerlukan pentadbiran repositori selain skop token
 
 Panggilan yang dibuat: `GET /repos/{owner}/{repo}` dan `GET /repos/{owner}/{repo}/push_mirrors`.
 
@@ -28,10 +28,18 @@ Panggilan yang dibuat: `GET /repos/{owner}/{repo}` dan `GET /repos/{owner}/{repo
 
 - Resource owner: pemilik repositori cermin
 - Repository access: hanya repositori cermin
-- Repository permission: **Administration: Read and write** (tiada kebenaran lain)
+- Repository permission: **Administration: Read and write** (tiada kebenaran lain); ia diperlukan untuk `PATCH /repos/{owner}/{repo}` dan `PUT /repos/{owner}/{repo}/topics`. `Metadata: Read` ditambah secara automatik dan meliputi `GET /repos/{owner}/{repo}`.
 - Tetapkan tarikh tamat tempoh
 
 Panggilan yang dibuat: `GET /repos/{owner}/{repo}`, `PATCH /repos/{owner}/{repo}` (penerangan) dan `PUT /repos/{owner}/{repo}/topics`.
+
+**Token Gitea untuk wiki** (lihat "Secret untuk menerbitkan wiki" di bawah): skop `write:repository`, kerana menulis halaman (`POST`, `PATCH`, `DELETE` di bawah `/repos/{owner}/{repo}/wiki`) memerlukan skop repositori dengan akses tulis, dan pengguna mesti mempunyai akses tulis kepada wiki repositori. Menyenaraikan dan membaca halaman hanya memerlukan skop baca.
+
+**Menguji kebenaran pada instans (pilihan)**
+
+1. Dalam tetapan Gitea pengguna, token yang disimpan sebagai `TOKEN_FOR_GITEA` hanya menyenaraikan `read:repository`, pengguna ialah pentadbir repositori, dan larian masih berakhir dengan `Preflight passed`.
+2. Token GitHub hanya menyenaraikan repositori cermin dan `Administration: Read and write` (serta `Metadata: Read` automatik), dan larian berakhir dengan `Preflight passed` dan `Synced description and topics`.
+3. Token sementara yang tidak mempunyai salah satu kebenaran ini menyebabkan larian gagal dengan `[permissions]` (atau HTTP 403 bagi Gitea) dan menamakan kategori tanpa mencetak token.
 
 Format `PAT_FOR_GITHUB`: hanya rentetan token (contohnya `github_pat_...`) sebagai teks biasa. Aliran kerja hanya menyemak bahawa ia tidak kosong; GitHub menolak nilai yang salah (HTTP 401).
 
