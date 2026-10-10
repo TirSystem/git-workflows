@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | S01 stood in for S05<br>Independence of the review is still open | [0799b43] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-005 and RC-008 to RC-010 | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-005 and RC-008 to RC-010 | [ae4e257] |
 
 ---
 
@@ -71,3 +71,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-009]: ./reviews/rc-009-project-plan-mil-005.md
 [RC-010]: ./reviews/rc-010-mil-005.md
 [0799b43]: https://git.tirsystem.com/TirSystem/github-action/commit/0799b43888a1fef02fe135818a4a38eff3452a09
+[ae4e257]: https://git.tirsystem.com/TirSystem/github-action/commit/ae4e257236095e76132980fad1e9a661b1d082c7

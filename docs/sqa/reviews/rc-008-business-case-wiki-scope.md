@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [ae4e257] |
 
 ---
 
@@ -45,3 +45,4 @@ Go - all eight criteria pass for the revision that adds the wiki (English, Danis
 
 [BC-001]: ../../business-case.md
 [QC-BC-001]: ../../../framework/qc/qc-business-case.md
+[ae4e257]: https://git.tirsystem.com/TirSystem/github-action/commit/ae4e257236095e76132980fad1e9a661b1d082c7

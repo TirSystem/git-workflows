@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added gateway MIL-005 (wiki and translations) | [08ef26a] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Last decision date is 2026-12-12 after adding MIL-005 | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Last decision date is 2026-12-12 after adding MIL-005 | [ae4e257] |
 
 ---
 
@@ -252,3 +252,4 @@ no tests, no release process.
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [08ef26a]: https://git.tirsystem.com/TirSystem/github-action/commit/08ef26a6d3eb98c066b45634c2271e578e6c0a0b
+[ae4e257]: https://git.tirsystem.com/TirSystem/github-action/commit/ae4e257236095e76132980fad1e9a661b1d082c7
