@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [f5fb023] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [f5fb023] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-012): decision stated in two sentences, rules moved below it | pending |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -55,18 +56,22 @@ Options for the source of truth of a translation:
 
 ## Decision
 
-The wiki has five pages (Home, Onboarding, Credentials, Troubleshooting,
-Capabilities). The English page has no suffix and is generated; a translation
-is the page name plus `.da` or `.ms` (`Home.da`, `Credentials.ms`), written by
-hand in `wiki/<Page>.<lang>.md`, reviewed by a native reader, and published by
-the same workflow. English is authoritative.
+A translation is named `<Page>.da` or `<Page>.ms`, written by hand in
+`wiki/<Page>.<lang>.md`, reviewed by a native reader and checked against a
+recorded hash of the English page. The English page has no suffix, is
+generated, and stays authoritative.
 
-Each translation starts with the comment
-`<!-- translation of <Page>.md, source sha256 <first 12 hex of the English file> -->`,
-so a check can report a translation whose English source has changed. Code
-blocks, commands, file names and the workflow's error messages stay in
-English. Terms are kept consistent through a term list (`docs/wiki-terms.md`,
-created in MIL-005 task 4).
+The rules that follow from it:
+
+- The wiki has five pages: Home, Onboarding, Credentials, Troubleshooting and
+  Capabilities, each also as `.da` and `.ms` (15 files in `wiki/`).
+- Each translation starts with the comment
+  `<!-- translation of <Page>.md, source sha256 <first 12 hex of the English file> -->`,
+  so a check can report a translation whose English source has changed.
+- Code blocks, commands, file names and the workflows' error messages stay in
+  English.
+- Terms are kept consistent through a term list (`docs/wiki-terms.md`, created
+  in MIL-005 task 4).
 
 ## Consequences
 

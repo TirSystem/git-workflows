@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [ADR-0001] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-005 and RC-008 to RC-010 | [ae4e257] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-011 for the MIL-005 amendment | [20361e8] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-011 for the MIL-005 amendment | [20361e8] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0001 and RC-012 | pending |
 
 ---
 
@@ -42,12 +42,14 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
 | [RC-010] | RC | [MIL-005] | - | - |
+| [ADR-0001] | ADR | [BC-001], [MIL-005] | - | [RC-012] |
 | [RC-011] | RC | [MIL-005] | - | - |
+| [RC-012] | RC | [ADR-0001] | - | - |
 
 ## Coverage Notes
 
 - `-` in Upstream means foundational (SA-001 has no prerequisite). In Downstream it means nothing is built on the instance yet. In Last Reviewed it means no `RC-*` exists (review records are not themselves reviewed).
-- Types with no instance yet: KPI, BMC, BPMN, UCD, US, UC, SSD, DM, OC, SD, DCD, ERD, ADR, GOV, DICT. The Project Plan lists use case candidates, but the formal use cases wait for a use case diagram and user stories.
+- Types with no instance yet: KPI, BMC, BPMN, UCD, US, UC, SSD, DM, OC, SD, DCD, ERD, GOV, DICT. The Project Plan lists use case candidates, but the formal use cases wait for a use case diagram and user stories.
 - PP-001 and TM-001 have no QC checklist; RC-002 validated PP-001 against its Business Case constraints and the milestone Go / No-Go criteria. TM-001 has no review record.
 - All review records are `Accepted` after S01 stood in for S05 on 2026-10-10. The author and S01 are the same person, so an independent review by S05 is still open (see RC-001).
 
@@ -72,5 +74,6 @@ updated whenever an artifact instance is created or reviewed.
 [RC-009]: ./reviews/rc-009-project-plan-mil-005.md
 [RC-010]: ./reviews/rc-010-mil-005.md
 [RC-011]: ./reviews/rc-011-mil-005-wiki-publishing.md
-[ae4e257]: https://git.tirsystem.com/TirSystem/github-action/commit/ae4e257236095e76132980fad1e9a661b1d082c7
+[RC-012]: ./reviews/rc-012-adr-0001.md
+[ADR-0001]: ../adr/adr-0001-wiki-structure-and-languages.md
 [20361e8]: https://git.tirsystem.com/TirSystem/github-action/commit/20361e881ebd0dc52e1d1c358ceb792c41b76c60
