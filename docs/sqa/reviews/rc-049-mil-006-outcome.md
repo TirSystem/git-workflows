@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [d575f27] |
 
 ---
 
@@ -43,3 +43,4 @@ Go - all six criteria pass; the one finding (criterion 2) was fixed during the r
 
 [MIL-006]: ../../milestones/mil-006-shared-wiki-publishing.md
 [QC-MIL-001]: ../../../framework/qc/qc-milestones-gateways.md
+[d575f27]: https://git.tirsystem.com/TirSystem/github-action/commit/d575f272fcb044e3165951013464177a6e659ea6

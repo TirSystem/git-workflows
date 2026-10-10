@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-048 (MIL-004 verification results) | [6933e91] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-049 (MIL-006 pilot results) | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-049 (MIL-006 pilot results) | [d575f27] |
 
 ---
 
@@ -183,3 +183,4 @@ updated whenever an artifact instance is created or reviewed.
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [6933e91]: https://git.tirsystem.com/TirSystem/github-action/commit/6933e91c83075fb39b2dfbe41683cb2a0a0bce28
+[d575f27]: https://git.tirsystem.com/TirSystem/github-action/commit/d575f272fcb044e3165951013464177a6e659ea6

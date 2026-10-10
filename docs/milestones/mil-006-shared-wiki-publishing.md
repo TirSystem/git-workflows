@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Target date 2026-12-26 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 1 evidence amended; added the verification results of the pilot | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 1 evidence amended; added the verification results of the pilot | [d575f27] |
 
 ---
 
@@ -94,3 +94,4 @@ the API and equal `wiki/*.md` on `main` (0 differences).
 [BC-001]: ../business-case.md
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
+[d575f27]: https://git.tirsystem.com/TirSystem/github-action/commit/d575f272fcb044e3165951013464177a6e659ea6
