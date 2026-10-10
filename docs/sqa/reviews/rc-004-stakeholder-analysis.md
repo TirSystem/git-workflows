@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S05 | Initial version | [aa3f088] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | Initial version | [aa3f088] |
 
 ---
 
@@ -33,7 +33,7 @@
 
 ## Overall Verdict
 
-Go — all eight criteria pass, with two follow-ups that do not affect the criteria. Retrospective review prepared 2026-10-10 at the request of S01; the instance has been `Accepted` since 2026-10-03 and this record confirms it against the checklist. The author and the approving reviewer are the same person (S01); independent review by S05 is recorded in RC-001 and applies here too.
+Go — all eight criteria pass, with two follow-ups that do not affect the criteria. Retrospective review prepared 2026-10-10 at the request of S01; the instance has been `Accepted` since 2026-10-03 and this record confirms it against the checklist. The author and the approving reviewer are the same person (S01); the independent S05 review is recorded in RC-001 and applies here too.
 
 ## Action Items
 

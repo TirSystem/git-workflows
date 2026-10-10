@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S05 | Initial version | [aa3f088] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | Initial version | [aa3f088] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Review records RC-001 to RC-007 are Accepted | pending |
 
 ---
 
@@ -43,7 +44,7 @@ updated whenever an artifact instance is created or reviewed.
 - `-` in Upstream means foundational (SA-001 has no prerequisite). In Downstream it means nothing is built on the instance yet. In Last Reviewed it means no `RC-*` exists (review records are not themselves reviewed).
 - Types with no instance yet: KPI, BMC, BPMN, UCD, US, UC, SSD, DM, OC, SD, DCD, ERD, ADR, GOV, DICT. The Project Plan lists use case candidates, but the formal use cases wait for a use case diagram and user stories.
 - PP-001 and TM-001 have no QC checklist; RC-002 validated PP-001 against its Business Case constraints and the milestone Go / No-Go criteria. TM-001 has no review record.
-- All review records are `Proposed`; the author and S01 are the same person, so an independent review by S05 is outstanding (see RC-001).
+- All review records are `Accepted` after the S05 review (reported by S01 on 2026-10-10); the author and S01 are the same person, so S05 is the independent reviewer.
 
 ---
 

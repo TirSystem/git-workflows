@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S05 | Initial version | [c017c06] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S05 | Initial version | [c017c06] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S05 | S05 review approved (reported by S01)<br>Independence action item closed | pending |
 
 ---
 
@@ -33,13 +34,13 @@
 
 ## Overall Verdict
 
-Go — all eight criteria pass. S01 gave the Go in chat on 2026-10-10 for the revision that changes the mirror assumption to at most one GitHub push mirror. The author and the approving reviewer are the same person (S01); an independent review by S05 is recorded as an action item.
+Go — all eight criteria pass. S01 gave the Go in chat on 2026-10-10 for the revision that changes the mirror assumption to at most one GitHub push mirror. The author and the approving reviewer are the same person (S01); S05 completed the independent review on 2026-10-10 (reported by S01).
 
 ## Action Items
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Independent review of this record and of BC-001 by a person other than the author (the rule that the reviewer must not be the author) | S05 | 2026-10-17 |
+| Independent review of this record and of BC-001 by a person other than the author (the rule that the reviewer must not be the author) | S05 | Done 2026-10-10 |
 
 ---
 
