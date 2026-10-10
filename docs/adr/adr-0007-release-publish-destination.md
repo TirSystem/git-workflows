@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version (RC-047) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version (RC-047) | [d9cd3c6] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -104,3 +104,4 @@ The rules that follow from it:
 [MIL-004]: ../milestones/mil-004-versioned-release.md
 [UC-006]: ../uc-006/uc.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
+[d9cd3c6]: https://git.tirsystem.com/TirSystem/github-action/commit/d9cd3c67d4017984af8958f32240d3d66217e153
