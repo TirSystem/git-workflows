@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | UC candidate 1: no GitHub mirror is a successful skip | [0c06789] |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Added gateway MIL-005 (wiki and translations) | pending |
+| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Added gateway MIL-005 (wiki and translations) | [08ef26a] |
 
 ---
 
@@ -252,3 +252,4 @@ no tests, no release process.
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [0c06789]: https://git.tirsystem.com/TirSystem/github-action/commit/0c06789a2779382672712cd483f4964b28a0ebe9
+[08ef26a]: https://git.tirsystem.com/TirSystem/github-action/commit/08ef26a6d3eb98c066b45634c2271e578e6c0a0b

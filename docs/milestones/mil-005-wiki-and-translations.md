@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [08ef26a] |
 
 ---
 
@@ -74,3 +74,4 @@ pull request rule in `AGENTS.md` that keeps the wiki current.
 ---
 
 [BC-001]: ../business-case.md
+[08ef26a]: https://git.tirsystem.com/TirSystem/github-action/commit/08ef26a6d3eb98c066b45634c2271e578e6c0a0b
