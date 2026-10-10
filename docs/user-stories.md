@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2bf2d4] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.09 and US-001.10 (quality checks, UC-005) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.09 and US-001.10 (quality checks, UC-005) | [385d2fb] |
 
 ---
 
@@ -176,3 +176,4 @@ behaviour is tested rather than built.
 [UC-004]: ./uc-004/uc.md
 [a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
 [UC-005]: ./uc-005/uc.md
+[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7

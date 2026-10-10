@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [385d2fb] |
 
 ---
 
@@ -41,3 +41,4 @@ A Software Engineer opens a pull request in a repository that calls the shared q
 [US-001]: ../user-stories.md
 [SA-001]: ../stakeholder-analysis.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
+[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7

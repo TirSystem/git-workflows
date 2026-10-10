@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2bf2d4] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added the actor Software Engineer and the use case Run Project Quality Checks | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added the actor Software Engineer and the use case Run Project Quality Checks | [385d2fb] |
 
 ---
 
@@ -98,3 +98,4 @@ UC4 ..> UC1 : <<extend>>
 [UC-004]: ./uc-004/uc.md
 [a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
 [UC-005]: ./uc-005/uc.md
+[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7

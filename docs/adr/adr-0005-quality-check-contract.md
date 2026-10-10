@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-038): the security impact of installing the tools from PyPI named | pending |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [385d2fb] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-038): the security impact of installing the tools from PyPI named | [385d2fb] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -121,3 +121,4 @@ The rules that follow from it:
 [UC-005]: ../uc-005/uc.md
 [US-001]: ../user-stories.md
 [ADR-0004]: ./adr-0004-shared-wiki-publishing-opt-in.md
+[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
