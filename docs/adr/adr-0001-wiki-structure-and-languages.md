@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [f5fb023] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-012): decision stated in two sentences, rules moved below it | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-012): decision stated in two sentences, rules moved below it | [d0618d9] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -103,3 +103,4 @@ The rules that follow from it:
 [MIL-005]: ../milestones/mil-005-wiki-and-translations.md
 [BC-001]: ../business-case.md
 [f5fb023]: https://git.tirsystem.com/TirSystem/github-action/commit/f5fb0238f36cbb98de482c68842fc60c7ce959e2
+[d0618d9]: https://git.tirsystem.com/TirSystem/github-action/commit/d0618d929f2ec274d30b10bb1be306e1f04c31ee

@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-011 for the MIL-005 amendment | [20361e8] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0001 and RC-012 | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0001 and RC-012 | [d0618d9] |
 
 ---
 
@@ -77,3 +77,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-012]: ./reviews/rc-012-adr-0001.md
 [ADR-0001]: ../adr/adr-0001-wiki-structure-and-languages.md
 [20361e8]: https://git.tirsystem.com/TirSystem/github-action/commit/20361e881ebd0dc52e1d1c358ceb792c41b76c60
+[d0618d9]: https://git.tirsystem.com/TirSystem/github-action/commit/d0618d929f2ec274d30b10bb1be306e1f04c31ee
