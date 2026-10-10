@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | UC candidate 2 names the secret PAT_FOR_GITHUB | [a26a491] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-015): JSON removed from the credential failures, answered MIL-001 decisions removed from Open Issues | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-015): JSON removed from the credential failures, answered MIL-001 decisions removed from Open Issues | [b282e10] |
 
 ---
 
@@ -251,3 +251,4 @@ no tests, no release process.
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [a26a491]: https://git.tirsystem.com/TirSystem/github-action/commit/a26a49173718b89785ea4a6e4c8bdbfb9aca975d
+[b282e10]: https://git.tirsystem.com/TirSystem/github-action/commit/b282e107416a890d6df27e6bdf23ab8a65e17123
