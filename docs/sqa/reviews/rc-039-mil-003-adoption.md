@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [3b8681d] |
 
 ---
 
@@ -44,3 +44,4 @@ Go - all six criteria pass; the reviewed change records the adoption trial and i
 
 [MIL-003]: ../../milestones/mil-003-quality-checks.md
 [QC-MIL-001]: ../../../framework/qc/qc-milestones-gateways.md
+[3b8681d]: https://git.tirsystem.com/TirSystem/github-action/commit/3b8681d0236c669b794ffbba725433fff600a2d2

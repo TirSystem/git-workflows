@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Task 1 verified: workflow_call and uses work from the same repository, the same organization and another organization (RC-033) | [b3f006f] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Task 4 recorded: adoption in RepoFoundry, the shfmt .editorconfig gap and the other findings (RC-039) | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Task 4 recorded: adoption in RepoFoundry, the shfmt .editorconfig gap and the other findings (RC-039) | [3b8681d] |
 
 ---
 
@@ -121,3 +121,4 @@ guide of task 5 (issue #19).
 [BC-001]: ../business-case.md
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [b3f006f]: https://git.tirsystem.com/TirSystem/github-action/commit/b3f006f7a482392189a46c324ad4f28c4c3a2d2a
+[3b8681d]: https://git.tirsystem.com/TirSystem/github-action/commit/3b8681d0236c669b794ffbba725433fff600a2d2
