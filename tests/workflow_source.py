@@ -11,6 +11,7 @@ WORKFLOW_DIRS = (
     REPO_ROOT / ".gitea" / "workflows",
 )
 SYNC_WORKFLOW = WORKFLOW_DIRS[0] / "sync-github-metadata.yml"
+PUBLISH_WORKFLOW = WORKFLOW_DIRS[0] / "publish-wiki.yml"
 
 _HEREDOC = re.compile(
     r"^[ \t]*python3 - <<'PY'\r?\n(?P<code>.*?)^[ \t]*PY[ \t]*\r?$",
@@ -41,4 +42,29 @@ def load_sync_module(name: str = "embedded_sync") -> dict[str, Any]:
     (source,) = embedded_python(SYNC_WORKFLOW)
     namespace: dict[str, Any] = {"__name__": name}
     exec(compile(source, str(SYNC_WORKFLOW), "exec"), namespace)
+    return namespace
+
+
+class ScriptNamespace(dict):
+    """The globals of an embedded script, readable and writable as attributes.
+
+    Functions of the script look names up in this dict, so a test that sets
+    `namespace.request_json = fake` changes what the script calls.
+    """
+
+    def __getattr__(self, name: str) -> Any:
+        try:
+            return self[name]
+        except KeyError:
+            raise AttributeError(name) from None
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        self[name] = value
+
+
+def load_publish_module(name: str = "embedded_publish") -> ScriptNamespace:
+    """Execute the embedded publish script without running `main`."""
+    (source,) = embedded_python(PUBLISH_WORKFLOW)
+    namespace = ScriptNamespace({"__name__": name})
+    exec(compile(source, str(PUBLISH_WORKFLOW), "exec"), namespace)
     return namespace
