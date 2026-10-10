@@ -11,9 +11,9 @@ each document lives in *this* project and the next version to use.
 | SA | Stakeholder Analysis | docs/stakeholder-analysis.md | 002 |
 | PP | Project Plan | docs/project-plan.md | 002 |
 | MIL | Milestone / Gateway | docs/milestones/*.md | 007 |
-| RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 047 |
+| RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 048 |
 | TM | Traceability Matrix | docs/sqa/traceability-matrix.md | 002 |
-| ADR | Architecture Decision Record | docs/adr/adr-NNNN-*.md | 0007 |
+| ADR | Architecture Decision Record | docs/adr/adr-NNNN-*.md | 0008 |
 | UCD | Use Case Diagram | docs/use-case-diagram.md | 002 |
 | US | User Story | docs/user-stories.md | 002 |
 | UC | Use Case | docs/uc-NNN/uc.md | 008 |

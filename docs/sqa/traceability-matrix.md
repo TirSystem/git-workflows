@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [ADR-0007], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added UC-006, ADR-0006 and RC-040 to RC-043 | [044d8ba] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added UC-007 and RC-044 to RC-046 | [4cf52af] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added UC-007 and RC-044 to RC-046 | [4cf52af] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0007 and RC-047 | pending |
 
 ---
 
@@ -65,6 +65,7 @@ updated whenever an artifact instance is created or reviewed.
 | [ADR-0005] | ADR | [MIL-003], [UC-005], [US-001], [ADR-0004] | - | [RC-038] |
 | [UC-006] | UC | [UCD-001], [US-001], [SA-001] | [ADR-0006] | [RC-042] |
 | [ADR-0006] | ADR | [MIL-004], [UC-006], [US-001], [ADR-0004], [ADR-0005] | - | [RC-043] |
+| [ADR-0007] | ADR | [MIL-004], [UC-006], [ADR-0006] | - | [RC-047] |
 | [UC-007] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-044] |
 | [RC-019] | RC | [UCD-001] | - | - |
 | [RC-020] | RC | [US-001] | - | - |
@@ -94,6 +95,7 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-044] | RC | [UC-007] | - | - |
 | [RC-045] | RC | [UCD-001] | - | - |
 | [RC-046] | RC | [US-001] | - | - |
+| [RC-047] | RC | [ADR-0007] | - | - |
 
 ## Coverage Notes
 
@@ -169,10 +171,11 @@ updated whenever an artifact instance is created or reviewed.
 [RC-044]: ./reviews/rc-044-uc-007.md
 [RC-045]: ./reviews/rc-045-ucd-001-consume.md
 [RC-046]: ./reviews/rc-046-us-001-consume.md
+[RC-047]: ./reviews/rc-047-adr-0007.md
+[ADR-0007]: ../adr/adr-0007-release-publish-destination.md
 [UC-007]: ../uc-007/uc.md
 [UC-006]: ../uc-006/uc.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
-[044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051
 [4cf52af]: https://git.tirsystem.com/TirSystem/github-action/commit/4cf52afe00f546c6b20424fb8dfc12796ffd9296
