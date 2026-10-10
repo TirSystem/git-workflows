@@ -20,6 +20,11 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Changed
+
+- The scoped workflows fetch their scripts at the tag `v1` instead of `main`,
+  so a merge to `main` reaches consumers only when it is released.
+
 ## [1.0.0] - 2026-10-10
 
 First release. The reusable workflow can be pinned at `v1` or `v1.0.0`. The

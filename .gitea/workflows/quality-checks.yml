@@ -4,7 +4,7 @@ name: Quality checks
 #
 #   jobs:
 #     quality:
-#       uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@main
+#       uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1
 #
 # It checks the Python and shell files of the repository with pinned tools,
 # changes no file and needs no secret.

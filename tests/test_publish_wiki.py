@@ -469,7 +469,7 @@ class TestWorkflow:
         assert steps[0]["uses"].startswith("actions/checkout@")
         assert steps[1]["with"] == {
             "repository": "TirSystem/github-action",
-            "ref": "main",
+            "ref": "v1",
             "path": "shared-scripts",
         }
         assert steps[-1]["run"] == "python3 shared-scripts/tools/publish_wiki.py"

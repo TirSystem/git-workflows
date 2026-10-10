@@ -1,4 +1,4 @@
-<!-- translation of QualityChecks.md, source sha256 84ed5e09689a -->
+<!-- translation of QualityChecks.md, source sha256 aa9c7296fa52 -->
 
 > Dette er en oversættelse af [`QualityChecks`](QualityChecks). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -22,7 +22,7 @@ jobs:
   quality:
     permissions:
       contents: read
-    uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@main
+    uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1
     with:
       languages: python,shell
 ```
@@ -36,7 +36,7 @@ jobs:
 | `shellcheck-py-version` | `0.10.0.1` | Version af pakken shellcheck-py (ShellCheck 0.10.0) |
 | `shfmt-py-version` | `3.11.0.2` | Version af pakken shfmt-py (shfmt 3.11.0) |
 
-Henvis til workflowet ved `main` eller et tag, aldrig ved en pull requests gren: den gren slettes, når pull requesten flettes, og henvisningen holder op med at virke.
+Henvis til workflowet ved major-tagget (`@v1`) eller et præcist tag (`@v1.0.0`), aldrig ved `main` og aldrig ved en pull requests gren: den gren slettes, når pull requesten flettes, og henvisningen holder op med at virke. Se opgraderingsvejledningen for, hvad hvert valg modtager.
 
 ## Hvad der kontrolleres
 
