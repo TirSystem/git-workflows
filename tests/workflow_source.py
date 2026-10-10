@@ -1,5 +1,6 @@
 """Helpers that read workflow files and the Python embedded in them."""
 
+import importlib.util
 import re
 import textwrap
 from pathlib import Path
@@ -11,6 +12,7 @@ WORKFLOW_DIRS = (
     REPO_ROOT / ".gitea" / "workflows",
 )
 SYNC_WORKFLOW = WORKFLOW_DIRS[0] / "sync-github-metadata.yml"
+SYNC_SCRIPT = REPO_ROOT / "tools" / "sync_github_metadata.py"
 PUBLISH_WORKFLOW = WORKFLOW_DIRS[0] / "publish-wiki.yml"
 
 _HEREDOC = re.compile(
@@ -37,12 +39,42 @@ def embedded_python(path: Path) -> list[str]:
     ]
 
 
-def load_sync_module(name: str = "embedded_sync") -> dict[str, Any]:
-    """Execute the embedded sync script without running `main`."""
-    (source,) = embedded_python(SYNC_WORKFLOW)
-    namespace: dict[str, Any] = {"__name__": name}
-    exec(compile(source, str(SYNC_WORKFLOW), "exec"), namespace)
-    return namespace
+class ModuleView:
+    """A script module, readable and writable by item and by attribute.
+
+    Tests write `sync["request_json"] = fake` or `module.request_json = fake`;
+    both set the attribute of the real module, so the functions of the script
+    see the replacement.
+    """
+
+    def __init__(self, module: Any) -> None:
+        object.__setattr__(self, "_module", module)
+
+    def __getitem__(self, name: str) -> Any:
+        return getattr(self._module, name)
+
+    def __setitem__(self, name: str, value: Any) -> None:
+        setattr(self._module, name, value)
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._module, name)
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        setattr(self._module, name, value)
+
+
+def load_script(path: Path, name: str) -> ModuleView:
+    """Import a script file without running its `main` (its name is not `__main__`)."""
+    spec = importlib.util.spec_from_file_location(name, path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return ModuleView(module)
+
+
+def load_sync_module(name: str = "sync_github_metadata") -> ModuleView:
+    """Import tools/sync_github_metadata.py."""
+    return load_script(SYNC_SCRIPT, name)
 
 
 class ScriptNamespace(dict):

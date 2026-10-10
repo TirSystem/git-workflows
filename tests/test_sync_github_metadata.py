@@ -1,4 +1,4 @@
-"""Offline tests for the Python embedded in sync-github-metadata.yml."""
+"""Offline tests for tools/sync_github_metadata.py."""
 
 import io
 import json

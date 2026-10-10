@@ -5,7 +5,7 @@ import ast
 import pytest
 import yaml
 
-from workflow_source import REPO_ROOT, SYNC_WORKFLOW, embedded_python, workflow_files
+from workflow_source import REPO_ROOT, SYNC_SCRIPT, SYNC_WORKFLOW, embedded_python, workflow_files
 
 WORKFLOWS = workflow_files()
 
@@ -33,8 +33,18 @@ class TestEachWorkflow:
             assert "permissions" in job, f"job {name} has no explicit permissions"
 
 
-def test_sync_workflow_embeds_exactly_one_script():
-    assert len(embedded_python(SYNC_WORKFLOW)) == 1
+def test_sync_workflow_embeds_no_script_and_runs_the_file():
+    assert embedded_python(SYNC_WORKFLOW) == []
+    document = yaml.safe_load(SYNC_WORKFLOW.read_text(encoding="utf-8"))
+    steps = document["jobs"]["sync-metadata"]["steps"]
+    assert steps[0]["with"]["repository"] == "TirSystem/github-action"
+    assert steps[-1]["run"] == "python3 shared-scripts/tools/sync_github_metadata.py"
+
+
+def test_sync_script_compiles_and_is_a_file_of_this_repository():
+    source = SYNC_SCRIPT.read_text(encoding="utf-8")
+    ast.parse(source, filename=str(SYNC_SCRIPT))
+    assert "def main()" in source and 'if __name__ == "__main__":' in source
 
 
 def test_each_workflow_name_has_one_source():
