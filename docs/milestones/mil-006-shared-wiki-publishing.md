@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [6b8e36d] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-12-26 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Target date 2026-12-26 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 1 evidence amended; added the verification results of the pilot | [d575f27] |
 
 ---
 
@@ -31,7 +31,7 @@ repository other than this one that publishes its wiki through it.
 
 | # | Criterion (objectively checkable) | Go | No-Go |
 | --- | --- | --- | --- |
-| 1 | A repository without the opt-in marker is never written to, shown by offline tests and by a run in one such repository | No request writes to its wiki | Any write |
+| 1 | A repository without the opt-in marker is never written to, shown by offline tests and by the trigger rule (a run in such a repository cannot be started: a scoped workflow is not dispatchable through the API and runs only on a push that changes `wiki/**`) | No request writes to its wiki | Any write |
 | 2 | The workflow exists once: the copy in `.gitea/workflows/` is removed and no script is needed from `tools/` | Count is 1 | A second copy exists |
 | 3 | One repository outside this one publishes its wiki through the shared workflow | Pages on the wiki equal its `wiki/` | Pages differ or run fails |
 | 4 | An empty or missing `wiki/` never deletes pages, and a failure names its category | Verified by tests | A wiki was emptied |
@@ -72,9 +72,26 @@ repository other than this one that publishes its wiki through it.
 | 4 | Pilot in one other repository | Choose one repository outside this one, add a `wiki/` folder with the marker, store `TOKEN_FOR_GITEA_WIKI` in its organisation (S03), publish, and read the pages back. Also confirm that a repository without the marker was not touched. | No | |
 | 5 | Update the guides and the wiki | Describe how a repository opts in and which secrets its organisation needs in the onboarding and credentials guides, regenerate the wiki pages and update the Danish and Bahasa Malaysia translations (rule 8 of `AGENTS.md`). | No | |
 
+## Verification results
+
+The pilot was `TirSystem/sqa-qc-checklists` (its PR 10, merged 2026-10-11).
+The scoped workflow ran as run 629 on `d4ddbb6`, fetched the scripts at `v1`,
+passed the token preflight and reported `Published 13 page(s): 0 created,
+0 updated, 0 deleted`. The 13 pages of the wiki were then read back through
+the API and equal `wiki/*.md` on `main` (0 differences).
+
+| # | Criterion | Result |
+| --- | --- | --- |
+| 1 | A repository without the marker is never written to | Go by the offline tests (`test_a_repository_without_the_marker_is_never_written_to`: no request, the existing page unchanged; `..._does_not_need_the_secret`; `..._without_a_wiki_directory_is_skipped`) and by the trigger rule. A live run was tried on 2026-10-11 in `TirSystem/IaC.server-setup-4-linux`: the API answered 404, the workflow is not listed for that repository and cannot be dispatched. S01 accepted the weaker evidence on 2026-10-11 (RC-049) |
+| 2 | The workflow exists once | Go: only `.gitea/scoped_workflows/publish-wiki.yml`; no copy in `.gitea/workflows/` and nothing is needed from `tools/` in the target repository (the script is fetched from `TirSystem/github-action`, MIL-004 task 6) |
+| 3 | One repository outside this one publishes its wiki | Go: `TirSystem/sqa-qc-checklists`, run 629, 13 pages equal |
+| 4 | An empty or missing `wiki/` never deletes pages; a failure names its category | Go: `test_an_empty_source_never_deletes_pages_even_with_prune` and the category tests |
+| 5 | `TOKEN_FOR_GITEA_WIKI` is documented and stored in the pilot's organisation | Go: `guides/credentials.md`; run 629 used the organisation secret |
+| 6 | The onboarding and credentials guides and their wiki languages describe opting in | Go: `wiki/.publish` and `TOKEN_FOR_GITEA_WIKI` appear in the guides and the English, Danish and Bahasa Malaysia pages |
+
 ---
 
 [BC-001]: ../business-case.md
-[6b8e36d]: https://git.tirsystem.com/TirSystem/github-action/commit/6b8e36d67ac9af165b180bc0045289e41cfd1fc3
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
+[d575f27]: https://git.tirsystem.com/TirSystem/github-action/commit/d575f272fcb044e3165951013464177a6e659ea6
