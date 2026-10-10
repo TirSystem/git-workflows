@@ -4,19 +4,19 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004] |
+| CrossReference | [BC-001], [SA-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Owner of every gateway is S05<br>Actors updated | [4de5438] |
 | 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | UC candidate 1: no GitHub mirror is a successful skip | [0c06789] |
+| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Added gateway MIL-005 (wiki and translations) | [08ef26a] |
 
 ---
 
 ## Purpose
 
-This plan schedules four milestones that move the repository from one
+This plan schedules five milestones that move the repository from one
 workflow with known defects to a documented, versioned collection of shared
 workflows. The Business Case sets no deadline, so the dates are proposals.
 
@@ -34,6 +34,7 @@ workflows. The Business Case sets no deadline, so the dates are proposals.
 | Onboarding and operations guide | [MIL-002] | 2026-10-19 to 2026-10-31 | 2026-10-31 | S05 | None yet | Verified onboarding, credential and diagnosis guide | [Milestone MIL-002] |
 | Shared quality checks | [MIL-003] | 2026-11-02 to 2026-11-14 | 2026-11-14 | S05 | None yet | Reusable quality-check workflow | [Milestone MIL-003] |
 | Versioned release and publishing | [MIL-004] | 2026-11-16 to 2026-11-28 | 2026-11-28 | S05 | None yet | Release process and reusable release workflow | [Milestone MIL-004] |
+| Wiki and translations | [MIL-005] | 2026-11-30 to 2026-12-12 | 2026-12-12 | S05 | None yet | Wiki pages in English, Danish and Bahasa Malaysia, kept current by every pull request | Not created yet |
 
 ```plantuml
 @startgantt
@@ -46,6 +47,8 @@ Project starts 2026-10-05
 [MIL-002 Go/No-Go] happens 2026-10-31
 [MIL-003 Go/No-Go] happens 2026-11-14
 [MIL-004 Go/No-Go] happens 2026-11-28
+[MIL-005 Wiki] starts 2026-11-30 and ends 2026-12-12
+[MIL-005 Go/No-Go] happens 2026-12-12
 @endgantt
 ```
 
@@ -57,11 +60,13 @@ Project starts 2026-10-05
 | Documentation for DevOps professionals | [MIL-002] |
 | Gitea Actions workflows for software engineers (quality checks) | [MIL-003] |
 | Gitea Actions workflows for software engineers (release and publishing) | [MIL-004] |
+| Wiki pages in English, Danish and Bahasa Malaysia | [MIL-005] |
 
 ## Dependencies
 
 ```
 MIL-001 → MIL-002 → MIL-003 → MIL-004
+            MIL-002 → MIL-005
 ```
 
 A No-Go moves every later window by the rework time of the failed milestone.
@@ -241,9 +246,10 @@ no tests, no release process.
 [MIL-002]: ./milestones/mil-002-onboarding-and-operations.md
 [MIL-003]: ./milestones/mil-003-quality-checks.md
 [MIL-004]: ./milestones/mil-004-versioned-release.md
+[MIL-005]: ./milestones/mil-005-wiki-and-translations.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
-[4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
 [0c06789]: https://git.tirsystem.com/TirSystem/github-action/commit/0c06789a2779382672712cd483f4964b28a0ebe9
+[08ef26a]: https://git.tirsystem.com/TirSystem/github-action/commit/08ef26a6d3eb98c066b45634c2271e578e6c0a0b

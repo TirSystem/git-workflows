@@ -10,7 +10,7 @@ each document lives in *this* project and the next version to use.
 | BC | Business Case | docs/business-case.md | 002 |
 | SA | Stakeholder Analysis | docs/stakeholder-analysis.md | 002 |
 | PP | Project Plan | docs/project-plan.md | 002 |
-| MIL | Milestone / Gateway | docs/milestones/*.md | 005 |
+| MIL | Milestone / Gateway | docs/milestones/*.md | 006 |
 | RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 008 |
 | TM | Traceability Matrix | docs/sqa/traceability-matrix.md | 002 |
 
@@ -23,6 +23,10 @@ each document lives in *this* project and the next version to use.
 | Technical register | IT Professional English |
 
 The PO language is English, so no PO-language translations are kept.
+
+The Gitea wiki (MIL-005) is the one exception: its pages are kept in English
+(authoritative), Danish (`da`) and Bahasa Malaysia (`ms`). Each translated page
+names the English source version it follows.
 
 | Artifact types | Register | Also kept as a PO-language file |
 | --- | --- | --- |
