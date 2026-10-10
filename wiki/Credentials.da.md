@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 57f66acfdc0a -->
+<!-- translation of Credentials.md, source sha256 b810a21a07d5 -->
 
 > Dette er en oversættelse af [`Credentials`](Credentials). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -10,8 +10,8 @@ Synkroniseringsworkflowet bruger to secrets. Giv hver af dem de mindste rettighe
 
 | Secret | Indhold | Bruges til |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA` | Et almindeligt token, en JSON-streng eller JSON med `GITEA_TOKEN` | At læse repositoryet (beskrivelse, emner) og dets push-spejle |
-| `CREDENTIALS_FOR_GITHUB` | JSON-objekt med et `GITHUB_PAT`, der ikke er tomt | At ændre beskrivelse og emner på GitHub-spejlet |
+| `TOKEN_FOR_GITEA` | Gitea-tokenet, intet andet | At læse repositoryet (beskrivelse, emner) og dets push-spejle |
+| `PAT_FOR_GITHUB` | GitHub-tokenet, intet andet | At ændre beskrivelse og emner på GitHub-spejlet |
 
 ## Mindste rettigheder
 
@@ -33,11 +33,7 @@ Kald, der foretages: `GET /repos/{owner}/{repo}` og `GET /repos/{owner}/{repo}/p
 
 Kald, der foretages: `GET /repos/{owner}/{repo}`, `PATCH /repos/{owner}/{repo}` (beskrivelse) og `PUT /repos/{owner}/{repo}/topics`.
 
-Format for `CREDENTIALS_FOR_GITHUB`:
-
-```json
-{"GITHUB_PAT": "<token>"}
-```
+Format for `PAT_FOR_GITHUB`: kun token-strengen (fx `github_pat_...`) som almindelig tekst. Workflowet tjekker kun, at den ikke er tom; GitHub afviser en forkert værdi (HTTP 401).
 
 ## Hvad workflowet kontrollerer, før det ændrer noget
 
@@ -56,7 +52,7 @@ Workflowet **Publish wiki** (kun dette repository) kopierer `wiki/` til Gitea-wi
 
 | Secret | Indhold | Bruges til |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA_WIKI` (valgfri) | Et almindeligt token, en JSON-streng eller JSON med `GITEA_TOKEN` | At skrive wikisiderne for dette repository |
+| `TOKEN_FOR_GITEA_WIKI` (valgfri) | Gitea-tokenet, intet andet | At skrive wikisiderne for dette repository |
 
 - Det token, der bruges, skal have scope `write:repository`, og dets bruger skal have skriveadgang til dette repository. Gitea har intet scope kun til wikien.
 - `TOKEN_FOR_GITEA` er beskrevet ovenfor med kun `read:repository`. Hvis det genbruges til wikien, skal dets scope hæves, hvilket også giver metadatasynkroniseringen skriveadgang. En separat `TOKEN_FOR_GITEA_WIKI` til en dedikeret bruger holder synkroniseringstokenet skrivebeskyttet. S05 beslutter hvilket, og S03 gemmer secreten.

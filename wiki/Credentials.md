@@ -12,8 +12,8 @@ leaves.
 
 | Secret | Content | Used for |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA` | A bare token, a JSON string, or JSON with `GITEA_TOKEN` | Reading the repository (description, topics) and its push mirrors |
-| `CREDENTIALS_FOR_GITHUB` | JSON object with a non-empty `GITHUB_PAT` | Changing the description and topics of the GitHub mirror |
+| `TOKEN_FOR_GITEA` | The Gitea token, nothing else | Reading the repository (description, topics) and its push mirrors |
+| `PAT_FOR_GITHUB` | The GitHub token, nothing else | Changing the description and topics of the GitHub mirror |
 
 ## Minimum permissions
 
@@ -40,11 +40,9 @@ Calls made: `GET /repos/{owner}/{repo}` and `GET /repos/{owner}/{repo}/push_mirr
 Calls made: `GET /repos/{owner}/{repo}`, `PATCH /repos/{owner}/{repo}` (description)
 and `PUT /repos/{owner}/{repo}/topics`.
 
-Format of `CREDENTIALS_FOR_GITHUB`:
-
-```json
-{"GITHUB_PAT": "<token>"}
-```
+Format of `PAT_FOR_GITHUB`: only the token string (for example
+`github_pat_...`), as clear text. The workflow only checks that it is not empty;
+GitHub rejects a wrong value (HTTP 401).
 
 ## What the workflow checks before it changes anything
 
@@ -70,7 +68,7 @@ when that secret exists and otherwise reuses `TOKEN_FOR_GITEA`.
 
 | Secret | Content | Used for |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA_WIKI` (optional) | A bare token, a JSON string, or JSON with `GITEA_TOKEN` | Writing the wiki pages of this repository |
+| `TOKEN_FOR_GITEA_WIKI` (optional) | The Gitea token, nothing else | Writing the wiki pages of this repository |
 
 - The token that is used needs scope `write:repository`, and its user needs
   write access to this repository. Gitea has no wiki-only scope.

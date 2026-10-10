@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 468c912e521b -->
+<!-- translation of Capabilities.md, source sha256 5856fdc70a30 -->
 
 > Dette er en oversættelse af [`Capabilities`](Capabilities). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -43,7 +43,7 @@ activate Workflow
 Workflow -> Workflow: Read and validate secrets
 note right
 TOKEN_FOR_GITEA
-CREDENTIALS_FOR_GITHUB
+PAT_FOR_GITHUB
 end note
 
 alt secret validation failed

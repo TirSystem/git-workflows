@@ -33,7 +33,7 @@ Until delivery is verified, onboard a repository by copying the workflow (below)
 3. **Add the two secrets** in the repository (or organization) settings,
    using the scopes in [credentials.md](Credentials):
    - `TOKEN_FOR_GITEA`
-   - `CREDENTIALS_FOR_GITHUB` (JSON with `GITHUB_PAT`)
+   - `PAT_FOR_GITHUB` (the GitHub token only)
 4. **Deliver the workflow:**
    - *If scoped workflows apply to the repository:* nothing to copy.
    - *Otherwise:* copy `.gitea/scoped_workflows/sync-github-metadata.yml`

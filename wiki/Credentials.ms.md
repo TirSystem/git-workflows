@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 57f66acfdc0a -->
+<!-- translation of Credentials.md, source sha256 b810a21a07d5 -->
 
 > Ini ialah terjemahan [`Credentials`](Credentials). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -10,8 +10,8 @@ Aliran kerja penyegerakan menggunakan dua rahsia (secret). Beri setiap satu keis
 
 | Secret | Kandungan | Digunakan untuk |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA` | Token biasa, rentetan JSON, atau JSON dengan `GITEA_TOKEN` | Membaca repositori (penerangan, topik) dan push mirror-nya |
-| `CREDENTIALS_FOR_GITHUB` | Objek JSON dengan `GITHUB_PAT` yang tidak kosong | Mengubah penerangan dan topik cermin GitHub |
+| `TOKEN_FOR_GITEA` | Token Gitea, tiada yang lain | Membaca repositori (penerangan, topik) dan push mirror-nya |
+| `PAT_FOR_GITHUB` | Token GitHub, tiada yang lain | Mengubah penerangan dan topik cermin GitHub |
 
 ## Kebenaran minimum
 
@@ -33,11 +33,7 @@ Panggilan yang dibuat: `GET /repos/{owner}/{repo}` dan `GET /repos/{owner}/{repo
 
 Panggilan yang dibuat: `GET /repos/{owner}/{repo}`, `PATCH /repos/{owner}/{repo}` (penerangan) dan `PUT /repos/{owner}/{repo}/topics`.
 
-Format `CREDENTIALS_FOR_GITHUB`:
-
-```json
-{"GITHUB_PAT": "<token>"}
-```
+Format `PAT_FOR_GITHUB`: hanya rentetan token (contohnya `github_pat_...`) sebagai teks biasa. Aliran kerja hanya menyemak bahawa ia tidak kosong; GitHub menolak nilai yang salah (HTTP 401).
 
 ## Perkara yang disemak oleh aliran kerja sebelum mengubah apa-apa
 
@@ -56,7 +52,7 @@ Aliran kerja **Publish wiki** (repositori ini sahaja) menyalin `wiki/` ke wiki G
 
 | Secret | Kandungan | Digunakan untuk |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA_WIKI` (pilihan) | Token biasa, rentetan JSON, atau JSON dengan `GITEA_TOKEN` | Menulis halaman wiki repositori ini |
+| `TOKEN_FOR_GITEA_WIKI` (pilihan) | Token Gitea, tiada yang lain | Menulis halaman wiki repositori ini |
 
 - Token yang digunakan mesti mempunyai skop `write:repository`, dan penggunanya mesti mempunyai akses tulis kepada repositori ini. Gitea tidak mempunyai skop untuk wiki sahaja.
 - `TOKEN_FOR_GITEA` didokumenkan di atas dengan `read:repository` sahaja. Menggunakannya semula untuk wiki bermakna meningkatkan skopnya, yang juga memberi akses tulis kepada penyegerakan metadata. `TOKEN_FOR_GITEA_WIKI` yang berasingan untuk pengguna khusus mengekalkan token penyegerakan sebagai baca sahaja. S05 memutuskan yang mana, dan S03 menyimpan secret.

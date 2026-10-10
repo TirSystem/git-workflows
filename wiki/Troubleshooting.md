@@ -28,12 +28,8 @@ never starts, or stops before the step) is a **runner** problem.
 
 | Message (start) | Category | Cause and fix |
 | --- | --- | --- |
-| `CREDENTIALS_FOR_GITHUB is missing or empty.` | configuration | Add the secret |
-| `CREDENTIALS_FOR_GITHUB must contain valid JSON.` | configuration | The value must be JSON such as `{"GITHUB_PAT": "..."}` |
-| `CREDENTIALS_FOR_GITHUB must be a JSON object.` | configuration | Use an object, not a list or string |
-| `CREDENTIALS_FOR_GITHUB must contain a non-empty GITHUB_PAT.` | configuration | Add the `GITHUB_PAT` key with a token |
+| `PAT_FOR_GITHUB is missing or empty.` | configuration | Add the secret |
 | `TOKEN_FOR_GITEA is missing or empty.` | configuration | Add the secret |
-| `TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN.` | configuration | The JSON form needs a `GITEA_TOKEN` key |
 | `Could not determine the Gitea source repository.` | configuration | The run has no repository name; report as a defect |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Keep one GitHub push mirror |
 | `No token for the wiki: set TOKEN_FOR_GITEA_WIKI, or TOKEN_FOR_GITEA.` | configuration | Wiki publishing only: add one of the secrets (see [credentials.md](Credentials)) |
@@ -42,7 +38,7 @@ never starts, or stops before the step) is a **runner** problem.
 | `The wiki source directory ... has no Markdown pages` | configuration | Wiki publishing only: `wiki/` is empty or missing; nothing was changed |
 | `Could not determine the GitHub owner and repository ...` | configuration | The mirror address must look like `https://github.com/<owner>/<repo>.git` |
 | `Gitea API request failed with HTTP 401` | credentials | Create a new Gitea token and update `TOKEN_FOR_GITEA` |
-| `GitHub API request failed with HTTP 401` | credentials | Create a new GitHub token and update `CREDENTIALS_FOR_GITHUB` |
+| `GitHub API request failed with HTTP 401` | credentials | Create a new GitHub token and update `PAT_FOR_GITHUB`; the value must be the token only (no name, quotes or JSON) |
 | `... HTTP 403 ...` (Gitea) | permissions | Token needs `read:repository`, and its user needs administrator access to the repository |
 | `... HTTP 403 ...` (GitHub) | permissions | Token needs Administration read and write on the mirror repository |
 | `The GitHub token cannot administer <repo>` | permissions | Same as above; the token can read the repository but not edit it |

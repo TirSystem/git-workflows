@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 044127b33c19 -->
+<!-- translation of Onboarding.md, source sha256 8e755cad4918 -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -24,7 +24,7 @@ Indtil leveringen er verificeret, tilsluttes et repository ved at kopiere workfl
 2. **Konfigurer ét GitHub push-spejl** i repositoryets indstillinger (Settings, Repository, Mirror settings, Push mirror). Workflowet fejler, hvis der er flere GitHub-spejle. Hvis der ingen er, lykkes det uden at synkronisere noget.
 3. **Tilføj de to secrets** i repositoryets (eller organisationens) indstillinger med de scopes, der står i [credentials.md](Credentials.da):
    - `TOKEN_FOR_GITEA`
-   - `CREDENTIALS_FOR_GITHUB` (JSON med `GITHUB_PAT`)
+   - `PAT_FOR_GITHUB` (kun GitHub-tokenet)
 4. **Lever workflowet:**
    - *Hvis scoped workflows gælder for repositoryet:* der er intet at kopiere.
    - *Ellers:* kopier `.gitea/scoped_workflows/sync-github-metadata.yml` fra dette repository til `.gitea/workflows/` i mål-repositoryet. Fastlås kopien til en gennemgået version af dette repository, og kopier igen, når den ændres.
