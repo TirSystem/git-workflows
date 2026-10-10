@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-015): JSON removed from the credential failures, answered MIL-001 decisions removed from Open Issues | [b282e10] |
-| 2026-10-10 | Proposed | Jens Tirsvad Nielsen | S01 | Added gateway MIL-006 (shared wiki publishing) | [6b8e36d] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Reviewed (RC-015): JSON removed from the credential failures, answered MIL-001 decisions removed from Open Issues | [b282e10] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added gateway MIL-006 (shared wiki publishing) | [6b8e36d] |
 
 ---
 
