@@ -18,7 +18,7 @@ jobs:
           GITEA_API_URL: ${{ gitea.api_url }}
           GITEA_CREDENTIALS: ${{ secrets.TOKEN_FOR_GITEA }}
           SOURCE_REPOSITORY: ${{ gitea.repository }}
-          GITHUB_CREDENTIALS: ${{ secrets.CREDENTIALS_FOR_GITHUB }}
+          PAT_FOR_GITHUB: ${{ secrets.PAT_FOR_GITHUB }}
         run: |
           python3 - <<'PY'
           import json
@@ -87,61 +87,22 @@ jobs:
                   ) from None
 
 
-          def parse_github_token(raw_credentials):
-              raw_credentials = (raw_credentials or "").strip()
-              if not raw_credentials:
+          def parse_github_token(raw_token):
+              token = (raw_token or "").strip()
+              if not token:
                   raise WorkflowError(
-                      "configuration", "CREDENTIALS_FOR_GITHUB is missing or empty."
+                      "configuration", "PAT_FOR_GITHUB is missing or empty."
                   )
-
-              try:
-                  credentials = json.loads(raw_credentials)
-              except json.JSONDecodeError:
-                  raise WorkflowError(
-                      "configuration",
-                      "CREDENTIALS_FOR_GITHUB must contain valid JSON.",
-                  ) from None
-
-              if not isinstance(credentials, dict):
-                  raise WorkflowError(
-                      "configuration",
-                      "CREDENTIALS_FOR_GITHUB must be a JSON object.",
-                  )
-
-              token = credentials.get("GITHUB_PAT")
-              if not isinstance(token, str) or not token.strip():
-                  raise WorkflowError(
-                      "configuration",
-                      "CREDENTIALS_FOR_GITHUB must contain a non-empty GITHUB_PAT.",
-                  )
-              return token.strip()
+              return token
 
 
-          def parse_gitea_token(raw_credentials):
-              raw_credentials = (raw_credentials or "").strip()
-              if not raw_credentials:
+          def parse_gitea_token(raw_token):
+              token = (raw_token or "").strip()
+              if not token:
                   raise WorkflowError(
                       "configuration", "TOKEN_FOR_GITEA is missing or empty."
                   )
-
-              try:
-                  credentials = json.loads(raw_credentials)
-              except json.JSONDecodeError:
-                  token = raw_credentials
-              else:
-                  if isinstance(credentials, dict):
-                      token = credentials.get("GITEA_TOKEN")
-                  elif isinstance(credentials, str):
-                      token = credentials
-                  else:
-                      token = None
-
-              if not isinstance(token, str) or not token.strip():
-                  raise WorkflowError(
-                      "configuration",
-                      "TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN.",
-                  )
-              return token.strip()
+              return token
 
 
           def split_repository(full_name):
@@ -219,7 +180,7 @@ jobs:
                   )
                   return 0
 
-              github_token = parse_github_token(os.environ.get("GITHUB_CREDENTIALS"))
+              github_token = parse_github_token(os.environ.get("PAT_FOR_GITHUB"))
               github_owner, github_repo = target
               github_api_url = (
                   "https://api.github.com/repos/"

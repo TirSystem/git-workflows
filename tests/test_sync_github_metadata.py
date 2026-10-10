@@ -15,47 +15,26 @@ def sync():
 
 
 class TestGithubToken:
-    def test_returns_stripped_token_from_json_object(self, sync):
-        raw = json.dumps({"GITHUB_PAT": "  ghp_abc  "})
-        assert sync["parse_github_token"](raw) == "ghp_abc"
+    def test_returns_the_stripped_token(self, sync):
+        assert sync["parse_github_token"]("  ghp_abc\n") == "ghp_abc"
+
+    def test_accepts_a_fine_grained_token(self, sync):
+        token = "github_pat_11ABCDEFG0abcdefghijkl_mnopqrstuvwxyz0123456789"
+        assert sync["parse_github_token"](token) == token
 
     @pytest.mark.parametrize("raw", [None, "", "   "])
     def test_rejects_missing_or_empty_value(self, sync, raw):
         with pytest.raises(RuntimeError, match="missing or empty"):
             sync["parse_github_token"](raw)
 
-    def test_rejects_invalid_json(self, sync):
-        with pytest.raises(RuntimeError, match="valid JSON"):
-            sync["parse_github_token"]("ghp_plain_token")
-
-    def test_rejects_json_that_is_not_an_object(self, sync):
-        with pytest.raises(RuntimeError, match="JSON object"):
-            sync["parse_github_token"]('["x"]')
-
-    @pytest.mark.parametrize("value", [{}, {"GITHUB_PAT": ""}, {"GITHUB_PAT": 5}])
-    def test_rejects_missing_or_invalid_pat(self, sync, value):
-        with pytest.raises(RuntimeError, match="GITHUB_PAT"):
-            sync["parse_github_token"](json.dumps(value))
-
 
 class TestGiteaToken:
-    def test_accepts_bare_token(self, sync):
-        assert sync["parse_gitea_token"]("abc123") == "abc123"
-
-    def test_accepts_json_object(self, sync):
-        assert sync["parse_gitea_token"]('{"GITEA_TOKEN": " t "}') == "t"
-
-    def test_accepts_json_string(self, sync):
-        assert sync["parse_gitea_token"]('"quoted"') == "quoted"
+    def test_returns_the_stripped_token(self, sync):
+        assert sync["parse_gitea_token"]("  abc123\n") == "abc123"
 
     @pytest.mark.parametrize("raw", [None, "", "  "])
     def test_rejects_missing_or_empty_value(self, sync, raw):
         with pytest.raises(RuntimeError, match="missing or empty"):
-            sync["parse_gitea_token"](raw)
-
-    @pytest.mark.parametrize("raw", ["{}", '{"GITEA_TOKEN": ""}', "12", "[]"])
-    def test_rejects_value_without_token(self, sync, raw):
-        with pytest.raises(RuntimeError, match="GITEA_TOKEN"):
             sync["parse_gitea_token"](raw)
 
 
@@ -199,7 +178,7 @@ def environment(monkeypatch):
     monkeypatch.setenv("GITEA_API_URL", "https://git.example.test/api/v1/")
     monkeypatch.setenv("GITEA_CREDENTIALS", "gitea-token")
     monkeypatch.setenv("SOURCE_REPOSITORY", "TirSystem/repo")
-    monkeypatch.setenv("GITHUB_CREDENTIALS", json.dumps({"GITHUB_PAT": "gh-token"}))
+    monkeypatch.setenv("PAT_FOR_GITHUB", "gh-token")
 
 
 class TestMain:
@@ -258,7 +237,7 @@ class TestMain:
     def test_succeeds_without_changes_when_no_github_mirror_exists(
         self, sync, environment, monkeypatch, capsys, mirrors
     ):
-        monkeypatch.setenv("GITHUB_CREDENTIALS", "")
+        monkeypatch.setenv("PAT_FOR_GITHUB", "")
         api = FakeApi(mirrors)
         sync["request_json"] = api
 
@@ -271,11 +250,11 @@ class TestMain:
     def test_fails_before_any_change_when_github_credentials_are_missing(
         self, sync, environment, monkeypatch
     ):
-        monkeypatch.setenv("GITHUB_CREDENTIALS", "")
+        monkeypatch.setenv("PAT_FOR_GITHUB", "")
         api = FakeApi([{"remote_address": "git@github.com:Org/repo.git"}])
         sync["request_json"] = api
 
-        with pytest.raises(RuntimeError, match="CREDENTIALS_FOR_GITHUB"):
+        with pytest.raises(RuntimeError, match="PAT_FOR_GITHUB"):
             sync["main"]()
         assert all(call[0] == "GET" for call in api.calls)
 

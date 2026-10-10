@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added gateway MIL-005 (wiki and translations) | [08ef26a] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Last decision date is 2026-12-12 after adding MIL-005 | [ae4e257] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | UC candidate 2 names the secret PAT_FOR_GITHUB | [a26a491] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-015): JSON removed from the credential failures, answered MIL-001 decisions removed from Open Issues | [b282e10] |
 
 ---
 
@@ -81,8 +81,6 @@ A No-Go moves every later window by the rework time of the failed milestone.
 ## Open Issues
 
 - Confirm the proposed dates and the start week (S01 and S05).
-- Decide the behavior for an invalid push mirror response (MIL-001 task 1).
-- Decide the canonical location of the workflow source (MIL-001 task 3).
 - No QC checklist exists for the Project Plan.
 - Formal use cases need a use case diagram and user stories first; neither exists yet.
 
@@ -134,8 +132,8 @@ no tests, no release process.
 - **Trigger:** onboarding a repository or rotating a token.
 - **Preconditions:** access to Gitea and GitHub settings.
 - **Success:** a workflow run passes credential checks with the documented minimum permissions.
-- **Main flow:** create the tokens, store `TOKEN_FOR_GITEA` and `CREDENTIALS_FOR_GITHUB`, run the workflow, read the validation result.
-- **Alternatives and failures:** malformed JSON, empty value, expired token, missing permission: the check names the category without printing the secret.
+- **Main flow:** create the tokens, store `TOKEN_FOR_GITEA` and `PAT_FOR_GITHUB`, run the workflow, read the validation result.
+- **Alternatives and failures:** empty value, wrong or expired token (rejected with HTTP 401), missing permission: the check names the category without printing the secret.
 - **Dependencies:** use case 1.
 
 ### UC candidate 3: Onboard a repository to standard workflows (P1)
@@ -252,5 +250,5 @@ no tests, no release process.
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
-[08ef26a]: https://git.tirsystem.com/TirSystem/github-action/commit/08ef26a6d3eb98c066b45634c2271e578e6c0a0b
-[ae4e257]: https://git.tirsystem.com/TirSystem/github-action/commit/ae4e257236095e76132980fad1e9a661b1d082c7
+[a26a491]: https://git.tirsystem.com/TirSystem/github-action/commit/a26a49173718b89785ea4a6e4c8bdbfb9aca975d
+[b282e10]: https://git.tirsystem.com/TirSystem/github-action/commit/b282e107416a890d6df27e6bdf23ab8a65e17123

@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 d34495c26923 -->
+<!-- translation of Troubleshooting.md, source sha256 12672b3dde45 -->
 
 > Ini ialah terjemahan [`Troubleshooting`](Troubleshooting). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -26,12 +26,8 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 
 | Mesej (permulaan) | Kategori | Punca dan pembetulan |
 | --- | --- | --- |
-| `CREDENTIALS_FOR_GITHUB is missing or empty.` | configuration | Tambah secret |
-| `CREDENTIALS_FOR_GITHUB must contain valid JSON.` | configuration | Nilai mesti JSON seperti `{"GITHUB_PAT": "..."}` |
-| `CREDENTIALS_FOR_GITHUB must be a JSON object.` | configuration | Gunakan objek, bukan senarai atau rentetan |
-| `CREDENTIALS_FOR_GITHUB must contain a non-empty GITHUB_PAT.` | configuration | Tambah kunci `GITHUB_PAT` dengan token |
+| `PAT_FOR_GITHUB is missing or empty.` | configuration | Tambah secret |
 | `TOKEN_FOR_GITEA is missing or empty.` | configuration | Tambah secret |
-| `TOKEN_FOR_GITEA must contain a non-empty GITEA_TOKEN.` | configuration | Bentuk JSON memerlukan kunci `GITEA_TOKEN` |
 | `Could not determine the Gitea source repository.` | configuration | Larian tiada nama repositori; laporkan sebagai kecacatan |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Kekalkan satu push mirror GitHub |
 | `No token for the wiki: set TOKEN_FOR_GITEA_WIKI, or TOKEN_FOR_GITEA.` | configuration | Penerbitan wiki sahaja: tambah salah satu secret (lihat [credentials.md](Credentials.ms)) |
@@ -40,7 +36,7 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 | `The wiki source directory ... has no Markdown pages` | configuration | Penerbitan wiki sahaja: `wiki/` kosong atau tiada; tiada apa-apa diubah |
 | `Could not determine the GitHub owner and repository ...` | configuration | Alamat cermin mesti kelihatan seperti `https://github.com/<owner>/<repo>.git` |
 | `Gitea API request failed with HTTP 401` | credentials | Cipta token Gitea baharu dan kemas kini `TOKEN_FOR_GITEA` |
-| `GitHub API request failed with HTTP 401` | credentials | Cipta token GitHub baharu dan kemas kini `CREDENTIALS_FOR_GITHUB` |
+| `GitHub API request failed with HTTP 401` | credentials | Cipta token GitHub baharu dan kemas kini `PAT_FOR_GITHUB`; nilai mesti token sahaja (tiada nama, tanda petikan atau JSON) |
 | `... HTTP 403 ...` (Gitea) | permissions | Token memerlukan `read:repository`, dan penggunanya mesti pentadbir repositori |
 | `... HTTP 403 ...` (GitHub) | permissions | Token memerlukan Administration read and write pada repositori cermin |
 | `The GitHub token cannot administer <repo>` | permissions | Sama seperti di atas; token boleh membaca repositori tetapi tidak boleh mengeditnya |

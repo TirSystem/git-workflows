@@ -29,19 +29,15 @@ def b64(text: str) -> str:
 
 
 class TestParseGiteaToken:
-    def test_accepts_bare_token(self):
-        assert publish_wiki.parse_gitea_token(" abc ") == "abc"
+    def test_returns_the_stripped_token(self):
+        assert publish_wiki.parse_gitea_token(" abc \n") == "abc"
 
-    def test_accepts_json_object_and_string(self):
-        assert publish_wiki.parse_gitea_token('{"GITEA_TOKEN": "abc"}') == "abc"
-        assert publish_wiki.parse_gitea_token('"abc"') == "abc"
-
-    @pytest.mark.parametrize("raw", [None, "", "  ", "{}", '{"GITEA_TOKEN": ""}', "[1]"])
+    @pytest.mark.parametrize("raw", [None, "", "  "])
     def test_rejects_missing_or_empty_token(self, raw):
         with pytest.raises(publish_wiki.WorkflowError) as caught:
             publish_wiki.parse_gitea_token(raw)
         assert caught.value.category == "configuration"
-        assert "TOKEN_FOR_GITEA" in str(caught.value) or "wiki token" in str(caught.value)
+        assert "No token for the wiki" in str(caught.value)
 
 
 class TestReadPages:

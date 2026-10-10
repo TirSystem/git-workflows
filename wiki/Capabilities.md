@@ -43,7 +43,7 @@ activate Workflow
 Workflow -> Workflow: Read and validate secrets
 note right
 TOKEN_FOR_GITEA
-CREDENTIALS_FOR_GITHUB
+PAT_FOR_GITHUB
 end note
 
 alt secret validation failed

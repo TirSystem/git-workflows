@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 75c6a7722bf7 -->
+<!-- translation of Home.md, source sha256 59273bf92278 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -21,8 +21,8 @@ Buat masa ini ia mengandungi aliran kerja Gitea [`sync-github-metadata.yml`](htt
 - Satu instans Gitea dengan Actions diaktifkan dan satu runner yang menyediakan `ubuntu-latest` dengan `python3`
 - Satu push mirror GitHub yang dikonfigurasi pada repositori Gitea (paling banyak satu; repositori tanpa cermin dilangkau dengan jayanya)
 - Rahsia (secret) repositori:
-  - `TOKEN_FOR_GITEA`: token API Gitea (rentetan biasa, atau JSON dengan `GITEA_TOKEN`)
-  - `CREDENTIALS_FOR_GITHUB`: objek JSON yang mengandungi `GITHUB_PAT`, iaitu personal access token GitHub yang dibenarkan mengubah suai repositori cermin
+  - `TOKEN_FOR_GITEA`: token API Gitea (token sahaja, tanpa JSON)
+  - `PAT_FOR_GITHUB`: personal access token GitHub yang dibenarkan mengubah suai repositori cermin (token sahaja, tanpa JSON)
   - `TOKEN_FOR_GITEA_WIKI` (pilihan, hanya dalam repositori ini, untuk aliran kerja **Publish wiki**): token Gitea yang boleh menulis ke wiki repositori; jika tiada, `TOKEN_FOR_GITEA` digunakan dan mesti mempunyai akses tulis
 
 

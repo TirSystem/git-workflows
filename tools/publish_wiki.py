@@ -7,7 +7,7 @@ source; edits made in the web UI are overwritten (MIL-005).
 Environment:
     GITEA_API_URL        Gitea API base, for example https://host/api/v1
     SOURCE_REPOSITORY    owner/repo of the repository whose wiki is written
-    WIKI_CREDENTIALS     bare token, JSON string, or JSON with GITEA_TOKEN
+    WIKI_CREDENTIALS     the Gitea token, as clear text
     WIKI_DIR             directory with the pages (default: wiki)
 
 Exit codes: 0 published or nothing to do, 1 failed (message names a category).
@@ -83,33 +83,15 @@ def request_json(
         raise WorkflowError("api", f"Gitea API is unreachable ({error}).") from None
 
 
-def parse_gitea_token(raw_credentials: str | None) -> str:
-    """Return the token from a bare value, a JSON string or JSON with GITEA_TOKEN."""
-    raw_credentials = (raw_credentials or "").strip()
-    if not raw_credentials:
+def parse_gitea_token(raw_token: str | None) -> str:
+    """Return the token, or fail when the secret is missing or empty."""
+    token = (raw_token or "").strip()
+    if not token:
         raise WorkflowError(
             "configuration",
             "No token for the wiki: set TOKEN_FOR_GITEA_WIKI, or TOKEN_FOR_GITEA.",
         )
-
-    token: Any
-    try:
-        credentials = json.loads(raw_credentials)
-    except json.JSONDecodeError:
-        token = raw_credentials
-    else:
-        if isinstance(credentials, dict):
-            token = credentials.get("GITEA_TOKEN")
-        elif isinstance(credentials, str):
-            token = credentials
-        else:
-            token = None
-
-    if not isinstance(token, str) or not token.strip():
-        raise WorkflowError(
-            "configuration", "The wiki token must contain a non-empty GITEA_TOKEN."
-        )
-    return token.strip()
+    return token
 
 
 def describe_token(token: str) -> str:

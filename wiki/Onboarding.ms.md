@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 044127b33c19 -->
+<!-- translation of Onboarding.md, source sha256 8e755cad4918 -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -24,7 +24,7 @@ Selagi penghantaran belum disahkan, sertakan repositori dengan menyalin aliran k
 2. **Konfigurasikan satu push mirror GitHub** dalam tetapan repositori (Settings, Repository, Mirror settings, Push mirror). Aliran kerja gagal jika terdapat beberapa cermin GitHub. Jika tiada, ia berjaya tanpa menyegerakkan apa-apa.
 3. **Tambah dua rahsia (secret)** dalam tetapan repositori (atau organisasi), dengan skop yang tertera dalam [credentials.md](Credentials.ms):
    - `TOKEN_FOR_GITEA`
-   - `CREDENTIALS_FOR_GITHUB` (JSON dengan `GITHUB_PAT`)
+   - `PAT_FOR_GITHUB` (token GitHub sahaja)
 4. **Hantar aliran kerja:**
    - *Jika scoped workflow terpakai pada repositori:* tiada apa yang perlu disalin.
    - *Jika tidak:* salin `.gitea/scoped_workflows/sync-github-metadata.yml` dari repositori ini ke `.gitea/workflows/` dalam repositori sasaran. Sematkan salinan itu pada versi repositori ini yang telah disemak, dan salin semula apabila ia berubah.
