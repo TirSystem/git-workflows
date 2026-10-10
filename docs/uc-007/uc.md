@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [4cf52af] |
 
 ---
 
@@ -40,3 +40,4 @@ When a new release of the shared workflows is announced, the Software Engineer r
 [UCD-001]: ../use-case-diagram.md
 [US-001]: ../user-stories.md
 [SA-001]: ../stakeholder-analysis.md
+[4cf52af]: https://git.tirsystem.com/TirSystem/github-action/commit/4cf52afe00f546c6b20424fb8dfc12796ffd9296
