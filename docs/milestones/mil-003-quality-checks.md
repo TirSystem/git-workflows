@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-03 | Deprecated | Jens Tirsvad Nielsen | S01 | Owner is S05 (security authority); S01 remains approving reviewer | [4de5438] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-11-14 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Target date 2026-11-14 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
+| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Task 1 verified: workflow_call and uses work from the same repository, the same organization and another organization (RC-033) | pending |
 
 ---
 
@@ -60,15 +60,34 @@ other repository, and a guide for reading its results.
 
 | # | Task | Summary | Needs its own Use Case/User Story? | Reference |
 | --- | --- | --- | --- | --- |
-| 1 | Verify reusable workflow support | Check whether this Gitea version supports `workflow_call` and cross-repository `uses`; if not, choose a copied template instead. | No | |
+| 1 | Verify reusable workflow support | Check whether this Gitea version supports `workflow_call` and cross-repository `uses`; if not, choose a copied template instead. Verified on 2026-10-10: supported, so no copied template is needed (see Verification results). | No | Verification results |
 | 2 | Define the quality-check contract | Decide the inputs (language, tool versions, working directory) and what a pass and a fail mean. Start with Python and shell. This is something an engineer does, so it needs a use case first. | Yes | Use case candidate: run project quality checks |
 | 3 | Implement the reusable quality workflow | Create the workflow in the canonical location with pinned tool versions and least-privilege permissions. | No | |
 | 4 | Adopt it in one other repository | Onboard a real project and fix the gaps in the guide that appear. | No | |
 | 5 | Write the guide for reading results | Explain status checks, logs and typical fixes so an engineer can make a failing check pass. | No | |
 
+## Verification results
+
+Task 1 was run on 2026-10-10 on the instance (Gitea 1.27.3) with a throwaway
+branch, `verify-reusable-workflows`, in `TirSystem/github-action`. The called
+workflow declared `on: workflow_call` with one input and printed it; the
+callers used `jobs.<job_id>.uses`. All branches were deleted afterwards.
+
+| Call | Caller | Result |
+| --- | --- | --- |
+| `uses: ./.gitea/workflows/reuse-callee.yml` | `TirSystem/github-action` (same repository) | Called job ran; input received |
+| `uses: TirSystem/github-action/.gitea/workflows/reuse-callee.yml@<branch>` | `TirSystem/github-action` | Called job ran; input received |
+| the same, from another repository of the organization | `TirSystem/sqa-qc-checklists` | Called job ran; `gitea.repository` was the caller |
+| the same, from a repository of another organization | `TirSystem-BashScript/RepoFoundry` | Called job ran; `gitea.repository` was the caller |
+
+What the test did not cover: a provider repository that is private (the
+provider here is public), passing secrets to a called workflow
+(`secrets:` or `secrets: inherit`), and a reference by tag instead of a
+branch. The quality checks of this milestone need none of the secrets; a
+private provider and tag references are for the release milestone (MIL-004).
+
 ---
 
 [BC-001]: ../business-case.md
-[4de5438]: https://git.tirsystem.com/TirSystem/github-action/commit/4de5438a88b4bbf18b165f52f797d1a52af89f6d
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
