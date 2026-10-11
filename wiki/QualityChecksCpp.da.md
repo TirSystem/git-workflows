@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCpp.md, source sha256 f54f7f7dc713 -->
+<!-- translation of QualityChecksCpp.md, source sha256 fd8bb0d71906 -->
 
 > Dette er en oversættelse af [`QualityChecksCpp`](QualityChecksCpp). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -41,7 +41,7 @@ Henvis til workflowet ved major-tagget (`@v1`) eller et præcist tag, aldrig ved
 ## Hvad repositoryet skal have
 
 - En `.clang-format` i arbejdsmappen eller i en mappe over den, op til repositoryets rod. Uden en fejler kørslen med `[configuration]`, og intet værktøj kører.
-- Eventuelt en `.clang-tidy` med projektets kontroller (for eksempel C++ Core Guidelines). Uden en kører clang-tidy sine standardkontroller.
+- Eventuelt en `.clang-tidy` med projektets kontroller (for eksempel C++ Core Guidelines). Uden en kører workflowet compilerdiagnostik og den statiske analysator (`clang-diagnostic-*` og `clang-analyzer-*`), fordi clang-tidy selv ikke aktiverer nogen kontrol uden konfiguration.
 - For præcise statiske kontroller en compile-database: byg den først (for eksempel `cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON`) og angiv `compile-commands-dir: build`. Workflowet bygger ikke dit projekt.
 
 ## Hvad der kontrolleres
@@ -49,7 +49,7 @@ Henvis til workflowet ved major-tagget (`@v1`) eller et præcist tag, aldrig ved
 | Filer | Værktøj | Hvad det melder |
 | --- | --- | --- |
 | sporede `*.c`, `*.cc`, `*.cpp`, `*.cxx`, `*.h`, `*.hh`, `*.hpp`, `*.hxx` | `clang-format --dry-run -Werror` | formatering, der afviger fra `.clang-format` |
-| de samme filer | `clang-tidy` | fund fra kontrollerne i `.clang-tidy`; `*.c`-filer kontrolleres som C17, de øvrige filer som C++-standarden i `std` |
+| de samme filer | `clang-tidy` | fund fra kontrollerne i `.clang-tidy` (eller fra `clang-diagnostic-*` og `clang-analyzer-*` uden en); `*.c`-filer kontrolleres som C17, de øvrige filer som C++-standarden i `std` |
 
 Usporede filer kontrolleres ikke. Et repository uden disse filer består med en bemærkning. Der er ingen `cppcheck`: kun en gammel version findes som pakke, og gamle værktøjer køres ikke (ADR-0008).
 

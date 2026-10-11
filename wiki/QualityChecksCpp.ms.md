@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCpp.md, source sha256 f54f7f7dc713 -->
+<!-- translation of QualityChecksCpp.md, source sha256 fd8bb0d71906 -->
 
 > Ini ialah terjemahan [`QualityChecksCpp`](QualityChecksCpp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -41,7 +41,7 @@ Rujuk aliran kerja pada tag major (`@v1`) atau pada tag tepat, jangan sekali-kal
 ## Apa yang diperlukan oleh repositori
 
 - Satu `.clang-format` dalam direktori kerja atau dalam direktori di atasnya, sehingga akar repositori. Tanpanya larian gagal dengan `[configuration]` dan tiada alat dijalankan.
-- Pilihan: satu `.clang-tidy` dengan semakan projek (contohnya C++ Core Guidelines). Tanpanya clang-tidy menjalankan semakan lalainya.
+- Pilihan: satu `.clang-tidy` dengan semakan projek (contohnya C++ Core Guidelines). Tanpanya aliran kerja menjalankan diagnostik pengkompil dan penganalisis statik (`clang-diagnostic-*` dan `clang-analyzer-*`), kerana clang-tidy sendiri tidak mengaktifkan sebarang semakan tanpa konfigurasi.
 - Untuk semakan statik yang tepat, satu pangkalan data kompilasi: bina dahulu (contohnya `cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON`) dan berikan `compile-commands-dir: build`. Aliran kerja tidak membina projek anda.
 
 ## Apa yang disemak
@@ -49,7 +49,7 @@ Rujuk aliran kerja pada tag major (`@v1`) atau pada tag tepat, jangan sekali-kal
 | Fail | Alat | Apa yang dilaporkan |
 | --- | --- | --- |
 | `*.c`, `*.cc`, `*.cpp`, `*.cxx`, `*.h`, `*.hh`, `*.hpp`, `*.hxx` yang dijejaki | `clang-format --dry-run -Werror` | pemformatan yang berbeza daripada `.clang-format` |
-| fail yang sama | `clang-tidy` | dapatan semakan dalam `.clang-tidy`; fail `*.c` disemak sebagai C17, fail lain sebagai piawaian C++ dalam `std` |
+| fail yang sama | `clang-tidy` | dapatan semakan dalam `.clang-tidy` (atau `clang-diagnostic-*` dan `clang-analyzer-*` tanpanya); fail `*.c` disemak sebagai C17, fail lain sebagai piawaian C++ dalam `std` |
 
 Fail yang tidak dijejaki tidak disemak. Repositori tanpa fail ini lulus dengan satu notis. Tiada `cppcheck`: hanya versi lama tersedia sebagai pakej, dan alat lama tidak dijalankan (ADR-0008).
 

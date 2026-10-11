@@ -44,7 +44,9 @@ version of a tool is a new release of this repository, not a silent change.
   the top of the repository. Without one the run fails with `[configuration]`
   and no tool runs.
 - Optionally a `.clang-tidy` with the checks of the project (for example the
-  C++ Core Guidelines). Without one clang-tidy runs its default checks.
+  C++ Core Guidelines). Without one the workflow runs the compiler diagnostics
+  and the static analyzer (`clang-diagnostic-*` and `clang-analyzer-*`),
+  because clang-tidy itself enables no check when there is no configuration.
 - For precise static checks, a compile database: build it first (for example
   `cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON`) and pass
   `compile-commands-dir: build`. The workflow does not build your project.
@@ -54,7 +56,7 @@ version of a tool is a new release of this repository, not a silent change.
 | Files | Tool | What it reports |
 | --- | --- | --- |
 | tracked `*.c`, `*.cc`, `*.cpp`, `*.cxx`, `*.h`, `*.hh`, `*.hpp`, `*.hxx` | `clang-format --dry-run -Werror` | formatting that differs from `.clang-format` |
-| the same files | `clang-tidy` | findings of the checks of `.clang-tidy`; `*.c` files are checked as C17, the other files as the C++ standard of `std` |
+| the same files | `clang-tidy` | findings of the checks of `.clang-tidy` (or of `clang-diagnostic-*` and `clang-analyzer-*` without one); `*.c` files are checked as C17, the other files as the C++ standard of `std` |
 
 Untracked files are not checked. A repository without these files passes with a
 notice. There is no `cppcheck`: only an old version of it is available as a

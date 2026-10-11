@@ -13,6 +13,7 @@
 # Every failure is printed as ::error::[category] message.
 
 C_STANDARD="${C_STANDARD:-c17}"
+DEFAULT_TIDY_CHECKS="clang-diagnostic-*,clang-analyzer-*"
 
 validate_inputs() {
   set -u
@@ -50,16 +51,19 @@ install_tools() {
     "clang-format==${CLANG_FORMAT_VERSION}" "clang-tidy==${CLANG_TIDY_VERSION}"
 }
 
-# A .clang-format must exist in the working directory or above it, up to the
-# top of the repository: clang-format finds its style the same way.
-find_clang_format_config() {
-  local top dir parent
+# Succeeds when one of the named files exists in the working directory or above
+# it, up to the top of the repository: clang-format and clang-tidy find their
+# configuration the same way.
+find_config_upwards() {
+  local top dir parent name
   top="$(cd "$(git rev-parse --show-toplevel)" && pwd -P)"
   dir="$(pwd -P)"
   while true; do
-    if [ -f "$dir/.clang-format" ] || [ -f "$dir/_clang-format" ]; then
-      return 0
-    fi
+    for name in "$@"; do
+      if [ -f "$dir/$name" ]; then
+        return 0
+      fi
+    done
     parent="$(dirname "$dir")"
     # stop at the top of the repository, or at the file system root
     if [ "$dir" = "$top" ] || [ "$parent" = "$dir" ]; then
@@ -76,6 +80,12 @@ run_checks() {
     echo "::error::[configuration] working-directory '$WORKING_DIRECTORY' does not exist."
     exit 1
   fi
+  # compile-commands-dir is relative to the repository root, not to the working directory
+  local repo_top compile_db=""
+  repo_top="$(cd "$(git rev-parse --show-toplevel)" && pwd -P)"
+  if [ -n "$COMPILE_COMMANDS_DIR" ]; then
+    compile_db="$repo_top/$COMPILE_COMMANDS_DIR"
+  fi
   cd "$WORKING_DIRECTORY"
 
   local all_files cpp_files c_files
@@ -85,11 +95,11 @@ run_checks() {
     echo "All selected checks passed."
     exit 0
   fi
-  if ! find_clang_format_config; then
+  if ! find_config_upwards .clang-format _clang-format; then
     echo "::error::[configuration] No .clang-format found in '$WORKING_DIRECTORY' or above it; add the style of the project."
     exit 1
   fi
-  if [ -n "$COMPILE_COMMANDS_DIR" ] && [ ! -f "$COMPILE_COMMANDS_DIR/compile_commands.json" ]; then
+  if [ -n "$compile_db" ] && [ ! -f "$compile_db/compile_commands.json" ]; then
     echo "::error::[configuration] compile-commands-dir '$COMPILE_COMMANDS_DIR' has no compile_commands.json; build it before the call."
     exit 1
   fi
@@ -115,14 +125,21 @@ run_checks() {
 
   run_tool "clang-format" "$QC_BIN/clang-format" --dry-run -Werror "${all_files[@]}"
 
-  if [ -n "$COMPILE_COMMANDS_DIR" ]; then
-    run_tool "clang-tidy" "$QC_BIN/clang-tidy" --quiet -p "$COMPILE_COMMANDS_DIR" "${all_files[@]}"
+  # Without a .clang-tidy, clang-tidy enables no check and refuses to run, so
+  # the project gets the compiler diagnostics and the static analyzer.
+  local tidy_args=(--quiet)
+  if ! find_config_upwards .clang-tidy _clang-tidy; then
+    tidy_args+=("--checks=${DEFAULT_TIDY_CHECKS}")
+  fi
+
+  if [ -n "$compile_db" ]; then
+    run_tool "clang-tidy" "$QC_BIN/clang-tidy" "${tidy_args[@]}" -p "$compile_db" "${all_files[@]}"
   else
     if [ "${#cpp_files[@]}" -gt 0 ]; then
-      run_tool "clang-tidy (C++)" "$QC_BIN/clang-tidy" --quiet "${cpp_files[@]}" -- "-std=${STD}"
+      run_tool "clang-tidy (C++)" "$QC_BIN/clang-tidy" "${tidy_args[@]}" "${cpp_files[@]}" -- "-std=${STD}"
     fi
     if [ "${#c_files[@]}" -gt 0 ]; then
-      run_tool "clang-tidy (C)" "$QC_BIN/clang-tidy" --quiet "${c_files[@]}" -- "-std=${C_STANDARD}"
+      run_tool "clang-tidy (C)" "$QC_BIN/clang-tidy" "${tidy_args[@]}" "${c_files[@]}" -- "-std=${C_STANDARD}"
     fi
   fi
 

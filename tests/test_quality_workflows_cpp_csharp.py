@@ -5,6 +5,7 @@ network, no clang and no .NET SDK are needed.
 """
 
 import os
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -285,7 +286,69 @@ class TestCppRun:
         result, calls = self.run(repo, tmp_path, cpp_bin, COMPILE_COMMANDS_DIR="build")
         assert result.returncode == 0, result.stdout
         assert len(calls) == 2
-        assert "-p build" in calls[1] and "-std=" not in calls[1]
+        database = re.search(r"-p (\S+)", calls[1])
+        assert database is not None and database.group(1).endswith(f"/{repo.name}/build")
+        assert "-std=" not in calls[1]
+
+    def test_clang_tidy_gets_default_checks_without_a_clang_tidy_file(
+        self,
+        repo: Path,
+        tmp_path: Path,
+        cpp_bin: Path,
+    ) -> None:
+        add_files(repo, "a.cpp")
+        _, calls = self.run(repo, tmp_path, cpp_bin)
+        assert "--checks=clang-diagnostic-*,clang-analyzer-*" in calls[1]
+        assert "--checks=" not in calls[0]
+
+    def test_no_default_checks_when_a_clang_tidy_file_is_in_the_repository_root(
+        self,
+        repo: Path,
+        tmp_path: Path,
+        cpp_bin: Path,
+    ) -> None:
+        add_files(repo, "a.cpp", ".clang-tidy")
+        _, calls = self.run(repo, tmp_path, cpp_bin)
+        assert len(calls) == 2
+        assert not any("--checks=" in call for call in calls)
+
+    def test_no_default_checks_when_a_clang_tidy_file_is_above_the_working_directory(
+        self,
+        repo: Path,
+        tmp_path: Path,
+        cpp_bin: Path,
+    ) -> None:
+        add_files(repo, "service/a.cpp", ".clang-tidy")
+        _, calls = self.run(repo, tmp_path, cpp_bin, WORKING_DIRECTORY="service")
+        assert len(calls) == 2
+        assert not any("--checks=" in call for call in calls)
+
+    def test_a_compile_database_is_resolved_from_the_repository_root(
+        self,
+        repo: Path,
+        tmp_path: Path,
+        cpp_bin: Path,
+    ) -> None:
+        add_files(repo, "service/a.cpp", "build/compile_commands.json")
+        result, calls = self.run(
+            repo, tmp_path, cpp_bin, WORKING_DIRECTORY="service", COMPILE_COMMANDS_DIR="build"
+        )
+        assert result.returncode == 0, result.stdout
+        database = re.search(r"-p (\S+)", calls[1])
+        assert database is not None and database.group(1).endswith(f"/{repo.name}/build")
+
+    def test_a_compile_database_only_inside_the_working_directory_is_not_found(
+        self,
+        repo: Path,
+        tmp_path: Path,
+        cpp_bin: Path,
+    ) -> None:
+        add_files(repo, "service/a.cpp", "service/build/compile_commands.json")
+        result, calls = self.run(
+            repo, tmp_path, cpp_bin, WORKING_DIRECTORY="service", COMPILE_COMMANDS_DIR="build"
+        )
+        assert result.returncode == 1 and "[configuration]" in result.stdout
+        assert calls == []
 
     def test_a_missing_compile_database_is_a_configuration_error(
         self,
