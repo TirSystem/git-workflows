@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Current tool versions only, .NET SDK 10 or later: results of run 699 replace the SDK 8 result; tasks 3 and criterion 1 amended | [7bcc67a] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Amendment reviewed (RC-055) and accepted: current tool versions, .NET SDK 10 or later, results of run 699, the contract of ADR-0008 in task 3 | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Amendment reviewed (RC-055) and accepted: current tool versions, .NET SDK 10 or later, results of run 699, the contract of ADR-0008 in task 3 | [faf13b2] |
 
 ---
 
@@ -123,3 +123,4 @@ network), a private runner with no internet, and an image that differs from
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [ADR-0008]: ../adr/adr-0008-cpp-csharp-quality-check-contract.md
 [7bcc67a]: https://git.tirsystem.com/TirSystem/github-action/commit/7bcc67a065ac5f67b4e13ebf243a4bbbe2af47d9
+[faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
