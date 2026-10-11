@@ -20,6 +20,8 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-11
+
 ### Added
 
 - Input `tools-ref` of `quality-checks.yml` (default `v1`): the tag or branch from
