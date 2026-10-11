@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Reviewed (RC-052) and accepted; target date 2027-01-16 confirmed by S01 (stand-in for S05) | [e3ad1fa] |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added the verification results of task 2 (runner tools) | [32b5ab6] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the verification results of task 2 (runner tools) | [32b5ab6] |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Current tool versions only, .NET SDK 10 or later: results of run 699 replace the SDK 8 result; tasks 3 and criterion 1 amended | pending |
 
 ---
 
@@ -27,13 +27,15 @@ set of inputs and pinned tool versions, a guide for reading its results on the
 wiki in English, Danish and Bahasa Malaysia, a use of each in at least one
 other repository, and a release that makes them available at the major tag.
 The existing workflow `quality-checks.yml` for Python and shell keeps its
-name and contract.
+name and contract. The workflows run current tools only: a .NET SDK of version
+10 or later, and the latest stable release of each clang tool; a tool that
+is only available as an old version is not used.
 
 ## Go / No-Go Criteria
 
 | # | Criterion (objectively checkable) | Go | No-Go |
 | --- | --- | --- | --- |
-| 1 | The runner of the instance can run the tools of each language (installed in the run or provided by the image), verified and recorded | Verified for both | A tool cannot be had without changing the runner |
+| 1 | The runner of the instance can run the tools of each language (installed in the run or provided by the image), verified and recorded | Verified for both, at current versions (.NET SDK 10 or later) | A tool cannot be had without changing the runner, or only as an old version |
 | 2 | The contract (tools, versions, inputs, what a pass and a fail mean) is decided in an ADR, and a language that cannot be checked without a build system says what it needs | ADR accepted | Open |
 | 3 | A failing check shows the tool, file and line in the log, verified with a seeded failure for each workflow | Verified | Cause not visible |
 | 4 | One other repository runs each workflow and its status appears on pull requests | Appears for both | Does not run |
@@ -71,7 +73,7 @@ name and contract.
 | --- | --- | --- | --- | --- |
 | 1 | Write the use case and stories for C++ and C# checks | Extend UC-005 (Run Project Quality Checks) so that its Brief names C++ and C#, and add stories to US-001 for a C++ project and a C# project, each with a pass and a fail acceptance criterion. Review them with the checklists of the `artifact` skill. | Yes | UC-005, US-001.09, US-001.10 |
 | 2 | Verify what the runner provides | On a throwaway branch, run a job on `ubuntu-latest` that prints which of `clang-format`, `clang-tidy`, `cppcheck` and the .NET SDK (`dotnet --version`) exist, and whether each can be installed in the run (for example from PyPI, apt or the dotnet install script) and how long that takes. Record the result in the milestone like MIL-003 task 1. | No | |
-| 3 | Decide the contract | Record an ADR that decides: one workflow for both languages or one per language; the tools and pinned versions (C++: `clang-format --dry-run -Werror`, `clang-tidy`, `cppcheck` or compiler warnings; C#: `dotnet format --verify-no-changes`, a build with analyzers and warnings as errors); the inputs (languages or paths, working directory, build command or compile database); what a build-dependent check needs from the caller; whether C is included with C++; and the names of the workflows and wiki pages (they follow `QualityChecksPythonShell`). Must be accepted before tasks 4 and 5. | No | ADR-0005 (refined) |
+| 3 | Decide the contract | Record an ADR that decides: one workflow for both languages or one per language; the tools and pinned versions, current releases only and .NET SDK 10 or later (C++: `clang-format --dry-run -Werror`, `clang-tidy` and compiler warnings; `cppcheck` only if a current release can be had; C#: `dotnet format --verify-no-changes`, a build with analyzers and warnings as errors); the inputs (languages or paths, working directory, build command or compile database); what a build-dependent check needs from the caller; whether C is included with C++; and the names of the workflows and wiki pages (they follow `QualityChecksPythonShell`). Must be accepted before tasks 4 and 5. | No | ADR-0005 (refined) |
 | 4 | Implement the C++ workflow | Add the reusable workflow and its script file `tools/quality-checks-cpp.sh` (or as the ADR decides), pinned tool versions, least-privilege permissions and offline tests with stub tools, as `quality-checks.yml` does. | No | |
 | 5 | Implement the C# workflow | The same for C#, with its script file and tests. | No | |
 | 6 | Write the guides and the wiki pages | One guide per workflow in `guides/` for reading its results, the wiki pages in English, Danish and Bahasa Malaysia, the Home workflow list and diagrams (a test requires every workflow to be listed), and an update of the upgrade guide. | No | |
@@ -90,13 +92,19 @@ tool.
 | Image | Ubuntu 24.04, `x86_64`, the job runs as root, `sudo`, `curl`, `python3` 3.12 and `pip` present |
 | Present in the image | `gcc` and `g++` 13.3, `make`; missing: `clang-format`, `clang-tidy`, `cppcheck`, `cmake`, `dotnet` |
 | `clang-format` | from PyPI in 2 s (23.1.3); from apt in 9 s |
-| `clang-tidy` | from PyPI in 5 s; from apt in 25 s |
-| `cppcheck` | from apt in 6 s (2.13.0); no PyPI package found under `cppcheck-wheel` |
-| .NET SDK | from apt `dotnet-sdk-8.0` in 24 s (8.0.131); from the official script `dot.net/v1/dotnet-install.sh` with `--channel 8.0` in 25 s (8.0.425) |
+| `clang-tidy` | from PyPI in 5 s (22.1.8); from apt in 25 s |
+| `cppcheck` | apt gives 2.13.0 in 6 s, which is old (the latest release is 2.22.0); the PyPI package named `cppcheck` is a different project (1.5.3) and is not used; a current release needs a build from source |
+| .NET SDK | the official script `dot.net/v1/dotnet-install.sh` with `--channel 10.0` gives 10.0.401 in 20 s; apt `dotnet-sdk-10.0` gives 10.0.112 in 23 s, an older feature band; the same script also offers 11.0 as a release candidate, which is not used |
 
-So every tool can be had in the run in under 30 seconds each with no change to
-the runner, either from PyPI (the clang tools, as `quality-checks.yml` already
-does for its tools, with an exact version) or from apt and the official script.
+A first run (run 692) looked at .NET SDK 8, which is not used: the requirement
+is a .NET SDK of version 10 or later, and old tools are not run. A second run
+(run 699, also deleted afterwards) checked current versions. The current
+clang tools come from PyPI in a few seconds with an exact version, as
+`quality-checks.yml` already does for its tools, and the .NET SDK 10 comes from
+the official script in 20 s, with no change to the runner. `cppcheck` is the
+exception: only an old version is a package, so the contract either drops it
+(`clang-tidy` does the static analysis) or builds a current release from
+source, which costs minutes per run.
 Not covered by this task: running a tool against a real C++ project (a
 `clang-tidy` run needs a compile database or flags) or a real C# solution
 (`dotnet format` and a build need the project's restore of packages from the
@@ -113,5 +121,4 @@ network), a private runner with no internet, and an image that differs from
 [MIL-004]: ./mil-004-versioned-release.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
-[e3ad1fa]: https://git.tirsystem.com/TirSystem/github-action/commit/e3ad1fa7e7eef57a6793a479edb41ac6fd2db688
 [32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346
