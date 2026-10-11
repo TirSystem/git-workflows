@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added task 6 (embedded scripts to files) and Go/No-Go criterion 5; traceability adds O2 (RC-034) | [616c5d2] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added the verification results of the first release (v1.0.0) | [6933e91] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the verification results of the first release (v1.0.0) | [6933e91] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 3 verified with pinned consumers after v1.0.1 and v1.1.0 (RC-048) | [05b635c] |
 
 ---
 
@@ -81,7 +81,7 @@ and the release page were created, and the job token was enough (ADR-0007).
 | --- | --- | --- |
 | 1 | A release is validated before a tag is created | Go: `tools/release.py` refuses unless the status `Validate workflows / validate (push)` of the tip of `main` is success; tested for failed and missing runs |
 | 2 | Version tag and changelog entry that marks breaking changes | Go: `v1.0.0` and `CHANGELOG.md` `[1.0.0]`; `tools/changelog.py` checks the convention |
-| 3 | A consumer pinned to the previous version keeps working | Go: tags are never moved or deleted; the upgrade guide describes the way back; the first release has no previous version, so this is by construction until `v1.0.1` |
+| 3 | A consumer pinned to the previous version keeps working | Go, verified on 2026-10-11 after `v1.0.1`: a caller in `TirSystem-BashScript/RepoFoundry` at `@v1.0.0` and one at `@v1` both passed (run 660); after `v1.1.0` a caller at `@v1.1.0` with `tools-ref: v1.1.0` and one at `@v1` passed (run 672). `v1.0.0` still points to `97ffa49` |
 | 4 | Publish destination decided, token scope documented | Go: ADR-0007 |
 | 5 | No embedded Python in the scoped workflows | Go: both run files of this repository, with offline tests that exercise the files (MIL-004 task 6) |
 
@@ -92,5 +92,5 @@ After the release the two scoped workflows fetch their scripts at `ref: v1`
 
 [BC-001]: ../business-case.md
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
-[616c5d2]: https://git.tirsystem.com/TirSystem/github-action/commit/616c5d2e48f0d76399a6f78923891fc7f50c8e22
 [6933e91]: https://git.tirsystem.com/TirSystem/github-action/commit/6933e91c83075fb39b2dfbe41683cb2a0a0bce28
+[05b635c]: https://git.tirsystem.com/TirSystem/github-action/commit/05b635c1b3d79390c794e62e781595fbe5f1a4ea
