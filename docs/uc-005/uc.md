@@ -4,12 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | UC-005 |
-| CrossReference | [UCD-001], [US-001], [SA-001], [ADR-0005] |
+| CrossReference | [UCD-001], [US-001], [SA-001], [ADR-0005], [MIL-007] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [385d2fb] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [385d2fb] |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Brief extended to C++ and C# (MIL-007 task 1) | [32b5ab6] |
 
 ---
 
@@ -20,18 +21,18 @@
 **Level:** user-goal
 **Primary Actor:** Software Engineer
 **Stakeholders:** S02, S05 (interests below)
-**Stories:** US-001.09, US-001.10
+**Stories:** US-001.09, US-001.10, US-001.16, US-001.17
 
 ## Brief
 
-A Software Engineer opens a pull request in a repository that calls the shared quality-check workflow. The workflow installs the pinned tools, runs the checks for each selected language on the files of the repository (lint, format and types for Python; lint and format for shell), and reports one status for the pull request. When every selected tool passes, the status is green.
+A Software Engineer opens a pull request in a repository that calls the shared quality-check workflow. The workflow installs the pinned tools, runs the checks for each selected language on the files of the repository (lint, format and types for Python; lint and format for shell; format and static checks for C++; format and analyzer checks for C#), and reports one status for the pull request. A language that needs a build or a project file says what is missing instead of passing. When every selected tool passes, the status is green.
 
 **Stakeholder interests**
 
 - S02 — checks run the same way in every project without writing a pipeline, and a failure says what to fix
 - S05 — the checks and their tool versions are defined once and change through a reviewed release
 
-**Preconditions:** The repository is onboarded, the shared workflow is available through reusable workflow delivery, and the repository has files of at least one supported language.
+**Preconditions:** The repository is onboarded, the shared workflow is available through reusable workflow delivery, and the repository has files of at least one supported language (Python, shell, C++ or C#).
 
 **Postconditions (success guarantee):** The pull request has a pass or fail status that comes from every selected tool, and no file of the repository was changed.
 
@@ -41,4 +42,6 @@ A Software Engineer opens a pull request in a repository that calls the shared q
 [US-001]: ../user-stories.md
 [SA-001]: ../stakeholder-analysis.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
+[MIL-007]: ../milestones/mil-007-cpp-csharp-quality-checks.md
 [385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
+[32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346
