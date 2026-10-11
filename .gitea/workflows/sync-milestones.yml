@@ -1,0 +1,89 @@
+# Publish accepted milestones to the git host.
+#
+# On a push to main that changes docs/milestones/ or docs/sqa/reviews/, this
+# workflow runs `sync-project.sh --accepted-only --apply`: every milestone whose
+# latest Version History row is Accepted and whose latest review record is a Go
+# is created or updated as a Milestone with its tasks as Issues. A Proposed
+# milestone, or one without a Go review, is skipped. Nothing is closed or
+# deleted. Each run updates the issues of every accepted milestone (the sync is
+# idempotent, but the host records the edit).
+#
+# INSTALLING THIS FILE IS THE STANDING AUTHORIZATION TO PUBLISH. This project
+# installed it on 2026-10-11 at the request of S01.
+#
+# Secret: TOKEN_FOR_GITEA, the bare Gitea token of the organization (no JSON).
+# It needs read and write on issues and milestones, and read on the framework
+# repository, which is checked out as a submodule. Gitea does not accept secret
+# names that start with GITEA_ or GITHUB_.
+#
+# Run it once by hand from the Actions page with dry_run left on: it prints
+# the plan and creates nothing. Turn dry_run off only for a real run.
+# A runner must be registered for the repository (or its organisation).
+
+name: Publish accepted milestones
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/milestones/**"
+      - "docs/sqa/reviews/**"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only: print the plan and create nothing"
+        type: boolean
+        default: true
+
+# Two merges in a row queue instead of racing.
+concurrency:
+  group: publish-accepted-milestones
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the project
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TOKEN_FOR_GITEA }}
+
+      # .gitmodules uses ssh:// URLs and the runner has no SSH key, so the
+      # submodules (framework, and framework/qc inside it) are fetched over HTTPS
+      # with the same token. The token goes through the environment, not a
+      # command line.
+      - name: Check out the framework submodules over HTTPS
+        env:
+          GIT_CONFIG_COUNT: "2"
+          GIT_CONFIG_KEY_0: "url.https://git.tirsystem.com/.insteadOf"
+          GIT_CONFIG_VALUE_0: "ssh://git@git.tirsystem.com:10022/"
+          GIT_CONFIG_KEY_1: "http.extraheader"
+          GIT_CONFIG_VALUE_1: "Authorization: token ${{ secrets.TOKEN_FOR_GITEA }}"
+        run: |
+          set -euo pipefail
+          git submodule update --init --recursive --depth=1
+
+      - name: Make sure curl and jq are available
+        run: |
+          set -euo pipefail
+          if command -v curl >/dev/null && command -v jq >/dev/null; then exit 0; fi
+          sudo_cmd=""
+          if [ "$(id -u)" -ne 0 ]; then sudo_cmd="sudo"; fi
+          $sudo_cmd apt-get update -qq
+          $sudo_cmd apt-get install -y -qq curl jq
+
+      - name: Publish accepted milestones
+        env:
+          GITEA_TOKEN: ${{ secrets.TOKEN_FOR_GITEA }}
+          # Empty on a push (a real run); "true" or "false" on a manual run.
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          if [ "$DRY_RUN" = "true" ]; then
+            bash framework/scripts/sync-project.sh --accepted-only
+          else
+            bash framework/scripts/sync-project.sh --accepted-only --apply
+          fi

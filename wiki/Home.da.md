@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 510b243ec5f2 -->
+<!-- translation of Home.md, source sha256 c9c04abaf4ae -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -13,12 +13,12 @@ En samling af genbrugelige Gitea Actions-workflows til DevOps-professionelle og 
 
 Dette repository er den centrale samling af genbrugelig automatisering til TirSystems repositories. Det primære repository ligger på `git.tirsystem.com` (Gitea) og spejles med push til GitHub.
 
-Det indeholder fem workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki, fælles kvalitetskontrol, et udgivelsesworkflow og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
+Det indeholder seks workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki, fælles kvalitetskontrol, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Der er fem workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
+Der er seks workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
 
 | Workflow | Fil | Type | Starter ved | Formål |
 | --- | --- | --- | --- | --- |
@@ -26,6 +26,7 @@ Der er fem workflows i dette repository. Et **scoped** workflow leveres af insta
 | Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, tilmelding med `wiki/.publish` | push til `main`, der ændrer `wiki/**`, manuelt | Publicerer siderne i `wiki/` til repositoryets wiki |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører ruff, mypy, shellcheck og shfmt på de sporede filer og ændrer intet |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Kun dette repository | manuelt | Opretter versionstagget, udgivelsessiden og major-tagget efter kontrollerne |
+| Publicering af accepterede milepæle | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Kun dette repository | push til `main`, der ændrer `docs/milestones/**` eller `docs/sqa/reviews/**`, manuelt (tørkørsel som standard) | Opretter eller opdaterer Gitea-milepælen og issues for hver milepæl, der er Accepted med en Go-gennemgang |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | Kun dette repository | pull request, push til `main`, manuelt | Læser hvert workflow som YAML og kører offline-testene |
 
 ### Synkronisering af GitHub-metadata
@@ -229,6 +230,54 @@ else
   end
   Workflow --> Trigger: Released
 end
+deactivate Workflow
+@enduml
+```
+
+### Publicering af accepterede milepæle
+
+Permanent tilladelse til at publicere: ved et push til `main`, der ændrer milepælene eller deres gennemgange, oprettes eller opdateres hver milepæl, hvis seneste række i Version History er Accepted, og hvis seneste gennemgang er en Go, på Gitea med sine opgaver som issues. Intet lukkes eller slettes. En manuel kørsel er en tørkørsel, medmindre `dry_run` slås fra. Det bruger secret'en `TOKEN_FOR_GITEA` og `--accepted-only`-reglen i det monterede framework (v0.5.0 eller nyere).
+
+#### Workflow
+
+```plantuml
+@startuml
+title Publish accepted milestones (this repository)
+
+autonumber
+
+actor "Push to main that changes\ndocs/milestones/** or docs/sqa/reviews/**,\nor manual trigger" as Trigger
+participant "Gitea Actions\nsync-milestones" as Workflow
+participant "framework/scripts/\nsync-project.sh" as Script
+participant "Gitea REST API" as Gitea
+
+Trigger -> Workflow: Start workflow
+activate Workflow
+Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA
+Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
+activate Script
+
+loop for each docs/milestones/mil-*.md
+  alt latest Version History row is not Accepted,\nor the latest review record is not a Go
+    Script -> Script: Skip with the reason on stderr
+  else
+    alt dry run
+      Script -> Script: Print the plan, no network call
+    else
+      Script -> Gitea: Create or update the Milestone\nand one Issue per task row
+      Gitea --> Script: Milestone and issue numbers
+    end
+  end
+end
+
+note right of Script
+Nothing is closed or deleted.
+Each real run edits the issues
+of every accepted milestone.
+end note
+Script --> Workflow: Done, or "nothing to publish"
+deactivate Script
+Workflow --> Trigger: Workflow result
 deactivate Workflow
 @enduml
 ```
