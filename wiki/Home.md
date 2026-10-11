@@ -13,18 +13,20 @@ A collection of reusable Gitea Actions workflows for DevOps professionals and so
 
 This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It contains six workflows: metadata sync to the GitHub mirror, wiki publishing, shared quality checks, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
+It contains eight workflows: metadata sync to the GitHub mirror, wiki publishing, shared quality checks for Python and shell, for C and C++ and for C#, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Six workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
+Eight workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push to `main`, manual, daily 03:17 UTC | Copies the description and topics of a Gitea repository to its GitHub push mirror |
 | Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, opt-in with `wiki/.publish` | push to `main` that changes `wiki/**`, manual | Publishes the pages in `wiki/` to the repository wiki |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Reusable (`workflow_call`) | a call from another repository | Runs ruff, mypy, shellcheck and shfmt on the tracked files and changes nothing |
+| Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs clang-format and clang-tidy at exact versions on the tracked C and C++ files and changes nothing |
+| Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs `dotnet format` and `dotnet build` on an exact .NET SDK 10 or later and changes nothing |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | This repository only | manual | Creates the version tag, the release page and the major tag after the checks |
 | Publish accepted milestones | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | This repository only | push to `main` that changes `docs/milestones/**` or `docs/sqa/reviews/**`, manual (dry run by default) | Creates or updates the Gitea milestone and issues of every milestone that is Accepted with a Go review |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | This repository only | pull request, push to `main`, manual | Parses every workflow and runs the offline tests |
@@ -180,6 +182,96 @@ alt any tool failed
   Workflow --> Caller: Fail and list the failed tools
 else
   Workflow --> Caller: All selected checks passed
+end
+deactivate Workflow
+@enduml
+```
+
+### Quality checks C++
+
+A reusable workflow for C and C++, called with `uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). The repository needs a `.clang-format`; a `.clang-tidy` and a compile database are optional.
+
+#### Workflow
+
+```plantuml
+@startuml
+title Shared quality checks for C and C++ (reusable workflow)
+
+autonumber
+
+actor "Calling repository\nuses: ...quality-checks-cpp.yml@v1" as Caller
+participant "Gitea Actions\nquality-checks-cpp" as Workflow
+participant "PyPI" as PyPI
+
+Caller -> Workflow: workflow_call with working-directory, std,\ncompile-commands-dir and tool versions
+activate Workflow
+
+Workflow -> Workflow: Check out the caller and the shared script
+Workflow -> Workflow: Validate the inputs
+alt an input is invalid or a version is not exact
+  Workflow --> Caller: Fail with [configuration]
+end
+
+Workflow -> PyPI: Install clang-format and clang-tidy at the exact versions
+PyPI --> Workflow: Tools installed
+
+alt no C or C++ file is tracked
+  Workflow --> Caller: Notice: nothing was checked, pass
+else no .clang-format, or compile-commands-dir\nwithout compile_commands.json
+  Workflow --> Caller: Fail with [configuration]
+else
+  Workflow -> Workflow: clang-format --dry-run -Werror on all files
+  Workflow -> Workflow: clang-tidy on the C++ files (-std=std)\nand on the C files (or with the compile database)
+  alt any tool failed
+    Workflow --> Caller: Fail with tool, file and line in the log
+  else
+    Workflow --> Caller: All selected checks passed
+  end
+end
+deactivate Workflow
+@enduml
+```
+
+### Quality checks C#
+
+A reusable workflow for C#, called with `uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). It installs the exact .NET SDK given by `dotnet-sdk-version` (10 or later) and needs the network for the package restore.
+
+#### Workflow
+
+```plantuml
+@startuml
+title Shared quality checks for C# (reusable workflow)
+
+autonumber
+
+actor "Calling repository\nuses: ...quality-checks-csharp.yml@v1" as Caller
+participant "Gitea Actions\nquality-checks-csharp" as Workflow
+participant "dot.net\n(dotnet-install.sh)" as DotNet
+
+Caller -> Workflow: workflow_call with working-directory,\nproject and dotnet-sdk-version
+activate Workflow
+
+Workflow -> Workflow: Check out the caller and the shared script
+Workflow -> Workflow: Validate the inputs
+alt an input is invalid or the SDK is not an exact\nstable version 10 or later
+  Workflow --> Caller: Fail with [configuration]
+end
+
+Workflow -> DotNet: Install the exact .NET SDK version
+DotNet --> Workflow: SDK installed
+
+alt no C# file is tracked
+  Workflow --> Caller: Notice: nothing was checked, pass
+else no solution or project, or several without the project input
+  Workflow --> Caller: Fail with [configuration] that names them
+else
+  Workflow -> Workflow: dotnet format --verify-no-changes
+  Workflow -> Workflow: dotnet build -warnaserror\n(package restore needs the network)
+  alt any tool failed
+    Workflow --> Caller: Fail with tool, file and line in the log
+  else
+    Workflow --> Caller: All selected checks passed
+  end
 end
 deactivate Workflow
 @enduml

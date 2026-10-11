@@ -1,0 +1,60 @@
+name: Quality checks C#
+
+# Reusable workflow (ADR-0008). A repository calls it with
+#
+#   jobs:
+#     quality:
+#       uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1
+#
+# It checks the C# solution or project of the repository with `dotnet format`
+# and `dotnet build` (warnings as errors) on an exact .NET SDK 10 or later,
+# changes no file and needs no secret. The package restore needs the network.
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        description: "Directory, relative to the repository root, whose files are checked"
+        type: string
+        default: "."
+      project:
+        description: "Solution or project file, relative to working-directory; empty uses the single .sln, .slnx or .csproj found"
+        type: string
+        default: ""
+      dotnet-sdk-version:
+        description: "Exact .NET SDK version, 10 or later (no channel, no range)"
+        type: string
+        default: "10.0.401"
+      tools-ref:
+        description: "Tag or branch of TirSystem/github-action whose tools/quality-checks-csharp.sh is run; pin it to the exact tag together with the workflow"
+        type: string
+        default: "v1"
+
+jobs:
+  quality-checks-csharp:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIRECTORY: ${{ inputs.working-directory }}
+      PROJECT: ${{ inputs.project }}
+      DOTNET_SDK_VERSION: ${{ inputs.dotnet-sdk-version }}
+      DOTNET_ROOT: /tmp/dotnet
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Fetch the shared script
+        uses: actions/checkout@v4
+        with:
+          repository: TirSystem/github-action
+          ref: ${{ inputs.tools-ref }}
+          path: shared-scripts
+
+      - name: Validate the inputs
+        run: bash shared-scripts/tools/quality-checks-csharp.sh validate
+
+      - name: Install the .NET SDK
+        run: bash shared-scripts/tools/quality-checks-csharp.sh install
+
+      - name: Run the checks
+        run: bash shared-scripts/tools/quality-checks-csharp.sh run

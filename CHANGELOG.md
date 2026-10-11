@@ -20,6 +20,18 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Added
+
+- Reusable workflow `quality-checks-cpp.yml` (ADR-0008): `clang-format --dry-run
+  -Werror` and `clang-tidy` on the tracked C and C++ files, at exact versions
+  (inputs `clang-format-version`, `clang-tidy-version`), with the inputs
+  `working-directory`, `std`, `compile-commands-dir` and `tools-ref`. The
+  repository needs a `.clang-format`.
+- Reusable workflow `quality-checks-csharp.yml` (ADR-0008): `dotnet format
+  --verify-no-changes` and `dotnet build -warnaserror` on an exact .NET SDK 10
+  or later (input `dotnet-sdk-version`, default `10.0.401`), with the inputs
+  `working-directory`, `project` and `tools-ref`.
+
 ### Changed
 
 - Every job has a `timeout-minutes` (5 to 15), so a hung step no longer holds a

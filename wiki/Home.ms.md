@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 c9c04abaf4ae -->
+<!-- translation of Home.md, source sha256 5751829e99af -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -13,18 +13,20 @@ Koleksi aliran kerja (workflow) Gitea Actions yang boleh digunakan semula untuk 
 
 Repositori ini ialah koleksi pusat bagi automasi yang boleh digunakan semula untuk repositori TirSystem. Repositori utama berada di `git.tirsystem.com` (Gitea) dan dicerminkan dengan push ke GitHub.
 
-Ia mengandungi enam aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki, semakan kualiti bersama, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
+Ia mengandungi lapan aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki, semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
 
 
 ## Aliran kerja
 
-Terdapat enam aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
+Terdapat lapan aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
 
 | Aliran kerja | Fail | Jenis | Bermula apabila | Tujuan |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push ke `main`, manual, setiap hari 03:17 UTC | Menyalin penerangan dan topik repositori Gitea ke push mirror GitHub-nya |
 | Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, pilih menyertai dengan `wiki/.publish` | push ke `main` yang mengubah `wiki/**`, manual | Menerbitkan halaman dalam `wiki/` ke wiki repositori |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan ruff, mypy, shellcheck dan shfmt pada fail yang dijejaki dan tidak mengubah apa-apa |
+| Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan clang-format dan clang-tidy pada versi tepat pada fail C dan C++ yang dijejaki dan tidak mengubah apa-apa |
+| Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan `dotnet format` dan `dotnet build` pada .NET SDK 10 atau lebih baharu yang tepat dan tidak mengubah apa-apa |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Repositori ini sahaja | manual | Mencipta tag versi, halaman keluaran dan tag major selepas semakan |
 | Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | Repositori ini sahaja | pull request, push ke `main`, manual | Menghurai setiap aliran kerja sebagai YAML dan menjalankan ujian luar talian |
@@ -180,6 +182,96 @@ alt any tool failed
   Workflow --> Caller: Fail and list the failed tools
 else
   Workflow --> Caller: All selected checks passed
+end
+deactivate Workflow
+@enduml
+```
+
+### Semakan kualiti C++
+
+Aliran kerja boleh guna semula untuk C dan C++, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositori mesti mempunyai `.clang-format`; `.clang-tidy` dan pangkalan data kompilasi adalah pilihan.
+
+#### Aliran kerja
+
+```plantuml
+@startuml
+title Shared quality checks for C and C++ (reusable workflow)
+
+autonumber
+
+actor "Calling repository\nuses: ...quality-checks-cpp.yml@v1" as Caller
+participant "Gitea Actions\nquality-checks-cpp" as Workflow
+participant "PyPI" as PyPI
+
+Caller -> Workflow: workflow_call with working-directory, std,\ncompile-commands-dir and tool versions
+activate Workflow
+
+Workflow -> Workflow: Check out the caller and the shared script
+Workflow -> Workflow: Validate the inputs
+alt an input is invalid or a version is not exact
+  Workflow --> Caller: Fail with [configuration]
+end
+
+Workflow -> PyPI: Install clang-format and clang-tidy at the exact versions
+PyPI --> Workflow: Tools installed
+
+alt no C or C++ file is tracked
+  Workflow --> Caller: Notice: nothing was checked, pass
+else no .clang-format, or compile-commands-dir\nwithout compile_commands.json
+  Workflow --> Caller: Fail with [configuration]
+else
+  Workflow -> Workflow: clang-format --dry-run -Werror on all files
+  Workflow -> Workflow: clang-tidy on the C++ files (-std=std)\nand on the C files (or with the compile database)
+  alt any tool failed
+    Workflow --> Caller: Fail with tool, file and line in the log
+  else
+    Workflow --> Caller: All selected checks passed
+  end
+end
+deactivate Workflow
+@enduml
+```
+
+### Semakan kualiti C#
+
+Aliran kerja boleh guna semula untuk C#, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Ia memasang .NET SDK tepat yang diberikan oleh `dotnet-sdk-version` (10 atau lebih baharu) dan memerlukan rangkaian untuk pemulihan pakej.
+
+#### Aliran kerja
+
+```plantuml
+@startuml
+title Shared quality checks for C# (reusable workflow)
+
+autonumber
+
+actor "Calling repository\nuses: ...quality-checks-csharp.yml@v1" as Caller
+participant "Gitea Actions\nquality-checks-csharp" as Workflow
+participant "dot.net\n(dotnet-install.sh)" as DotNet
+
+Caller -> Workflow: workflow_call with working-directory,\nproject and dotnet-sdk-version
+activate Workflow
+
+Workflow -> Workflow: Check out the caller and the shared script
+Workflow -> Workflow: Validate the inputs
+alt an input is invalid or the SDK is not an exact\nstable version 10 or later
+  Workflow --> Caller: Fail with [configuration]
+end
+
+Workflow -> DotNet: Install the exact .NET SDK version
+DotNet --> Workflow: SDK installed
+
+alt no C# file is tracked
+  Workflow --> Caller: Notice: nothing was checked, pass
+else no solution or project, or several without the project input
+  Workflow --> Caller: Fail with [configuration] that names them
+else
+  Workflow -> Workflow: dotnet format --verify-no-changes
+  Workflow -> Workflow: dotnet build -warnaserror\n(package restore needs the network)
+  alt any tool failed
+    Workflow --> Caller: Fail with tool, file and line in the log
+  else
+    Workflow --> Caller: All selected checks passed
+  end
 end
 deactivate Workflow
 @enduml
