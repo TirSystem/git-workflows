@@ -4,25 +4,25 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | P1 use cases written and accepted (UCD-001, US-001, UC-001 to UC-004): Open Issues updated | [a2bf2d4] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Dates confirmed by S01 (stand-in for S05); the confirmation item is removed from Open Issues | [ea06eaa] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Dates confirmed by S01 (stand-in for S05); the confirmation item is removed from Open Issues | [ea06eaa] |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-007 (quality checks for C++ and C#) | pending |
 
 ---
 
 ## Purpose
 
-This plan schedules six milestones that move the repository from one
+This plan schedules seven milestones that move the repository from one
 workflow with known defects to a documented, versioned collection of shared
 workflows. The Business Case sets no deadline, so the dates are the plan's own; they were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
 ## Planning Assumptions
 
-- Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26.
+- Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26; MIL-007 follows in January 2027 (proposed, 2027-01-04 to 2027-01-16).
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -36,6 +36,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Versioned release and publishing | [MIL-004] | 2026-11-16 to 2026-11-28 | 2026-11-28 | S05 | None yet | Release process and reusable release workflow | [Milestone MIL-004] |
 | Wiki and translations | [MIL-005] | 2026-11-30 to 2026-12-12 | 2026-12-12 | S05 | None yet | Wiki pages in English, Danish and Bahasa Malaysia, kept current by every pull request | [Milestone MIL-005] |
 | Shared wiki publishing | [MIL-006] | 2026-12-14 to 2026-12-26 | 2026-12-26 | S05 | None yet | Scoped publish-wiki workflow with opt-in, piloted in one other repository | [Milestone MIL-006] |
+| Quality checks for C++ and C# | [MIL-007] | 2027-01-04 to 2027-01-16 | 2027-01-16 | S05 | US-001.09, US-001.10 (to extend) | Reusable quality-check workflows for C++ and C#, released | Not synced yet |
 
 ```plantuml
 @startgantt
@@ -52,6 +53,8 @@ Project starts 2026-10-05
 [MIL-005 Go/No-Go] happens 2026-12-12
 [MIL-006 Shared wiki] starts 2026-12-14 and ends 2026-12-26
 [MIL-006 Go/No-Go] happens 2026-12-26
+[MIL-007 C++ and C#] starts 2027-01-04 and ends 2027-01-16
+[MIL-007 Go/No-Go] happens 2027-01-16
 @endgantt
 ```
 
@@ -65,12 +68,14 @@ Project starts 2026-10-05
 | Gitea Actions workflows for software engineers (release and publishing) | [MIL-004] |
 | Wiki pages in English, Danish and Bahasa Malaysia | [MIL-005] |
 | The wiki publisher shared with other repositories through scoped delivery | [MIL-006] |
+| Gitea Actions workflows for software engineers (quality checks for C++ and C#) | [MIL-007] |
 
 ## Dependencies
 
 ```
 MIL-001 → MIL-002 → MIL-003 → MIL-004
             MIL-002 → MIL-005 → MIL-006
+   MIL-003 + MIL-004 → MIL-007
 ```
 
 A No-Go moves every later window by the rework time of the failed milestone.
@@ -79,6 +84,7 @@ A No-Go moves every later window by the rework time of the failed milestone.
 
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
+| The runner cannot provide the C++ or C# tools (MIL-007) | The workflows need a custom runner image or a longer install | MIL-007 task 2 verifies it first; the ADR of task 3 says what a build-dependent check needs from the caller. |
 | Reusable workflow support is missing on the instance | MIL-003 and MIL-004 change shape | Verify first in each milestone (MIL-002 task 2, MIL-003 task 1); fall back to copied templates. |
 | Security review by S05 is a bottleneck | Milestone decisions slip | Keep milestones small and plan review time before each decision date. |
 
@@ -251,11 +257,11 @@ no tests, no release process.
 [MIL-004]: ./milestones/mil-004-versioned-release.md
 [MIL-005]: ./milestones/mil-005-wiki-and-translations.md
 [MIL-006]: ./milestones/mil-006-shared-wiki-publishing.md
+[MIL-007]: ./milestones/mil-007-cpp-csharp-quality-checks.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [Milestone MIL-006]: https://git.tirsystem.com/TirSystem/github-action/milestone/94
-[a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
