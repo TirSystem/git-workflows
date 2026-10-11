@@ -26,9 +26,10 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Check and publish the release
         env:
