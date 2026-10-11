@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-007 |
-| CrossReference | [BC-001], [US-001], [UC-005], [MIL-003], [MIL-004], [ADR-0005], [ADR-0006] |
+| CrossReference | [BC-001], [US-001], [UC-005], [MIL-003], [MIL-004], [ADR-0005], [ADR-0006], [ADR-0008] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the verification results of task 2 (runner tools) | [32b5ab6] |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Current tool versions only, .NET SDK 10 or later: results of run 699 replace the SDK 8 result; tasks 3 and criterion 1 amended | [7bcc67a] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Current tool versions only, .NET SDK 10 or later: results of run 699 replace the SDK 8 result; tasks 3 and criterion 1 amended | [7bcc67a] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Amendment reviewed (RC-055) and accepted: current tool versions, .NET SDK 10 or later, results of run 699, the contract of ADR-0008 in task 3 | [faf13b2] |
 
 ---
 
@@ -71,11 +71,11 @@ is only available as an old version is not used.
 
 | # | Task | Summary | Needs its own Use Case/User Story? | Reference |
 | --- | --- | --- | --- | --- |
-| 1 | Write the use case and stories for C++ and C# checks | Extend UC-005 (Run Project Quality Checks) so that its Brief names C++ and C#, and add stories to US-001 for a C++ project and a C# project, each with a pass and a fail acceptance criterion. Review them with the checklists of the `artifact` skill. | Yes | UC-005, US-001.09, US-001.10 |
+| 1 | Write the use case and stories for C++ and C# checks | Extend UC-005 (Run Project Quality Checks) so that its Brief names C++ and C#, and add stories to US-001 for a C++ project and a C# project, each with a pass and a fail acceptance criterion. Review them with the checklists of the `artifact` skill. | Yes | UC-005, US-001.09, US-001.10, US-001.16, US-001.17 |
 | 2 | Verify what the runner provides | On a throwaway branch, run a job on `ubuntu-latest` that prints which of `clang-format`, `clang-tidy`, `cppcheck` and the .NET SDK (`dotnet --version`) exist, and whether each can be installed in the run (for example from PyPI, apt or the dotnet install script) and how long that takes. Record the result in the milestone like MIL-003 task 1. | No | |
-| 3 | Decide the contract | Record an ADR that decides: one workflow for both languages or one per language; the tools and pinned versions, current releases only and .NET SDK 10 or later (C++: `clang-format --dry-run -Werror`, `clang-tidy` and compiler warnings; `cppcheck` only if a current release can be had; C#: `dotnet format --verify-no-changes`, a build with analyzers and warnings as errors); the inputs (languages or paths, working directory, build command or compile database); what a build-dependent check needs from the caller; whether C is included with C++; and the names of the workflows and wiki pages (they follow `QualityChecksPythonShell`). Must be accepted before tasks 4 and 5. | No | ADR-0005 (refined) |
-| 4 | Implement the C++ workflow | Add the reusable workflow and its script file `tools/quality-checks-cpp.sh` (or as the ADR decides), pinned tool versions, least-privilege permissions and offline tests with stub tools, as `quality-checks.yml` does. | No | |
-| 5 | Implement the C# workflow | The same for C#, with its script file and tests. | No | |
+| 3 | Decide the contract | Decided in ADR-0008 (accepted on 2026-10-11, RC-054): two separate reusable workflows, `quality-checks-cpp.yml` for C and C++ and `quality-checks-csharp.yml`, each running a script file fetched at `tools-ref`; C++: `clang-format --dry-run -Werror` and `clang-tidy` at exact current versions, no `cppcheck`; C#: `dotnet format --verify-no-changes` and a build with analyzers and warnings as errors, with the .NET SDK installed at an exact `10.0.x`; the inputs, the names of the workflows, guides and wiki pages and the consequences are in the ADR. | No | ADR-0008 |
+| 4 | Implement the C++ workflow | Add the reusable workflow `quality-checks-cpp.yml` and its script file `tools/quality-checks-cpp.sh` as ADR-0008 decides, exact tool versions, least-privilege permissions and offline tests with stub tools, as `quality-checks.yml` does. | No | |
+| 5 | Implement the C# workflow | The same for C#: `quality-checks-csharp.yml`, `tools/quality-checks-csharp.sh` and tests, as ADR-0008 decides. | No | |
 | 6 | Write the guides and the wiki pages | One guide per workflow in `guides/` for reading its results, the wiki pages in English, Danish and Bahasa Malaysia, the Home workflow list and diagrams (a test requires every workflow to be listed), and an update of the upgrade guide. | No | |
 | 7 | Adopt each workflow in one other repository | Onboard a real C++ project and a real C# project, or a throwaway repository when none exists, and fix the gaps in the guides that appear. Verify a seeded failure. | No | |
 | 8 | Release | Add the changelog entry (a new workflow is a minor change, ADR-0006) and run the Release workflow; record the results in this milestone and review it. | No | |
@@ -102,9 +102,9 @@ is a .NET SDK of version 10 or later, and old tools are not run. A second run
 clang tools come from PyPI in a few seconds with an exact version, as
 `quality-checks.yml` already does for its tools, and the .NET SDK 10 comes from
 the official script in 20 s, with no change to the runner. `cppcheck` is the
-exception: only an old version is a package, so the contract either drops it
-(`clang-tidy` does the static analysis) or builds a current release from
-source, which costs minutes per run.
+exception: only an old version is a package. ADR-0008 drops it, because
+`clang-tidy` does the static analysis and a current `cppcheck` would have to
+be built from source, which costs minutes per run.
 Not covered by this task: running a tool against a real C++ project (a
 `clang-tidy` run needs a compile database or flags) or a real C# solution
 (`dotnet format` and a build need the project's restore of packages from the
@@ -121,5 +121,6 @@ network), a private runner with no internet, and an image that differs from
 [MIL-004]: ./mil-004-versioned-release.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
-[32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346
+[ADR-0008]: ../adr/adr-0008-cpp-csharp-quality-check-contract.md
 [7bcc67a]: https://git.tirsystem.com/TirSystem/github-action/commit/7bcc67a065ac5f67b4e13ebf243a4bbbe2af47d9
+[faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
