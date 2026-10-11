@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [385d2fb] |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Brief extended to C++ and C# (MIL-007 task 1) | [32b5ab6] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Brief extended to C++ and C# (MIL-007 task 1) | [32b5ab6] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Brief extended to C++ and C# reviewed (RC-056) and accepted; the failure sentence is left to the stories | [1bc56f8] |
 
 ---
 
@@ -25,7 +25,7 @@
 
 ## Brief
 
-A Software Engineer opens a pull request in a repository that calls the shared quality-check workflow. The workflow installs the pinned tools, runs the checks for each selected language on the files of the repository (lint, format and types for Python; lint and format for shell; format and static checks for C++; format and analyzer checks for C#), and reports one status for the pull request. A language that needs a build or a project file says what is missing instead of passing. When every selected tool passes, the status is green.
+A Software Engineer opens a pull request in a repository that calls the shared quality-check workflow. The workflow installs the pinned tools, runs the checks for each selected language on the files of the repository (lint, format and types for Python; lint and format for shell; format and static checks for C++; format and analyzer checks for C#), and reports one status for the pull request. When every selected tool passes, the status is green.
 
 **Stakeholder interests**
 
@@ -43,5 +43,5 @@ A Software Engineer opens a pull request in a repository that calls the shared q
 [SA-001]: ../stakeholder-analysis.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [MIL-007]: ../milestones/mil-007-cpp-csharp-quality-checks.md
-[385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
 [32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346
+[1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e

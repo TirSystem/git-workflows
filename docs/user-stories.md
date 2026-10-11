@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.14 and US-001.15 (UC-007); US-001.13 traced to UC-007 (RC-046) | [4cf52af] |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added US-001.16 and US-001.17 (C++ and C# checks, MIL-007 task 1) | [32b5ab6] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.16 and US-001.17 (C++ and C# checks, MIL-007 task 1) | [32b5ab6] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | US-001.16 and US-001.17 reviewed (RC-057) and accepted; the Purpose and Scope names the later stories | [1bc56f8] |
 
 ---
 
@@ -19,7 +19,9 @@
 These stories cover the P1 use cases of the Project Plan that MIL-002 delivers
 (O1 to O3 of [BC-001]): keeping the mirror metadata correct, configuring
 credentials, onboarding a repository and diagnosing a failed run. Roles are the
-actors of [UCD-001]. Stories for quality checks and releases (MIL-004) and for the wiki (MIL-005, MIL-006) are not written yet.
+actors of [UCD-001]. Later stories cover quality checks (US-001.09, US-001.10 and, for
+C++ and C#, US-001.16 and US-001.17), releases and updates (US-001.11 to
+US-001.15). Stories for the wiki (MIL-005, MIL-006) are not written yet.
 
 ## Story List
 
@@ -272,5 +274,5 @@ behaviour is tested rather than built.
 [UC-005]: ./uc-005/uc.md
 [UC-006]: ./uc-006/uc.md
 [UC-007]: ./uc-007/uc.md
-[4cf52af]: https://git.tirsystem.com/TirSystem/github-action/commit/4cf52afe00f546c6b20424fb8dfc12796ffd9296
 [32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346
+[1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
