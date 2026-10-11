@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [6933e91] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [6933e91] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 3 verified; the action item is closed | pending |
 
 ---
 
@@ -31,13 +32,13 @@
 
 ## Overall Verdict
 
-Go - all six criteria pass, and the five Go/No-Go criteria of MIL-004 are met. One limit is stated, not hidden: criterion 3 (a consumer pinned to the previous version keeps working) is met by construction until a second release exists, because tags are never moved. S01 gave the Go in chat on 2026-10-11, standing in for the other reviewers as ADR-0002 records; there is no independent reader.
+Go - all six criteria pass, and the five Go/No-Go criteria of MIL-004 are met. Criterion 3 (a consumer pinned to the previous version keeps working) was met by construction at the first release and verified on 2026-10-11 with pinned consumers after `v1.0.1` and `v1.1.0` (see the Verification results of MIL-004). S01 gave the Go in chat on 2026-10-11, standing in for the other reviewers as ADR-0002 records; there is no independent reader.
 
 ## Action Items
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Verify criterion 3 with a real consumer when `v1.0.1` or `v1.1.0` is released | S05 | next release |
+| Done 2026-10-11: criterion 3 verified with pinned consumers after `v1.0.1` (run 660) and `v1.1.0` (run 672) | S05 | done |
 
 ---
 
