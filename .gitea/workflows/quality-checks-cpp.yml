@@ -43,6 +43,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       WORKING_DIRECTORY: ${{ inputs.working-directory }}
       STD: ${{ inputs.std }}
@@ -52,10 +53,10 @@ jobs:
       QC_VENV: /tmp/quality-tools
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Fetch the shared script
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           repository: TirSystem/github-action
           ref: ${{ inputs.tools-ref }}
