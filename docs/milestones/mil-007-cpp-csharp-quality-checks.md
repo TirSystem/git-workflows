@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [b74ee0e] |
 
 ---
 
@@ -86,3 +86,4 @@ name and contract.
 [MIL-004]: ./mil-004-versioned-release.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
+[b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a

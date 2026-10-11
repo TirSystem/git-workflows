@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Dates confirmed by S01 (stand-in for S05); the confirmation item is removed from Open Issues | [ea06eaa] |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-007 (quality checks for C++ and C#) | pending |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-007 (quality checks for C++ and C#) | [b74ee0e] |
 
 ---
 
@@ -265,3 +265,4 @@ no tests, no release process.
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [Milestone MIL-006]: https://git.tirsystem.com/TirSystem/github-action/milestone/94
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
+[b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
