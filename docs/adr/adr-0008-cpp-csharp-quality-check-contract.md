@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [11cba35] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [11cba35] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-054): abbreviations expanded at first use and the security impact of downloading tools named | [9e7aedd] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -30,12 +31,12 @@ on 2026-10-11 and bound the decision:
 Facts (MIL-007 task 2, runs 692 and 699 on `ubuntu-latest`, Ubuntu 24.04,
 root, `gcc`/`g++` 13.3 present):
 
-- `clang-format` 23.1.3 and `clang-tidy` 22.1.8 install from PyPI in a few
-  seconds with an exact version.
+- `clang-format` 23.1.3 and `clang-tidy` 22.1.8 install from the Python Package
+  Index (PyPI) in a few seconds with an exact version.
 - `cppcheck` is only available as an old version (apt 2.13.0; the latest
   release is 2.22.0; the PyPI package of that name is another project).
-- The .NET SDK 10.0.401 installs with the official `dotnet-install.sh` in about
-  20 s with an exact `--version`; apt gives an older band (10.0.112).
+- The .NET software development kit (SDK) 10.0.401 installs with the official
+  `dotnet-install.sh` in about 20 s with an exact `--version`; apt gives an older band (10.0.112).
 - A `clang-tidy` run needs flags or a compile database, and a C# format check
   and build need the project's package restore, which needs the network.
 
@@ -118,6 +119,12 @@ The rules that follow from it:
   change and costs a major version (ADR-0006).
 - A caller pinned to an exact tag is pinned completely only when `tools-ref`
   names the same tag (as for `quality-checks.yml`).
+- Security: each run downloads and executes code from outside the repository
+  (wheels from PyPI and the `dotnet-install.sh` script from `dot.net`, and for
+  C# the NuGet packages of the project). Exact versions limit what can change
+  but are not verified against a hash, so a compromised package index or
+  download host would reach the run. The jobs get `contents: read` and no
+  secret, which limits what such code can do.
 
 ## Affected Artifacts
 
@@ -135,3 +142,4 @@ The rules that follow from it:
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [11cba35]: https://git.tirsystem.com/TirSystem/github-action/commit/11cba358b83cb7b6624f6b0956ae7b0c112d3692
+[9e7aedd]: https://git.tirsystem.com/TirSystem/github-action/commit/9e7aeddb11c2b41ac893d9f7893d663a53fbe470
