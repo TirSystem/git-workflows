@@ -16,9 +16,10 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Fetch the shared script
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           repository: TirSystem/github-action
           ref: v1

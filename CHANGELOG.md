@@ -20,6 +20,13 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Changed
+
+- Every job has a `timeout-minutes` (5 to 15), so a hung step no longer holds a
+  runner for the host's default limit.
+- `actions/checkout` is referenced by the exact tag `v4.2.2` instead of the
+  moving tag `v4`. No change for callers.
+
 ## [1.1.0] - 2026-10-11
 
 ### Added
