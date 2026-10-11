@@ -312,6 +312,31 @@ class TestCppRun:
         assert len(calls) == 2
         assert not any("--checks=" in call for call in calls)
 
+    @pytest.mark.parametrize(
+        ("files", "extra", "tidy_calls"),
+        [
+            (("a.cpp", "lib/c.c"), {}, 2),
+            (("a.cpp", ".clang-tidy"), {}, 1),
+            (("a.cpp", "build/compile_commands.json"), {"COMPILE_COMMANDS_DIR": "build"}, 1),
+        ],
+        ids=["no-clang-tidy-file", "clang-tidy-file", "compile-database"],
+    )
+    def test_every_clang_tidy_call_treats_warnings_as_errors(
+        self,
+        repo: Path,
+        tmp_path: Path,
+        cpp_bin: Path,
+        files: tuple[str, ...],
+        extra: dict[str, str],
+        tidy_calls: int,
+    ) -> None:
+        add_files(repo, *files)
+        _, calls = self.run(repo, tmp_path, cpp_bin, **extra)
+        tidy = [c for c in calls if c.startswith("clang-tidy")]
+        assert len(tidy) == tidy_calls
+        assert all("--warnings-as-errors=*" in call for call in tidy)
+        assert "--warnings-as-errors" not in calls[0] and calls[0].startswith("clang-format")
+
     def test_no_default_checks_when_a_clang_tidy_file_is_above_the_working_directory(
         self,
         repo: Path,

@@ -27,7 +27,8 @@ Each release lists its changes in these groups, in this order:
   (inputs `clang-format-version`, `clang-tidy-version`), with the inputs
   `working-directory`, `std`, `compile-commands-dir` and `tools-ref`. The
   repository needs a `.clang-format`; without a `.clang-tidy` the checks
-  `clang-diagnostic-*` and `clang-analyzer-*` run.
+  `clang-diagnostic-*` and `clang-analyzer-*` run, and every clang-tidy finding
+  is an error (`--warnings-as-errors=*`).
 - Reusable workflow `quality-checks-csharp.yml` (ADR-0008): `dotnet format
   --verify-no-changes` and `dotnet build -warnaserror` on an exact .NET SDK 10
   or later (input `dotnet-sdk-version`, default `10.0.401`), with the inputs

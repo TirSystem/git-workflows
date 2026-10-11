@@ -127,7 +127,9 @@ run_checks() {
 
   # Without a .clang-tidy, clang-tidy enables no check and refuses to run, so
   # the project gets the compiler diagnostics and the static analyzer.
-  local tidy_args=(--quiet)
+  # clang-tidy exits 0 on a warning, so every finding is made an error: a
+  # finding must fail the check, as a failing tool does for the other languages.
+  local tidy_args=(--quiet "--warnings-as-errors=*")
   if ! find_config_upwards .clang-tidy _clang-tidy; then
     tidy_args+=("--checks=${DEFAULT_TIDY_CHECKS}")
   fi

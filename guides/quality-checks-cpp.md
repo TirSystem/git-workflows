@@ -56,7 +56,7 @@ version of a tool is a new release of this repository, not a silent change.
 | Files | Tool | What it reports |
 | --- | --- | --- |
 | tracked `*.c`, `*.cc`, `*.cpp`, `*.cxx`, `*.h`, `*.hh`, `*.hpp`, `*.hxx` | `clang-format --dry-run -Werror` | formatting that differs from `.clang-format` |
-| the same files | `clang-tidy` | findings of the checks of `.clang-tidy` (or of `clang-diagnostic-*` and `clang-analyzer-*` without one); `*.c` files are checked as C17, the other files as the C++ standard of `std` |
+| the same files | `clang-tidy` | findings of the checks of `.clang-tidy` (or of `clang-diagnostic-*` and `clang-analyzer-*` without one); `*.c` files are checked as C17, the other files as the C++ standard of `std`; every finding is an error (`--warnings-as-errors=*`), so a warning fails the run |
 
 Untracked files are not checked. A repository without these files passes with a
 notice. There is no `cppcheck`: only an old version of it is available as a

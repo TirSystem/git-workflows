@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCpp.md, source sha256 fd8bb0d71906 -->
+<!-- translation of QualityChecksCpp.md, source sha256 baf659e82523 -->
 
 > Ini ialah terjemahan [`QualityChecksCpp`](QualityChecksCpp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -49,7 +49,7 @@ Rujuk aliran kerja pada tag major (`@v1`) atau pada tag tepat, jangan sekali-kal
 | Fail | Alat | Apa yang dilaporkan |
 | --- | --- | --- |
 | `*.c`, `*.cc`, `*.cpp`, `*.cxx`, `*.h`, `*.hh`, `*.hpp`, `*.hxx` yang dijejaki | `clang-format --dry-run -Werror` | pemformatan yang berbeza daripada `.clang-format` |
-| fail yang sama | `clang-tidy` | dapatan semakan dalam `.clang-tidy` (atau `clang-diagnostic-*` dan `clang-analyzer-*` tanpanya); fail `*.c` disemak sebagai C17, fail lain sebagai piawaian C++ dalam `std` |
+| fail yang sama | `clang-tidy` | dapatan semakan dalam `.clang-tidy` (atau `clang-diagnostic-*` dan `clang-analyzer-*` tanpanya); fail `*.c` disemak sebagai C17, fail lain sebagai piawaian C++ dalam `std`; setiap dapatan ialah ralat (`--warnings-as-errors=*`), jadi amaran menggagalkan larian |
 
 Fail yang tidak dijejaki tidak disemak. Repositori tanpa fail ini lulus dengan satu notis. Tiada `cppcheck`: hanya versi lama tersedia sebagai pakej, dan alat lama tidak dijalankan (ADR-0008).
 

@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCpp.md, source sha256 fd8bb0d71906 -->
+<!-- translation of QualityChecksCpp.md, source sha256 baf659e82523 -->
 
 > Dette er en oversættelse af [`QualityChecksCpp`](QualityChecksCpp). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -49,7 +49,7 @@ Henvis til workflowet ved major-tagget (`@v1`) eller et præcist tag, aldrig ved
 | Filer | Værktøj | Hvad det melder |
 | --- | --- | --- |
 | sporede `*.c`, `*.cc`, `*.cpp`, `*.cxx`, `*.h`, `*.hh`, `*.hpp`, `*.hxx` | `clang-format --dry-run -Werror` | formatering, der afviger fra `.clang-format` |
-| de samme filer | `clang-tidy` | fund fra kontrollerne i `.clang-tidy` (eller fra `clang-diagnostic-*` og `clang-analyzer-*` uden en); `*.c`-filer kontrolleres som C17, de øvrige filer som C++-standarden i `std` |
+| de samme filer | `clang-tidy` | fund fra kontrollerne i `.clang-tidy` (eller fra `clang-diagnostic-*` og `clang-analyzer-*` uden en); `*.c`-filer kontrolleres som C17, de øvrige filer som C++-standarden i `std`; hvert fund er en fejl (`--warnings-as-errors=*`), så en advarsel får kørslen til at fejle |
 
 Usporede filer kontrolleres ikke. Et repository uden disse filer består med en bemærkning. Der er ingen `cppcheck`: kun en gammel version findes som pakke, og gamle værktøjer køres ikke (ADR-0008).
 
