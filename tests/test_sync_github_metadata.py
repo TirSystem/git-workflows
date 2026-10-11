@@ -245,7 +245,9 @@ class TestMain:
 
         assert all(call[0] == "GET" for call in api.calls)
         assert not any(call[1].startswith("https://api.github.com") for call in api.calls)
-        assert "No GitHub push mirror configured" in capsys.readouterr().out
+        output = capsys.readouterr().out
+        assert "No GitHub push mirror configured" in output
+        assert output.rstrip().splitlines()[-1] == "Skipped"
 
     def test_fails_before_any_change_when_github_credentials_are_missing(
         self, sync, environment, monkeypatch

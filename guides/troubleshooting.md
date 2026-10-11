@@ -43,9 +43,9 @@ never starts, or stops before the step) is a **runner** problem.
 
 ## Not an error
 
-`No GitHub push mirror configured for <repo>; nothing to sync.` The run
-succeeds. Not every Gitea repository has a GitHub mirror, so this is expected
-for those. If the repository should have one, add it in the repository
+`No GitHub push mirror configured for <repo>; nothing to sync.` followed by
+`Skipped`. The run succeeds. Not every Gitea repository has a GitHub mirror, so
+this is expected for those. If the repository should have one, add it in the repository
 settings.
 
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not

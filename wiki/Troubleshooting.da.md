@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 e8a34cbe7e93 -->
+<!-- translation of Troubleshooting.md, source sha256 eb63f4109a0d -->
 
 > Dette er en oversættelse af [`Troubleshooting`](Troubleshooting). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -47,7 +47,7 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 
 ## Ikke en fejl
 
-`No GitHub push mirror configured for <repo>; nothing to sync.` Kørslen lykkes. Ikke alle Gitea-repositories har et GitHub-spejl, så det er forventet for dem. Hvis repositoryet skal have et, så tilføj det i repositoryets indstillinger.
+`No GitHub push mirror configured for <repo>; nothing to sync.` efterfulgt af `Skipped`. Kørslen lykkes. Ikke alle Gitea-repositories har et GitHub-spejl, så det er forventet for dem. Hvis repositoryet skal have et, så tilføj det i repositoryets indstillinger.
 
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not synced.` Kørslen lykkes, men intet blev synkroniseret. Kontroller, at Gitea-versionen understøtter push mirror-API'et, og kør igen.
 
