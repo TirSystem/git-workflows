@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [b74ee0e] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [b74ee0e] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-052) and accepted; target date 2027-01-16 confirmed by S01 (stand-in for S05) | pending |
 
 ---
 
@@ -62,7 +63,7 @@ name and contract.
 
 ## Target Date
 
-2027-01-16 — proposed on 2026-10-11, to be confirmed by S01 standing in for S05 (ADR-0002); it follows the last decision of the plan, 2026-12-26, with two weeks from 2027-01-04. The Business Case sets no deadline.
+2027-01-16 — confirmed on 2026-10-11 by S01, standing in for S05 (ADR-0002); it follows the last decision of the plan, 2026-12-26, with two weeks from 2027-01-04. The Business Case sets no deadline.
 
 ## Tasks
 

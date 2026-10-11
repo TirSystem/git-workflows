@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [ADR-0007], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [RC-052], [RC-053], [ADR-0007], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-050 (MIL-005 translations accepted) | [ead3d98] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-051 (ADR-0005 tools-ref) | [670f0ac] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-051 (ADR-0005 tools-ref) | [670f0ac] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-007, RC-052 and RC-053 | pending |
 
 ---
 
@@ -26,7 +26,7 @@ updated whenever an artifact instance is created or reviewed.
 | --- | --- | --- | --- | --- |
 | [SA-001] | SA | - | [BC-001], [UCD-001] | [RC-004] |
 | [BC-001] | BC | [SA-001] | [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] | [RC-001], [RC-008] |
-| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [US-001] | [RC-002], [RC-009], [RC-015], [RC-017], [RC-025], [RC-032] |
+| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [US-001] | [RC-002], [RC-009], [RC-015], [RC-017], [RC-025], [RC-032], [RC-053] |
 | [MIL-001] | MIL | [BC-001], [PP-001] | [MIL-002] | [RC-003], [RC-026] |
 | [MIL-002] | MIL | [BC-001], [PP-001], [MIL-001] | [MIL-003], [MIL-005] | [RC-005], [RC-027] |
 | [MIL-003] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-004] | [RC-006], [RC-028], [RC-033], [RC-039] |
@@ -39,6 +39,7 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-006] | RC | [MIL-003] | - | - |
 | [MIL-005] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-006] | [RC-010], [RC-011], [RC-030], [RC-050] |
 | [MIL-006] | MIL | [BC-001], [PP-001], [MIL-002], [MIL-005] | - | [RC-016], [RC-031], [RC-049] |
+| [MIL-007] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004] | - | [RC-052] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
@@ -100,6 +101,8 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-049] | RC | [MIL-006] | - | - |
 | [RC-050] | RC | [MIL-005] | - | - |
 | [RC-051] | RC | [ADR-0005] | - | - |
+| [RC-052] | RC | [MIL-007] | - | - |
+| [RC-053] | RC | [PP-001] | - | - |
 
 ## Coverage Notes
 
@@ -119,6 +122,7 @@ updated whenever an artifact instance is created or reviewed.
 [MIL-004]: ../milestones/mil-004-versioned-release.md
 [MIL-005]: ../milestones/mil-005-wiki-and-translations.md
 [MIL-006]: ../milestones/mil-006-shared-wiki-publishing.md
+[MIL-007]: ../milestones/mil-007-cpp-csharp-quality-checks.md
 [RC-001]: ./reviews/rc-001-business-case.md
 [RC-002]: ./reviews/rc-002-project-plan.md
 [RC-003]: ./reviews/rc-003-mil-001.md
@@ -180,11 +184,12 @@ updated whenever an artifact instance is created or reviewed.
 [RC-049]: ./reviews/rc-049-mil-006-outcome.md
 [RC-050]: ./reviews/rc-050-mil-005-outcome.md
 [RC-051]: ./reviews/rc-051-adr-0005-tools-ref.md
+[RC-052]: ./reviews/rc-052-mil-007.md
+[RC-053]: ./reviews/rc-053-pp-001-mil-007.md
 [ADR-0007]: ../adr/adr-0007-release-publish-destination.md
 [UC-007]: ../uc-007/uc.md
 [UC-006]: ../uc-006/uc.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
-[ead3d98]: https://git.tirsystem.com/TirSystem/github-action/commit/ead3d98d73fcab95fd57b0eb005a02aff9983256
 [670f0ac]: https://git.tirsystem.com/TirSystem/github-action/commit/670f0ac469043bb166c84290c0dbf62b4908e3cc

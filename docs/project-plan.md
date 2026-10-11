@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Dates confirmed by S01 (stand-in for S05); the confirmation item is removed from Open Issues | [ea06eaa] |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-007 (quality checks for C++ and C#) | [b74ee0e] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-007 (quality checks for C++ and C#); reviewed (RC-053) | pending |
 
 ---
 
@@ -22,7 +22,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 
 ## Planning Assumptions
 
-- Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26; MIL-007 follows in January 2027 (proposed, 2027-01-04 to 2027-01-16).
+- Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26; MIL-007 follows in January 2027 (2027-01-04 to 2027-01-16, confirmed on 2026-10-11 by S01).
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
