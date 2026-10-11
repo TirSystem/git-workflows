@@ -8,7 +8,7 @@
 - [Onboarding](Onboarding)
 - [Credentials](Credentials)
 - [Troubleshooting](Troubleshooting)
-- [Quality checks](QualityChecks)
+- [Quality checks (Python, shell)](QualityChecksPythonShell)
 - [Upgrading](Upgrading)
 - [Capabilities](Capabilities)
 
@@ -18,7 +18,7 @@
 - [Tilslutning](Onboarding.da)
 - [Credentials](Credentials.da)
 - [Fejlfinding](Troubleshooting.da)
-- [Kvalitetskontrol](QualityChecks.da)
+- [Kvalitetskontrol (Python, shell)](QualityChecksPythonShell.da)
 - [Opgradering](Upgrading.da)
 - [Kapabiliteter](Capabilities.da)
 
@@ -28,6 +28,6 @@
 - [Menyertakan](Onboarding.ms)
 - [Kelayakan](Credentials.ms)
 - [Diagnosis](Troubleshooting.ms)
-- [Semakan kualiti](QualityChecks.ms)
+- [Semakan kualiti (Python, shell)](QualityChecksPythonShell.ms)
 - [Menaik taraf](Upgrading.ms)
 - [Keupayaan](Capabilities.ms)

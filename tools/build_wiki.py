@@ -43,7 +43,7 @@ PAGES: tuple[Page, ...] = (
     Page("Onboarding", "guides/onboarding.md"),
     Page("Credentials", "guides/credentials.md"),
     Page("Troubleshooting", "guides/troubleshooting.md"),
-    Page("QualityChecks", "guides/quality-checks.md"),
+    Page("QualityChecksPythonShell", "guides/quality-checks.md"),
     Page("Upgrading", "guides/upgrading.md"),
     Page("Capabilities", "README.md", ("Capabilities",)),
 )
@@ -61,7 +61,7 @@ _PAGE_FOR_SOURCE = {
     "guides/onboarding.md": "Onboarding",
     "guides/credentials.md": "Credentials",
     "guides/troubleshooting.md": "Troubleshooting",
-    "guides/quality-checks.md": "QualityChecks",
+    "guides/quality-checks.md": "QualityChecksPythonShell",
     "guides/upgrading.md": "Upgrading",
 }
 
@@ -187,9 +187,9 @@ def render_page(page: Page, repo_root: Path = REPO_ROOT) -> str:
 # Link text of the sidebar: English, then one list per translation code.
 SIDEBAR_TITLE = "TirSystem GitHub Actions"
 SIDEBAR_LABELS: dict[str, tuple[str, ...]] = {
-    "en": ("Home", "Onboarding", "Credentials", "Troubleshooting", "Quality checks", "Upgrading", "Capabilities"),
-    "da": ("Hjem", "Tilslutning", "Credentials", "Fejlfinding", "Kvalitetskontrol", "Opgradering", "Kapabiliteter"),
-    "ms": ("Utama", "Menyertakan", "Kelayakan", "Diagnosis", "Semakan kualiti", "Menaik taraf", "Keupayaan"),
+    "en": ("Home", "Onboarding", "Credentials", "Troubleshooting", "Quality checks (Python, shell)", "Upgrading", "Capabilities"),
+    "da": ("Hjem", "Tilslutning", "Credentials", "Fejlfinding", "Kvalitetskontrol (Python, shell)", "Opgradering", "Kapabiliteter"),
+    "ms": ("Utama", "Menyertakan", "Kelayakan", "Diagnosis", "Semakan kualiti (Python, shell)", "Menaik taraf", "Keupayaan"),
 }
 SIDEBAR_NAME = "_Sidebar.md"
 

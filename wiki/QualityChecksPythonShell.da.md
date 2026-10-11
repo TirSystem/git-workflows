@@ -1,8 +1,8 @@
-<!-- translation of QualityChecks.md, source sha256 aa9c7296fa52 -->
+<!-- translation of QualityChecksPythonShell.md, source sha256 9b63f6eb0c8c -->
 
-> Dette er en oversættelse af [`QualityChecks`](QualityChecks). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
+> Dette er en oversættelse af [`QualityChecksPythonShell`](QualityChecksPythonShell). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](QualityChecks) | Dansk | [Bahasa Melayu](QualityChecks.ms)
+[English](QualityChecksPythonShell) | Dansk | [Bahasa Melayu](QualityChecksPythonShell.ms)
 
 # Aflæsning af resultater fra kvalitetskontrol
 
