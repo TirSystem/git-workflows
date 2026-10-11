@@ -38,11 +38,17 @@ jobs:
 | `mypy-version` | `1.11.2` | Version of mypy |
 | `shellcheck-py-version` | `0.10.0.1` | Version of the shellcheck-py package (ShellCheck 0.10.0) |
 | `shfmt-py-version` | `3.11.0.2` | Version of the shfmt-py package (shfmt 3.11.0) |
+| `tools-ref` | `v1` | Tag or branch of `TirSystem/github-action` from which the script `tools/quality-checks.sh` is fetched |
 
 Reference the workflow at the major tag (`@v1`) or at an exact tag
 (`@v1.0.0`), never at `main` and never at the branch of a pull request: that
 branch is deleted when the pull request is merged and the reference stops
 working. See the upgrade guide for what each choice receives.
+
+The workflow file calls a script of this repository, fetched at `tools-ref`. A
+call at an exact tag is pinned completely only when `tools-ref` names the same
+tag, for example `@v1.0.1` with `tools-ref: v1.0.1`; with the default the
+script follows `v1`.
 
 ## What is checked
 

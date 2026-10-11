@@ -15,6 +15,8 @@ import yaml
 from workflow_source import REPO_ROOT
 
 WORKFLOW = REPO_ROOT / ".gitea" / "workflows" / "quality-checks.yml"
+SCRIPT = REPO_ROOT / "tools" / "quality-checks.sh"
+COMMANDS = {"Validate the inputs": "validate", "Install the tools": "install", "Run the checks": "run"}
 BASH = shutil.which("bash")
 
 pytestmark = pytest.mark.skipif(BASH is None, reason="bash is needed to run the workflow steps")
@@ -25,7 +27,7 @@ def document() -> dict:
     return yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
 
 
-def step_script(document: dict, name: str) -> str:
+def step_command(document: dict, name: str) -> str:
     steps = document["jobs"]["quality-checks"]["steps"]
     return next(step["run"] for step in steps if step.get("name") == name)
 
@@ -40,9 +42,11 @@ class TestDefinition:
             "mypy-version",
             "shellcheck-py-version",
             "shfmt-py-version",
+            "tools-ref",
         }
         assert inputs["languages"]["default"] == "python,shell"
         assert inputs["working-directory"]["default"] == "."
+        assert inputs["tools-ref"]["default"] == "v1"
 
     def test_tool_versions_are_pinned_to_the_adr(self, document):
         inputs = document[True]["workflow_call"]["inputs"]
@@ -60,13 +64,31 @@ class TestDefinition:
         for step in document["jobs"]["quality-checks"]["steps"]:
             assert "${{" not in step.get("run", ""), f"{step.get('name')} interpolates an expression"
 
-    @pytest.mark.parametrize(
-        "name", ["Validate the inputs", "Install the tools", "Run the checks"]
-    )
-    def test_every_script_parses(self, document, name):
-        script = step_script(document, name)
-        result = subprocess.run([BASH, "-n"], input=script, text=True, capture_output=True)
+    def test_the_script_parses(self):
+        result = subprocess.run([BASH, "-n", str(SCRIPT)], text=True, capture_output=True)
         assert result.returncode == 0, result.stderr
+
+    def test_the_workflow_embeds_no_script_and_runs_the_file(self, document):
+        steps = document["jobs"]["quality-checks"]["steps"]
+        commands = [step["run"] for step in steps if "run" in step]
+        assert commands == [
+            "bash shared-scripts/tools/quality-checks.sh validate",
+            "bash shared-scripts/tools/quality-checks.sh install",
+            "bash shared-scripts/tools/quality-checks.sh run",
+        ]
+
+    def test_the_script_is_fetched_at_the_tools_ref_input(self, document):
+        steps = document["jobs"]["quality-checks"]["steps"]
+        fetch = next(step for step in steps if step.get("name") == "Fetch the shared script")
+        assert fetch["with"] == {
+            "repository": "TirSystem/github-action",
+            "ref": "${{ inputs.tools-ref }}",
+            "path": "shared-scripts",
+        }
+
+    def test_an_unknown_command_is_refused(self):
+        result = subprocess.run([BASH, str(SCRIPT), "bogus"], text=True, capture_output=True)
+        assert result.returncode == 2
 
 
 STUB = """#!/usr/bin/env bash
@@ -111,7 +133,7 @@ def add_files(root: Path, *relative: str) -> None:
 
 
 def run_step(document, name, repo, bin_dir, tmp_path, **env):
-    script = step_script(document, name)
+    command = COMMANDS[name]
     log = tmp_path / "tools.log"
     environment = dict(os.environ)
     environment.update(
@@ -126,7 +148,7 @@ def run_step(document, name, repo, bin_dir, tmp_path, **env):
     )
     environment.update(env)
     result = subprocess.run(
-        [BASH, "-c", script], cwd=repo, env=environment, text=True, capture_output=True
+        [BASH, str(SCRIPT), command], cwd=repo, env=environment, text=True, capture_output=True
     )
     calls = log.read_text(encoding="utf-8").splitlines() if log.exists() else []
     return result, calls

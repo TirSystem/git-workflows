@@ -16,6 +16,10 @@ repository, tags `vMAJOR.MINOR.PATCH` and a moving major tag `vMAJOR`.
 A breaking release gets a new major version (`v2`), so a pipeline on `@v1`
 never receives it until you change the line yourself.
 
+The quality-checks workflow fetches its script at its input `tools-ref`, which
+defaults to `v1`. To pin it completely, call it at an exact tag and set
+`tools-ref` to the same tag; otherwise the script follows the major tag.
+
 The two scoped workflows (**Sync GitHub mirror metadata** and **Publish
 wiki**) are delivered by the instance and are not in your `uses:` lines; you
 cannot pin them, but they fetch their scripts at the major tag.
