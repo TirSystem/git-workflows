@@ -68,23 +68,11 @@ jobs:
           git submodule update --init --recursive --depth=1
 
       - name: Make sure curl and jq are available
-        run: |
-          set -euo pipefail
-          if command -v curl >/dev/null && command -v jq >/dev/null; then exit 0; fi
-          sudo_cmd=""
-          if [ "$(id -u)" -ne 0 ]; then sudo_cmd="sudo"; fi
-          $sudo_cmd apt-get update -qq
-          $sudo_cmd apt-get install -y -qq curl jq
+        run: bash framework/scripts/ci-publish-milestones.sh ensure-tools
 
       - name: Publish accepted milestones
         env:
           GITEA_TOKEN: ${{ secrets.TOKEN_FOR_GITEA }}
           # Empty on a push (a real run); "true" or "false" on a manual run.
           DRY_RUN: ${{ inputs.dry_run }}
-        run: |
-          set -euo pipefail
-          if [ "$DRY_RUN" = "true" ]; then
-            bash framework/scripts/sync-project.sh --accepted-only
-          else
-            bash framework/scripts/sync-project.sh --accepted-only --apply
-          fi
+        run: bash framework/scripts/ci-publish-milestones.sh publish
