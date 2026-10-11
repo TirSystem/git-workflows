@@ -9,6 +9,10 @@ a proofreader of the English.
 This is a working document for reviewers, like [the term list](wiki-terms.md).
 It is not a project artifact.
 
+**Status (2026-10-11):** no native reader was available; S01 accepted the
+translations as the stand-in of ADR-0002 (RC-050). This checklist stays for
+a native reader who wants to review them; the findings go in a pull request.
+
 ## What to review
 
 Fifteen pages exist on the wiki. You review the five pages of your language.

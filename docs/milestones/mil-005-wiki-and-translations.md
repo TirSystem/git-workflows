@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Decided how the wiki is published: source in `wiki/`, published by a workflow on merge<br>Added task 8 | [77c5277] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Target date 2026-12-12 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Target date 2026-12-12 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 4 amended (accepted by S01 as stand-in when no native reader exists); added the verification results | pending |
 
 ---
 
@@ -36,7 +36,7 @@ to `main`, and a pull request rule in `AGENTS.md` keeps the wiki current.
 | 1 | The wiki is enabled and contains the five pages in all three languages | 15 pages present | Any page missing |
 | 2 | Each English page is generated from `README.md` or `guides/`, and a check reports a page that differs from its source | Check passes | Hand-edited page drifts |
 | 3 | Each Danish and Bahasa Malaysia page names the English source version it follows | Named on every page | Missing |
-| 4 | A native reader of each language has reviewed the translations | Review recorded | Unreviewed |
+| 4 | The translations are reviewed and accepted: by a native reader of each language, or, when none is available, by S01 as the stand-in of ADR-0002, with the lack of a native reader stated | Acceptance recorded, and a native review where one exists | Unreviewed |
 | 5 | `AGENTS.md` requires a wiki update in every pull request that changes a workflow, a guide or the README, and the PR description lists the pages changed | Rule present and used by one PR | Missing |
 | 6 | The wiki is published only by the workflow from `main`; no agent or person pushes to the wiki repository by hand | Last wiki commit is by the workflow | A manual push exists |
 
@@ -76,9 +76,21 @@ to `main`, and a pull request rule in `AGENTS.md` keeps the wiki current.
 | 7 | Publish and verify | Publish the pages, open them in the browser in each language and check that links, code blocks and the capability table render. | No | |
 | 8 | Add the wiki publishing workflow | Add a Gitea workflow, canonical in `.gitea/scoped_workflows/`, that runs on push to `main` when `wiki/` changes and copies `wiki/` to the wiki repository with the secret from task 2. It needs least-privilege permissions, must not print the secret, and gets offline tests like the metadata sync, with the same categorized error messages. | No | |
 
+## Verification results
+
+Checked on 2026-10-11 against `main` at the merge of PR 83.
+
+| # | Criterion | Result |
+| --- | --- | --- |
+| 1 | The wiki is enabled and contains the pages in all three languages | Go: 21 pages (seven pages in English, Danish and Bahasa Malaysia), more than the 15 the criterion names |
+| 2 | Each English page is generated from `README.md` or `guides/`, and a check reports a page that differs | Go: `python tools/build_wiki.py --check` passes and the tests fail on a stale page |
+| 3 | Each translation names the English source version it follows | Go: every `.da` and `.ms` file starts with `translation of X.md, source sha256`, and the tests check it |
+| 4 | The translations are reviewed and accepted | Go on the stand-in: no native reader of Danish or Bahasa Malaysia reviewed the pages. S01 accepted them on 2026-10-11 (RC-050) and the checklist `docs/wiki-translation-review.md` stays available for a native reader. The accuracy of the text rests on the author and S01, not on a native reader |
+| 5 | `AGENTS.md` requires a wiki update and the PR lists the pages | Go: rule 8 of `AGENTS.md`; used by PR 78, PR 82 and others, each listing the wiki pages it changed |
+| 6 | The wiki is published only by the workflow from `main` | Go: the last commit of all 21 pages has the message `Publish wiki from the repository`, which only the publisher writes |
+
 ---
 
 [BC-001]: ../business-case.md
-[77c5277]: https://git.tirsystem.com/TirSystem/github-action/commit/77c52779c46bca35dee4d73e587ca7b611373790
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
