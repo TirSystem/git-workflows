@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 a8c03a001880 -->
+<!-- translation of Capabilities.md, source sha256 1f12a6b27e5d -->
 
 > Ini ialah terjemahan [`Capabilities`](Capabilities). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -15,4 +15,5 @@ Baris yang menyatakan Dilaksanakan atau Panduan telah ditulis wujud hari ini. Se
 | Menyertakan repositori, mengurus runner, mendiagnosis kegagalan | Panduan telah ditulis ([menyertakan repositori](Onboarding.ms), [diagnosis](Troubleshooting.ms)); penghantaran scoped ke repositori keempat-empat organisasi telah disahkan (MIL-002) |
 | Menerbitkan wiki repositori daripada `wiki/` (pilih menyertai, dihantar ke setiap organisasi) | Dilaksanakan dalam `.gitea/scoped_workflows/publish-wiki.yml`, dengan ujian luar talian; satu juruterbang dalam repositori kedua menerbitkan wikinya (MIL-006) |
 | Semakan kualiti bersama (Python dan shell) | Dilaksanakan sebagai aliran kerja boleh guna semula `.gitea/workflows/quality-checks.yml`, dengan ujian luar talian dan percubaan dalam organisasi kedua; digunakan dalam RepoFoundry ([panduan](QualityChecksPythonShell.ms)) |
+| Semakan kualiti bersama (C dan C++, C#) | Dilaksanakan sebagai aliran kerja boleh guna semula `.gitea/workflows/quality-checks-cpp.yml` dan `.gitea/workflows/quality-checks-csharp.yml` dengan versi alat yang tepat dan ujian luar talian; belum digunakan dalam repositori lain (MIL-007) ([panduan C dan C++](QualityChecksCpp.ms), [panduan C#](QualityChecksCSharp.ms)) |
 | Keluaran berversi dan penerbitan | Proses keluaran, changelog dan panduan naik taraf telah ditakrifkan; aliran kerja keluaran sudah ada dan `v1.0.0` telah dikeluarkan (MIL-004) ([panduan](Upgrading.ms)) |

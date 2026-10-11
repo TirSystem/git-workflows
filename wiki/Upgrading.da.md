@@ -1,4 +1,4 @@
-<!-- translation of Upgrading.md, source sha256 3f119a1ab12d -->
+<!-- translation of Upgrading.md, source sha256 7fba937279b1 -->
 
 > Dette er en oversættelse af [`Upgrading`](Upgrading). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -18,7 +18,7 @@ Sådan tager en softwareudvikler en ny udgivelse af de fælles workflows i brug 
 
 En udgivelse, der bryder kompatibiliteten, får en ny major-version (`v2`), så en pipeline på `@v1` aldrig modtager den, før du selv ændrer linjen.
 
-Kvalitetskontrol-workflowet henter sit script ved sit input `tools-ref`, som som standard er `v1`. For at fastlåse det helt skal du kalde det ved et præcist tag og sætte `tools-ref` til samme tag; ellers følger scriptet major-tagget.
+Kvalitetskontrol-workflowene (`quality-checks.yml`, `quality-checks-cpp.yml` og `quality-checks-csharp.yml`) henter deres script ved deres input `tools-ref`, som som standard er `v1`. For at fastlåse et helt skal du kalde det ved et præcist tag og sætte `tools-ref` til samme tag; ellers følger scriptet major-tagget.
 
 De to scoped workflows (**Sync GitHub mirror metadata** og **Publish wiki**) leveres af instansen og står ikke i dine `uses:`-linjer; du kan ikke fastlåse dem, men de henter deres scripts ved major-tagget.
 
