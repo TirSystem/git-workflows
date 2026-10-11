@@ -1,6 +1,7 @@
 """Offline tests for tools/build_wiki.py."""
 
 import importlib.util
+import re
 from pathlib import Path
 
 import pytest
@@ -154,7 +155,8 @@ class TestWriteAndCheck:
     def test_write_then_check_passes(self, repo, tmp_path):
         wiki = tmp_path / "wiki"
         changed = build_wiki.write_pages(wiki, repo)
-        assert sorted(changed) == sorted(f"{p.name}.md" for p in build_wiki.PAGES)
+        expected = [f"{p.name}.md" for p in build_wiki.PAGES] + [build_wiki.SIDEBAR_NAME]
+        assert sorted(changed) == sorted(expected)
         assert build_wiki.check_pages(wiki, repo) == []
         assert build_wiki.write_pages(wiki, repo) == []
 
@@ -267,3 +269,25 @@ def test_committed_translations_follow_the_english_structure(page, code):
 def test_committed_translations_are_current():
     """No translation follows an older version of its English page."""
     assert build_wiki.check_translations() == []
+
+
+class TestSidebar:
+    """Gitea shows subpages only through _Sidebar, so it must reach every page."""
+
+    def test_links_every_page_in_every_language(self):
+        sidebar = build_wiki.render_sidebar()
+        for page in build_wiki.PAGES:
+            assert f"]({page.name})" in sidebar
+            for code, _label in build_wiki.LANGUAGES:
+                assert f"]({page.name}.{code})" in sidebar
+
+    def test_every_link_names_a_committed_page(self):
+        sidebar = build_wiki.render_sidebar()
+        targets = re.findall(r"\]\(([^)]+)\)", sidebar)
+        assert targets
+        for target in targets:
+            assert (build_wiki.WIKI_DIR / f"{target}.md").is_file(), target
+
+    def test_has_one_label_per_page_and_language(self):
+        for code in ("en", *(c for c, _ in build_wiki.LANGUAGES)):
+            assert len(build_wiki.SIDEBAR_LABELS[code]) == len(build_wiki.PAGES)
