@@ -20,6 +20,8 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-11
+
 ### Changed
 
 - Sync GitHub mirror metadata: a repository without a GitHub push mirror still
