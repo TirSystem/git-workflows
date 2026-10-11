@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksPythonShell.md, source sha256 9b63f6eb0c8c -->
+<!-- translation of QualityChecksPythonShell.md, source sha256 2a0c9d43c77d -->
 
 > Ini ialah terjemahan [`QualityChecksPythonShell`](QualityChecksPythonShell). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -35,8 +35,11 @@ jobs:
 | `mypy-version` | `1.11.2` | Versi mypy |
 | `shellcheck-py-version` | `0.10.0.1` | Versi pakej shellcheck-py (ShellCheck 0.10.0) |
 | `shfmt-py-version` | `3.11.0.2` | Versi pakej shfmt-py (shfmt 3.11.0) |
+| `tools-ref` | `v1` | Tag atau cabang `TirSystem/github-action` tempat skrip `tools/quality-checks.sh` diambil |
 
 Rujuk aliran kerja pada tag major (`@v1`) atau pada tag tepat (`@v1.0.0`), jangan sekali-kali pada `main` dan jangan pada cabang pull request: cabang itu dipadam apabila pull request digabungkan dan rujukan itu berhenti berfungsi. Lihat panduan naik taraf untuk apa yang diterima oleh setiap pilihan.
+
+Fail aliran kerja memanggil skrip dalam repositori ini, yang diambil pada `tools-ref`. Panggilan pada tag tepat hanya disematkan sepenuhnya apabila `tools-ref` menamakan tag yang sama, contohnya `@v1.0.1` dengan `tools-ref: v1.0.1`; dengan nilai lalai skrip mengikuti `v1`.
 
 ## Perkara yang disemak
 

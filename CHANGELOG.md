@@ -20,6 +20,17 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Added
+
+- Input `tools-ref` of `quality-checks.yml` (default `v1`): the tag or branch from
+  which the workflow fetches its script `tools/quality-checks.sh`.
+
+### Changed
+
+- `quality-checks.yml` runs the script file `tools/quality-checks.sh` instead of
+  embedding about 100 lines of shell; the checks, messages and results are the
+  same.
+
 ## [1.0.1] - 2026-10-11
 
 ### Changed

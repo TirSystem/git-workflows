@@ -35,6 +35,10 @@ on:
         description: "Version of the shfmt-py package (shfmt 3.11.0)"
         type: string
         default: "3.11.0.2"
+      tools-ref:
+        description: "Tag or branch of TirSystem/github-action whose tools/quality-checks.sh is run; pin it to the exact tag together with the workflow"
+        type: string
+        default: "v1"
 
 jobs:
   quality-checks:
@@ -50,104 +54,21 @@ jobs:
       SHFMT_PY_VERSION: ${{ inputs.shfmt-py-version }}
       QC_VENV: /tmp/quality-tools
     steps:
-      - name: Validate the inputs
-        run: |
-          set -u
-          IFS=',' read -ra langs <<< "${LANGUAGES// /}"
-          if [ "${#langs[@]}" -eq 0 ]; then
-            echo "::error::[configuration] languages is empty; use python, shell or both, comma separated."
-            exit 1
-          fi
-          for lang in "${langs[@]}"; do
-            case "$lang" in
-              python | shell) ;;
-              *)
-                echo "::error::[configuration] Unknown language '$lang'; use python and shell, comma separated."
-                exit 1
-                ;;
-            esac
-          done
-          case "$WORKING_DIRECTORY" in
-            "" | /* | .. | ../* | */.. | */../*)
-              echo "::error::[configuration] working-directory must be a relative path inside the repository."
-              exit 1
-              ;;
-          esac
-          echo "Checking ${LANGUAGES} in ${WORKING_DIRECTORY}"
-
       - name: Check out the repository
         uses: actions/checkout@v4
 
+      - name: Fetch the shared script
+        uses: actions/checkout@v4
+        with:
+          repository: TirSystem/github-action
+          ref: ${{ inputs.tools-ref }}
+          path: shared-scripts
+
+      - name: Validate the inputs
+        run: bash shared-scripts/tools/quality-checks.sh validate
+
       - name: Install the tools
-        run: |
-          set -eu
-          IFS=',' read -ra langs <<< "${LANGUAGES// /}"
-          packages=()
-          for lang in "${langs[@]}"; do
-            case "$lang" in
-              python) packages+=("ruff==${RUFF_VERSION}" "mypy==${MYPY_VERSION}") ;;
-              shell) packages+=("shellcheck-py==${SHELLCHECK_PY_VERSION}" "shfmt-py==${SHFMT_PY_VERSION}") ;;
-            esac
-          done
-          python3 -m venv "$QC_VENV"
-          "$QC_VENV/bin/pip" install --quiet "${packages[@]}"
+        run: bash shared-scripts/tools/quality-checks.sh install
 
       - name: Run the checks
-        run: |
-          set -u
-          QC_BIN="${QC_BIN:-$QC_VENV/bin}"
-          if [ ! -d "$WORKING_DIRECTORY" ]; then
-            echo "::error::[configuration] working-directory '$WORKING_DIRECTORY' does not exist."
-            exit 1
-          fi
-          cd "$WORKING_DIRECTORY"
-
-          failed=()
-          run_tool() {
-            local name="$1"
-            shift
-            echo "::group::$name"
-            if "$@"; then
-              echo "::endgroup::"
-              echo "PASS $name"
-            else
-              echo "::endgroup::"
-              echo "FAIL $name"
-              failed+=("$name")
-            fi
-          }
-          wanted() {
-            local lang
-            IFS=',' read -ra langs <<< "${LANGUAGES// /}"
-            for lang in "${langs[@]}"; do
-              [ "$lang" = "$1" ] && return 0
-            done
-            return 1
-          }
-
-          if wanted python; then
-            mapfile -t files < <(git ls-files -- '*.py')
-            if [ "${#files[@]}" -eq 0 ]; then
-              echo "::notice::No python files in '$WORKING_DIRECTORY'; nothing was checked."
-            else
-              run_tool "ruff check" "$QC_BIN/ruff" check "${files[@]}"
-              run_tool "ruff format --check" "$QC_BIN/ruff" format --check "${files[@]}"
-              run_tool "mypy --strict" "$QC_BIN/mypy" --strict "${files[@]}"
-            fi
-          fi
-
-          if wanted shell; then
-            mapfile -t files < <(git ls-files -- '*.sh')
-            if [ "${#files[@]}" -eq 0 ]; then
-              echo "::notice::No shell files in '$WORKING_DIRECTORY'; nothing was checked."
-            else
-              run_tool "shellcheck" "$QC_BIN/shellcheck" "${files[@]}"
-              run_tool "shfmt -d" "$QC_BIN/shfmt" -d "${files[@]}"
-            fi
-          fi
-
-          if [ "${#failed[@]}" -gt 0 ]; then
-            echo "::error::Quality checks failed: ${failed[*]}"
-            exit 1
-          fi
-          echo "All selected checks passed."
+        run: bash shared-scripts/tools/quality-checks.sh run

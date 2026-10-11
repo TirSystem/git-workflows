@@ -1,4 +1,4 @@
-<!-- translation of Upgrading.md, source sha256 ff8a06c4a03f -->
+<!-- translation of Upgrading.md, source sha256 3f119a1ab12d -->
 
 > Ini ialah terjemahan [`Upgrading`](Upgrading). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -17,6 +17,8 @@ Cara seorang jurutera perisian menerima keluaran baharu aliran kerja bersama den
 | `@main` | semuanya, termasuk yang belum dikeluarkan | jangan sekali-kali; hanya untuk ujian repositori ini sendiri |
 
 Keluaran yang memecahkan keserasian mendapat versi major baharu (`v2`), jadi saluran paip pada `@v1` tidak menerimanya sehingga anda sendiri menukar baris itu.
+
+Aliran kerja semakan kualiti mengambil skripnya pada inputnya `tools-ref`, yang lalai ialah `v1`. Untuk menyematkannya sepenuhnya, panggil pada tag tepat dan tetapkan `tools-ref` kepada tag yang sama; jika tidak, skrip mengikuti tag major.
 
 Dua aliran kerja scoped (**Sync GitHub mirror metadata** dan **Publish wiki**) dihantar oleh instans dan tidak terdapat dalam baris `uses:` anda; anda tidak boleh menyematkannya, tetapi ia mengambil skripnya pada tag major.
 
