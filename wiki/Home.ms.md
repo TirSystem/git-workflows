@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 510b243ec5f2 -->
+<!-- translation of Home.md, source sha256 c9c04abaf4ae -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -13,12 +13,12 @@ Koleksi aliran kerja (workflow) Gitea Actions yang boleh digunakan semula untuk 
 
 Repositori ini ialah koleksi pusat bagi automasi yang boleh digunakan semula untuk repositori TirSystem. Repositori utama berada di `git.tirsystem.com` (Gitea) dan dicerminkan dengan push ke GitHub.
 
-Ia mengandungi lima aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki, semakan kualiti bersama, aliran kerja keluaran dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
+Ia mengandungi enam aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki, semakan kualiti bersama, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
 
 
 ## Aliran kerja
 
-Terdapat lima aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
+Terdapat enam aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
 
 | Aliran kerja | Fail | Jenis | Bermula apabila | Tujuan |
 | --- | --- | --- | --- | --- |
@@ -26,6 +26,7 @@ Terdapat lima aliran kerja dalam repositori ini. Aliran kerja **scoped** dihanta
 | Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, pilih menyertai dengan `wiki/.publish` | push ke `main` yang mengubah `wiki/**`, manual | Menerbitkan halaman dalam `wiki/` ke wiki repositori |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan ruff, mypy, shellcheck dan shfmt pada fail yang dijejaki dan tidak mengubah apa-apa |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Repositori ini sahaja | manual | Mencipta tag versi, halaman keluaran dan tag major selepas semakan |
+| Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | Repositori ini sahaja | pull request, push ke `main`, manual | Menghurai setiap aliran kerja sebagai YAML dan menjalankan ujian luar talian |
 
 ### Menyegerakkan metadata GitHub
@@ -229,6 +230,54 @@ else
   end
   Workflow --> Trigger: Released
 end
+deactivate Workflow
+@enduml
+```
+
+### Menerbitkan milestone yang diterima
+
+Kebenaran tetap untuk menerbitkan: pada push ke `main` yang mengubah milestone atau semakannya, setiap milestone yang baris terkini Version History-nya Accepted dan semakan terkininya Go dicipta atau dikemas kini di Gitea dengan tugasnya sebagai isu. Tiada apa-apa ditutup atau dipadam. Larian manual ialah larian percubaan kecuali `dry_run` dimatikan. Ia menggunakan secret `TOKEN_FOR_GITEA` dan peraturan `--accepted-only` framework yang dipasang (v0.5.0 atau lebih baharu).
+
+#### Aliran kerja
+
+```plantuml
+@startuml
+title Publish accepted milestones (this repository)
+
+autonumber
+
+actor "Push to main that changes\ndocs/milestones/** or docs/sqa/reviews/**,\nor manual trigger" as Trigger
+participant "Gitea Actions\nsync-milestones" as Workflow
+participant "framework/scripts/\nsync-project.sh" as Script
+participant "Gitea REST API" as Gitea
+
+Trigger -> Workflow: Start workflow
+activate Workflow
+Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA
+Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
+activate Script
+
+loop for each docs/milestones/mil-*.md
+  alt latest Version History row is not Accepted,\nor the latest review record is not a Go
+    Script -> Script: Skip with the reason on stderr
+  else
+    alt dry run
+      Script -> Script: Print the plan, no network call
+    else
+      Script -> Gitea: Create or update the Milestone\nand one Issue per task row
+      Gitea --> Script: Milestone and issue numbers
+    end
+  end
+end
+
+note right of Script
+Nothing is closed or deleted.
+Each real run edits the issues
+of every accepted milestone.
+end note
+Script --> Workflow: Done, or "nothing to publish"
+deactivate Script
+Workflow --> Trigger: Workflow result
 deactivate Workflow
 @enduml
 ```

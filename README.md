@@ -17,11 +17,11 @@ A collection of reusable Gitea Actions workflows for DevOps professionals and so
 
 This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It contains five workflows: metadata sync to the GitHub mirror, wiki publishing, shared quality checks, a release workflow and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#-workflows).
+It contains six workflows: metadata sync to the GitHub mirror, wiki publishing, shared quality checks, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#-workflows).
 
 ## 🔧 Workflows
 
-Five workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
+Six workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |
 | --- | --- | --- | --- | --- |
@@ -29,6 +29,7 @@ Five workflows live in this repository. A **scoped** workflow is delivered by th
 | Publish wiki | [`publish-wiki.yml`](.gitea/scoped_workflows/publish-wiki.yml) | Scoped, opt-in with `wiki/.publish` | push to `main` that changes `wiki/**`, manual | Publishes the pages in `wiki/` to the repository wiki |
 | Quality checks | [`quality-checks.yml`](.gitea/workflows/quality-checks.yml) | Reusable (`workflow_call`) | a call from another repository | Runs ruff, mypy, shellcheck and shfmt on the tracked files and changes nothing |
 | Release | [`release.yml`](.gitea/workflows/release.yml) | This repository only | manual | Creates the version tag, the release page and the major tag after the checks |
+| Publish accepted milestones | [`sync-milestones.yml`](.gitea/workflows/sync-milestones.yml) | This repository only | push to `main` that changes `docs/milestones/**` or `docs/sqa/reviews/**`, manual (dry run by default) | Creates or updates the Gitea milestone and issues of every milestone that is Accepted with a Go review |
 | Validate workflows | [`validate-workflows.yml`](.gitea/workflows/validate-workflows.yml) | This repository only | pull request, push to `main`, manual | Parses every workflow and runs the offline tests |
 
 ### 🔄 Sync GitHub metadata
@@ -232,6 +233,54 @@ else
   end
   Workflow --> Trigger: Released
 end
+deactivate Workflow
+@enduml
+```
+
+### 📌 Publish accepted milestones
+
+Standing authorization to publish: on a push to `main` that changes the milestones or their reviews, every milestone whose latest Version History row is Accepted and whose latest review is a Go is created or updated on Gitea with its tasks as issues. Nothing is closed or deleted. A manual run is a dry run unless `dry_run` is switched off. It uses the secret `TOKEN_FOR_GITEA` and the `--accepted-only` rule of the mounted framework (v0.5.0 or later).
+
+#### 🔀 Workflow
+
+```plantuml
+@startuml
+title Publish accepted milestones (this repository)
+
+autonumber
+
+actor "Push to main that changes\ndocs/milestones/** or docs/sqa/reviews/**,\nor manual trigger" as Trigger
+participant "Gitea Actions\nsync-milestones" as Workflow
+participant "framework/scripts/\nsync-project.sh" as Script
+participant "Gitea REST API" as Gitea
+
+Trigger -> Workflow: Start workflow
+activate Workflow
+Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA
+Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
+activate Script
+
+loop for each docs/milestones/mil-*.md
+  alt latest Version History row is not Accepted,\nor the latest review record is not a Go
+    Script -> Script: Skip with the reason on stderr
+  else
+    alt dry run
+      Script -> Script: Print the plan, no network call
+    else
+      Script -> Gitea: Create or update the Milestone\nand one Issue per task row
+      Gitea --> Script: Milestone and issue numbers
+    end
+  end
+end
+
+note right of Script
+Nothing is closed or deleted.
+Each real run edits the issues
+of every accepted milestone.
+end note
+Script --> Workflow: Done, or "nothing to publish"
+deactivate Script
+Workflow --> Trigger: Workflow result
 deactivate Workflow
 @enduml
 ```
