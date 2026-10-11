@@ -255,7 +255,7 @@ Trigger -> Workflow: Start workflow
 activate Workflow
 Workflow -> Workflow: Check out the repository
 Workflow -> Workflow: Create a virtual environment and\ninstall tests/requirements.txt
-Workflow -> Workflow: Run pytest on tests/ (offline, no secrets):\nworkflows parse as YAML, no embedded Python,\nscripts compile, wiki pages and translations are current,\nsync, publish and release flows against a fake API
+Workflow -> Workflow: Run pytest on tests/ under coverage (offline, no secrets):\nworkflows parse as YAML, no embedded Python,\nscripts compile, wiki pages and translations are current,\nsync, publish and release flows against a fake API
 
 alt a test fails
   Workflow --> Trigger: Workflow fails (the pull request is not ready)
@@ -298,10 +298,11 @@ The workflow files and the scripts in `tools/` are validated by offline tests th
 python3 -m venv .venv
 source .venv/bin/activate        # Windows PowerShell: .venv\Scripts\Activate.ps1
 python -m pip install -r tests/requirements.txt
-python -m pytest -q tests
+python -m coverage run -m pytest -q tests
+python -m coverage report
 ```
 
-The same checks run on every pull request and push to `main` through [`validate-workflows.yml`](.gitea/workflows/validate-workflows.yml). They parse every workflow as YAML, check that none embeds Python, compile the scripts in `tools/`, require explicit job permissions, and test credential parsing, push mirror address parsing and the sync and publish flows against a fake API.
+The same checks run on every pull request and push to `main` through [`validate-workflows.yml`](.gitea/workflows/validate-workflows.yml). They parse every workflow as YAML, check that none embeds Python, compile the scripts in `tools/`, require explicit job permissions, and test credential parsing, push mirror address parsing and the sync and publish flows against a fake API. The run fails when the line and branch coverage of `tools/` falls below 95% (`.coveragerc`).
 
 After a change to the sync workflow, also trigger **Sync GitHub mirror metadata** manually in Gitea and compare the description and topics on the GitHub mirror.
 

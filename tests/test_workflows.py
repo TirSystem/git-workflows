@@ -73,3 +73,19 @@ def test_no_workflow_copy_outside_the_workflow_directories():
         if path.name == SYNC_WORKFLOW.name
     ]
     assert not stray, f"duplicate workflow copies: {stray}"
+
+
+def test_validation_runs_the_tests_under_a_coverage_gate():
+    """validate-workflows.yml measures tools/ and fails below the .coveragerc limit."""
+    text = (REPO_ROOT / ".gitea" / "workflows" / "validate-workflows.yml").read_text(
+        encoding="utf-8"
+    )
+    assert "-m coverage run -m pytest -q tests" in text
+    assert "-m coverage report" in text
+    config = (REPO_ROOT / ".coveragerc").read_text(encoding="utf-8")
+    assert "source = tools" in config and "branch = True" in config
+    assert any(
+        line.replace(" ", "") == "fail_under=95" for line in config.splitlines()
+    ), "the gate is 95 percent"
+    requirements = (REPO_ROOT / "tests" / "requirements.txt").read_text(encoding="utf-8")
+    assert "coverage" in requirements
