@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Target date 2026-12-12 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 4 amended (accepted by S01 as stand-in when no native reader exists); added the verification results | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 4 amended (accepted by S01 as stand-in when no native reader exists); added the verification results | [ead3d98] |
 
 ---
 
@@ -94,3 +94,4 @@ Checked on 2026-10-11 against `main` at the merge of PR 83.
 [BC-001]: ../business-case.md
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
+[ead3d98]: https://git.tirsystem.com/TirSystem/github-action/commit/ead3d98d73fcab95fd57b0eb005a02aff9983256

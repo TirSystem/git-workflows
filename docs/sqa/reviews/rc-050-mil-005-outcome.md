@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [ead3d98] |
 
 ---
 
@@ -43,3 +43,4 @@ Go - all six criteria pass; the one finding (criterion 2) was fixed during the r
 
 [MIL-005]: ../../milestones/mil-005-wiki-and-translations.md
 [QC-MIL-001]: ../../../framework/qc/qc-milestones-gateways.md
+[ead3d98]: https://git.tirsystem.com/TirSystem/github-action/commit/ead3d98d73fcab95fd57b0eb005a02aff9983256
