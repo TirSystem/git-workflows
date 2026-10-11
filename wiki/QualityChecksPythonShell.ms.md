@@ -1,8 +1,8 @@
-<!-- translation of QualityChecks.md, source sha256 aa9c7296fa52 -->
+<!-- translation of QualityChecksPythonShell.md, source sha256 9b63f6eb0c8c -->
 
-> Ini ialah terjemahan [`QualityChecks`](QualityChecks). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
+> Ini ialah terjemahan [`QualityChecksPythonShell`](QualityChecksPythonShell). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](QualityChecks) | [Dansk](QualityChecks.da) | Bahasa Melayu
+[English](QualityChecksPythonShell) | [Dansk](QualityChecksPythonShell.da) | Bahasa Melayu
 
 # Membaca keputusan semakan kualiti
 

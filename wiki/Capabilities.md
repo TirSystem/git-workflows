@@ -12,10 +12,10 @@ Rows that say Implemented or Guides written exist today. The rest is planned and
 | --- | --- |
 | Synchronize repository metadata (Gitea to GitHub mirror) | Implemented in `.gitea/scoped_workflows/`, with offline tests and a validation workflow |
 | Configure and validate workflow credentials | Implemented for the sync workflow: preflight checks both tokens before any change ([guide](Credentials)) |
-| Onboard a repository, manage runners, diagnose failures | Guides written ([onboarding](Onboarding), [troubleshooting](Troubleshooting)); scoped delivery to other repositories not yet verified; brief use cases open (MIL-002) |
-| Publish a repository wiki from `wiki/` (opt-in, delivered to every organization) | Implemented in `.gitea/scoped_workflows/publish-wiki.yml`, with offline tests; the pilot in a second repository is pending (MIL-006) |
-| Shared quality checks (Python and shell) | Implemented as the reusable workflow `.gitea/workflows/quality-checks.yml`, with offline tests and a trial in a second organization; adoption in RepoFoundry is in review ([guide](QualityChecks)) |
-| Versioned release and publishing | Release process, changelog and upgrade guide defined; the release workflow exists; the first release `v1.0.0` is pending (MIL-004) ([guide](Upgrading)) |
+| Onboard a repository, manage runners, diagnose failures | Guides written ([onboarding](Onboarding), [troubleshooting](Troubleshooting)); scoped delivery to the repositories of all four organizations verified (MIL-002) |
+| Publish a repository wiki from `wiki/` (opt-in, delivered to every organization) | Implemented in `.gitea/scoped_workflows/publish-wiki.yml`, with offline tests; a pilot in a second repository publishes its wiki (MIL-006) |
+| Shared quality checks (Python and shell) | Implemented as the reusable workflow `.gitea/workflows/quality-checks.yml`, with offline tests and a trial in a second organization; adopted in RepoFoundry ([guide](QualityChecksPythonShell)) |
+| Versioned release and publishing | Release process, changelog and upgrade guide defined; the release workflow exists and `v1.0.0` is released (MIL-004) ([guide](Upgrading)) |
 
 ### Sync GitHub metadata
 

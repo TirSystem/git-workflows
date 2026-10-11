@@ -2,7 +2,7 @@
 
 > This page is generated from [`guides/quality-checks.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/quality-checks.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](QualityChecks.da) | [Bahasa Melayu](QualityChecks.ms)
+English | [Dansk](QualityChecksPythonShell.da) | [Bahasa Melayu](QualityChecksPythonShell.ms)
 
 # Reading quality-check results
 
