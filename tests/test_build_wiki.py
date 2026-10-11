@@ -92,9 +92,10 @@ def _write_sources(root: Path) -> None:
     (root / "README.md").write_text(
         "# 🚀 Name\nIntro.\n\n## 📚 Table of Contents\n- [x](#-overview)\n\n"
         "## 🧭 Overview\nSee [credentials](guides/credentials.md).\n\n"
+        "## 🔧 Workflows\nA table and diagrams.\n\n### 🔄 Sync\nDetails.\n\n"
         "## 📋 Requirements\nNeeds a runner.\n\n## 🛠️ Setup\nRun [it](#-requirements).\n\n"
-        "## ▶️ Run\nGo.\n\n## 🧪 Tests\nPytest.\n\n## 🟢 Capabilities\nA table.\n\n"
-        "### 🔄 Sync\nDetails.\n\n## 📄 License\nMIT.\n",
+        "## ▶️ Run\nGo.\n\n## 🧪 Tests\nPytest.\n\n## 🟢 Capabilities\nA table.\n\n### 🔎 Detail\nMore.\n\n"
+        "## 📄 License\nMIT.\n",
         encoding="utf-8",
     )
     for name in ("onboarding", "credentials", "troubleshooting", "quality-checks", "upgrading"):
@@ -123,7 +124,8 @@ class TestRenderPage:
         page = next(p for p in build_wiki.PAGES if p.name == "Capabilities")
         text = build_wiki.render_page(page, repo)
         assert "## Capabilities" in text
-        assert "### Sync" in text
+        assert "### Detail" in text
+        assert "### Sync" not in text
         assert "## Overview" not in text
 
     def test_every_page_names_its_source_and_warns(self, repo):
@@ -291,3 +293,17 @@ class TestSidebar:
     def test_has_one_label_per_page_and_language(self):
         for code in ("en", *(c for c, _ in build_wiki.LANGUAGES)):
             assert len(build_wiki.SIDEBAR_LABELS[code]) == len(build_wiki.PAGES)
+
+
+def test_home_lists_every_workflow_file_with_a_diagram():
+    """The Home page names each workflow file of the repository and draws it."""
+    home = (REPO_ROOT / "wiki" / "Home.md").read_text(encoding="utf-8")
+    files = sorted(
+        path.name
+        for folder in (".gitea/scoped_workflows", ".gitea/workflows")
+        for path in (REPO_ROOT / folder).glob("*.yml")
+    )
+    assert files
+    for name in files:
+        assert f"[`{name}`]" in home, f"{name} is not listed on the Home page"
+    assert home.count("@startuml") == len(files)

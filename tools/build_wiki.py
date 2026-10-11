@@ -39,7 +39,7 @@ class Page:
 
 
 PAGES: tuple[Page, ...] = (
-    Page("Home", "README.md", ("Overview", "Requirements", "Setup", "Run", "Tests")),
+    Page("Home", "README.md", ("Overview", "Workflows", "Requirements", "Setup", "Run", "Tests")),
     Page("Onboarding", "guides/onboarding.md"),
     Page("Credentials", "guides/credentials.md"),
     Page("Troubleshooting", "guides/troubleshooting.md"),
