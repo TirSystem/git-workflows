@@ -13,7 +13,255 @@ A collection of reusable Gitea Actions workflows for DevOps professionals and so
 
 This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It currently contains the Gitea workflow [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml), which copies the repository description and topics from Gitea to the GitHub mirror on every push to `main`, on manual dispatch, and daily at 03:17 UTC.
+It contains five workflows: metadata sync to the GitHub mirror, wiki publishing, shared quality checks, a release workflow and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
+
+
+## Workflows
+
+Five workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
+
+| Workflow | File | Kind | Starts on | Purpose |
+| --- | --- | --- | --- | --- |
+| Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push to `main`, manual, daily 03:17 UTC | Copies the description and topics of a Gitea repository to its GitHub push mirror |
+| Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, opt-in with `wiki/.publish` | push to `main` that changes `wiki/**`, manual | Publishes the pages in `wiki/` to the repository wiki |
+| Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Reusable (`workflow_call`) | a call from another repository | Runs ruff, mypy, shellcheck and shfmt on the tracked files and changes nothing |
+| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | This repository only | manual | Creates the version tag, the release page and the major tag after the checks |
+| Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | This repository only | pull request, push to `main`, manual | Parses every workflow and runs the offline tests |
+
+### Sync GitHub metadata
+
+Syncs the Gitea repository description and topics to the GitHub push mirror.
+
+#### Cron
+
+Daily at 03:17 UTC (`17 3 * * *`), plus every push to `main` and manual `workflow_dispatch`.
+
+#### Workflow
+
+```plantuml
+@startuml
+title Sync Gitea repository description and topics to GitHub
+
+autonumber
+
+actor "Push to main,\nmanual trigger, or schedule" as Trigger
+participant "Gitea Actions\nsync-github-metadata" as Workflow
+participant "Gitea REST API" as Gitea
+participant "GitHub REST API" as GitHub
+
+Trigger -> Workflow: Start workflow
+activate Workflow
+
+Workflow -> Workflow: Read and validate secrets
+note right
+TOKEN_FOR_GITEA
+PAT_FOR_GITHUB
+end note
+
+alt secret validation failed
+  Workflow --> Trigger: workflow failed
+end
+
+
+Workflow -> Gitea: GET /repos/{owner}/{repo}
+Gitea --> Workflow: Description and topics
+
+Workflow -> Gitea: GET /repos/{owner}/{repo}/push_mirrors
+Gitea --> Workflow: Push mirror response
+
+alt mirrors is not a list
+    Workflow --> Trigger: Log a warning and succeed\n(GitHub metadata not synced)
+else mirrors is a list with no GitHub mirror
+    Workflow --> Trigger: Log that there is nothing to sync and succeed
+else mirrors is a list
+    Workflow -> Workflow: Find GitHub owner and repo from remote_address
+
+    Workflow -> GitHub: PATCH /repos/{owner}/{repo}\n{description}
+    GitHub --> Workflow: Repository updated
+
+    Workflow -> GitHub: PUT /repos/{owner}/{repo}/topics\n{names}
+    GitHub --> Workflow: Topics updated
+
+    Workflow --> Trigger: Sync completed
+else Gitea API denies access
+    Gitea --> Workflow: HTTP 403 Forbidden
+    Workflow --> Trigger: Workflow fails
+else GitHub API denies access
+    GitHub --> Workflow: HTTP error
+    Workflow --> Trigger: Workflow fails
+end
+deactivate Workflow
+@enduml
+```
+
+### Publish wiki
+
+Publishes `wiki/` to the repository wiki, only in a repository that has opted in with `wiki/.publish`. The word `prune` in that file also deletes pages that are not in `wiki/`.
+
+#### Workflow
+
+```plantuml
+@startuml
+title Publish wiki/ to the repository wiki
+
+autonumber
+
+actor "Push to main that changes wiki/**,\nor manual trigger" as Trigger
+participant "Gitea Actions\npublish-wiki" as Workflow
+participant "shared-scripts\n(tools/publish_wiki.py at v1)" as Script
+participant "Gitea wiki API" as Wiki
+
+Trigger -> Workflow: Start workflow
+activate Workflow
+Workflow -> Script: Check out the repository and the script, run it
+activate Script
+
+alt wiki/.publish does not exist
+  Script --> Workflow: Log that publishing is not enabled and succeed\n(nothing is written)
+else wiki/ has no Markdown pages
+  Script --> Workflow: Fail with [configuration]\n(an empty wiki/ never deletes pages)
+else
+  Script -> Script: Read the marker (empty, or the word prune)\nand TOKEN_FOR_GITEA_WIKI
+  Script -> Wiki: GET repository (preflight)
+  Wiki --> Script: Wiki is enabled, token accepted
+  Script -> Wiki: GET pages
+  Wiki --> Script: Existing pages
+  Script -> Wiki: Create new pages, update changed pages
+  opt marker says prune
+    Script -> Wiki: Delete pages that are not in wiki/
+  end
+  Script --> Workflow: Log created, updated and deleted counts
+end
+deactivate Script
+Workflow --> Trigger: Workflow result
+deactivate Workflow
+@enduml
+```
+
+### Quality checks
+
+A reusable workflow for Python and shell, called with `uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1` (see the [guide](QualityChecksPythonShell)).
+
+#### Workflow
+
+```plantuml
+@startuml
+title Shared quality checks (reusable workflow)
+
+autonumber
+
+actor "Calling repository\nuses: ...quality-checks.yml@v1" as Caller
+participant "Gitea Actions\nquality-checks" as Workflow
+participant "PyPI" as PyPI
+
+Caller -> Workflow: workflow_call with languages,\nworking-directory and tool versions
+activate Workflow
+
+Workflow -> Workflow: Validate the inputs
+alt languages or working-directory is invalid
+  Workflow --> Caller: Fail with [configuration]
+end
+
+Workflow -> Workflow: Check out the calling repository
+Workflow -> PyPI: Install the pinned tools in a virtual environment\n(ruff, mypy, shellcheck-py, shfmt-py as selected)
+PyPI --> Workflow: Tools installed
+
+loop for each selected language
+  Workflow -> Workflow: List tracked files
+  alt no files of that language
+    Workflow -> Workflow: Notice: nothing was checked
+  else
+    Workflow -> Workflow: Run every tool and record PASS or FAIL
+  end
+end
+
+alt any tool failed
+  Workflow --> Caller: Fail and list the failed tools
+else
+  Workflow --> Caller: All selected checks passed
+end
+deactivate Workflow
+@enduml
+```
+
+### Release
+
+Started by hand by a maintainer; with `dry_run` `true` (the default) it only checks (see the [release process](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/release-process.md)).
+
+#### Workflow
+
+```plantuml
+@startuml
+title Release this repository
+
+autonumber
+
+actor "Maintainer\n(workflow_dispatch: version, dry_run)" as Trigger
+participant "Gitea Actions\nrelease" as Workflow
+participant "Gitea REST API" as Gitea
+
+Trigger -> Workflow: Start with version and dry_run
+activate Workflow
+
+Workflow -> Workflow: Check the version and read CHANGELOG.md
+alt version malformed or no changelog entry
+  Workflow --> Trigger: Fail with [validation] or [configuration]
+end
+
+Workflow -> Gitea: GET branch main and status of the commit
+Gitea --> Workflow: Tip of main and the validation run
+alt commit is not the tip of main,\nor the validation run is not green
+  Workflow --> Trigger: Fail with [validation]\n(no tag is created)
+end
+
+Workflow -> Gitea: GET tags
+Gitea --> Workflow: Existing tags
+alt tag vMAJOR.MINOR.PATCH exists
+  Workflow --> Trigger: Fail with [validation]\n(tags are never moved)
+end
+
+alt dry_run is true (default)
+  Workflow --> Trigger: Log what would be created and stop
+else
+  Workflow -> Gitea: POST release (creates the version tag,\nbody is the changelog entry)
+  opt this is the highest version of its major
+    Workflow -> Gitea: Delete and recreate the major tag vMAJOR
+  end
+  Workflow --> Trigger: Released
+end
+deactivate Workflow
+@enduml
+```
+
+### Validate workflows
+
+The repository's own validation: the offline tests that gate every pull request.
+
+#### Workflow
+
+```plantuml
+@startuml
+title Validate workflows (this repository's own checks)
+
+autonumber
+
+actor "Pull request,\npush to main, or manual trigger" as Trigger
+participant "Gitea Actions\nvalidate-workflows" as Workflow
+
+Trigger -> Workflow: Start workflow
+activate Workflow
+Workflow -> Workflow: Check out the repository
+Workflow -> Workflow: Create a virtual environment and\ninstall tests/requirements.txt
+Workflow -> Workflow: Run pytest on tests/ (offline, no secrets):\nworkflows parse as YAML, no embedded Python,\nscripts compile, wiki pages and translations are current,\nsync, publish and release flows against a fake API
+
+alt a test fails
+  Workflow --> Trigger: Workflow fails (the pull request is not ready)
+else
+  Workflow --> Trigger: Workflow succeeds
+end
+deactivate Workflow
+@enduml
+```
 
 
 ## Requirements

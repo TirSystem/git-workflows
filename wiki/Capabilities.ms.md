@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 86dfa2bd5483 -->
+<!-- translation of Capabilities.md, source sha256 a8c03a001880 -->
 
 > Ini ialah terjemahan [`Capabilities`](Capabilities). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -16,69 +16,3 @@ Baris yang menyatakan Dilaksanakan atau Panduan telah ditulis wujud hari ini. Se
 | Menerbitkan wiki repositori daripada `wiki/` (pilih menyertai, dihantar ke setiap organisasi) | Dilaksanakan dalam `.gitea/scoped_workflows/publish-wiki.yml`, dengan ujian luar talian; satu juruterbang dalam repositori kedua menerbitkan wikinya (MIL-006) |
 | Semakan kualiti bersama (Python dan shell) | Dilaksanakan sebagai aliran kerja boleh guna semula `.gitea/workflows/quality-checks.yml`, dengan ujian luar talian dan percubaan dalam organisasi kedua; digunakan dalam RepoFoundry ([panduan](QualityChecksPythonShell.ms)) |
 | Keluaran berversi dan penerbitan | Proses keluaran, changelog dan panduan naik taraf telah ditakrifkan; aliran kerja keluaran sudah ada dan `v1.0.0` telah dikeluarkan (MIL-004) ([panduan](Upgrading.ms)) |
-
-### Menyegerakkan metadata GitHub
-
-Menyegerakkan penerangan dan topik repositori Gitea ke push mirror GitHub.
-
-#### Jadual (cron)
-
-Setiap hari pada 03:17 UTC (`17 3 * * *`), serta pada setiap push ke `main` dan `workflow_dispatch` manual.
-
-#### Aliran kerja
-
-```plantuml
-@startuml
-title Sync Gitea repository description and topics to GitHub
-
-autonumber
-
-actor "Push to main,\nmanual trigger, or schedule" as Trigger
-participant "Gitea Actions\nsync-github-metadata" as Workflow
-participant "Gitea REST API" as Gitea
-participant "GitHub REST API" as GitHub
-
-Trigger -> Workflow: Start workflow
-activate Workflow
-
-Workflow -> Workflow: Read and validate secrets
-note right
-TOKEN_FOR_GITEA
-PAT_FOR_GITHUB
-end note
-
-alt secret validation failed
-  Workflow --> Trigger: workflow failed
-end
-
-
-Workflow -> Gitea: GET /repos/{owner}/{repo}
-Gitea --> Workflow: Description and topics
-
-Workflow -> Gitea: GET /repos/{owner}/{repo}/push_mirrors
-Gitea --> Workflow: Push mirror response
-
-alt mirrors is not a list
-    Workflow --> Trigger: Log a warning and succeed\n(GitHub metadata not synced)
-else mirrors is a list with no GitHub mirror
-    Workflow --> Trigger: Log that there is nothing to sync and succeed
-else mirrors is a list
-    Workflow -> Workflow: Find GitHub owner and repo from remote_address
-
-    Workflow -> GitHub: PATCH /repos/{owner}/{repo}\n{description}
-    GitHub --> Workflow: Repository updated
-
-    Workflow -> GitHub: PUT /repos/{owner}/{repo}/topics\n{names}
-    GitHub --> Workflow: Topics updated
-
-    Workflow --> Trigger: Sync completed
-else Gitea API denies access
-    Gitea --> Workflow: HTTP 403 Forbidden
-    Workflow --> Trigger: Workflow fails
-else GitHub API denies access
-    GitHub --> Workflow: HTTP error
-    Workflow --> Trigger: Workflow fails
-end
-deactivate Workflow
-@enduml
-```
