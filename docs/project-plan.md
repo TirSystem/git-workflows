@@ -36,7 +36,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Versioned release and publishing | [MIL-004] | 2026-11-16 to 2026-11-28 | 2026-11-28 | S05 | None yet | Release process and reusable release workflow | [Milestone MIL-004] |
 | Wiki and translations | [MIL-005] | 2026-11-30 to 2026-12-12 | 2026-12-12 | S05 | None yet | Wiki pages in English, Danish and Bahasa Malaysia, kept current by every pull request | [Milestone MIL-005] |
 | Shared wiki publishing | [MIL-006] | 2026-12-14 to 2026-12-26 | 2026-12-26 | S05 | None yet | Scoped publish-wiki workflow with opt-in, piloted in one other repository | [Milestone MIL-006] |
-| Quality checks for C++ and C# | [MIL-007] | 2027-01-04 to 2027-01-16 | 2027-01-16 | S05 | US-001.09, US-001.10 (to extend) | Reusable quality-check workflows for C++ and C#, released | Not synced yet |
+| Quality checks for C++ and C# | [MIL-007] | 2027-01-04 to 2027-01-16 | 2027-01-16 | S05 | US-001.09, US-001.10 (to extend) | Reusable quality-check workflows for C++ and C#, released | [Milestone MIL-007] |
 
 ```plantuml
 @startgantt
@@ -264,6 +264,7 @@ no tests, no release process.
 [Milestone MIL-004]: https://git.tirsystem.com/TirSystem/github-action/milestone/21
 [Milestone MIL-005]: https://git.tirsystem.com/TirSystem/github-action/milestone/93
 [Milestone MIL-006]: https://git.tirsystem.com/TirSystem/github-action/milestone/94
+[Milestone MIL-007]: https://git.tirsystem.com/TirSystem/github-action/milestone/95
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
 [b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
 [e3ad1fa]: https://git.tirsystem.com/TirSystem/github-action/commit/e3ad1fa7e7eef57a6793a479edb41ac6fd2db688
