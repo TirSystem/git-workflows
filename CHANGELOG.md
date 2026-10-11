@@ -26,7 +26,7 @@ Each release lists its changes in these groups, in this order:
   runner for the host's default limit.
 - `actions/checkout` is referenced by the exact tag `v4.2.2` instead of the
   moving tag `v4`. No change for callers.
-- The framework pin moves from `v0.5.2` to `v0.6.1`, and the two long `run:`
+- The framework pin moves from `v0.5.2` to `v0.6.2`, and the two long `run:`
   blocks of this repository's own `sync-milestones.yml` call
   `framework/scripts/ci-publish-milestones.sh`. No change for callers of the
   shared workflows.
