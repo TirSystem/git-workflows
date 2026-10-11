@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [b74ee0e] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-052) and accepted; target date 2027-01-16 confirmed by S01 (stand-in for S05) | [e3ad1fa] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Reviewed (RC-052) and accepted; target date 2027-01-16 confirmed by S01 (stand-in for S05) | [e3ad1fa] |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added the verification results of task 2 (runner tools) | pending |
 
 ---
 
@@ -78,6 +78,32 @@ name and contract.
 | 7 | Adopt each workflow in one other repository | Onboard a real C++ project and a real C# project, or a throwaway repository when none exists, and fix the gaps in the guides that appear. Verify a seeded failure. | No | |
 | 8 | Release | Add the changelog entry (a new workflow is a minor change, ADR-0006) and run the Release workflow; record the results in this milestone and review it. | No | |
 
+## Verification results
+
+Task 2 was run on 2026-10-11 with a throwaway branch, `verify-runner-tools`,
+in `TirSystem/github-action` (run 692, deleted afterwards). One job on
+`ubuntu-latest` printed what the image has and tried each way of installing a
+tool.
+
+| Fact | Result |
+| --- | --- |
+| Image | Ubuntu 24.04, `x86_64`, the job runs as root, `sudo`, `curl`, `python3` 3.12 and `pip` present |
+| Present in the image | `gcc` and `g++` 13.3, `make`; missing: `clang-format`, `clang-tidy`, `cppcheck`, `cmake`, `dotnet` |
+| `clang-format` | from PyPI in 2 s (23.1.3); from apt in 9 s |
+| `clang-tidy` | from PyPI in 5 s; from apt in 25 s |
+| `cppcheck` | from apt in 6 s (2.13.0); no PyPI package found under `cppcheck-wheel` |
+| .NET SDK | from apt `dotnet-sdk-8.0` in 24 s (8.0.131); from the official script `dot.net/v1/dotnet-install.sh` with `--channel 8.0` in 25 s (8.0.425) |
+
+So every tool can be had in the run in under 30 seconds each with no change to
+the runner, either from PyPI (the clang tools, as `quality-checks.yml` already
+does for its tools, with an exact version) or from apt and the official script.
+Not covered by this task: running a tool against a real C++ project (a
+`clang-tidy` run needs a compile database or flags) or a real C# solution
+(`dotnet format` and a build need the project's restore of packages from the
+network), a private runner with no internet, and an image that differs from
+`ubuntu-latest`. Those belong to the contract (task 3) and to the adoption
+(task 7).
+
 ---
 
 [BC-001]: ../business-case.md
@@ -87,5 +113,4 @@ name and contract.
 [MIL-004]: ./mil-004-versioned-release.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
-[b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
 [e3ad1fa]: https://git.tirsystem.com/TirSystem/github-action/commit/e3ad1fa7e7eef57a6793a479edb41ac6fd2db688

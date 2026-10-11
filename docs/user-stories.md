@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | US-001 |
-| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007] |
+| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007], [MIL-007] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.11 to US-001.13 (releases, UC-006); US-001.13 traced to the epic (RC-041) | [044d8ba] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.14 and US-001.15 (UC-007); US-001.13 traced to UC-007 (RC-046) | [4cf52af] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.14 and US-001.15 (UC-007); US-001.13 traced to UC-007 (RC-046) | [4cf52af] |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added US-001.16 and US-001.17 (C++ and C# checks, MIL-007 task 1) | pending |
 
 ---
 
@@ -218,9 +218,37 @@ actors of [UCD-001]. Stories for quality checks and releases (MIL-004) and for t
 | --- | --- | --- |
 | [UC-007], [MIL-004] | fits one iteration | none |
 
+### US-001.16 — A C++ project gets the same checks
+
+**As a** Software Engineer, **I want** a pull request in a C++ repository to run format and static checks, **so that** a defect is found before review without me writing a pipeline.
+
+**Acceptance Criteria**
+
+- Given a repository that calls the shared C++ quality-check workflow and has C++ files, when a pull request is opened, then the format and static checks run and the status is pass or fail.
+- Given a file with a finding, when the check runs, then the job fails and the log shows the tool name with `path:line` and the tool's message.
+- Given a repository that lacks what a check needs, when the check runs, then it fails with a `[configuration]` message that names what is missing instead of passing.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-005], [MIL-007] | fits one iteration | none |
+
+### US-001.17 — A C# project gets the same checks
+
+**As a** Software Engineer, **I want** a pull request in a C# repository to run format and analyzer checks, **so that** a defect is found before review without me writing a pipeline.
+
+**Acceptance Criteria**
+
+- Given a repository that calls the shared C# quality-check workflow and has a project or solution, when a pull request is opened, then the format and analyzer checks run and the status is pass or fail.
+- Given a file with a finding, when the check runs, then the job fails and the log shows the tool name with `path:line` and the tool's message.
+- Given a repository without a project or solution, when the check runs, then it fails with a `[configuration]` message that names what is missing instead of passing.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-005], [MIL-007] | fits one iteration | none |
+
 ## INVEST Check
 
-All fifteen stories are independent of each other except that US-001.05 and
+All seventeen stories are independent of each other except that US-001.05 and
 US-001.06 build on US-001.04 (the secrets must exist before a repository can
 run the workflow). Each states one goal and can be negotiated, delivers value
 to the named role, is small enough for one iteration, and has acceptance
@@ -236,12 +264,12 @@ behaviour is tested rather than built.
 [MIL-002]: ./milestones/mil-002-onboarding-and-operations.md
 [MIL-003]: ./milestones/mil-003-quality-checks.md
 [MIL-004]: ./milestones/mil-004-versioned-release.md
+[MIL-007]: ./milestones/mil-007-cpp-csharp-quality-checks.md
 [UC-001]: ./uc-001/uc.md
 [UC-002]: ./uc-002/uc.md
 [UC-003]: ./uc-003/uc.md
 [UC-004]: ./uc-004/uc.md
 [UC-005]: ./uc-005/uc.md
 [UC-006]: ./uc-006/uc.md
-[044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051
 [UC-007]: ./uc-007/uc.md
 [4cf52af]: https://git.tirsystem.com/TirSystem/github-action/commit/4cf52afe00f546c6b20424fb8dfc12796ffd9296
