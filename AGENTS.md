@@ -15,6 +15,49 @@ framework.
 the working tree first; edit, summarise and stop. The commit/PR rules below
 apply once a commit has been asked for.
 
+## Related repositories
+
+This project is one of four repositories that change together. Each has one
+job; a change goes to the repository that owns it, not to the one that happens
+to be open.
+
+| Repository | Owns | Consumed by | Pinned or released as |
+| --- | --- | --- | --- |
+| `TirSystem/SQA-QC-Checklists` | the QC checklists (`qc/artifacts/`, `qc/code/`) | `sqa-qc-framework` | a commit, pinned as the `qc/` submodule |
+| `TirSystem/sqa-qc-framework` | the skills, process documents, catalog, templates (`templates/ci/`) and scripts | every project, as the `framework/` submodule | a release tag (`v0.5.2`, ...) |
+| `TirSystem/github-action` | the shared workflows (`quality-checks`, `release`), the scoped workflows (`publish-wiki`, `sync-github-metadata`) and the scripts they call (`tools/`) | every repository of the organisation, by `uses:` and `ref:` | a release tag and a moving major tag (`v1`), made by its release workflow |
+| `TirSystem/sqa-and-qc` | the SQA and AI project management: project artifacts, review records, the traceability matrix | itself | the pull request that merges it |
+
+Where a thing lives:
+
+- A QC checklist, a convention or a template is changed in its owner above and
+  reaches this project by moving the pin. The review record of a checklist is
+  written in the project that reviews it (`docs/sqa/reviews/`), not in the
+  checklist repository.
+- A workflow that other repositories call is changed in `github-action` and
+  released there. A workflow a project copies from `templates/ci/` is changed
+  in the framework; the project updates its copy after the pin moves.
+- A script a workflow needs is a file (`tools/` of `github-action`, or
+  `scripts/` of the framework for the templates), never a long `run:` block
+  (`QC-WF-001` criterion 20).
+- The `framework/` pin here is independent of the one in `sqa-and-qc`; the two
+  may differ, and neither is moved to follow the other without a reason in
+  the pull request.
+
+A change that spans repositories:
+
+1. One pull request per repository, in dependency order: checklists, then
+   framework, then `github-action` and the projects. A pull request names the
+   ones it depends on in its description.
+2. A downstream repository moves a pin only to a merged commit or tag of the
+   upstream, never to an unmerged branch.
+3. Nothing is released or tagged until its dependencies are merged; a release
+   is a separate, deliberate step (the release workflow defaults to a dry run).
+4. A related repository is added to the session as a working directory only
+   when the task needs it. In autonomous mode work in a related repository is
+   inside the accepted plan only if the plan names it; otherwise the run stops
+   and reports.
+
 ## Workflow order
 
 Business Case, Stakeholder Analysis, Project Plan, milestones, tasks synced as
