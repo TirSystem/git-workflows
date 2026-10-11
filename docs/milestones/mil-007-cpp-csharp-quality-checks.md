@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [b74ee0e] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-052) and accepted; target date 2027-01-16 confirmed by S01 (stand-in for S05) | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-052) and accepted; target date 2027-01-16 confirmed by S01 (stand-in for S05) | [e3ad1fa] |
 
 ---
 
@@ -88,3 +88,4 @@ name and contract.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
+[e3ad1fa]: https://git.tirsystem.com/TirSystem/github-action/commit/e3ad1fa7e7eef57a6793a479edb41ac6fd2db688
