@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [11cba35] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-054): abbreviations expanded at first use and the security impact of downloading tools named | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-054): abbreviations expanded at first use and the security impact of downloading tools named | [9e7aedd] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -142,3 +142,4 @@ The rules that follow from it:
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [11cba35]: https://git.tirsystem.com/TirSystem/github-action/commit/11cba358b83cb7b6624f6b0956ae7b0c112d3692
+[9e7aedd]: https://git.tirsystem.com/TirSystem/github-action/commit/9e7aeddb11c2b41ac893d9f7893d663a53fbe470
