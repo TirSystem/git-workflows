@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.14 and US-001.15 (UC-007); US-001.13 traced to UC-007 (RC-046) | [4cf52af] |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added US-001.16 and US-001.17 (C++ and C# checks, MIL-007 task 1) | pending |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added US-001.16 and US-001.17 (C++ and C# checks, MIL-007 task 1) | [32b5ab6] |
 
 ---
 
@@ -273,3 +273,4 @@ behaviour is tested rather than built.
 [UC-006]: ./uc-006/uc.md
 [UC-007]: ./uc-007/uc.md
 [4cf52af]: https://git.tirsystem.com/TirSystem/github-action/commit/4cf52afe00f546c6b20424fb8dfc12796ffd9296
+[32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346

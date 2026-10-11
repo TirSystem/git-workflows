@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Reviewed (RC-052) and accepted; target date 2027-01-16 confirmed by S01 (stand-in for S05) | [e3ad1fa] |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added the verification results of task 2 (runner tools) | pending |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Added the verification results of task 2 (runner tools) | [32b5ab6] |
 
 ---
 
@@ -114,3 +114,4 @@ network), a private runner with no internet, and an image that differs from
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [e3ad1fa]: https://git.tirsystem.com/TirSystem/github-action/commit/e3ad1fa7e7eef57a6793a479edb41ac6fd2db688
+[32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346
