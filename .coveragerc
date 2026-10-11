@@ -1,0 +1,12 @@
+# Coverage of the scripts in tools/ by the offline tests. validate-workflows.yml
+# runs `coverage run -m pytest -q tests` and `coverage report`, which fails
+# below fail_under. Measured at 97% on 2026-10-11; the gate leaves room for a
+# few lines and fails when a tool grows without tests.
+[run]
+branch = True
+source = tools
+
+[report]
+fail_under = 95
+show_missing = True
+skip_empty = True

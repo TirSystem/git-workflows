@@ -20,5 +20,8 @@ jobs:
           python3 -m venv .venv
           .venv/bin/python -m pip install --quiet -r tests/requirements.txt
 
-      - name: Validate workflow files and run the offline tests
-        run: .venv/bin/python -m pytest -q tests
+      - name: Validate workflow files and run the offline tests under coverage
+        run: .venv/bin/python -m coverage run -m pytest -q tests
+
+      - name: Check the coverage of the tools
+        run: .venv/bin/python -m coverage report
