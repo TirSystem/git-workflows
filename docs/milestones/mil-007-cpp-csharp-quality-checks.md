@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the verification results of task 2 (runner tools) | [32b5ab6] |
-| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Current tool versions only, .NET SDK 10 or later: results of run 699 replace the SDK 8 result; tasks 3 and criterion 1 amended | pending |
+| 2026-10-11 | Proposed | Jens Tirsvad Nielsen | S01 | Current tool versions only, .NET SDK 10 or later: results of run 699 replace the SDK 8 result; tasks 3 and criterion 1 amended | [7bcc67a] |
 
 ---
 
@@ -122,3 +122,4 @@ network), a private runner with no internet, and an image that differs from
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346
+[7bcc67a]: https://git.tirsystem.com/TirSystem/github-action/commit/7bcc67a065ac5f67b4e13ebf243a4bbbe2af47d9
