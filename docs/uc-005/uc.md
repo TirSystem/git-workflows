@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Brief extended to C++ and C# (MIL-007 task 1) | [32b5ab6] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Brief extended to C++ and C# reviewed (RC-056) and accepted; the failure sentence is left to the stories | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Brief extended to C++ and C# reviewed (RC-056) and accepted; the failure sentence is left to the stories | [1bc56f8] |
 
 ---
 
@@ -44,3 +44,4 @@ A Software Engineer opens a pull request in a repository that calls the shared q
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [MIL-007]: ../milestones/mil-007-cpp-csharp-quality-checks.md
 [32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346
+[1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e

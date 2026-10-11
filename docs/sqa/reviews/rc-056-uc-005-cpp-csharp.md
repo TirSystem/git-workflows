@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [1bc56f8] |
 
 ---
 
@@ -49,3 +49,4 @@ Go - all applicable criteria pass; the one finding (criterion 1) was fixed durin
 
 [UC-005]: ../../uc-005/uc.md
 [QC-UC-001]: ../../../framework/qc/qc-use-case.md
+[1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e

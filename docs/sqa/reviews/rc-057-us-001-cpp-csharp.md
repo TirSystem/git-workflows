@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [1bc56f8] |
 
 ---
 
@@ -44,3 +44,4 @@ Go - all seven criteria pass. One stale sentence in the Purpose and Scope (it sa
 
 [US-001]: ../../user-stories.md
 [QC-US-001]: ../../../framework/qc/qc-user-story.md
+[1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
