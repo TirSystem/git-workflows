@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [6933e91] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 3 verified; the action item is closed | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 3 verified; the action item is closed | [05b635c] |
 
 ---
 
@@ -45,3 +45,4 @@ Go - all six criteria pass, and the five Go/No-Go criteria of MIL-004 are met. C
 [MIL-004]: ../../milestones/mil-004-versioned-release.md
 [QC-MIL-001]: ../../../framework/qc/qc-milestones-gateways.md
 [6933e91]: https://git.tirsystem.com/TirSystem/github-action/commit/6933e91c83075fb39b2dfbe41683cb2a0a0bce28
+[05b635c]: https://git.tirsystem.com/TirSystem/github-action/commit/05b635c1b3d79390c794e62e781595fbe5f1a4ea

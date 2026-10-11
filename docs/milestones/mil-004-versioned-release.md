@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the verification results of the first release (v1.0.0) | [6933e91] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 3 verified with pinned consumers after v1.0.1 and v1.1.0 (RC-048) | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 3 verified with pinned consumers after v1.0.1 and v1.1.0 (RC-048) | [05b635c] |
 
 ---
 
@@ -93,3 +93,4 @@ After the release the two scoped workflows fetch their scripts at `ref: v1`
 [BC-001]: ../business-case.md
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [6933e91]: https://git.tirsystem.com/TirSystem/github-action/commit/6933e91c83075fb39b2dfbe41683cb2a0a0bce28
+[05b635c]: https://git.tirsystem.com/TirSystem/github-action/commit/05b635c1b3d79390c794e62e781595fbe5f1a4ea
