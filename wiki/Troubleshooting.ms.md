@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 e8a34cbe7e93 -->
+<!-- translation of Troubleshooting.md, source sha256 eb63f4109a0d -->
 
 > Ini ialah terjemahan [`Troubleshooting`](Troubleshooting). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -47,7 +47,7 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 
 ## Bukan satu ralat
 
-`No GitHub push mirror configured for <repo>; nothing to sync.` Larian berjaya. Tidak semua repositori Gitea mempunyai cermin GitHub, jadi ini dijangka bagi repositori tersebut. Jika repositori itu sepatutnya mempunyainya, tambahkannya dalam tetapan repositori.
+`No GitHub push mirror configured for <repo>; nothing to sync.` diikuti oleh `Skipped`. Larian berjaya. Tidak semua repositori Gitea mempunyai cermin GitHub, jadi ini dijangka bagi repositori tersebut. Jika repositori itu sepatutnya mempunyainya, tambahkannya dalam tetapan repositori.
 
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not synced.` Larian berjaya tetapi tiada apa-apa disegerakkan. Semak bahawa versi Gitea menyokong API push mirror dan jalankan semula.
 

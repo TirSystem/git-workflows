@@ -22,6 +22,8 @@ Each release lists its changes in these groups, in this order:
 
 ### Changed
 
+- Sync GitHub mirror metadata: a repository without a GitHub push mirror still
+  succeeds, and the log now ends with the line `Skipped`.
 - The scoped workflows fetch their scripts at the tag `v1` instead of `main`,
   so a merge to `main` reaches consumers only when it is released.
 

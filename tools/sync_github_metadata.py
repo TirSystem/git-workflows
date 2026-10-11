@@ -170,6 +170,7 @@ def main():
             "No GitHub push mirror configured for "
             f"{source_owner}/{source_repo}; nothing to sync."
         )
+        print("Skipped")
         return 0
 
     github_token = parse_github_token(os.environ.get("PAT_FOR_GITHUB"))
