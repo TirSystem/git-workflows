@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Reviewed (RC-038): the security impact of installing the tools from PyPI named | [385d2fb] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added the input tools-ref: the shell steps moved to a script file fetched at that ref (RC-051) | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added the input tools-ref: the shell steps moved to a script file fetched at that ref (RC-051) | [670f0ac] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -125,3 +125,4 @@ The rules that follow from it:
 [US-001]: ../user-stories.md
 [ADR-0004]: ./adr-0004-shared-wiki-publishing-opt-in.md
 [385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
+[670f0ac]: https://git.tirsystem.com/TirSystem/github-action/commit/670f0ac469043bb166c84290c0dbf62b4908e3cc

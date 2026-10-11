@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [670f0ac] |
 
 ---
 
@@ -48,3 +48,4 @@ Go - all applicable criteria pass. Adding an optional input is a minor change un
 
 [ADR-0005]: ../../adr/adr-0005-quality-check-contract.md
 [QC-ADR-001]: ../../../framework/qc/qc-adr.md
+[670f0ac]: https://git.tirsystem.com/TirSystem/github-action/commit/670f0ac469043bb166c84290c0dbf62b4908e3cc
