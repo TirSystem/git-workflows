@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [01b9c29] |
 
 ---
 
@@ -51,3 +51,4 @@ Go - all six criteria pass. The amendment follows from a scan on 2026-10-13: 8 r
 [MIL-008]: ../../milestones/mil-008-wiki-reusable-workflow.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
 [RC-060]: ./rc-060-mil-008-plan.md
+[01b9c29]: https://git.tirsystem.com/TirSystem/github-action/commit/01b9c2972b4317bcc590540010aea0eaf7f30014

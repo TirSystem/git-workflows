@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-059 (MIL-007 task 7 results) | [2481c26] |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-008, RC-060 and RC-061 | pending |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-008, RC-060 and RC-061 | [01b9c29] |
 
 ---
 
@@ -215,3 +215,4 @@ updated whenever an artifact instance is created or reviewed.
 [faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
 [2481c26]: https://git.tirsystem.com/TirSystem/github-action/commit/2481c26d802464decd51d75539157093b60e08e8
+[01b9c29]: https://git.tirsystem.com/TirSystem/github-action/commit/01b9c2972b4317bcc590540010aea0eaf7f30014

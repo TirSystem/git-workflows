@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-060) | pending |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Task 5 changed to deprecate the scoped workflow (8 repositories still use it); reviewed (RC-061) | pending |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-060) | [01b9c29] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Task 5 changed to deprecate the scoped workflow (8 repositories still use it); reviewed (RC-061) | [01b9c29] |
 
 ---
 
@@ -83,3 +83,4 @@ removed), and a release that projects can pin.
 [ADR-0004]: ../adr/adr-0004-shared-wiki-publishing-opt-in.md
 [RC-060]: ../sqa/reviews/rc-060-mil-008-plan.md
 [RC-061]: ../sqa/reviews/rc-061-mil-008-task-5-deferred.md
+[01b9c29]: https://git.tirsystem.com/TirSystem/github-action/commit/01b9c2972b4317bcc590540010aea0eaf7f30014
