@@ -29,7 +29,8 @@ class TestEachWorkflow:
     def test_every_job_declares_permissions_and_runner(self, path):
         document = yaml.safe_load(path.read_text(encoding="utf-8"))
         for name, job in document["jobs"].items():
-            assert "runs-on" in job, f"job {name} has no runs-on"
+            if "uses" not in job:  # a called workflow has its own runner
+                assert "runs-on" in job, f"job {name} has no runs-on"
             assert "permissions" in job, f"job {name} has no explicit permissions"
 
 

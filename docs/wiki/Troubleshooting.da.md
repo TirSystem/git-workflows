@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 eb63f4109a0d -->
+<!-- translation of Troubleshooting.md, source sha256 c68827295812 -->
 
 > Dette er en oversættelse af [`Troubleshooting`](Troubleshooting). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -30,11 +30,13 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 | `TOKEN_FOR_GITEA is missing or empty.` | configuration | Tilføj secreten |
 | `Could not determine the Gitea source repository.` | configuration | Kørslen har intet repositorynavn; meld det som en defekt |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Behold ét GitHub push-spejl |
-| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Kun wiki-publicering: repositoryet har meldt sig til med `wiki/.publish`, men dets organisation har ingen sådan secret; gem den (se [credentials.md](Credentials.da)) |
-| `wiki/.publish may only be empty or contain the word 'prune'.` | configuration | Kun wiki-publicering: lad markøren være tom, eller skriv kun ordet `prune` i den |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Kun wiki-publicering: repositoryet kalder workflowet, men dets organisation har ingen sådan secret, eller kaldet sender den ikke; gem den og send den i `secrets:` (se [credentials.md](Credentials.da)) |
+| `wiki/.publish may only be empty or contain the word 'prune'.` | configuration | Kun wiki-publicering gennem det ældre scoped workflow: lad markøren være tom, eller skriv kun ordet `prune` i den |
+| `The prune input must be 'true' or 'false'` | configuration | Kun wiki-publicering: sæt `prune` i kaldet til `"true"` eller `"false"` |
+| `The wiki folder ... does not exist` | configuration | Kun wiki-publicering: sæt `wiki_dir` i kaldet til mappen med siderne (standard `docs/wiki`) |
 | `... HTTP 403 ...` ved publicering af wikien | permissions | Kun wiki-publicering: tokenet skal have `write:repository` og skriveadgang til dette repository |
 | `The wiki is not enabled on <repo>` | configuration | Kun wiki-publicering: aktivér wikien i repositoryets indstillinger |
-| `The wiki source directory ... has no Markdown pages` | configuration | Kun wiki-publicering: `wiki/` er tom eller mangler; intet blev ændret |
+| `The wiki source directory ... has no Markdown pages` | configuration | Kun wiki-publicering: mappen har ingen Markdown-sider; intet blev ændret |
 | `Could not determine the GitHub owner and repository ...` | configuration | Spejlets adresse skal se ud som `https://github.com/<owner>/<repo>.git` |
 | `Gitea API request failed with HTTP 401` | credentials | Opret et nyt Gitea-token, og opdatér `TOKEN_FOR_GITEA` |
 | `GitHub API request failed with HTTP 401` | credentials | Opret et nyt GitHub-token, og opdatér `PAT_FOR_GITHUB`; værdien skal kun være tokenet (intet navn, ingen anførselstegn eller JSON) |
@@ -51,9 +53,9 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not synced.` Kørslen lykkes, men intet blev synkroniseret. Kontroller, at Gitea-versionen understøtter push mirror-API'et, og kør igen.
 
-`No wiki/.publish marker in <owner>/<repo>; wiki publishing is not enabled for this repository.` Kørslen af Publish wiki lykkes og skriver intet. Repositoryet har ikke meldt sig til; tilføj `wiki/.publish`, hvis det skal publicere.
+`No wiki/.publish marker in <owner>/<repo>; wiki publishing is not enabled for this repository.` Kørslen af det ældre scoped Publish wiki lykkes og skriver intet. Repositoryet har ikke meldt sig til; kald det genbrugelige workflow **Publish wiki pages** (se [onboarding.md](Onboarding.da)), hvis det skal publicere.
 
-`<n> page(s) are in the wiki but not in wiki/ and were kept; put the word 'prune' in wiki/.publish to delete them.` Kørslen lykkes. Sider, der kun findes i wikien, lades i fred, medmindre markøren indeholder `prune`.
+`<n> page(s) are in the wiki but not in <folder>/ and were kept; set the prune input to true to delete them.` Kørslen lykkes. Sider, der kun findes i wikien, lades i fred, medmindre kaldet sætter `prune: "true"` (med det ældre scoped workflow: ordet `prune` i `wiki/.publish`).
 
 ## Runner-problemer
 

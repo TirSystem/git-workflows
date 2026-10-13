@@ -20,6 +20,39 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [1.2.2] - 2026-10-13
+
+### Added
+
+- Reusable workflow `publish-wiki-pages.yml` (ADR-0009): publishes the Markdown
+  pages of a folder to the wiki of the calling repository. The call is the
+  opt-in and no `wiki/.publish` marker is read. Inputs: `wiki_dir` (default
+  `docs/wiki`), `prune` (`"true"` deletes wiki pages that are not in the folder,
+  default `"false"`) and `tools-ref` (default `v1`); the secret
+  `TOKEN_FOR_GITEA_WIKI` is declared by the workflow and passed by the caller,
+  with no fallback to another token. A missing folder is a configuration error,
+  and an empty folder never deletes pages. A caller template is
+  `templates/ci/publish-wiki.yml` of the SQA and QC framework.
+- Environment variable `WIKI_PRUNE` of `tools/publish_wiki.py`: when it is set the
+  marker is not read. Without it the script behaves as before, so the scoped
+  workflow is unchanged.
+
+### Changed
+
+- The scoped workflow `publish-wiki.yml` is deprecated. It still publishes the
+  eight repositories that have `wiki/.publish` (checked on 2026-10-13) and is not
+  removed in this release; it is removed, with their migration, in a later major
+  release.
+- The wiki of this repository moves from `wiki/` to `docs/wiki/` and is published
+  through the new workflow by `publish-own-wiki.yml`. `tools/build_wiki.py`
+  writes to `docs/wiki/`. No change for callers of the other workflows.
+- The onboarding, credentials and troubleshooting guides and their wiki pages
+  (English, Danish, Bahasa Malaysia) describe the caller, `docs/wiki/`, the
+  `prune` and `wiki_dir` inputs and the two new error messages.
+- Release type: this is a patch release by the owner's decision (S01, MIL-008),
+  although ADR-0006 classes a new workflow as minor. Nothing is removed or
+  renamed, so no caller breaks.
+
 ## [1.2.1] - 2026-10-13
 
 ### Changed

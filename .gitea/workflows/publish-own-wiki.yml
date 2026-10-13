@@ -1,0 +1,25 @@
+name: Publish own wiki
+
+# Publishes the wiki of this repository from docs/wiki/ by calling the
+# reusable workflow of this repository (ADR-0009, MIL-008 task 4). It is the
+# caller a project copies from framework/templates/ci/publish-wiki.yml, with
+# two differences: the reusable workflow is called by its local path, and
+# tools-ref is main so that the script that is run is the one of this commit.
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "docs/wiki/**"
+  workflow_dispatch:
+
+jobs:
+  wiki:
+    permissions:
+      contents: read
+    uses: ./.gitea/workflows/publish-wiki-pages.yml
+    with:
+      wiki_dir: docs/wiki
+      prune: "true"
+      tools-ref: main
+    secrets:
+      TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}

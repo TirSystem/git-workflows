@@ -1,4 +1,4 @@
-"""Offline tests for tools/publish_wiki.py and the scoped publish-wiki workflow."""
+"""Offline tests for tools/publish_wiki.py and the publish-wiki workflows."""
 
 import base64
 import io
@@ -8,6 +8,8 @@ import pytest
 import yaml
 
 from workflow_source import PUBLISH_WORKFLOW, REPO_ROOT, load_publish_module
+
+REUSABLE_WORKFLOW = REPO_ROOT / ".gitea" / "workflows" / "publish-wiki-pages.yml"
 
 API = "https://git.example.test/api/v1"
 REPO_URL = f"{API}/repos/TirSystem/repo"
@@ -450,6 +452,121 @@ class TestRequestJson:
         assert caught.value.category == "api"
 
 
+class TestExplicitPrune:
+    """The reusable workflow sets WIKI_PRUNE: the caller is the opt-in (MIL-008)."""
+
+    @pytest.fixture()
+    def explicit(self, environment, monkeypatch):
+        (environment / ".publish").unlink()
+        monkeypatch.setenv("WIKI_PRUNE", "false")
+        return environment
+
+    @pytest.mark.parametrize(
+        ("text", "expected"), [("true", True), (" TRUE\n", True), ("false", False)]
+    )
+    def test_reads_true_and_false(self, publish_wiki, text, expected):
+        assert publish_wiki.parse_prune_setting(text) is expected
+
+    @pytest.mark.parametrize("text", ["", "yes", "prune", None])
+    def test_rejects_anything_else(self, publish_wiki, text):
+        with pytest.raises(publish_wiki.WorkflowError) as caught:
+            publish_wiki.parse_prune_setting(text)
+        assert caught.value.category == "configuration"
+
+    def test_publishes_without_a_marker_and_keeps_other_pages(
+        self, publish_wiki, explicit, capsys
+    ):
+        gitea = FakeGitea(publish_wiki, wiki={"Old": b64("hand written")})
+
+        assert run_main(publish_wiki, gitea) == 0
+
+        assert set(gitea.wiki) == {"Old", "Home", "Credentials"}
+        assert "set the prune input to true" in capsys.readouterr().out
+
+    def test_prune_true_deletes_pages_outside_the_folder(
+        self, publish_wiki, explicit, monkeypatch
+    ):
+        monkeypatch.setenv("WIKI_PRUNE", "true")
+        gitea = FakeGitea(publish_wiki, wiki={"Old": b64("stale")})
+
+        assert run_main(publish_wiki, gitea) == 0
+
+        assert set(gitea.wiki) == {"Home", "Credentials"}
+
+    def test_a_missing_folder_is_a_configuration_error_before_any_request(
+        self, publish_wiki, explicit, monkeypatch, tmp_path
+    ):
+        monkeypatch.setenv("WIKI_DIR", str(tmp_path / "docs" / "wiki"))
+        gitea = FakeGitea(publish_wiki)
+
+        with pytest.raises(publish_wiki.WorkflowError, match="wiki_dir") as caught:
+            run_main(publish_wiki, gitea)
+
+        assert caught.value.category == "configuration"
+        assert gitea.calls == []
+
+    def test_an_empty_folder_never_deletes_pages_even_with_prune(
+        self, publish_wiki, explicit, monkeypatch
+    ):
+        monkeypatch.setenv("WIKI_PRUNE", "true")
+        for page in explicit.glob("*.md"):
+            page.unlink()
+        gitea = FakeGitea(publish_wiki, wiki={"Home": b64("home")})
+
+        with pytest.raises(publish_wiki.WorkflowError) as caught:
+            run_main(publish_wiki, gitea)
+
+        assert caught.value.category == "configuration"
+        assert gitea.writes == []
+
+    def test_a_missing_secret_fails_before_any_request(
+        self, publish_wiki, explicit, monkeypatch
+    ):
+        monkeypatch.setenv("WIKI_CREDENTIALS", "")
+        gitea = FakeGitea(publish_wiki)
+
+        with pytest.raises(publish_wiki.WorkflowError, match="TOKEN_FOR_GITEA_WIKI"):
+            run_main(publish_wiki, gitea)
+
+        assert gitea.calls == []
+
+
+class TestReusableWorkflow:
+    @pytest.fixture()
+    def document(self):
+        return yaml.safe_load(REUSABLE_WORKFLOW.read_text(encoding="utf-8"))
+
+    def test_is_called_and_has_no_other_trigger(self, document):
+        assert list(document[True]) == ["workflow_call"]
+
+    def test_the_folder_defaults_to_docs_wiki_and_nothing_is_pruned_by_default(self, document):
+        inputs = document[True]["workflow_call"]["inputs"]
+        assert inputs["wiki_dir"]["default"] == "docs/wiki"
+        assert inputs["prune"]["default"] == "false"
+
+    def test_the_token_is_a_declared_secret_without_a_fallback(self, document):
+        text = REUSABLE_WORKFLOW.read_text(encoding="utf-8")
+        assert document[True]["workflow_call"]["secrets"]["TOKEN_FOR_GITEA_WIKI"]["required"]
+        assert "secrets.TOKEN_FOR_GITEA }}" not in text
+        assert "github.token" not in text
+
+    def test_job_has_read_only_permissions(self, document):
+        assert document["jobs"]["publish-wiki"]["permissions"] == {"contents": "read"}
+
+    def test_the_inputs_reach_the_script_through_the_environment(self, document):
+        step = document["jobs"]["publish-wiki"]["steps"][-1]
+        assert step["env"]["WIKI_DIR"] == "${{ inputs.wiki_dir }}"
+        assert step["env"]["WIKI_PRUNE"] == "${{ inputs.prune }}"
+        assert step["env"]["WIKI_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_WIKI }}"
+        assert step["run"] == "python3 shared-scripts/tools/publish_wiki.py"
+        assert "inputs." not in step["run"]
+
+    def test_the_script_is_fetched_at_the_tools_ref(self, document):
+        fetch = document["jobs"]["publish-wiki"]["steps"][1]["with"]
+        assert fetch["repository"] == "TirSystem/github-action"
+        assert fetch["ref"] == "${{ inputs.tools-ref }}"
+
+
 class TestWorkflow:
     @pytest.fixture()
     def document(self):
@@ -471,8 +588,7 @@ class TestWorkflow:
         assert publish_step["env"]["WIKI_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_WIKI }}"
         assert "secrets" not in publish_step["run"]
 
-    def test_the_workflow_has_one_source_and_runs_the_script_file(self, document):
-        assert not (REPO_ROOT / ".gitea" / "workflows" / "publish-wiki.yml").exists()
+    def test_the_scoped_workflow_runs_the_script_file(self, document):
         assert (REPO_ROOT / "tools" / "publish_wiki.py").is_file()
         steps = document["jobs"]["publish-wiki"]["steps"]
         assert "python3 - <<" not in PUBLISH_WORKFLOW.read_text(encoding="utf-8")
@@ -485,7 +601,15 @@ class TestWorkflow:
         assert steps[-1]["run"] == "python3 shared-scripts/tools/publish_wiki.py"
 
 
-def test_this_repository_opts_in_and_prunes():
-    """The wiki of this repository must equal wiki/ (ADR-0001, ADR-0004)."""
-    marker = REPO_ROOT / "wiki" / ".publish"
-    assert marker.read_text(encoding="utf-8").strip() == "prune"
+def test_this_repository_publishes_docs_wiki_through_the_reusable_workflow():
+    """The wiki of this repository equals docs/wiki/ (ADR-0009, MIL-008 task 4)."""
+    assert not (REPO_ROOT / "wiki").exists()
+    assert (REPO_ROOT / "docs" / "wiki" / "Home.md").is_file()
+    caller = yaml.safe_load(
+        (REPO_ROOT / ".gitea" / "workflows" / "publish-own-wiki.yml").read_text(encoding="utf-8")
+    )
+    job = caller["jobs"]["wiki"]
+    assert job["uses"] == "./.gitea/workflows/publish-wiki-pages.yml"
+    assert job["with"]["wiki_dir"] == "docs/wiki"
+    assert job["with"]["prune"] == "true"
+    assert caller[True]["push"]["paths"] == ["docs/wiki/**"]

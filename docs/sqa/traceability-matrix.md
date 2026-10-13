@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [RC-052], [RC-053], [RC-054], [RC-055], [RC-056], [RC-057], [RC-058], [RC-059], [ADR-0007], [ADR-0008], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [RC-052], [RC-053], [RC-054], [RC-055], [RC-056], [RC-057], [RC-058], [RC-059], [RC-060], [ADR-0007], [ADR-0008], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-058 (MIL-006 task 6 amendment) | [8051cc4] |
 | 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-059 (MIL-007 task 7 results) | [2481c26] |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-008, RC-060 and RC-061 | [01b9c29] |
 
 ---
 
@@ -40,6 +40,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-005] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-006] | [RC-010], [RC-011], [RC-030], [RC-050] |
 | [MIL-006] | MIL | [BC-001], [PP-001], [MIL-002], [MIL-005] | - | [RC-016], [RC-031], [RC-049], [RC-058] |
 | [MIL-007] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004], [ADR-0008] | - | [RC-052], [RC-055], [RC-059] |
+| [MIL-008] | MIL | [BC-001], [MIL-006], [ADR-0004] | - | [RC-060], [RC-061] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
@@ -110,6 +111,8 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-057] | RC | [US-001] | - | - |
 | [RC-058] | RC | [MIL-006] | - | - |
 | [RC-059] | RC | [MIL-007] | - | - |
+| [RC-060] | RC | [MIL-008] | - | - |
+| [RC-061] | RC | [MIL-008] | - | - |
 
 ## Coverage Notes
 
@@ -130,6 +133,7 @@ updated whenever an artifact instance is created or reviewed.
 [MIL-005]: ../milestones/mil-005-wiki-and-translations.md
 [MIL-006]: ../milestones/mil-006-shared-wiki-publishing.md
 [MIL-007]: ../milestones/mil-007-cpp-csharp-quality-checks.md
+[MIL-008]: ../milestones/mil-008-wiki-reusable-workflow.md
 [RC-001]: ./reviews/rc-001-business-case.md
 [RC-002]: ./reviews/rc-002-project-plan.md
 [RC-003]: ./reviews/rc-003-mil-001.md
@@ -199,6 +203,8 @@ updated whenever an artifact instance is created or reviewed.
 [RC-057]: ./reviews/rc-057-us-001-cpp-csharp.md
 [RC-058]: ./reviews/rc-058-mil-006-task-6.md
 [RC-059]: ./reviews/rc-059-mil-007-adoption.md
+[RC-060]: ./reviews/rc-060-mil-008-plan.md
+[RC-061]: ./reviews/rc-061-mil-008-task-5-deferred.md
 [ADR-0008]: ../adr/adr-0008-cpp-csharp-quality-check-contract.md
 [ADR-0007]: ../adr/adr-0007-release-publish-destination.md
 [UC-007]: ../uc-007/uc.md
@@ -208,5 +214,5 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
-[8051cc4]: https://git.tirsystem.com/TirSystem/github-action/commit/8051cc4489ee9bcf3b6c62f2eafcb2013b7d2f90
 [2481c26]: https://git.tirsystem.com/TirSystem/github-action/commit/2481c26d802464decd51d75539157093b60e08e8
+[01b9c29]: https://git.tirsystem.com/TirSystem/github-action/commit/01b9c2972b4317bcc590540010aea0eaf7f30014

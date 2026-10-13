@@ -271,7 +271,7 @@ def _shape(text: str) -> dict:
 @pytest.mark.parametrize("code", [code for code, _label in build_wiki.LANGUAGES])
 def test_committed_translations_follow_the_english_structure(page, code):
     """A translation has the same code blocks, table rows and heading levels."""
-    wiki = REPO_ROOT / "wiki"
+    wiki = REPO_ROOT / "docs" / "wiki"
     english = _shape((wiki / f"{page}.md").read_text(encoding="utf-8"))
     translated = _shape((wiki / f"{page}.{code}.md").read_text(encoding="utf-8"))
     assert translated == english
@@ -306,7 +306,7 @@ class TestSidebar:
 
 def test_home_lists_every_workflow_file_with_a_diagram():
     """The Home page names each workflow file of the repository and draws it."""
-    home = (REPO_ROOT / "wiki" / "Home.md").read_text(encoding="utf-8")
+    home = (REPO_ROOT / "docs" / "wiki" / "Home.md").read_text(encoding="utf-8")
     files = sorted(
         path.name
         for folder in (".gitea/scoped_workflows", ".gitea/workflows")
