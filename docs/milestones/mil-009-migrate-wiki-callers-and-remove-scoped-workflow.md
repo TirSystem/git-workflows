@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [2b53ee6] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [2b53ee6] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Plan accepted in chat with the defaults: target date 2026-11-30 confirmed, `027-sandbox` and `028-pomodoro` do not publish, framework release 0.7.0; reviewed (RC-064) | [2f267df] |
 
 ---
 
@@ -33,7 +34,7 @@ marker as an opt-in removed; ADR-0004 marked superseded; and the major release
 
 | # | Criterion (objectively checkable) | Go | No-Go |
 | --- | --- | --- | --- |
-| 1 | The framework is released with `templates/ci/publish-wiki.yml` and `process/wiki.md`, as a tag | The tag exists and each migrating repository pins it | No tag, or a repository pins an unmerged commit |
+| 1 | The framework is released as 0.7.0 with `templates/ci/publish-wiki.yml` and `process/wiki.md`, as a tag | The tag exists and each migrating repository pins it | No tag, or a repository pins an unmerged commit |
 | 2 | Each of the seven repositories publishes from `docs/wiki/` through a caller of `publish-wiki-pages.yml`, and has no `wiki/.publish` | A scan of the instance lists the seven with a caller and no marker | Any marker or missing caller remains |
 | 3 | The wiki of each of the seven equals its `docs/wiki/` after the first run | 0 differences read back through the API for each | A difference, or a failed run |
 | 4 | A scan of every repository of the four organisations finds no `wiki/.publish` and no run of the scoped workflow that wrote | None found | Any found |
@@ -63,7 +64,7 @@ marker as an opt-in removed; ADR-0004 marked superseded; and the major release
 
 ## Target Date
 
-2026-11-30 — proposed; the Business Case sets no deadline. To be confirmed by S01, standing in for S05 (ADR-0002).
+2026-11-30 — confirmed on 2026-10-14 by S01 in chat; the Business Case sets no deadline.
 
 ## Tasks
 
@@ -72,7 +73,7 @@ marker as an opt-in removed; ADR-0004 marked superseded; and the major release
 | 1 | Release the framework | `TirSystem/sqa-qc-framework` has the caller template and `process/wiki.md` merged (pull request 45). Add the changelog entry, tag the release and record the tag. Needed before any repository pins the template. | No | |
 | 2 | Migrate the three TirSystem projects | `sqa-and-qc`, `sqa-qc-framework` and `sqa-qc-checklists`: move `wiki/` to `docs/wiki/`, copy the caller from `templates/ci/publish-wiki.yml`, remove `wiki/.publish`, fix the paths in their generators and documents, move the framework pin to the released tag, one pull request each. Confirm the organisation secret `TOKEN_FOR_GITEA_WIKI` is present. | No | |
 | 3 | Migrate `repo-foundry` | Same steps for `TirSystem-BashScript/repo-foundry` (21 wiki files); the organisation `TirSystem-BashScript` needs its own `TOKEN_FOR_GITEA_WIKI` secret (S03). | No | |
-| 4 | Migrate the three Udemy repositories | Same steps for `021-snake-game`, `024-snake` and `025-weather` of `Tirsvad-Udemy-100-days-of-code` (5 wiki files each). Decide with S01 whether `027-sandbox` and `028-pomodoro`, which have `docs/wiki/` and no marker, should publish too. | No | |
+| 4 | Migrate the three Udemy repositories | Same steps for `021-snake-game`, `024-snake` and `025-weather` of `Tirsvad-Udemy-100-days-of-code` (5 wiki files each). `027-sandbox` and `028-pomodoro`, which have `docs/wiki/` and no marker, do not publish (decided by S01 on 2026-10-14). | No | |
 | 5 | Verify the migration | After each first run read the wiki back and compare it with `docs/wiki/`; then scan the four organisations for `wiki/.publish` and for repositories still publishing through the scoped workflow. Record the results in this milestone. | No | |
 | 6 | Remove the scoped workflow | Delete `.gitea/scoped_workflows/publish-wiki.yml`, the marker path of `tools/publish_wiki.py` (the `WIKI_PRUNE` input becomes required), the tests that cover it and the marker text in the guides, the README and the three wiki languages. Keep the drift test for the remaining scoped workflow. | No | |
 | 7 | Supersede ADR-0004 | Mark ADR-0004 `Superseded by ADR-0009` for the delivery and marker parts (new version row, review record), and make ADR-0009 link back. | No | |
@@ -88,3 +89,4 @@ marker as an opt-in removed; ADR-0004 marked superseded; and the major release
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [2b53ee6]: https://git.tirsystem.com/TirSystem/github-action/commit/2b53ee6d21babdefc30556b92c3300c6cd956898
+[2f267df]: https://git.tirsystem.com/TirSystem/github-action/commit/2f267df2a270087cb7dc482af4ce4f4341e97b03
