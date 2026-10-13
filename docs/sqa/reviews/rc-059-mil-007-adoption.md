@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [2481c26] |
 
 ---
 
@@ -48,3 +48,4 @@ Go - all six criteria pass. Criteria 3 and 4 of the milestone are verified on th
 [MIL-007]: ../../milestones/mil-007-cpp-csharp-quality-checks.md
 [RC-055]: ./rc-055-mil-007-amendment.md
 [QC-MIL-001]: ../../../framework/qc/qc-milestones-gateways.md
+[2481c26]: https://git.tirsystem.com/TirSystem/github-action/commit/2481c26d802464decd51d75539157093b60e08e8

@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Amendment reviewed (RC-055) and accepted: current tool versions, .NET SDK 10 or later, results of run 699, the contract of ADR-0008 in task 3 | [faf13b2] |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Task 7 results added and reviewed (RC-059): adoption in two throwaway repositories, seeded failures verified, a guide gap fixed | pending |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Task 7 results added and reviewed (RC-059): adoption in two throwaway repositories, seeded failures verified, a guide gap fixed | [2481c26] |
 
 ---
 
@@ -148,3 +148,4 @@ them.
 [ADR-0008]: ../adr/adr-0008-cpp-csharp-quality-check-contract.md
 [7bcc67a]: https://git.tirsystem.com/TirSystem/github-action/commit/7bcc67a065ac5f67b4e13ebf243a4bbbe2af47d9
 [faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
+[2481c26]: https://git.tirsystem.com/TirSystem/github-action/commit/2481c26d802464decd51d75539157093b60e08e8
