@@ -7,8 +7,10 @@
 # these (see framework/README.md "Using it in a project"):
 #   .agents/skills/  <- install-skills.sh's copy of framework/.agents/skills/
 #   .claude/skills/  <- same copy, for the standalone Claude Code CLI
+#   .codex/agents/   <- the Codex form of framework/.agents/agents/
 /.agents/
 /.claude/
+.codex/agents/
 
 # Python virtual environment and caches
 .venv/
