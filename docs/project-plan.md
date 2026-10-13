@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | S01 gave the Go on the MIL-008 change in chat; accepted (RC-062) | [23a64a3] |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-009 (migrate the wiki callers, remove the scoped workflow); review RC-064 awaits S01 | pending |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-009 (migrate the wiki callers, remove the scoped workflow); review RC-064 awaits S01 | [86e69ce] |
 
 ---
 
@@ -281,3 +281,4 @@ no tests, no release process.
 [Milestone MIL-008]: https://git.tirsystem.com/TirSystem/github-action/milestone/152
 [b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
 [23a64a3]: https://git.tirsystem.com/TirSystem/github-action/commit/23a64a3f35bd69de456b3c44556d542bd2da0ca0
+[86e69ce]: https://git.tirsystem.com/TirSystem/github-action/commit/86e69ce85df72ea3caed40253e08231c73187fde
