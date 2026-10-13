@@ -22,8 +22,9 @@ repository, tags `vMAJOR.MINOR.PATCH` and a moving major tag `vMAJOR`.
 A breaking release gets a new major version (`v2`), so a pipeline on `@v1`
 never receives it until you change the line yourself.
 
-The quality-checks workflow fetches its script at its input `tools-ref`, which
-defaults to `v1`. To pin it completely, call it at an exact tag and set
+The quality-checks workflows (`quality-checks.yml`, `quality-checks-cpp.yml` and
+`quality-checks-csharp.yml`) fetch their script at their input `tools-ref`, which
+defaults to `v1`. To pin one completely, call it at an exact tag and set
 `tools-ref` to the same tag; otherwise the script follows the major tag.
 
 The two scoped workflows (**Sync GitHub mirror metadata** and **Publish

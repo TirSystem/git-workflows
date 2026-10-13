@@ -9,6 +9,8 @@
 - [Credentials](Credentials)
 - [Troubleshooting](Troubleshooting)
 - [Quality checks (Python, shell)](QualityChecksPythonShell)
+- [Quality checks (C and C++)](QualityChecksCpp)
+- [Quality checks (C#)](QualityChecksCSharp)
 - [Upgrading](Upgrading)
 - [Capabilities](Capabilities)
 
@@ -19,6 +21,8 @@
 - [Credentials](Credentials.da)
 - [Fejlfinding](Troubleshooting.da)
 - [Kvalitetskontrol (Python, shell)](QualityChecksPythonShell.da)
+- [Kvalitetskontrol (C og C++)](QualityChecksCpp.da)
+- [Kvalitetskontrol (C#)](QualityChecksCSharp.da)
 - [Opgradering](Upgrading.da)
 - [Kapabiliteter](Capabilities.da)
 
@@ -29,5 +33,7 @@
 - [Kelayakan](Credentials.ms)
 - [Diagnosis](Troubleshooting.ms)
 - [Semakan kualiti (Python, shell)](QualityChecksPythonShell.ms)
+- [Semakan kualiti (C dan C++)](QualityChecksCpp.ms)
+- [Semakan kualiti (C#)](QualityChecksCSharp.ms)
 - [Menaik taraf](Upgrading.ms)
 - [Keupayaan](Capabilities.ms)
