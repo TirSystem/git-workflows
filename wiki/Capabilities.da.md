@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 a8c03a001880 -->
+<!-- translation of Capabilities.md, source sha256 1f12a6b27e5d -->
 
 > Dette er en oversættelse af [`Capabilities`](Capabilities). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -15,4 +15,5 @@ Rækker, der siger Implementeret eller Vejledninger er skrevet, findes i dag. Re
 | Tilslutning af et repository, administration af runners, fejlfinding | Vejledninger er skrevet ([tilslutning](Onboarding.da), [fejlfinding](Troubleshooting.da)); scoped levering til alle fire organisationers repositories er verificeret (MIL-002) |
 | Publicering af et repositorys wiki fra `wiki/` (tilmelding, leveres til alle organisationer) | Implementeret i `.gitea/scoped_workflows/publish-wiki.yml`, med offline-tests; et pilotforsøg i et andet repository publicerer sin wiki (MIL-006) |
 | Fælles kvalitetskontrol (Python og shell) | Implementeret som det genbrugelige workflow `.gitea/workflows/quality-checks.yml`, med offline-tests og et forsøg i en anden organisation; taget i brug i RepoFoundry ([vejledning](QualityChecksPythonShell.da)) |
+| Fælles kvalitetskontrol (C og C++, C#) | Implementeret som de genbrugelige workflows `.gitea/workflows/quality-checks-cpp.yml` og `.gitea/workflows/quality-checks-csharp.yml` med præcise værktøjsversioner og offline-tests; endnu ikke brugt i et andet repository (MIL-007) ([vejledning til C og C++](QualityChecksCpp.da), [vejledning til C#](QualityChecksCSharp.da)) |
 | Versioneret udgivelse og publicering | Udgivelsesproces, changelog og opgraderingsvejledning er defineret; udgivelsesworkflowet findes, og `v1.0.0` er udgivet (MIL-004) ([vejledning](Upgrading.da)) |

@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 c9c04abaf4ae -->
+<!-- translation of Home.md, source sha256 5751829e99af -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -13,18 +13,20 @@ En samling af genbrugelige Gitea Actions-workflows til DevOps-professionelle og 
 
 Dette repository er den centrale samling af genbrugelig automatisering til TirSystems repositories. Det primære repository ligger på `git.tirsystem.com` (Gitea) og spejles med push til GitHub.
 
-Det indeholder seks workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki, fælles kvalitetskontrol, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
+Det indeholder otte workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki, fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Der er seks workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
+Der er otte workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
 
 | Workflow | Fil | Type | Starter ved | Formål |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push til `main`, manuelt, dagligt kl. 03:17 UTC | Kopierer beskrivelsen og emnerne for et Gitea-repository til dets GitHub push-spejl |
 | Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, tilmelding med `wiki/.publish` | push til `main`, der ændrer `wiki/**`, manuelt | Publicerer siderne i `wiki/` til repositoryets wiki |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører ruff, mypy, shellcheck og shfmt på de sporede filer og ændrer intet |
+| Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører clang-format og clang-tidy i præcise versioner på de sporede C- og C++-filer og ændrer intet |
+| Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører `dotnet format` og `dotnet build` på et præcist .NET SDK 10 eller nyere og ændrer intet |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Kun dette repository | manuelt | Opretter versionstagget, udgivelsessiden og major-tagget efter kontrollerne |
 | Publicering af accepterede milepæle | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Kun dette repository | push til `main`, der ændrer `docs/milestones/**` eller `docs/sqa/reviews/**`, manuelt (tørkørsel som standard) | Opretter eller opdaterer Gitea-milepælen og issues for hver milepæl, der er Accepted med en Go-gennemgang |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | Kun dette repository | pull request, push til `main`, manuelt | Læser hvert workflow som YAML og kører offline-testene |
@@ -180,6 +182,96 @@ alt any tool failed
   Workflow --> Caller: Fail and list the failed tools
 else
   Workflow --> Caller: All selected checks passed
+end
+deactivate Workflow
+@enduml
+```
+
+### Kvalitetskontrol C++
+
+Et genbrugeligt workflow til C og C++, kaldt med `uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositoryet skal have en `.clang-format`; en `.clang-tidy` og en compile-database er valgfrie.
+
+#### Workflow
+
+```plantuml
+@startuml
+title Shared quality checks for C and C++ (reusable workflow)
+
+autonumber
+
+actor "Calling repository\nuses: ...quality-checks-cpp.yml@v1" as Caller
+participant "Gitea Actions\nquality-checks-cpp" as Workflow
+participant "PyPI" as PyPI
+
+Caller -> Workflow: workflow_call with working-directory, std,\ncompile-commands-dir and tool versions
+activate Workflow
+
+Workflow -> Workflow: Check out the caller and the shared script
+Workflow -> Workflow: Validate the inputs
+alt an input is invalid or a version is not exact
+  Workflow --> Caller: Fail with [configuration]
+end
+
+Workflow -> PyPI: Install clang-format and clang-tidy at the exact versions
+PyPI --> Workflow: Tools installed
+
+alt no C or C++ file is tracked
+  Workflow --> Caller: Notice: nothing was checked, pass
+else no .clang-format, or compile-commands-dir\nwithout compile_commands.json
+  Workflow --> Caller: Fail with [configuration]
+else
+  Workflow -> Workflow: clang-format --dry-run -Werror on all files
+  Workflow -> Workflow: clang-tidy on the C++ files (-std=std)\nand on the C files (or with the compile database)
+  alt any tool failed
+    Workflow --> Caller: Fail with tool, file and line in the log
+  else
+    Workflow --> Caller: All selected checks passed
+  end
+end
+deactivate Workflow
+@enduml
+```
+
+### Kvalitetskontrol C#
+
+Et genbrugeligt workflow til C#, kaldt med `uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Det installerer det præcise .NET SDK, som `dotnet-sdk-version` angiver (10 eller nyere), og skal bruge netværket til pakkegendannelsen.
+
+#### Workflow
+
+```plantuml
+@startuml
+title Shared quality checks for C# (reusable workflow)
+
+autonumber
+
+actor "Calling repository\nuses: ...quality-checks-csharp.yml@v1" as Caller
+participant "Gitea Actions\nquality-checks-csharp" as Workflow
+participant "dot.net\n(dotnet-install.sh)" as DotNet
+
+Caller -> Workflow: workflow_call with working-directory,\nproject and dotnet-sdk-version
+activate Workflow
+
+Workflow -> Workflow: Check out the caller and the shared script
+Workflow -> Workflow: Validate the inputs
+alt an input is invalid or the SDK is not an exact\nstable version 10 or later
+  Workflow --> Caller: Fail with [configuration]
+end
+
+Workflow -> DotNet: Install the exact .NET SDK version
+DotNet --> Workflow: SDK installed
+
+alt no C# file is tracked
+  Workflow --> Caller: Notice: nothing was checked, pass
+else no solution or project, or several without the project input
+  Workflow --> Caller: Fail with [configuration] that names them
+else
+  Workflow -> Workflow: dotnet format --verify-no-changes
+  Workflow -> Workflow: dotnet build -warnaserror\n(package restore needs the network)
+  alt any tool failed
+    Workflow --> Caller: Fail with tool, file and line in the log
+  else
+    Workflow --> Caller: All selected checks passed
+  end
 end
 deactivate Workflow
 @enduml

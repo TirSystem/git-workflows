@@ -98,7 +98,16 @@ def _write_sources(root: Path) -> None:
         "## 📄 License\nMIT.\n",
         encoding="utf-8",
     )
-    for name in ("onboarding", "credentials", "troubleshooting", "quality-checks", "upgrading"):
+    guide_names = (
+        "onboarding",
+        "credentials",
+        "troubleshooting",
+        "quality-checks",
+        "quality-checks-cpp",
+        "quality-checks-csharp",
+        "upgrading",
+    )
+    for name in guide_names:
         (root / "guides" / f"{name}.md").write_text(
             f"# {name.title()}\nBody.\n", encoding="utf-8"
         )
