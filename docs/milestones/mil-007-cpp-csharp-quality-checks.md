@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Amendment reviewed (RC-055) and accepted: current tool versions, .NET SDK 10 or later, results of run 699, the contract of ADR-0008 in task 3 | [faf13b2] |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Task 7 results added and reviewed (RC-059): adoption in two throwaway repositories, seeded failures verified, a guide gap fixed | [2481c26] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Task 7 results added and reviewed (RC-059): adoption in two throwaway repositories, seeded failures verified, a guide gap fixed | [2481c26] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Throwaway repositories of task 7 deleted at the user's request; action item of RC-059 closed | pending |
 
 ---
 
@@ -133,8 +133,8 @@ their three wiki languages now say so.
 
 Not covered: a real C++ project with a compile database and a real C# solution
 with many packages; both stay open until a project of that kind adopts the
-workflows. The throwaway repositories are kept until the user says to delete
-them.
+workflows. The throwaway repositories were deleted at the user's request on 2026-10-13;
+the run numbers above are kept as the record.
 
 ---
 
