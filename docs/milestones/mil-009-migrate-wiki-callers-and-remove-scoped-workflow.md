@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [2b53ee6] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Plan accepted in chat with the defaults: target date 2026-11-30 confirmed, `027-sandbox` and `028-pomodoro` do not publish, framework release 0.7.0; reviewed (RC-064) | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Plan accepted in chat with the defaults: target date 2026-11-30 confirmed, `027-sandbox` and `028-pomodoro` do not publish, framework release 0.7.0; reviewed (RC-064) | [2f267df] |
 
 ---
 
@@ -89,3 +89,4 @@ marker as an opt-in removed; ADR-0004 marked superseded; and the major release
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [2b53ee6]: https://git.tirsystem.com/TirSystem/github-action/commit/2b53ee6d21babdefc30556b92c3300c6cd956898
+[2f267df]: https://git.tirsystem.com/TirSystem/github-action/commit/2f267df2a270087cb7dc482af4ce4f4341e97b03

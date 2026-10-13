@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-009 and RC-064 (the MIL-009 plan row) | [86e69ce] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | MIL-009, PP-001 and RC-064 accepted | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | MIL-009, PP-001 and RC-064 accepted | [2f267df] |
 
 ---
 
@@ -225,3 +225,4 @@ updated whenever an artifact instance is created or reviewed.
 [faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
 [86e69ce]: https://git.tirsystem.com/TirSystem/github-action/commit/86e69ce85df72ea3caed40253e08231c73187fde
+[2f267df]: https://git.tirsystem.com/TirSystem/github-action/commit/2f267df2a270087cb7dc482af4ce4f4341e97b03
