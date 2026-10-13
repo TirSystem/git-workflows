@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [86e69ce] |
 
 ---
 
@@ -62,3 +62,4 @@ Go proposed - all criteria pass. MIL-009, the plan row and this record stay `Pro
 [PP-001]: ../../project-plan.md
 [BC-001]: ../../business-case.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[86e69ce]: https://git.tirsystem.com/TirSystem/github-action/commit/86e69ce85df72ea3caed40253e08231c73187fde
