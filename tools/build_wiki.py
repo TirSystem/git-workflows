@@ -1,4 +1,4 @@
-"""Build the English wiki pages in ``wiki/`` from ``README.md`` and ``guides/``.
+"""Build the English wiki pages in ``docs/wiki/`` from ``README.md`` and ``guides/``.
 
 The wiki source lives in this repository (MIL-005). The English pages are
 generated, never edited by hand; ``--check`` reports a page that differs from
@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-WIKI_DIR = REPO_ROOT / "wiki"
+WIKI_DIR = REPO_ROOT / "docs" / "wiki"
 SOURCE_BASE_URL = "https://git.tirsystem.com/TirSystem/github-action/src/branch/main"
 GENERATOR = "tools/build_wiki.py"
 
@@ -50,7 +50,7 @@ PAGES: tuple[Page, ...] = (
     Page("Capabilities", "README.md", ("Capabilities",)),
 )
 
-# Translations (ADR-0001): `<Page>.<code>` written by hand in wiki/.
+# Translations (ADR-0001): `<Page>.<code>` written by hand in docs/wiki/.
 LANGUAGES: tuple[tuple[str, str], ...] = (("da", "Dansk"), ("ms", "Bahasa Melayu"))
 HASH_LENGTH = 12
 _TRANSLATION_HEADER = re.compile(
@@ -304,9 +304,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.check:
             problems = check_pages() + check_translations()
             for problem in problems:
-                print(f"ERROR: wiki/{problem}", file=sys.stderr)
+                print(f"ERROR: docs/wiki/{problem}", file=sys.stderr)
             if problems:
-                print(f"Run `python {GENERATOR}` and commit wiki/.", file=sys.stderr)
+                print(f"Run `python {GENERATOR}` and commit docs/wiki/.", file=sys.stderr)
                 return 1
             print("Wiki pages are up to date.")
             return 0

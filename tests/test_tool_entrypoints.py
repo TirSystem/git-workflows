@@ -281,7 +281,7 @@ class TestBuildWikiCommandLine:
         monkeypatch.setattr(build_wiki._module, "check_translations", lambda: [])
         assert build_wiki["main"](["--check"]) == 1
         err = capsys.readouterr().err
-        assert "ERROR: wiki/Home.md: missing" in err
+        assert "ERROR: docs/wiki/Home.md: missing" in err
         assert "python tools/build_wiki.py" in err
 
     def test_generate_reports_the_changed_pages(self, monkeypatch, capsys):
@@ -320,7 +320,7 @@ class TestRunAsAProcess:
         assert result.stderr.startswith("ERROR: [configuration]")
 
     def test_publish_wiki_without_a_repository_exits_1(self):
-        result = run_tool("publish_wiki.py", WIKI_DIR=str(REPO_ROOT / "wiki"), GITEA_API_URL="https://x")
+        result = run_tool("publish_wiki.py", WIKI_DIR=str(REPO_ROOT / "docs" / "wiki"), GITEA_API_URL="https://x")
         assert result.returncode == 1
         assert "ERROR:" in result.stderr
 

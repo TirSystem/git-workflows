@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 0b11defd563a -->
+<!-- translation of Onboarding.md, source sha256 4de4897fb3b7 -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -32,15 +32,31 @@ Penghantaran adalah automatik, jadi repositori tidak memerlukan salinan aliran k
 
 ## Menerbitkan wiki (pilihan)
 
-Aliran kerja **Publish wiki** menyalin halaman Markdown dalam `wiki/` ke wiki repositori apabila perubahan pada `wiki/` digabungkan ke `main`. Ia dihantar seperti aliran kerja penyegerakan, tetapi hanya menulis di tempat repositori telah memilih untuk menyertainya.
+Aliran kerja boleh guna semula **Publish wiki pages** menyalin halaman Markdown dalam `docs/wiki/` ke wiki repositori apabila perubahan pada `docs/wiki/` digabungkan ke `main`. Repositori memanggilnya, jadi tiada apa-apa ditulis di tempat yang tiada panggilan. Wiki ada dalam bahasa Inggeris dan bahasa pemilik produk sekurang-kurangnya.
 
 1. Aktifkan wiki dalam tetapan repositori.
-2. Tambah halaman Markdown ke `wiki/`. Nama fail ialah nama halaman: `Home.md` ialah halaman utama. Tanda sempang dalam nama ialah ruang dalam nama halaman: `Home-da.md` ialah halaman "Home da", dan pautan kepadanya ialah `[Dansk](Home-da)`.
-3. Tambah penanda `wiki/.publish`. Biarkan kosong untuk mencipta dan mengemas kini halaman sahaja. Letakkan satu perkataan `prune` di dalamnya untuk turut memadam halaman wiki yang tiada dalam `wiki/`, supaya wiki sentiasa sama dengan folder itu.
+2. Tambah halaman Markdown ke `docs/wiki/`. Nama fail ialah nama halaman: `Home.md` ialah halaman utama. Tanda sempang dalam nama ialah ruang dalam nama halaman: `Home-da.md` ialah halaman "Home da", dan pautan kepadanya ialah `[Dansk](Home-da)`.
+3. Tambah aliran kerja, contohnya `.gitea/workflows/publish-wiki.yml`, yang memanggil aliran kerja boleh guna semula:
+
+   ```yaml
+   on:
+     push:
+       branches: [ main ]
+       paths: [ "docs/wiki/**" ]
+   jobs:
+     wiki:
+       uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1
+       with:
+         prune: "true"
+       secrets:
+         TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
+   ```
+
+   `wiki_dir` lalai ialah `docs/wiki`. `prune: "true"` turut memadam halaman wiki yang tiada dalam folder itu, supaya wiki sentiasa sama dengan folder; lalai `false` mengekalkannya.
 4. Simpan `TOKEN_FOR_GITEA_WIKI` sebagai secret organisasi repositori, dengan skop yang tertera dalam [credentials.md](Credentials.ms).
 5. Gabungkan perubahan ke `main`. Log mesti berakhir dengan `Published <n> page(s) to the wiki of <owner>/<repo>`.
 
-Repositori tanpa `wiki/.publish` dilangkau dengan baris `No wiki/.publish marker in <owner>/<repo>`: tiada apa-apa ditulis dan tiada secret diperlukan.
+Repositori yang masih mempunyai penanda `wiki/.publish` diterbitkan oleh aliran kerja scoped yang lebih lama, yang dibuang apabila setiap repositori mempunyai panggilan. Alihkan halaman ke `docs/wiki/` dan tambah panggilan sebelum itu.
 
 ## Runners
 

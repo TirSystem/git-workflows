@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 10a051e910de -->
+<!-- translation of Credentials.md, source sha256 cba8a44e1152 -->
 
 > Dette er en oversættelse af [`Credentials`](Credentials). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -56,17 +56,17 @@ Ved succes står der i loggen `Preflight passed: Gitea and GitHub accepted the c
 
 ## Secret til publicering af wiki
 
-Workflowet **Publish wiki** kopierer `wiki/` til Gitea-wikien i et repository, der har meldt sig til med `wiki/.publish` (se [onboarding.md](Onboarding.da)). Det bruger sin egen secret, så synkroniseringstokenet forbliver skrivebeskyttet.
+Workflowet **Publish wiki pages** kopierer `docs/wiki/` til Gitea-wikien i et repository, der kalder det (se [onboarding.md](Onboarding.da)). Det bruger sin egen secret, så synkroniseringstokenet forbliver skrivebeskyttet. Kalderen sender secreten i `secrets:`; den nedarves ikke.
 
 | Secret | Indhold | Bruges til |
 | --- | --- | --- |
 | `TOKEN_FOR_GITEA_WIKI` | Gitea-tokenet, intet andet | At skrive wikisiderne for de repositories i en organisation, der melder sig til |
 
-- Gem den som en secret i organisationen for hvert repository, der publicerer. Der er ingen reserve til `TOKEN_FOR_GITEA`: et repository, der har meldt sig til og ikke har secreten, fejler med en konfigurationsfejl, og et repository, der ikke har meldt sig til, behøver den ikke.
+- Gem den som en secret i organisationen for hvert repository, der publicerer. Der er ingen reserve til `TOKEN_FOR_GITEA`: et repository, der kalder workflowet og ikke har secreten, fejler med en konfigurationsfejl, og et repository, der ikke kalder det, behøver den ikke.
 - Tokenet skal have scope `write:repository`, og dets bruger skal have skriveadgang til repositories. Gitea har intet scope kun til wikien, så opret tokenet til en dedikeret bruger. S05 godkender scopet, og S03 gemmer secreten.
-- Kald, der foretages: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`, `GET`, `POST` og `PATCH /repos/{owner}/{repo}/wiki/...` og, for en side, der ikke længere findes i `wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}`.
+- Kald, der foretages: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`, `GET`, `POST` og `PATCH /repos/{owner}/{repo}/wiki/...` og, for en side, der ikke længere findes i `docs/wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}`.
 - Wikien skal være aktiveret i repositoryets indstillinger. Workflowet nægter at køre, hvis den ikke er det.
-- Sider, der findes i `wiki/`, overskrives altid fra den, så en ændring i Gitea's weboverflade går tabt ved næste publicering. Sider, der kun findes i wikien, fjernes kun, når `wiki/.publish` indeholder ordet `prune`.
+- Sider, der findes i `docs/wiki/`, overskrives altid fra den, så en ændring i Gitea's weboverflade går tabt ved næste publicering. Sider, der kun findes i wikien, fjernes kun, når kaldet sætter `prune: "true"`.
 
 ## Udskiftning af et token
 

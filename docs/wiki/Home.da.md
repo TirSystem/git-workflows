@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 5751829e99af -->
+<!-- translation of Home.md, source sha256 b6796554f4eb -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -13,20 +13,22 @@ En samling af genbrugelige Gitea Actions-workflows til DevOps-professionelle og 
 
 Dette repository er den centrale samling af genbrugelig automatisering til TirSystems repositories. Det primære repository ligger på `git.tirsystem.com` (Gitea) og spejles med push til GitHub.
 
-Det indeholder otte workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki, fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
+Det indeholder ti workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki (scoped og genbrugeligt for repositories, der kalder det), fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Der er otte workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
+Der er ti workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
 
 | Workflow | Fil | Type | Starter ved | Formål |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push til `main`, manuelt, dagligt kl. 03:17 UTC | Kopierer beskrivelsen og emnerne for et Gitea-repository til dets GitHub push-spejl |
-| Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, tilmelding med `wiki/.publish` | push til `main`, der ændrer `wiki/**`, manuelt | Publicerer siderne i `wiki/` til repositoryets wiki |
+| Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, tilmelding med `wiki/.publish`; forældet, afløses af det genbrugelige workflow nedenfor (ADR-0009) | push til `main`, der ændrer `wiki/**`, manuelt | Publicerer siderne i `wiki/` til repositoryets wiki |
+| Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-wiki-pages.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Publicerer siderne i `docs/wiki/` (eller den mappe, `wiki_dir` angiver) til wikien i det kaldende repository |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører ruff, mypy, shellcheck og shfmt på de sporede filer og ændrer intet |
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører clang-format og clang-tidy i præcise versioner på de sporede C- og C++-filer og ændrer intet |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører `dotnet format` og `dotnet build` på et præcist .NET SDK 10 eller nyere og ændrer intet |
+| Publish own wiki | [`publish-own-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-own-wiki.yml) | Kun dette repository | push til `main`, der ændrer `docs/wiki/**`, manuelt | Kalder det genbrugelige workflow Publish wiki pages for dette repositorys wiki |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Kun dette repository | manuelt | Opretter versionstagget, udgivelsessiden og major-tagget efter kontrollerne |
 | Publicering af accepterede milepæle | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Kun dette repository | push til `main`, der ændrer `docs/milestones/**` eller `docs/sqa/reviews/**`, manuelt (tørkørsel som standard) | Opretter eller opdaterer Gitea-milepælen og issues for hver milepæl, der er Accepted med en Go-gennemgang |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | Kun dette repository | pull request, push til `main`, manuelt | Læser hvert workflow som YAML og kører offline-testene |
@@ -97,7 +99,7 @@ deactivate Workflow
 @enduml
 ```
 
-### Publicering af wiki
+### Publicering af wiki (scoped, forældet)
 
 Publicerer `wiki/` til repositoryets wiki, kun i et repository, der har tilmeldt sig med `wiki/.publish`. Ordet `prune` i den fil sletter også sider, som ikke findes i `wiki/`.
 
@@ -323,6 +325,90 @@ else
   Workflow --> Trigger: Released
 end
 deactivate Workflow
+@enduml
+```
+
+### Publicering af wiki-sider
+
+Et genbrugeligt workflow (ADR-0009). Et repository kalder det fra sit eget workflow, så selve kaldet er tilmeldingen, og der behøves ingen markørfil. Det publicerer Markdown-siderne i `wiki_dir` (standard `docs/wiki`) til wikien i det kaldende repository og sletter kun sider, der ikke findes i mappen, når `prune` er `true`.
+
+```yaml
+on:
+  push:
+    branches: [ main ]
+    paths: [ "docs/wiki/**" ]
+jobs:
+  wiki:
+    uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1
+    secrets:
+      TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
+```
+
+#### Workflow
+
+```plantuml
+@startuml
+title Publish docs/wiki to the wiki of the calling repository
+
+autonumber
+
+actor "Calling repository\nuses: ...publish-wiki-pages.yml@v1" as Caller
+participant "Gitea Actions\npublish-wiki-pages" as Workflow
+participant "shared-scripts\n(tools/publish_wiki.py at tools-ref)" as Script
+participant "Gitea wiki API" as Wiki
+
+Caller -> Workflow: Call with wiki_dir, prune and the secret
+activate Workflow
+Workflow -> Script: Check out the repository and the script, run it
+activate Script
+
+alt wiki_dir does not exist, or has no Markdown pages
+  Script --> Workflow: Fail with [configuration]\n(an empty folder never deletes pages)
+else
+  Script -> Script: Read prune and TOKEN_FOR_GITEA_WIKI
+  Script -> Wiki: GET repository (preflight)
+  Wiki --> Script: Wiki is enabled, token accepted
+  Script -> Wiki: GET pages
+  Wiki --> Script: Existing pages
+  Script -> Wiki: Create new pages, update changed pages
+  opt prune is true
+    Script -> Wiki: Delete pages that are not in wiki_dir
+  end
+  Script --> Workflow: Log created, updated and deleted counts
+end
+deactivate Script
+Workflow --> Caller: Workflow result
+deactivate Workflow
+@enduml
+```
+
+### Publicering af egen wiki
+
+Dette repositorys wiki er `docs/wiki/`. Workflowet kalder det genbrugelige workflow ovenfor med dets lokale sti, med `prune` sat til `true`, så wikien altid er lig med mappen, og `tools-ref` sat til `main`, så scriptet fra samme commit kører. Det er den kalder, et projekt kopierer fra frameworkets `templates/ci/publish-wiki.yml`.
+
+#### Workflow
+
+```plantuml
+@startuml
+title Publish the wiki of this repository (docs/wiki)
+
+autonumber
+
+actor "Push to main that changes docs/wiki/**,\nor manual trigger" as Trigger
+participant "Gitea Actions\npublish-own-wiki" as Caller
+participant "Gitea Actions\npublish-wiki-pages\n(called by its local path)" as Workflow
+participant "Gitea wiki API" as Wiki
+
+Trigger -> Caller: Start workflow
+activate Caller
+Caller -> Workflow: Call with wiki_dir docs/wiki, prune true,\ntools-ref main and TOKEN_FOR_GITEA_WIKI
+activate Workflow
+Workflow -> Wiki: Create, update and delete pages\nso the wiki equals docs/wiki
+Wiki --> Workflow: Done
+Workflow --> Caller: Workflow result
+deactivate Workflow
+Caller --> Trigger: Workflow result
+deactivate Caller
 @enduml
 ```
 

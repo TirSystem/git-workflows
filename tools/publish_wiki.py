@@ -1,15 +1,19 @@
-"""Publish the pages in wiki/ to the Gitea wiki of the repository.
+"""Publish the pages of a folder to the Gitea wiki of the repository.
 
-Run by the scoped workflow publish-wiki.yml, which checks out the repository
-that owns the wiki and this repository, and runs this file (MIL-004 task 6).
-A repository publishes only when it has opted in with wiki/.publish
-(ADR-0004); the word prune in that file lets the run delete wiki pages that
-are not in wiki/. It reads its settings from the environment:
+Run by the reusable workflow publish-wiki.yml, which a repository calls
+(MIL-008), and by the scoped workflow of the same name until it is removed.
+The reusable workflow sets WIKI_PRUNE: the caller is the opt-in, and the
+folder must exist. The scoped workflow leaves WIKI_PRUNE unset: a repository
+publishes only when it has opted in with WIKI_DIR/.publish (ADR-0004), and the
+word prune in that file lets the run delete wiki pages that are not in the
+folder. It reads its settings from the environment:
 
     GITEA_API_URL        Gitea API base, for example https://host/api/v1
     SOURCE_REPOSITORY    owner/repo of the repository whose wiki is written
     WIKI_CREDENTIALS     the Gitea token, as clear text (TOKEN_FOR_GITEA_WIKI)
     WIKI_DIR             directory with the pages (default: wiki)
+    WIKI_PRUNE           true or false: delete pages that are not in the
+                         folder; when set, no .publish marker is read
 
 Every failure is printed as ``ERROR: [category] message`` with the categories
 configuration, credentials, permissions and api; no secret value is printed.
@@ -87,6 +91,16 @@ def parse_marker(text):
     raise WorkflowError(
         "configuration",
         f"wiki/{MARKER_NAME} may only be empty or contain the word '{PRUNE_WORD}'.",
+    )
+
+
+def parse_prune_setting(text):
+    """Return the boolean of the WIKI_PRUNE input: true or false, nothing else."""
+    word = (text or "").strip().lower()
+    if word in ("true", "false"):
+        return word == "true"
+    raise WorkflowError(
+        "configuration", f"The prune input must be 'true' or 'false', not '{(text or '').strip()}'."
     )
 
 
@@ -243,14 +257,24 @@ def main():
     wiki_dir = Path(os.environ.get("WIKI_DIR", "wiki"))
     owner, repo = split_repository(os.environ.get("SOURCE_REPOSITORY"))
 
-    marker = wiki_dir / MARKER_NAME
-    if not marker.is_file():
-        print(
-            f"No {wiki_dir}/{MARKER_NAME} marker in {owner}/{repo}; "
-            "wiki publishing is not enabled for this repository."
-        )
-        return 0
-    prune = parse_marker(marker.read_text(encoding="utf-8"))
+    prune_setting = os.environ.get("WIKI_PRUNE")
+    if prune_setting is None:
+        marker = wiki_dir / MARKER_NAME
+        if not marker.is_file():
+            print(
+                f"No {wiki_dir}/{MARKER_NAME} marker in {owner}/{repo}; "
+                "wiki publishing is not enabled for this repository."
+            )
+            return 0
+        prune = parse_marker(marker.read_text(encoding="utf-8"))
+    else:
+        prune = parse_prune_setting(prune_setting)
+        if not wiki_dir.is_dir():
+            raise WorkflowError(
+                "configuration",
+                f"The wiki folder {wiki_dir} does not exist in {owner}/{repo}; "
+                "set the wiki_dir input to the folder with the pages.",
+            )
 
     pages = read_pages(wiki_dir)
     token = parse_gitea_token(os.environ.get("WIKI_CREDENTIALS"))
@@ -292,8 +316,12 @@ def main():
     if result["kept"]:
         print(
             f"{len(result['kept'])} page(s) are in the wiki but not in "
-            f"{wiki_dir}/ and were kept; put the word '{PRUNE_WORD}' in "
-            f"{wiki_dir}/{MARKER_NAME} to delete them."
+            f"{wiki_dir}/ and were kept; "
+            + (
+                f"put the word '{PRUNE_WORD}' in {wiki_dir}/{MARKER_NAME} to delete them."
+                if prune_setting is None
+                else "set the prune input to true to delete them."
+            )
         )
     return 0
 

@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 0b11defd563a -->
+<!-- translation of Onboarding.md, source sha256 4de4897fb3b7 -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -32,15 +32,31 @@ Leveringen er automatisk, så et repository behøver ingen kopi af workflowet. S
 
 ## Publicér en wiki (valgfrit)
 
-Workflowet **Publish wiki** kopierer Markdown-siderne i `wiki/` til repositoryets wiki, når en ændring af `wiki/` flettes til `main`. Det leveres som synkroniseringsworkflowet, men skriver kun, hvor et repository har meldt sig til.
+Det genbrugelige workflow **Publish wiki pages** kopierer Markdown-siderne i `docs/wiki/` til repositoryets wiki, når en ændring af `docs/wiki/` flettes til `main`. Repositoryet kalder det, så der skrives intet, hvor der ikke findes et kald. Wikien findes som minimum på engelsk og på produktejerens sprog.
 
 1. Aktivér wikien i repositoryets indstillinger.
-2. Tilføj Markdown-sider til `wiki/`. Filnavnet er sidens navn: `Home.md` er forsiden. En bindestreg i navnet er et mellemrum i sidens navn: `Home-da.md` er siden "Home da", og et link til den er `[Dansk](Home-da)`.
-3. Tilføj markøren `wiki/.publish`. Lad den være tom for kun at oprette og opdatere sider. Skriv det ene ord `prune` i den for også at slette wiki-sider, der ikke findes i `wiki/`, så wikien altid er lig med mappen.
+2. Tilføj Markdown-sider til `docs/wiki/`. Filnavnet er sidens navn: `Home.md` er forsiden. En bindestreg i navnet er et mellemrum i sidens navn: `Home-da.md` er siden "Home da", og et link til den er `[Dansk](Home-da)`.
+3. Tilføj et workflow, for eksempel `.gitea/workflows/publish-wiki.yml`, der kalder det genbrugelige workflow:
+
+   ```yaml
+   on:
+     push:
+       branches: [ main ]
+       paths: [ "docs/wiki/**" ]
+   jobs:
+     wiki:
+       uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1
+       with:
+         prune: "true"
+       secrets:
+         TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
+   ```
+
+   `wiki_dir` er som standard `docs/wiki`. `prune: "true"` sletter også wiki-sider, der ikke findes i mappen, så wikien altid er lig med mappen; standarden `false` beholder dem.
 4. Gem `TOKEN_FOR_GITEA_WIKI` som en secret i repositoryets organisation med det scope, der står i [credentials.md](Credentials.da).
 5. Flet ændringen til `main`. Loggen skal slutte med `Published <n> page(s) to the wiki of <owner>/<repo>`.
 
-Et repository uden `wiki/.publish` springes over med linjen `No wiki/.publish marker in <owner>/<repo>`: intet bliver skrevet, og der skal ingen secret til.
+Et repository, der stadig har markøren `wiki/.publish`, publiceres af det ældre scoped workflow, som fjernes, når alle repositories har et kald. Flyt siderne til `docs/wiki/` og tilføj kaldet, før det sker.
 
 ## Runners
 

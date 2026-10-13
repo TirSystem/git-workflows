@@ -1,5 +1,10 @@
 name: Publish wiki
 
+# DEPRECATED (ADR-0009, MIL-008): repositories publish their wiki by calling
+# the reusable workflow publish-wiki-pages.yml. This scoped workflow stays
+# until every repository that has wiki/.publish has migrated; it is then
+# removed in a later major release.
+
 # Shared through scoped delivery: it runs in every repository of an
 # organization, but writes only where the repository has opted in with
 # wiki/.publish (ADR-0004). TOKEN_FOR_GITEA_WIKI is read from the organization

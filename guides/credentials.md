@@ -82,29 +82,30 @@ is ever printed.
 
 ## Wiki publishing secret
 
-The workflow **Publish wiki** copies `wiki/` to the Gitea wiki of a repository
-that has opted in with `wiki/.publish` (see [onboarding.md](onboarding.md)). It
-uses its own secret, so the metadata sync token stays read-only.
+The workflow **Publish wiki pages** copies `docs/wiki/` to the Gitea wiki of a
+repository that calls it (see [onboarding.md](onboarding.md)). It uses its own
+secret, so the metadata sync token stays read-only. The caller passes the
+secret in `secrets:`; it is not inherited.
 
 | Secret | Content | Used for |
 | --- | --- | --- |
 | `TOKEN_FOR_GITEA_WIKI` | The Gitea token, nothing else | Writing the wiki pages of the repositories of an organization that opt in |
 
 - Store it as a secret of the organization of each repository that publishes.
-  There is no fallback to `TOKEN_FOR_GITEA`: a repository that opted in and has
-  no such secret fails with a configuration error, and a repository that did
-  not opt in does not need it.
+  There is no fallback to `TOKEN_FOR_GITEA`: a repository that calls the
+  workflow and has no such secret fails with a configuration error, and a
+  repository that does not call it does not need it.
 - The token needs scope `write:repository`, and its user needs write access to
   the repositories. Gitea has no wiki-only scope, so create the token for a
   dedicated user. S05 approves the scope and S03 stores the secret.
 - Calls made: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`,
   `GET`, `POST` and `PATCH /repos/{owner}/{repo}/wiki/...` and, for a page that
-  no longer exists in `wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}`.
+  no longer exists in `docs/wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}`.
 - The wiki must be enabled in the repository settings. The workflow refuses to
   run when it is not.
-- Pages that are in `wiki/` are always overwritten from it, so a change made
-  in the Gitea web UI is lost on the next publish. Pages that are only in the
-  wiki are removed only when `wiki/.publish` contains the word `prune`.
+- Pages that are in `docs/wiki/` are always overwritten from it, so a change
+  made in the Gitea web UI is lost on the next publish. Pages that are only in
+  the wiki are removed only when the call sets `prune: "true"`.
 
 ## Rotating a token
 
