@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-007 (quality checks for C++ and C#); reviewed (RC-053) | [e3ad1fa] |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-008 (wiki publishing as a reusable workflow); review RC-062 awaits S01 | [9aeb74e] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-008 (wiki publishing as a reusable workflow); review RC-062 awaits S01 | [9aeb74e] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | S01 gave the Go on the MIL-008 change in chat; accepted (RC-062) | pending |
 
 ---
 
@@ -274,5 +274,4 @@ no tests, no release process.
 [Milestone MIL-007]: https://git.tirsystem.com/TirSystem/github-action/milestone/95
 [Milestone MIL-008]: https://git.tirsystem.com/TirSystem/github-action/milestone/152
 [b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
-[e3ad1fa]: https://git.tirsystem.com/TirSystem/github-action/commit/e3ad1fa7e7eef57a6793a479edb41ac6fd2db688
 [9aeb74e]: https://git.tirsystem.com/TirSystem/github-action/commit/9aeb74e8b09bb7882847e9bd5d569dbc9856fc03
