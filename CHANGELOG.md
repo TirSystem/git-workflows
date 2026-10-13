@@ -20,6 +20,8 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-13
+
 ### Added
 
 - Reusable workflow `quality-checks-cpp.yml` (ADR-0008): `clang-format --dry-run
