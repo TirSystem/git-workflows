@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | S01 gave the Go on the MIL-008 change in chat; accepted (RC-062) | [23a64a3] |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-009 (migrate the wiki callers, remove the scoped workflow); review RC-064 awaits S01 | [86e69ce] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-009 (migrate the wiki callers, remove the scoped workflow); review RC-064 awaits S01 | [86e69ce] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | MIL-009 plan accepted in chat with the defaults; target date 2026-11-30 confirmed (RC-064) | pending |
 
 ---
 
@@ -22,7 +22,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 
 ## Planning Assumptions
 
-- Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26; MIL-007 follows in January 2027 (2027-01-04 to 2027-01-16, confirmed on 2026-10-11 by S01). MIL-008 amends the shared wiki publishing of MIL-006 and runs in parallel with the October and November windows: its work started on 2026-10-13 and its decision date is its own Target Date, 2026-11-15. MIL-009 follows MIL-008 and runs from 2026-11-16 to its proposed Target Date, 2026-11-30, which S01 has yet to confirm.
+- Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26; MIL-007 follows in January 2027 (2027-01-04 to 2027-01-16, confirmed on 2026-10-11 by S01). MIL-008 amends the shared wiki publishing of MIL-006 and runs in parallel with the October and November windows: its work started on 2026-10-13 and its decision date is its own Target Date, 2026-11-15. MIL-009 follows MIL-008 and runs from 2026-11-16 to its proposed Target Date, 2026-11-30, confirmed by S01 in chat on 2026-10-14.
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -280,5 +280,4 @@ no tests, no release process.
 [Milestone MIL-007]: https://git.tirsystem.com/TirSystem/github-action/milestone/95
 [Milestone MIL-008]: https://git.tirsystem.com/TirSystem/github-action/milestone/152
 [b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
-[23a64a3]: https://git.tirsystem.com/TirSystem/github-action/commit/23a64a3f35bd69de456b3c44556d542bd2da0ca0
 [86e69ce]: https://git.tirsystem.com/TirSystem/github-action/commit/86e69ce85df72ea3caed40253e08231c73187fde

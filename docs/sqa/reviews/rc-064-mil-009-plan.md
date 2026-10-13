@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [86e69ce] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted | [86e69ce] |
 
 ---
 
@@ -19,7 +19,7 @@
 - Checklist used: [QC-MIL-001] for the milestone; for the plan, the criteria of `PP.md` (no QC checklist exists for PP-001)
 - Scope: full review of MIL-009; delta re-review of PP-001, earlier record RC-062
 - Language and domain: n/a (technical type)
-- Mode: supervised (the AI prepared the record; the Go is S01's and is not yet given)
+- Mode: autonomous, not independent (the reviewer is `AI as stand-in for S01`; the user accepted the plan in chat on 2026-10-14 with the defaults)
 
 ## Checklist Results
 
@@ -46,15 +46,13 @@
 
 ## Overall Verdict
 
-Go proposed - all criteria pass. MIL-009, the plan row and this record stay `Proposed` until S01 gives the Go and confirms the target date, because the AI does not stand in for S01 in supervised mode.
+Go - all criteria pass. The user switched to autonomous mode and accepted the plan in chat on 2026-10-14 with the defaults (target date 2026-11-30, no publishing for `027-sandbox` and `028-pomodoro`, framework release 0.7.0); the AI records the acceptance as stand-in for S01. There is no independent reader and the decision stays open to challenge in the run summary.
 
 ## Action Items
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Confirm the target date 2026-11-30 and decide whether `027-sandbox` and `028-pomodoro` publish | S01 | before the Go |
-| Give the Go, then set MIL-009, PP-001 and this record to `Accepted`; the milestone sync then creates the Gitea milestone and its issues | S01 | before work starts |
-| Check that `TirSystem-BashScript` has its own `TOKEN_FOR_GITEA_WIKI` (S03) | S03 | MIL-009 task 3 |
+| Check that `TirSystem-BashScript` has its own `TOKEN_FOR_GITEA_WIKI` (S03); stop and report if it does not | S03 | MIL-009 task 3 |
 
 ---
 
