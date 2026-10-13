@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [01b9c29] |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Review findings fixed (RC-063): the product owner's language is spelled out, the security consequence is named, and the secret passing is recorded as verified | pending |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Review findings fixed (RC-063): the product owner's language is spelled out, the security consequence is named, and the secret passing is recorded as verified | [8c2c52e] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -101,3 +101,4 @@ The rules that follow from it:
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [01b9c29]: https://git.tirsystem.com/TirSystem/github-action/commit/01b9c2972b4317bcc590540010aea0eaf7f30014
+[8c2c52e]: https://git.tirsystem.com/TirSystem/github-action/commit/8c2c52ebd2a27e4d0edb4008c31c002718d280fb

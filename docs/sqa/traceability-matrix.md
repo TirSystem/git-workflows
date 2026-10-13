@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | PP-001 and RC-062 accepted (the Go on the MIL-008 plan change) | [23a64a3] |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0009 and RC-063 (accepted) | pending |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0009 and RC-063 (accepted) | [8c2c52e] |
 
 ---
 
@@ -221,3 +221,4 @@ updated whenever an artifact instance is created or reviewed.
 [faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
 [23a64a3]: https://git.tirsystem.com/TirSystem/github-action/commit/23a64a3f35bd69de456b3c44556d542bd2da0ca0
+[8c2c52e]: https://git.tirsystem.com/TirSystem/github-action/commit/8c2c52ebd2a27e4d0edb4008c31c002718d280fb
