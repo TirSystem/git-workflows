@@ -4,25 +4,25 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-008 (wiki publishing as a reusable workflow); review RC-062 awaits S01 | [9aeb74e] |
 | 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | S01 gave the Go on the MIL-008 change in chat; accepted (RC-062) | [23a64a3] |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-009 (migrate the wiki callers, remove the scoped workflow); review RC-064 awaits S01 | pending |
 
 ---
 
 ## Purpose
 
-This plan schedules eight milestones that move the repository from one
+This plan schedules nine milestones that move the repository from one
 workflow with known defects to a documented, versioned collection of shared
 workflows. The Business Case sets no deadline, so the dates are the plan's own; they were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
 ## Planning Assumptions
 
-- Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26; MIL-007 follows in January 2027 (2027-01-04 to 2027-01-16, confirmed on 2026-10-11 by S01). MIL-008 amends the shared wiki publishing of MIL-006 and runs in parallel with the October and November windows: its work started on 2026-10-13 and its decision date is its own Target Date, 2026-11-15.
+- Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26; MIL-007 follows in January 2027 (2027-01-04 to 2027-01-16, confirmed on 2026-10-11 by S01). MIL-008 amends the shared wiki publishing of MIL-006 and runs in parallel with the October and November windows: its work started on 2026-10-13 and its decision date is its own Target Date, 2026-11-15. MIL-009 follows MIL-008 and runs from 2026-11-16 to its proposed Target Date, 2026-11-30, which S01 has yet to confirm.
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -38,6 +38,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Shared wiki publishing | [MIL-006] | 2026-12-14 to 2026-12-26 | 2026-12-26 | S05 | None yet | Scoped publish-wiki workflow with opt-in, piloted in one other repository | [Milestone MIL-006] |
 | Quality checks for C++ and C# | [MIL-007] | 2027-01-04 to 2027-01-16 | 2027-01-16 | S05 | US-001.09, US-001.10 (to extend) | Reusable quality-check workflows for C++ and C#, released | [Milestone MIL-007] |
 | Wiki publishing as a reusable workflow | [MIL-008] | 2026-10-13 to 2026-11-15 | 2026-11-15 | S05 | None yet | Reusable publish-wiki-pages workflow, wiki in docs/wiki, scoped workflow deprecated, released as 1.2.2 | [Milestone MIL-008] |
+| Migrate the wiki callers and remove the scoped workflow | [MIL-009] | 2026-11-16 to 2026-11-30 | 2026-11-30 | S05 | None yet | Seven repositories publish through a caller, scoped workflow removed, ADR-0004 superseded, released as 2.0.0 | Not created yet (the sync creates it when MIL-009 is Accepted) |
 
 ```plantuml
 @startgantt
@@ -58,6 +59,8 @@ Project starts 2026-10-05
 [MIL-007 Go/No-Go] happens 2027-01-16
 [MIL-008 Reusable wiki workflow] starts 2026-10-13 and ends 2026-11-15
 [MIL-008 Go/No-Go] happens 2026-11-15
+[MIL-009 Migrate and remove] starts 2026-11-16 and ends 2026-11-30
+[MIL-009 Go/No-Go] happens 2026-11-30
 @endgantt
 ```
 
@@ -73,6 +76,7 @@ Project starts 2026-10-05
 | The wiki publisher shared with other repositories through scoped delivery | [MIL-006] |
 | Gitea Actions workflows for software engineers (quality checks for C++ and C#) | [MIL-007] |
 | The wiki publisher as a workflow that repositories call, from docs/wiki | [MIL-008] |
+| Moving every publishing repository to the called workflow and removing the scoped one | [MIL-009] |
 
 ## Dependencies
 
@@ -80,7 +84,7 @@ Project starts 2026-10-05
 MIL-001 → MIL-002 → MIL-003 → MIL-004
             MIL-002 → MIL-005 → MIL-006
    MIL-003 + MIL-004 → MIL-007
-                      MIL-006 → MIL-008
+                      MIL-006 → MIL-008 → MIL-009
 ```
 
 A No-Go moves every later window by the rework time of the failed milestone.
@@ -92,6 +96,7 @@ A No-Go moves every later window by the rework time of the failed milestone.
 | The runner cannot provide the C++ or C# tools (MIL-007) | The workflows need a custom runner image or a longer install | MIL-007 task 2 verifies it first; the ADR of task 3 says what a build-dependent check needs from the caller. |
 | Reusable workflow support is missing on the instance | MIL-003 and MIL-004 change shape | Verify first in each milestone (MIL-002 task 2, MIL-003 task 1); fall back to copied templates. |
 | Eight repositories still publish through the scoped workflow that MIL-008 deprecates (MIL-008 task 5) | Removing it would stop their wikis | It is deprecated and kept; a follow-up milestone migrates them and removes it in a major release (RC-061). |
+| An organisation has no `TOKEN_FOR_GITEA_WIKI` secret, or a repository fails its first run (MIL-009 tasks 3 and 4) | The wiki of that repository stops updating | MIL-009 task 5 reads each wiki back after the first run; the scoped workflow is removed only after every repository passes. |
 | Security review by S05 is a bottleneck | Milestone decisions slip | Keep milestones small and plan review time before each decision date. |
 
 ## Open Issues
@@ -265,6 +270,7 @@ no tests, no release process.
 [MIL-006]: ./milestones/mil-006-shared-wiki-publishing.md
 [MIL-007]: ./milestones/mil-007-cpp-csharp-quality-checks.md
 [MIL-008]: ./milestones/mil-008-wiki-reusable-workflow.md
+[MIL-009]: ./milestones/mil-009-migrate-wiki-callers-and-remove-scoped-workflow.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
@@ -274,5 +280,4 @@ no tests, no release process.
 [Milestone MIL-007]: https://git.tirsystem.com/TirSystem/github-action/milestone/95
 [Milestone MIL-008]: https://git.tirsystem.com/TirSystem/github-action/milestone/152
 [b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
-[9aeb74e]: https://git.tirsystem.com/TirSystem/github-action/commit/9aeb74e8b09bb7882847e9bd5d569dbc9856fc03
 [23a64a3]: https://git.tirsystem.com/TirSystem/github-action/commit/23a64a3f35bd69de456b3c44556d542bd2da0ca0
