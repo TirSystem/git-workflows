@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [01b9c29] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [01b9c29] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Review findings fixed (RC-063): the product owner's language is spelled out, the security consequence is named, and the secret passing is recorded as verified | pending |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -22,7 +23,8 @@ repository of an organisation, and a marker file `wiki/.publish` is the opt-in.
 That avoids a copy of the workflow, but it runs where nobody asked for it and
 needs a safety gate for that reason; its trigger path (`wiki/**`) and the
 version of the script (`v1`) are fixed centrally. The framework now prescribes
-the wiki in `docs/wiki/` with English and the PO language as a minimum, and
+the wiki in `docs/wiki/` with English and the product owner's language as a
+minimum, and
 repositories need to say where their wiki is.
 
 Options:
@@ -61,6 +63,9 @@ The rules that follow from it:
   to `docs/wiki/` one repository at a time.
 - Opting in is a file in the repository, reviewed in a pull request, and a
   repository without a caller is never written to.
+- Security: the token is passed explicitly by the caller and is never
+  inherited or taken from a fallback, so a repository that does not pass it
+  cannot write a wiki.
 - One call convention for every shared workflow of this repository.
 
 **Negative:**
@@ -74,8 +79,13 @@ The rules that follow from it:
   their migrations.
 - The owner chose a patch release (1.2.2) for this change although a new
   workflow is a minor one under [ADR-0006]; the changelog states the deviation.
-- Passing a declared secret through `workflow_call` is not yet verified on this
-  Gitea instance; it is checked by the first call, in this repository.
+- Anyone who can change the caller file of a repository can change the folder
+  and `prune`, and so what the token deletes in that repository's wiki; this is
+  the same exposure as the marker had, and it is reviewed through the pull
+  request that changes the caller.
+- Passing a declared secret through `workflow_call`, and a local `uses:` call,
+  were verified on this Gitea instance by run 316 of this repository on
+  2026-10-13.
 
 ## Affected Artifacts
 
