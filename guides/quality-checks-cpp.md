@@ -70,7 +70,9 @@ package, and old tools are not run (ADR-0008).
 3. A tool ends with `PASS <tool>` or `FAIL <tool>`; the last line of a failed
    run names them: `Quality checks failed: clang-format`.
 4. A finding is written by the tool itself as `path:line:column: message`.
-   Paths are relative to `working-directory`.
+   `clang-format` prints paths relative to `working-directory`; `clang-tidy`
+   prints absolute paths in the workspace of the runner
+   (`/workspace/<owner>/<repo>/main.cpp:5:18`).
 
 ## Typical failures and fixes
 

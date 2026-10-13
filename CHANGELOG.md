@@ -20,6 +20,12 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Changed
+
+- The C++ and C# guides and their wiki pages say that `clang-tidy` and `dotnet` print
+  absolute paths in the workspace of the runner (found in the adoption check,
+  MIL-007 task 7).
+
 ## [1.2.0] - 2026-10-13
 
 ### Added

@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCSharp.md, source sha256 2baa0d48f712 -->
+<!-- translation of QualityChecksCSharp.md, source sha256 36e34031e0b9 -->
 
 > Dette er en oversættelse af [`QualityChecksCSharp`](QualityChecksCSharp). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -56,7 +56,7 @@ Usporede filer kontrolleres ikke. Et repository uden `*.cs`-filer består med en
 1. Åbn statuskontrollen på pull requesten og derefter jobbet `quality-checks-csharp`.
 2. Hvert værktøj har sin egen logggruppe. Begge kører, selv om det første fejlede, så én kørsel viser alle fund.
 3. Et værktøj ender med `PASS <værktøj>` eller `FAIL <værktøj>`; sidste linje i en mislykket kørsel nævner dem: `Quality checks failed: dotnet format --verify-no-changes`.
-4. Et fund skrives af værktøjet selv som `path(line,column): CODE message`.
+4. Et fund skrives af værktøjet selv som `path(line,column): CODE message`. Stien er absolut i runnerens arbejdsområde (`/workspace/<owner>/<repo>/src/Program.cs(8,27)`).
 
 ## Typiske fejl og rettelser
 
