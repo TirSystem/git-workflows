@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [2481c26] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [2481c26] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Action item closed: the two throwaway repositories were deleted at the user's request | [daecb7b] |
 
 ---
 
@@ -41,7 +42,8 @@ Go - all six criteria pass. Criteria 3 and 4 of the milestone are verified on th
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Decide whether to delete `TirSystem/qc-adoption-cpp` and `TirSystem/qc-adoption-csharp`, and adopt the workflows in a real C++ and C# project | S05 | before the milestone closes |
+| ~~Decide whether to delete `TirSystem/qc-adoption-cpp` and `TirSystem/qc-adoption-csharp`~~ Closed 2026-10-13: both were deleted at the user's request | S05 | done |
+| Adopt the workflows in a real C++ and a real C# project | S05 | before the milestone closes |
 
 ---
 
@@ -49,3 +51,4 @@ Go - all six criteria pass. Criteria 3 and 4 of the milestone are verified on th
 [RC-055]: ./rc-055-mil-007-amendment.md
 [QC-MIL-001]: ../../../framework/qc/qc-milestones-gateways.md
 [2481c26]: https://git.tirsystem.com/TirSystem/github-action/commit/2481c26d802464decd51d75539157093b60e08e8
+[daecb7b]: https://git.tirsystem.com/TirSystem/github-action/commit/daecb7b452197643b39752b9b453a8c376562354
