@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 1d431898754e -->
+<!-- translation of Onboarding.md, source sha256 0b11defd563a -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -35,7 +35,7 @@ Penghantaran adalah automatik, jadi repositori tidak memerlukan salinan aliran k
 Aliran kerja **Publish wiki** menyalin halaman Markdown dalam `wiki/` ke wiki repositori apabila perubahan pada `wiki/` digabungkan ke `main`. Ia dihantar seperti aliran kerja penyegerakan, tetapi hanya menulis di tempat repositori telah memilih untuk menyertainya.
 
 1. Aktifkan wiki dalam tetapan repositori.
-2. Tambah halaman Markdown ke `wiki/`. Nama fail ialah nama halaman: `Home.md` ialah halaman utama.
+2. Tambah halaman Markdown ke `wiki/`. Nama fail ialah nama halaman: `Home.md` ialah halaman utama. Tanda sempang dalam nama ialah ruang dalam nama halaman: `Home-da.md` ialah halaman "Home da", dan pautan kepadanya ialah `[Dansk](Home-da)`.
 3. Tambah penanda `wiki/.publish`. Biarkan kosong untuk mencipta dan mengemas kini halaman sahaja. Letakkan satu perkataan `prune` di dalamnya untuk turut memadam halaman wiki yang tiada dalam `wiki/`, supaya wiki sentiasa sama dengan folder itu.
 4. Simpan `TOKEN_FOR_GITEA_WIKI` sebagai secret organisasi repositori, dengan skop yang tertera dalam [credentials.md](Credentials.ms).
 5. Gabungkan perubahan ke `main`. Log mesti berakhir dengan `Published <n> page(s) to the wiki of <owner>/<repo>`.
