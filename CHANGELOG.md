@@ -31,6 +31,14 @@ Each release lists its changes in these groups, in this order:
   `framework/scripts/ci-publish-milestones.sh`. No change for callers of the
   shared workflows.
 
+### Fixed
+
+- `publish-wiki` sends a page title with spaces instead of hyphens. Gitea keeps a
+  hyphen in a title literal and stored `Home-da` as `Home-da.-.md`, addressed as
+  `Home%2Dda`, so links to `Home-da` led to the page list. A new page is now
+  stored as `Home-da.md` and addressed as `Home-da`. Pages already created with
+  the old title must be deleted by hand (the publisher does not prune them).
+
 ## [1.1.0] - 2026-10-11
 
 ### Added
