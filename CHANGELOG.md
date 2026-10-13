@@ -20,6 +20,8 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-10-13
+
 ### Changed
 
 - The C++ and C# guides and their wiki pages say that `clang-tidy` and `dotnet` print
