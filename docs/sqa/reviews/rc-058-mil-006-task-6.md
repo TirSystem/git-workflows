@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [8051cc4] |
 
 ---
 
@@ -48,3 +48,4 @@ Go - all six criteria pass. It restores the status Accepted of MIL-006, which th
 [MIL-006]: ../../milestones/mil-006-shared-wiki-publishing.md
 [RC-049]: ./rc-049-mil-006-outcome.md
 [QC-MIL-001]: ../../../framework/qc/qc-milestones-gateways.md
+[8051cc4]: https://git.tirsystem.com/TirSystem/github-action/commit/8051cc4489ee9bcf3b6c62f2eafcb2013b7d2f90

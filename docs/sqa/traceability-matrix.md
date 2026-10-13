@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-056 and RC-057 (UC-005 and US-001 for C++ and C#) | [1bc56f8] |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-058 (MIL-006 task 6 amendment) | pending |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-058 (MIL-006 task 6 amendment) | [8051cc4] |
 
 ---
 
@@ -206,3 +206,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
+[8051cc4]: https://git.tirsystem.com/TirSystem/github-action/commit/8051cc4489ee9bcf3b6c62f2eafcb2013b7d2f90

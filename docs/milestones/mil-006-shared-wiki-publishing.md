@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Criterion 1 evidence amended; added the verification results of the pilot | [d575f27] |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Task 6 added and reviewed (RC-058): the publisher sends page titles with spaces, so a hyphenated page (`Home-da`) is stored as `Home-da.md` and its links resolve | pending |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Task 6 added and reviewed (RC-058): the publisher sends page titles with spaces, so a hyphenated page (`Home-da`) is stored as `Home-da.md` and its links resolve | [8051cc4] |
 
 ---
 
@@ -96,3 +96,4 @@ the API and equal `wiki/*.md` on `main` (0 differences).
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
 [d575f27]: https://git.tirsystem.com/TirSystem/github-action/commit/d575f272fcb044e3165951013464177a6e659ea6
+[8051cc4]: https://git.tirsystem.com/TirSystem/github-action/commit/8051cc4489ee9bcf3b6c62f2eafcb2013b7d2f90
