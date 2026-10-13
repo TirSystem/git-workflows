@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [2b53ee6] |
 
 ---
 
@@ -87,3 +87,4 @@ marker as an opt-in removed; ADR-0004 marked superseded; and the major release
 [ADR-0004]: ../adr/adr-0004-shared-wiki-publishing-opt-in.md
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
+[2b53ee6]: https://git.tirsystem.com/TirSystem/github-action/commit/2b53ee6d21babdefc30556b92c3300c6cd956898
