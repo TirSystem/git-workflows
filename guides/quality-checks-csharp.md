@@ -67,6 +67,8 @@ a notice. Project tests are not run.
    run names them:
    `Quality checks failed: dotnet format --verify-no-changes`.
 4. A finding is written by the tool itself as `path(line,column): CODE message`.
+   The path is absolute in the workspace of the runner
+   (`/workspace/<owner>/<repo>/src/Program.cs(8,27)`).
 
 ## Typical failures and fixes
 

@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCpp.md, source sha256 baf659e82523 -->
+<!-- translation of QualityChecksCpp.md, source sha256 6faa57183a11 -->
 
 > Dette er en oversættelse af [`QualityChecksCpp`](QualityChecksCpp). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -58,7 +58,7 @@ Usporede filer kontrolleres ikke. Et repository uden disse filer består med en 
 1. Åbn statuskontrollen på pull requesten og derefter jobbet `quality-checks-cpp`.
 2. Hvert værktøj har sin egen logggruppe. Alle værktøjer kører, selv om et tidligere fejlede, så én kørsel viser alle fund.
 3. Et værktøj ender med `PASS <værktøj>` eller `FAIL <værktøj>`; sidste linje i en mislykket kørsel nævner dem: `Quality checks failed: clang-format`.
-4. Et fund skrives af værktøjet selv som `path:line:column: message`. Stier er relative til `working-directory`.
+4. Et fund skrives af værktøjet selv som `path:line:column: message`. `clang-format` skriver stier relative til `working-directory`; `clang-tidy` skriver absolutte stier i runnerens arbejdsområde (`/workspace/<owner>/<repo>/main.cpp:5:18`).
 
 ## Typiske fejl og rettelser
 

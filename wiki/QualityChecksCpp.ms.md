@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCpp.md, source sha256 baf659e82523 -->
+<!-- translation of QualityChecksCpp.md, source sha256 6faa57183a11 -->
 
 > Ini ialah terjemahan [`QualityChecksCpp`](QualityChecksCpp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -58,7 +58,7 @@ Fail yang tidak dijejaki tidak disemak. Repositori tanpa fail ini lulus dengan s
 1. Buka semakan status pada pull request, kemudian kerja `quality-checks-cpp`.
 2. Setiap alat mempunyai kumpulan lognya sendiri. Setiap alat dijalankan walaupun yang terdahulu gagal, jadi satu larian menunjukkan semua dapatan.
 3. Satu alat berakhir dengan `PASS <alat>` atau `FAIL <alat>`; baris terakhir larian yang gagal menamakannya: `Quality checks failed: clang-format`.
-4. Satu dapatan ditulis oleh alat itu sendiri sebagai `path:line:column: message`. Laluan relatif kepada `working-directory`.
+4. Satu dapatan ditulis oleh alat itu sendiri sebagai `path:line:column: message`. `clang-format` menulis laluan relatif kepada `working-directory`; `clang-tidy` menulis laluan mutlak dalam ruang kerja runner (`/workspace/<owner>/<repo>/main.cpp:5:18`).
 
 ## Kegagalan biasa dan pembetulan
 

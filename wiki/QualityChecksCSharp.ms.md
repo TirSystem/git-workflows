@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCSharp.md, source sha256 2baa0d48f712 -->
+<!-- translation of QualityChecksCSharp.md, source sha256 36e34031e0b9 -->
 
 > Ini ialah terjemahan [`QualityChecksCSharp`](QualityChecksCSharp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -56,7 +56,7 @@ Fail yang tidak dijejaki tidak disemak. Repositori tanpa fail `*.cs` lulus denga
 1. Buka semakan status pada pull request, kemudian kerja `quality-checks-csharp`.
 2. Setiap alat mempunyai kumpulan lognya sendiri. Kedua-duanya dijalankan walaupun yang pertama gagal, jadi satu larian menunjukkan semua dapatan.
 3. Satu alat berakhir dengan `PASS <alat>` atau `FAIL <alat>`; baris terakhir larian yang gagal menamakannya: `Quality checks failed: dotnet format --verify-no-changes`.
-4. Satu dapatan ditulis oleh alat itu sendiri sebagai `path(line,column): CODE message`.
+4. Satu dapatan ditulis oleh alat itu sendiri sebagai `path(line,column): CODE message`. Laluan itu mutlak dalam ruang kerja runner (`/workspace/<owner>/<repo>/src/Program.cs(8,27)`).
 
 ## Kegagalan biasa dan pembetulan
 
