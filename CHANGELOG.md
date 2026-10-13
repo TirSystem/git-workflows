@@ -20,6 +20,8 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-13
+
 ### Changed
 
 - Every job has a `timeout-minutes` (5 to 15), so a hung step no longer holds a
@@ -30,6 +32,9 @@ Each release lists its changes in these groups, in this order:
   blocks of this repository's own `sync-milestones.yml` call
   `framework/scripts/ci-publish-milestones.sh`. No change for callers of the
   shared workflows.
+- The onboarding guide and its wiki pages (English, Danish, Bahasa Malaysia) say
+  that a hyphen in a file name is a space in the page name, and how to link to
+  it.
 
 ### Fixed
 
@@ -38,9 +43,6 @@ Each release lists its changes in these groups, in this order:
   `Home%2Dda`, so links to `Home-da` led to the page list. A new page is now
   stored as `Home-da.md` and addressed as `Home-da`. Pages already created with
   the old title must be deleted by hand (the publisher does not prune them).
-- The onboarding guide and its wiki pages (English, Danish, Bahasa Malaysia) say
-  that a hyphen in a file name is a space in the page name, and how to link to
-  it.
 
 ## [1.1.0] - 2026-10-11
 
