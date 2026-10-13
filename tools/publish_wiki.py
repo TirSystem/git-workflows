@@ -135,6 +135,16 @@ def page_key(title):
     return str(title).replace(" ", "-")
 
 
+def page_title(key):
+    """Return the title to send to Gitea for a page key.
+
+    A hyphen in a title is a literal hyphen to Gitea, which then stores the page
+    as Home-da.-.md and addresses it as Home%2Dda, so a link to Home-da finds
+    nothing. A space is stored as a hyphen (Home-da.md) and addressed as Home-da.
+    """
+    return key.replace("-", " ")
+
+
 def read_pages(wiki_dir):
     """Return {page key: content} for every Markdown file in wiki_dir."""
     pages = {}
@@ -207,7 +217,7 @@ def publish(pages, wiki_url, headers, send, prune):
     result = {"created": [], "updated": [], "deleted": [], "kept": []}
     for title, content in pages.items():
         body = {
-            "title": title,
+            "title": page_title(title),
             "content_base64": base64.b64encode(content).decode("ascii"),
             "message": COMMIT_MESSAGE,
         }

@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Target date 2026-12-26 confirmed on 2026-10-10 by S01 (stand-in for S05) | [ea06eaa] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Criterion 1 evidence amended; added the verification results of the pilot | [d575f27] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Criterion 1 evidence amended; added the verification results of the pilot | [d575f27] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Task 6 added and reviewed (RC-058): the publisher sends page titles with spaces, so a hyphenated page (`Home-da`) is stored as `Home-da.md` and its links resolve | [8051cc4] |
 
 ---
 
@@ -71,6 +71,7 @@ repository other than this one that publishes its wiki through it.
 | 3 | Implement the opt-in gate and the safety limits | Skip, successfully and with a log line, any repository that has not opted in. Keep the refusal on an empty `wiki/` and the categorised errors, and add offline tests with a fake Gitea for opted-in, not opted-in and missing-secret runs. | No | |
 | 4 | Pilot in one other repository | Choose one repository outside this one, add a `wiki/` folder with the marker, store `TOKEN_FOR_GITEA_WIKI` in its organisation (S03), publish, and read the pages back. Also confirm that a repository without the marker was not touched. | No | |
 | 5 | Update the guides and the wiki | Describe how a repository opts in and which secrets its organisation needs in the onboarding and credentials guides, regenerate the wiki pages and update the Danish and Bahasa Malaysia translations (rule 8 of `AGENTS.md`). | No | |
+| 6 | Fix the page title of hyphenated pages | Gitea keeps a hyphen in a title literal, so the publisher created `Home-da` as `Home-da.-.md`, addressed `Home%2Dda`, and every link to `Home-da` led to the page list (found on the `sqa-and-qc`, `sqa-qc-framework` and `sqa-qc-checklists` wikis). Send the title with spaces (`Home da`, stored `Home-da.md`), cover it with a test and a changelog entry. The stale `*.-.md` pages are deleted after the release, by hand. | No | |
 
 ## Verification results
 
@@ -95,3 +96,4 @@ the API and equal `wiki/*.md` on `main` (0 differences).
 [ADR-0002]: ../adr/adr-0002-s01-approves-as-stand-in.md
 [ea06eaa]: https://git.tirsystem.com/TirSystem/github-action/commit/ea06eaaa698247d20e4a8e2694d7acbb1de58b63
 [d575f27]: https://git.tirsystem.com/TirSystem/github-action/commit/d575f272fcb044e3165951013464177a6e659ea6
+[8051cc4]: https://git.tirsystem.com/TirSystem/github-action/commit/8051cc4489ee9bcf3b6c62f2eafcb2013b7d2f90

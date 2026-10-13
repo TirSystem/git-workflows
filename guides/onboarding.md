@@ -51,7 +51,8 @@ like the sync workflow, but it writes only where a repository opts in.
 
 1. Enable the wiki in the repository settings.
 2. Add Markdown pages to `wiki/`. The file name is the page name: `Home.md` is
-   the home page.
+   the home page. A hyphen in the name is a space in the page name: `Home-da.md`
+   is the page "Home da", and a link to it is `[Dansk](Home-da)`.
 3. Add the marker `wiki/.publish`. Leave it empty to create and update pages
    only. Put the single word `prune` in it to also delete wiki pages that are
    not in `wiki/`, so the wiki always equals the folder.

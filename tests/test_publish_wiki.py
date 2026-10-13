@@ -67,6 +67,15 @@ class TestReadPages:
             publish_wiki.read_pages(tmp_path)
 
 
+class TestPageTitle:
+    @pytest.mark.parametrize(
+        ("key", "title"), [("Home", "Home"), ("Home-da", "Home da"), ("Getting-Started-ms", "Getting Started ms")]
+    )
+    def test_a_hyphen_is_sent_as_a_space(self, publish_wiki, key, title):
+        # Gitea keeps a hyphen in a title literal (Home-da.-.md, address Home%2Dda).
+        assert publish_wiki.page_title(key) == title
+
+
 class TestPageKey:
     @pytest.mark.parametrize(
         ("name", "key"),
@@ -107,12 +116,13 @@ class FakeGitea:
                 raise self.error("configuration", "404")
             return [{"title": key.replace("-", " "), "sub_url": key} for key in self.wiki]
         if method == "POST" and url == f"{WIKI_URL}/new":
-            self.wiki[body["title"]] = body["content_base64"]
+            self.wiki[body["title"].replace(" ", "-")] = body["content_base64"]
             return None
         title = url.rsplit("/", 1)[-1]
         if method == "GET":
             return {"title": title, "content_base64": self.wiki[title]}
         if method == "PATCH":
+            assert " " in body["title"] or "-" not in body["title"], body["title"]
             self.wiki[title] = body["content_base64"]
             return None
         if method == "DELETE":

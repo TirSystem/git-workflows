@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 1d431898754e -->
+<!-- translation of Onboarding.md, source sha256 0b11defd563a -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -35,7 +35,7 @@ Leveringen er automatisk, så et repository behøver ingen kopi af workflowet. S
 Workflowet **Publish wiki** kopierer Markdown-siderne i `wiki/` til repositoryets wiki, når en ændring af `wiki/` flettes til `main`. Det leveres som synkroniseringsworkflowet, men skriver kun, hvor et repository har meldt sig til.
 
 1. Aktivér wikien i repositoryets indstillinger.
-2. Tilføj Markdown-sider til `wiki/`. Filnavnet er sidens navn: `Home.md` er forsiden.
+2. Tilføj Markdown-sider til `wiki/`. Filnavnet er sidens navn: `Home.md` er forsiden. En bindestreg i navnet er et mellemrum i sidens navn: `Home-da.md` er siden "Home da", og et link til den er `[Dansk](Home-da)`.
 3. Tilføj markøren `wiki/.publish`. Lad den være tom for kun at oprette og opdatere sider. Skriv det ene ord `prune` i den for også at slette wiki-sider, der ikke findes i `wiki/`, så wikien altid er lig med mappen.
 4. Gem `TOKEN_FOR_GITEA_WIKI` som en secret i repositoryets organisation med det scope, der står i [credentials.md](Credentials.da).
 5. Flet ændringen til `main`. Loggen skal slutte med `Published <n> page(s) to the wiki of <owner>/<repo>`.

@@ -40,10 +40,21 @@ Each release lists its changes in these groups, in this order:
   runner for the host's default limit.
 - `actions/checkout` is referenced by the exact tag `v4.2.2` instead of the
   moving tag `v4`. No change for callers.
-- The framework pin moves from `v0.5.2` to `v0.6.0`, and the two long `run:`
+- The framework pin moves from `v0.5.2` to `v0.6.2`, and the two long `run:`
   blocks of this repository's own `sync-milestones.yml` call
   `framework/scripts/ci-publish-milestones.sh`. No change for callers of the
   shared workflows.
+
+### Fixed
+
+- `publish-wiki` sends a page title with spaces instead of hyphens. Gitea keeps a
+  hyphen in a title literal and stored `Home-da` as `Home-da.-.md`, addressed as
+  `Home%2Dda`, so links to `Home-da` led to the page list. A new page is now
+  stored as `Home-da.md` and addressed as `Home-da`. Pages already created with
+  the old title must be deleted by hand (the publisher does not prune them).
+- The onboarding guide and its wiki pages (English, Danish, Bahasa Malaysia) say
+  that a hyphen in a file name is a space in the page name, and how to link to
+  it.
 
 ## [1.1.0] - 2026-10-11
 
