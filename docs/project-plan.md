@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | MIL-009 plan accepted in chat with the defaults; target date 2026-11-30 confirmed (RC-064) | [2f267df] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-010 (code metrics and coverage badges); reviewed (RC-068) | [5002450] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-010 (code metrics and coverage badges); reviewed (RC-068) | [5002450] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-011 (fix the defaults of the code metrics workflow); not yet reviewed | [02e3794] |
 
 ---
 
@@ -40,6 +40,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Wiki publishing as a reusable workflow | [MIL-008] | 2026-10-13 to 2026-11-15 | 2026-11-15 | S05 | None yet | Reusable publish-wiki-pages workflow, wiki in docs/wiki, scoped workflow deprecated, released as 1.2.2 | [Milestone MIL-008] |
 | Migrate the wiki callers and remove the scoped workflow | [MIL-009] | 2026-11-16 to 2026-11-30 | 2026-11-30 | S05 | None yet | Seven repositories publish through a caller, scoped workflow removed, ADR-0004 superseded, released as 2.0.0 | Not created yet (the sync creates it when MIL-009 is Accepted) |
 | Code metrics and coverage badges | [MIL-010] | 2027-01-18 to 2027-01-30 | 2027-01-30 | S05 | None yet (task 1 writes them) | Reusable workflow that counts code files and lines of code, reads coverage and commits SVG badges, released | Not created yet (the sync creates it when MIL-010 is Accepted) |
+| Fix the defaults of the code metrics workflow | [MIL-011] | 2026-10-14 to 2026-10-23 | 2026-10-23 | S05 | None (technical tasks) | Patch release 2.1.1: the default `tools-ref` of every reusable workflow names a tag that holds its scripts, a test for it, guides and wiki at `@v2`, the framework Badges page without the workaround | Not created yet (the sync creates it when MIL-011 is Accepted) |
 
 ```plantuml
 @startgantt
@@ -64,6 +65,8 @@ Project starts 2026-10-05
 [MIL-009 Go/No-Go] happens 2026-11-30
 [MIL-010 Badges] starts 2027-01-18 and ends 2027-01-30
 [MIL-010 Go/No-Go] happens 2027-01-30
+[MIL-011 Defaults fix] starts 2026-10-14 and ends 2026-10-23
+[MIL-011 Go/No-Go] happens 2026-10-23
 @endgantt
 ```
 
@@ -81,6 +84,7 @@ Project starts 2026-10-05
 | The wiki publisher as a workflow that repositories call, from docs/wiki | [MIL-008] |
 | Moving every publishing repository to the called workflow and removing the scoped one | [MIL-009] |
 | A shared workflow for code metrics and coverage badges | [MIL-010] |
+| The code metrics workflow works with its documented defaults | [MIL-011] |
 
 ## Dependencies
 
@@ -89,7 +93,7 @@ MIL-001 → MIL-002 → MIL-003 → MIL-004
             MIL-002 → MIL-005 → MIL-006
    MIL-003 + MIL-004 → MIL-007
                       MIL-006 → MIL-008 → MIL-009
-   MIL-003 + MIL-004 → MIL-010
+   MIL-003 + MIL-004 → MIL-010 → MIL-011
 ```
 
 A No-Go moves every later window by the rework time of the failed milestone.
@@ -278,6 +282,7 @@ no tests, no release process.
 [MIL-008]: ./milestones/mil-008-wiki-reusable-workflow.md
 [MIL-009]: ./milestones/mil-009-migrate-wiki-callers-and-remove-scoped-workflow.md
 [MIL-010]: ./milestones/mil-010-code-metrics-badges.md
+[MIL-011]: ./milestones/mil-011-code-metrics-default-tools-ref.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
@@ -289,3 +294,4 @@ no tests, no release process.
 [b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
 [2f267df]: https://git.tirsystem.com/TirSystem/github-action/commit/2f267df2a270087cb7dc482af4ce4f4341e97b03
 [5002450]: https://git.tirsystem.com/TirSystem/github-action/commit/50024505fe788b1c5e3021c0d1fc3d079590070e
+[02e3794]: https://git.tirsystem.com/TirSystem/github-action/commit/02e3794d7b05799af2544ca303c99271da788e82
