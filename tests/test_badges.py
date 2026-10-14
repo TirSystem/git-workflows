@@ -280,3 +280,10 @@ class TestMain:
         code = badges.main(["--metrics", str(bad), "--output-dir", str(tmp_path / "o")])
         assert code == 1
         assert "cannot be read" in capsys.readouterr().out
+
+    def test_no_code_files_is_a_notice_and_badges_that_show_zero(self, tmp_path, capsys):
+        out = tmp_path / "out"
+        metrics = metrics_file(tmp_path, files=0, lines=0)
+        assert badges.main(["--metrics", str(metrics), "--output-dir", str(out)]) == 0
+        assert "::notice::No code files were found" in capsys.readouterr().out
+        assert 'aria-label="code files: 0"' in (out / "code-files.svg").read_text()

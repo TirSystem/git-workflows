@@ -1,0 +1,81 @@
+name: Code metrics
+
+# Reusable workflow (ADR-0010). A repository calls it with
+#
+#   on:
+#     push:
+#       branches: [main]
+#   jobs:
+#     metrics:
+#       uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v1
+#       permissions:
+#         contents: write
+#
+# It counts the code files and the lines of code of the repository (comment
+# and blank lines are not counted), reads an optional Cobertura XML coverage
+# report and commits three SVG badges to a branch of the calling repository.
+# It runs no test, needs no secret and writes only the badges branch.
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        description: "Directory, relative to the repository root, whose code is counted"
+        type: string
+        default: "."
+      exclude:
+        description: "Comma list of patterns of files and directories that are not counted, in addition to the defaults of ADR-0010"
+        type: string
+        default: ""
+      coverage-report:
+        description: "Path, relative to the repository root, of a Cobertura XML coverage report; empty writes no coverage badge"
+        type: string
+        default: ""
+      coverage-warn:
+        description: "Coverage in percent below which the coverage badge is red"
+        type: string
+        default: "60"
+      coverage-good:
+        description: "Coverage in percent from which the coverage badge is green"
+        type: string
+        default: "80"
+      badges-branch:
+        description: "Branch that holds the badge files; it is created when it does not exist"
+        type: string
+        default: "badges"
+      tools-ref:
+        description: "Tag or branch of TirSystem/github-action whose tools/ files are run; pin it to the exact tag together with the workflow"
+        type: string
+        default: "v1"
+
+jobs:
+  code-metrics:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      WORKING_DIRECTORY: ${{ inputs.working-directory }}
+      EXCLUDE: ${{ inputs.exclude }}
+      COVERAGE_REPORT: ${{ inputs.coverage-report }}
+      COVERAGE_WARN: ${{ inputs.coverage-warn }}
+      COVERAGE_GOOD: ${{ inputs.coverage-good }}
+      BADGES_BRANCH: ${{ inputs.badges-branch }}
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Fetch the shared scripts
+        uses: actions/checkout@v4.2.2
+        with:
+          repository: TirSystem/github-action
+          ref: ${{ inputs.tools-ref }}
+          path: shared-scripts
+
+      - name: Validate the inputs
+        run: bash shared-scripts/tools/code-metrics.sh validate
+
+      - name: Count the code and write the badges
+        run: bash shared-scripts/tools/code-metrics.sh measure
+
+      - name: Publish the badges
+        run: bash shared-scripts/tools/code-metrics.sh publish

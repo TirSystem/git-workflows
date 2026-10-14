@@ -205,6 +205,8 @@ def main(argv: list[str] | None = None) -> int:
             f"::error::[configuration] metrics file '{args.metrics}' cannot be read: {error}"
         )
         return 1
+    if file_count == 0:
+        print("::notice::No code files were found; the badges show 0.")
     if coverage is None:
         print("::notice::No coverage-report given; no coverage badge is written.")
     metrics_json = json.dumps(metrics, indent=2, sort_keys=True) + "\n"
