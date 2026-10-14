@@ -20,6 +20,8 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-10-14
+
 ### Fixed
 
 - `code-metrics.yml` could not be called as documented. Its guide, header
