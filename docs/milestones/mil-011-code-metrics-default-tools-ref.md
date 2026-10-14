@@ -10,6 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-076), accepted by the author in chat as stand-in for S01 | [02e3794] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added the results of task 1 (reproduction and the defaults of the five workflows) | pending |
 
 ---
 
@@ -76,6 +77,27 @@ A patch release (`2.1.1`, [ADR-0006]) in which: the default `tools-ref` of every
 | 7 | Remove the workaround from the framework page | In `TirSystem/sqa-qc-framework`, remove the `tools-ref: v2` line and the two bullets about it from `docs/wiki/Badges.md`, `Badges-da.md` and `Badges-ms.md`, and add a changelog line. This is a change in another repository, made after release 2.1.1 and in its own pull request. | No | |
 | 8 | Add MIL-011 to the Project Plan | Add the schedule row, the Gantt bar, the scope entry and the dependency to [PP-001], and its review to the traceability matrix. | No | |
 | 9 | Review | Record `RC-*` for this milestone, the workflow and tests, and the guides, each with a verdict. | No | |
+
+## Verification results
+
+Task 1 was run on 2026-10-14 with the throwaway branch `verify-code-metrics-defaults` of `TirSystem/github-action`. It calls `code-metrics.yml` at the two refs a caller could use, with every input at its default.
+
+| Call | Result | Evidence |
+| --- | --- | --- |
+| `...code-metrics.yml@v2`, defaults | Fails in the step "Validate the inputs": `bash: shared-scripts/tools/code-metrics.sh: No such file or directory`, exit code 127. The input `tools-ref` is `v1`, so the scripts are fetched from `v1`. | run 1499, job 1638 |
+| `...code-metrics.yml@v1`, defaults | No run is created at all, and no error is shown: two pushes of a workflow that calls it (once with the `@v2` job beside it, once alone) made no run in over a minute, while the push of the `@v2` call alone made one | commits `5654905` and `46e752d` (no run), `9a17868` (run 1499) |
+
+The defaults of the five reusable workflows at `v2.1.0` (`v1` is `1.2.2`, `v2` is `2.1.0`):
+
+| Workflow | Default `tools-ref` | Script it runs | At the default | At `v2` |
+| --- | --- | --- | --- | --- |
+| `code-metrics.yml` | `v1` | `tools/code-metrics.sh` | **absent** | present |
+| `quality-checks.yml` | `v1` | `tools/quality-checks.sh` | present | present |
+| `quality-checks-cpp.yml` | `v1` | `tools/quality-checks-cpp.sh` | present | present |
+| `quality-checks-csharp.yml` | `v1` | `tools/quality-checks-csharp.sh` | present | present |
+| `publish-wiki-pages.yml` | `v1` | `tools/publish_wiki.py` | present | present |
+
+Only `code-metrics.yml` is broken. The other four resolve, but a caller at `@v2` runs their scripts from `1.2.2` and not from `2.1.0`; `tools/publish_wiki.py` changed in `2.0.0` (it requires `WIKI_PRUNE` and no longer reads a marker). Whether that is a defect is decided in task 2.
 
 ---
 
