@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of task 1 (reproduction and the defaults of the five workflows); reviewed (RC-077), accepted by the AI as stand-in for S01 in autonomous mode | [e11c43f] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added the results of tasks 2 to 5 (the fix, the test, the guides, the run on the instance); reviewed in RC-078, the release follows | [a6892c3] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the results of task 1 (reproduction and the defaults of the five workflows); reviewed (RC-077), accepted by the AI as stand-in for S01 in autonomous mode | [e11c43f] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of tasks 2 to 5 (the fix, the test, the guides, the run on the instance); reviewed in RC-078, the release follows; outcome reviewed (RC-079), accepted by the AI as stand-in for S01 in autonomous mode | [a6892c3] |
 
 ---
 
@@ -107,6 +107,13 @@ Tasks 2 to 5 were done on 2026-10-14 on the branch `mil-011-fix`:
 - **Guides (task 4):** `guides/code-metrics.md`, `guides/upgrading.md`, the three quality-check guides, `README.md` and the wiki pages in English, Danish and Bahasa Malaysia; the amendments of ADR-0005, ADR-0008, ADR-0009 and ADR-0010. A search for `code-metrics.yml@v1` finds none.
 - **Instance (task 5):** the workflow at `@mil-011-fix` with every input at its default except `badges-branch` ran as run 1509 (job 1649): `tools-ref` resolved to `v2`, the scripts were fetched, and the badges were committed to `badges-verify` (commit `041d991`).
 
+
+Tasks 6 and 7 were done on 2026-10-14:
+
+- **Release (task 6):** the Release workflow ran in dry-run mode (run 1524) and then for real (run 1525); `v2.1.1` and `v2` are `3023461`, `v1` is unchanged at `9bf0a2b` (1.2.2), and the release page has the changelog entry. A call at `@v2` with the defaults ran after the release (run 1526, job 1670): `tools-ref` resolved to `v2`, the scripts were fetched at `3023461`, and the badges were published.
+- **Framework page (task 7):** `TirSystem/sqa-qc-framework` pull request 57 removed the `tools-ref` workaround from the `Badges` pages in three languages; the wiki is published.
+- **Outcome:** [RC-079], Go, all eight criteria pass.
+
 ---
 
 [BC-001]: ../business-case.md
@@ -115,5 +122,6 @@ Tasks 2 to 5 were done on 2026-10-14 on the branch `mil-011-fix`:
 [ADR-0010]: ../adr/adr-0010-code-metrics-badges-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [PP-001]: ../project-plan.md
+[RC-079]: ../sqa/reviews/rc-079-mil-011-outcome.md
 [e11c43f]: https://git.tirsystem.com/TirSystem/github-action/commit/e11c43f0a41e7dd9647f7804947d6e464407a597
 [a6892c3]: https://git.tirsystem.com/TirSystem/github-action/commit/a6892c372aca9f2e12826a4c3b260290a0656ecb

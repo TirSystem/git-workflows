@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-011 and RC-076 (fix the defaults of the code metrics workflow) | [3d7a9df] |
 | 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-077 and RC-078 (MIL-011 task 1 results, and the fix of the defaults) | [a6892c3] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-079 (MIL-011 outcome, release 2.1.1) | pending |
 
 ---
 
@@ -44,7 +44,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-008] | MIL | [BC-001], [PP-001], [MIL-006], [ADR-0004] | [MIL-009] | [RC-060], [RC-061] |
 | [MIL-009] | MIL | [BC-001], [PP-001], [MIL-008], [ADR-0004], [ADR-0006], [ADR-0009] | - | [RC-064], [RC-066] |
 | [MIL-010] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004] | [MIL-011] | [RC-068], [RC-074], [RC-075] |
-| [MIL-011] | MIL | [BC-001], [PP-001], [MIL-010], [ADR-0006], [ADR-0010] | - | [RC-076], [RC-077], [RC-078] |
+| [MIL-011] | MIL | [BC-001], [PP-001], [MIL-010], [ADR-0006], [ADR-0010] | - | [RC-076], [RC-077], [RC-078], [RC-079] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
@@ -136,6 +136,7 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-076] | RC | [MIL-011], [PP-001] | - | - |
 | [RC-077] | RC | [MIL-011] | - | - |
 | [RC-078] | RC | [MIL-011] | - | - |
+| [RC-079] | RC | [MIL-011] | - | - |
 
 ## Coverage Notes
 
@@ -249,6 +250,7 @@ updated whenever an artifact instance is created or reviewed.
 [RC-076]: ./reviews/rc-076-mil-011-plan.md
 [RC-077]: ./reviews/rc-077-mil-011-task-1-results.md
 [RC-078]: ./reviews/rc-078-mil-011-fix.md
+[RC-079]: ./reviews/rc-079-mil-011-outcome.md
 [ADR-0008]: ../adr/adr-0008-cpp-csharp-quality-check-contract.md
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0007]: ../adr/adr-0007-release-publish-destination.md
