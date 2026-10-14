@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted | [eaa0e30] |
 
 ---
 
@@ -47,3 +47,4 @@ Go - the results are true to the evidence: the failure at `@v2` is in the log of
 [MIL-011]: ../../milestones/mil-011-code-metrics-default-tools-ref.md
 [RC-076]: ./rc-076-mil-011-plan.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[eaa0e30]: https://git.tirsystem.com/TirSystem/github-action/commit/eaa0e30beaa097dfeb1c07c814a71d02a6987060

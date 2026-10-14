@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | The report reaches the workflow as an artifact of the caller's run (input `coverage-artifact`), because a called workflow runs in its own job; reviewed (RC-073) | [0dc5132] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -223,3 +223,4 @@ not affected: the `v1` tag keeps the `v1` workflow files.
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [0dc5132]: https://git.tirsystem.com/TirSystem/github-action/commit/0dc5132a2ea419ba05035ee3594cec63335c240b
+[eaa0e30]: https://git.tirsystem.com/TirSystem/github-action/commit/eaa0e30beaa097dfeb1c07c814a71d02a6987060

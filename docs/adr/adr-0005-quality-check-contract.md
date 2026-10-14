@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Added the input tools-ref: the shell steps moved to a script file fetched at that ref (RC-051) | [670f0ac] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -134,3 +134,4 @@ not affected: the `v1` tag keeps the `v1` workflow files.
 [ADR-0004]: ./adr-0004-shared-wiki-publishing-opt-in.md
 [385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
 [670f0ac]: https://git.tirsystem.com/TirSystem/github-action/commit/670f0ac469043bb166c84290c0dbf62b4908e3cc
+[eaa0e30]: https://git.tirsystem.com/TirSystem/github-action/commit/eaa0e30beaa097dfeb1c07c814a71d02a6987060

@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Review findings fixed (RC-063): the product owner's language is spelled out, the security consequence is named, and the secret passing is recorded as verified | [8c2c52e] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -110,3 +110,4 @@ not affected: the `v1` tag keeps the `v1` workflow files.
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [01b9c29]: https://git.tirsystem.com/TirSystem/github-action/commit/01b9c2972b4317bcc590540010aea0eaf7f30014
 [8c2c52e]: https://git.tirsystem.com/TirSystem/github-action/commit/8c2c52ebd2a27e4d0edb4008c31c002718d280fb
+[eaa0e30]: https://git.tirsystem.com/TirSystem/github-action/commit/eaa0e30beaa097dfeb1c07c814a71d02a6987060

@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version: Go for tasks 2 to 5, criteria 6 to 8 open until the release | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version: Go for tasks 2 to 5, criteria 6 to 8 open until the release | [a6892c3] |
 
 ---
 
@@ -53,3 +53,4 @@ Go for the deliverables of tasks 2 to 5: criteria 1 to 5 pass on the evidence ab
 [MIL-011]: ../../milestones/mil-011-code-metrics-default-tools-ref.md
 [RC-076]: ./rc-076-mil-011-plan.md
 [RC-077]: ./rc-077-mil-011-task-1-results.md
+[a6892c3]: https://git.tirsystem.com/TirSystem/github-action/commit/a6892c372aca9f2e12826a4c3b260290a0656ecb

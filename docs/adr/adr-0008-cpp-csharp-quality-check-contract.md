@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-054): abbreviations expanded at first use and the security impact of downloading tools named | [9e7aedd] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -151,3 +151,4 @@ not affected: the `v1` tag keeps the `v1` workflow files.
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [11cba35]: https://git.tirsystem.com/TirSystem/github-action/commit/11cba358b83cb7b6624f6b0956ae7b0c112d3692
 [9e7aedd]: https://git.tirsystem.com/TirSystem/github-action/commit/9e7aeddb11c2b41ac893d9f7893d663a53fbe470
+[eaa0e30]: https://git.tirsystem.com/TirSystem/github-action/commit/eaa0e30beaa097dfeb1c07c814a71d02a6987060

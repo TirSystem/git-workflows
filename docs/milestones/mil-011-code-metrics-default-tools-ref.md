@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of task 1 (reproduction and the defaults of the five workflows); reviewed (RC-077), accepted by the AI as stand-in for S01 in autonomous mode | [e11c43f] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added the results of tasks 2 to 5 (the fix, the test, the guides, the run on the instance); reviewed in RC-078, the release follows | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added the results of tasks 2 to 5 (the fix, the test, the guides, the run on the instance); reviewed in RC-078, the release follows | [a6892c3] |
 
 ---
 
@@ -116,3 +116,4 @@ Tasks 2 to 5 were done on 2026-10-14 on the branch `mil-011-fix`:
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [PP-001]: ../project-plan.md
 [e11c43f]: https://git.tirsystem.com/TirSystem/github-action/commit/e11c43f0a41e7dd9647f7804947d6e464407a597
+[a6892c3]: https://git.tirsystem.com/TirSystem/github-action/commit/a6892c372aca9f2e12826a4c3b260290a0656ecb
