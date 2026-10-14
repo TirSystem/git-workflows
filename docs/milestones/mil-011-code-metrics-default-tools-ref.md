@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-076), accepted by the author in chat as stand-in for S01 | [02e3794] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added the results of task 1 (reproduction and the defaults of the five workflows) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added the results of task 1 (reproduction and the defaults of the five workflows) | [e11c43f] |
 
 ---
 
@@ -108,3 +108,4 @@ Only `code-metrics.yml` is broken. The other four resolve, but a caller at `@v2`
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [PP-001]: ../project-plan.md
 [02e3794]: https://git.tirsystem.com/TirSystem/github-action/commit/02e3794d7b05799af2544ca303c99271da788e82
+[e11c43f]: https://git.tirsystem.com/TirSystem/github-action/commit/e11c43f0a41e7dd9647f7804947d6e464407a597
