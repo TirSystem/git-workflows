@@ -46,6 +46,7 @@ PAGES: tuple[Page, ...] = (
     Page("QualityChecksPythonShell", "guides/quality-checks.md"),
     Page("QualityChecksCpp", "guides/quality-checks-cpp.md"),
     Page("QualityChecksCSharp", "guides/quality-checks-csharp.md"),
+    Page("CodeMetrics", "guides/code-metrics.md"),
     Page("Upgrading", "guides/upgrading.md"),
     Page("Capabilities", "README.md", ("Capabilities",)),
 )
@@ -66,6 +67,7 @@ _PAGE_FOR_SOURCE = {
     "guides/quality-checks.md": "QualityChecksPythonShell",
     "guides/quality-checks-cpp.md": "QualityChecksCpp",
     "guides/quality-checks-csharp.md": "QualityChecksCSharp",
+    "guides/code-metrics.md": "CodeMetrics",
     "guides/upgrading.md": "Upgrading",
 }
 
@@ -191,9 +193,9 @@ def render_page(page: Page, repo_root: Path = REPO_ROOT) -> str:
 # Link text of the sidebar: English, then one list per translation code.
 SIDEBAR_TITLE = "TirSystem GitHub Actions"
 SIDEBAR_LABELS: dict[str, tuple[str, ...]] = {
-    "en": ("Home", "Onboarding", "Credentials", "Troubleshooting", "Quality checks (Python, shell)", "Quality checks (C and C++)", "Quality checks (C#)", "Upgrading", "Capabilities"),
-    "da": ("Hjem", "Tilslutning", "Credentials", "Fejlfinding", "Kvalitetskontrol (Python, shell)", "Kvalitetskontrol (C og C++)", "Kvalitetskontrol (C#)", "Opgradering", "Kapabiliteter"),
-    "ms": ("Utama", "Menyertakan", "Kelayakan", "Diagnosis", "Semakan kualiti (Python, shell)", "Semakan kualiti (C dan C++)", "Semakan kualiti (C#)", "Menaik taraf", "Keupayaan"),
+    "en": ("Home", "Onboarding", "Credentials", "Troubleshooting", "Quality checks (Python, shell)", "Quality checks (C and C++)", "Quality checks (C#)", "Code metrics", "Upgrading", "Capabilities"),
+    "da": ("Hjem", "Tilslutning", "Credentials", "Fejlfinding", "Kvalitetskontrol (Python, shell)", "Kvalitetskontrol (C og C++)", "Kvalitetskontrol (C#)", "Kodemålinger", "Opgradering", "Kapabiliteter"),
+    "ms": ("Utama", "Menyertakan", "Kelayakan", "Diagnosis", "Semakan kualiti (Python, shell)", "Semakan kualiti (C dan C++)", "Semakan kualiti (C#)", "Metrik kod", "Menaik taraf", "Keupayaan"),
 }
 SIDEBAR_NAME = "_Sidebar.md"
 

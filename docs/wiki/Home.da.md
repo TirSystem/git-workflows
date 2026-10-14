@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 074ce16f3435 -->
+<!-- translation of Home.md, source sha256 810981fb9bc8 -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -13,12 +13,12 @@ En samling af genbrugelige Gitea Actions-workflows til DevOps-professionelle og 
 
 Dette repository er den centrale samling af genbrugelig automatisering til TirSystems repositories. Det primære repository ligger på `git.tirsystem.com` (Gitea) og spejles med push til GitHub.
 
-Det indeholder ni workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki (kaldt af hvert repository), fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
+Det indeholder ti workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki (kaldt af hvert repository), fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, kodemålinger og dækningsbadges, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Der er ni workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
+Der er ti workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
 
 | Workflow | Fil | Type | Starter ved | Formål |
 | --- | --- | --- | --- | --- |
@@ -27,6 +27,7 @@ Der er ni workflows i dette repository. Et **scoped** workflow leveres af instan
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører ruff, mypy, shellcheck og shfmt på de sporede filer og ændrer intet |
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører clang-format og clang-tidy i præcise versioner på de sporede C- og C++-filer og ændrer intet |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører `dotnet format` og `dotnet build` på et præcist .NET SDK 10 eller nyere og ændrer intet |
+| Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/code-metrics.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer), læser en Cobertura-dækningsrapport og committer tre SVG-badges til en `badges`-gren |
 | Publish own wiki | [`publish-own-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-own-wiki.yml) | Kun dette repository | push til `main`, der ændrer `docs/wiki/**`, manuelt | Kalder det genbrugelige workflow Publish wiki pages for dette repositorys wiki |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Kun dette repository | manuelt | Opretter versionstagget, udgivelsessiden og major-tagget efter kontrollerne |
 | Publicering af accepterede milepæle | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Kun dette repository | push til `main`, der ændrer `docs/milestones/**` eller `docs/sqa/reviews/**`, manuelt (tørkørsel som standard) | Opretter eller opdaterer Gitea-milepælen og issues for hver milepæl, der er Accepted med en Go-gennemgang |
@@ -229,6 +230,50 @@ else
   else
     Workflow --> Caller: All selected checks passed
   end
+end
+deactivate Workflow
+@enduml
+```
+
+### Kodemålinger og dækningsbadges
+
+Et genbrugeligt workflow, der tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer) i et repository og udgiver dem sammen med testdækningen som tre SVG-badges på en `badges`-gren, kaldt med `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v1` (ADR-0010). Det kræver `contents: write` og kører ingen test: et tidligere job hos kalderen frembringer en dækningsrapport i Cobertura XML-format og uploader den som artefakt ([vejledning](CodeMetrics.da)).
+
+#### Workflow
+
+```plantuml
+@startuml
+title Code metrics and coverage badges (reusable workflow)
+
+autonumber
+
+actor "Calling repository\nuses: ...code-metrics.yml@v1" as Caller
+participant "Gitea Actions\ncode-metrics" as Workflow
+participant "Branch badges\nof the caller" as Branch
+
+Caller -> Workflow: workflow_call with working-directory, exclude,\ncoverage-report and thresholds
+activate Workflow
+
+Workflow -> Workflow: Check out the caller and the shared scripts
+Workflow -> Workflow: Validate the inputs
+alt an input is invalid
+  Workflow --> Caller: Fail with [configuration]
+end
+
+Workflow -> Workflow: Download the coverage artifact (when given)
+Workflow -> Workflow: Count code files and lines of code
+alt a coverage report is given but missing or malformed
+  Workflow --> Caller: Fail with [configuration] that names the file
+else
+  Workflow -> Workflow: Write code-files.svg, code-lines.svg\nand coverage.svg
+end
+
+Workflow -> Branch: Compare with the files of the branch
+alt no badge changed
+  Workflow --> Caller: Notice: nothing to commit, pass
+else
+  Workflow -> Branch: One commit with [skip ci]
+  Workflow --> Caller: Badges published
 end
 deactivate Workflow
 @enduml

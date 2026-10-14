@@ -17,11 +17,11 @@ A collection of reusable Gitea Actions workflows for DevOps professionals and so
 
 This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It contains nine workflows: metadata sync to the GitHub mirror, wiki publishing (called by each repository), shared quality checks for Python and shell, for C and C++ and for C#, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#-workflows).
+It contains ten workflows: metadata sync to the GitHub mirror, wiki publishing (called by each repository), shared quality checks for Python and shell, for C and C++ and for C#, code metrics and coverage badges, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#-workflows).
 
 ## 🔧 Workflows
 
-Nine workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
+Ten workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |
 | --- | --- | --- | --- | --- |
@@ -30,6 +30,7 @@ Nine workflows live in this repository. A **scoped** workflow is delivered by th
 | Quality checks | [`quality-checks.yml`](.gitea/workflows/quality-checks.yml) | Reusable (`workflow_call`) | a call from another repository | Runs ruff, mypy, shellcheck and shfmt on the tracked files and changes nothing |
 | Quality checks C++ | [`quality-checks-cpp.yml`](.gitea/workflows/quality-checks-cpp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs clang-format and clang-tidy at exact versions on the tracked C and C++ files and changes nothing |
 | Quality checks C# | [`quality-checks-csharp.yml`](.gitea/workflows/quality-checks-csharp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs `dotnet format` and `dotnet build` on an exact .NET SDK 10 or later and changes nothing |
+| Code metrics | [`code-metrics.yml`](.gitea/workflows/code-metrics.yml) | Reusable (`workflow_call`) | a call from another repository | Counts the code files and the lines of code (without comment and blank lines), reads a Cobertura coverage report and commits three SVG badges to a `badges` branch |
 | Publish own wiki | [`publish-own-wiki.yml`](.gitea/workflows/publish-own-wiki.yml) | This repository only | push to `main` that changes `docs/wiki/**`, manual | Calls the reusable Publish wiki pages workflow for the wiki of this repository |
 | Release | [`release.yml`](.gitea/workflows/release.yml) | This repository only | manual | Creates the version tag, the release page and the major tag after the checks |
 | Publish accepted milestones | [`sync-milestones.yml`](.gitea/workflows/sync-milestones.yml) | This repository only | push to `main` that changes `docs/milestones/**` or `docs/sqa/reviews/**`, manual (dry run by default) | Creates or updates the Gitea milestone and issues of every milestone that is Accepted with a Go review |
@@ -232,6 +233,50 @@ else
   else
     Workflow --> Caller: All selected checks passed
   end
+end
+deactivate Workflow
+@enduml
+```
+
+### 🏅 Code metrics
+
+A reusable workflow that counts the code files and the lines of code (without comment and blank lines) of a repository and publishes them, with the test coverage, as three SVG badges on a `badges` branch, called with `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v1` (ADR-0010). It needs `contents: write` and runs no test: an earlier job of the caller produces a Cobertura XML coverage report and uploads it as an artifact ([guide](guides/code-metrics.md)).
+
+#### 🔀 Workflow
+
+```plantuml
+@startuml
+title Code metrics and coverage badges (reusable workflow)
+
+autonumber
+
+actor "Calling repository\nuses: ...code-metrics.yml@v1" as Caller
+participant "Gitea Actions\ncode-metrics" as Workflow
+participant "Branch badges\nof the caller" as Branch
+
+Caller -> Workflow: workflow_call with working-directory, exclude,\ncoverage-report and thresholds
+activate Workflow
+
+Workflow -> Workflow: Check out the caller and the shared scripts
+Workflow -> Workflow: Validate the inputs
+alt an input is invalid
+  Workflow --> Caller: Fail with [configuration]
+end
+
+Workflow -> Workflow: Download the coverage artifact (when given)
+Workflow -> Workflow: Count code files and lines of code
+alt a coverage report is given but missing or malformed
+  Workflow --> Caller: Fail with [configuration] that names the file
+else
+  Workflow -> Workflow: Write code-files.svg, code-lines.svg\nand coverage.svg
+end
+
+Workflow -> Branch: Compare with the files of the branch
+alt no badge changed
+  Workflow --> Caller: Notice: nothing to commit, pass
+else
+  Workflow -> Branch: One commit with [skip ci]
+  Workflow --> Caller: Badges published
 end
 deactivate Workflow
 @enduml
@@ -500,6 +545,7 @@ Rows that say Implemented or Guides written exist today. The rest is planned and
 | Publish a repository wiki from `docs/wiki/` through a called workflow | Implemented as the reusable workflow `.gitea/workflows/publish-wiki-pages.yml`, with offline tests; called by every repository that publishes a wiki, and this repository's own wiki is in `docs/wiki/` (MIL-008, MIL-009) |
 | Shared quality checks (Python and shell) | Implemented as the reusable workflow `.gitea/workflows/quality-checks.yml`, with offline tests and a trial in a second organization; adopted in RepoFoundry ([guide](guides/quality-checks.md)) |
 | Shared quality checks (C and C++, C#) | Implemented as the reusable workflows `.gitea/workflows/quality-checks-cpp.yml` and `.gitea/workflows/quality-checks-csharp.yml` with exact tool versions and offline tests; not yet used in another repository (MIL-007) ([C and C++ guide](guides/quality-checks-cpp.md), [C# guide](guides/quality-checks-csharp.md)) |
+| Code metrics and coverage badges | Implemented as the reusable workflow `.gitea/workflows/code-metrics.yml` with a counter, a Cobertura reader, an SVG renderer and offline tests; not yet used in another repository (MIL-010) ([guide](guides/code-metrics.md)) |
 | Versioned release and publishing | Release process, changelog and upgrade guide defined; the release workflow exists and `v1.0.0` is released (MIL-004) ([guide](guides/upgrading.md)) |
 
 ## 📄 License

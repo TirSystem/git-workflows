@@ -23,8 +23,8 @@ A breaking release gets a new major version (`v2`), so a pipeline on `@v1`
 never receives it until you change the line yourself.
 
 The quality-checks workflows (`quality-checks.yml`, `quality-checks-cpp.yml` and
-`quality-checks-csharp.yml`) fetch their script at their input `tools-ref`, which
-defaults to `v1`. To pin one completely, call it at an exact tag and set
+`quality-checks-csharp.yml`) and the code-metrics workflow (`code-metrics.yml`)
+fetch their scripts at their input `tools-ref`, which defaults to `v1`. To pin one completely, call it at an exact tag and set
 `tools-ref` to the same tag; otherwise the script follows the major tag.
 
 The scoped workflow **Sync GitHub mirror metadata** is delivered by the
