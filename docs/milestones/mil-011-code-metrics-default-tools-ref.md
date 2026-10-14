@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [02e3794] |
 
 ---
 
@@ -85,3 +85,4 @@ A patch release (`2.1.1`, [ADR-0006]) in which: the default `tools-ref` of every
 [ADR-0010]: ../adr/adr-0010-code-metrics-badges-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [PP-001]: ../project-plan.md
+[02e3794]: https://git.tirsystem.com/TirSystem/github-action/commit/02e3794d7b05799af2544ca303c99271da788e82
