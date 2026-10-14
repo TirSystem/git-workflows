@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-072) | pending |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | The report reaches the workflow as an artifact of the caller's run (input `coverage-artifact`), because a called workflow runs in its own job; reviewed (RC-073) | pending |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-072) | [0dc5132] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | The report reaches the workflow as an artifact of the caller's run (input `coverage-artifact`), because a called workflow runs in its own job; reviewed (RC-073) | [0dc5132] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -214,3 +214,4 @@ The rules that follow from it:
 [US-001]: ../user-stories.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
+[0dc5132]: https://git.tirsystem.com/TirSystem/github-action/commit/0dc5132a2ea419ba05035ee3594cec63335c240b

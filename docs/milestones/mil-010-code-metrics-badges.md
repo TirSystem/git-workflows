@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-068) | [5002450] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Results of tasks 3, 6 and 8 added: the report as an artifact of the caller (ADR-0010), adoption in a throwaway repository with seeded change and failure; reviewed (RC-074) | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Results of tasks 3, 6 and 8 added: the report as an artifact of the caller (ADR-0010), adoption in a throwaway repository with seeded change and failure; reviewed (RC-074) | [5c5a1d1] |
 
 ---
 
@@ -174,3 +174,4 @@ user to delete.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [5002450]: https://git.tirsystem.com/TirSystem/github-action/commit/50024505fe788b1c5e3021c0d1fc3d079590070e
+[5c5a1d1]: https://git.tirsystem.com/TirSystem/github-action/commit/5c5a1d19d96a6979b4f6141e736957174ba686a9

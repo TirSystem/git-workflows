@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | US-001.16 and US-001.17 reviewed (RC-057) and accepted; the Purpose and Scope names the later stories | [1bc56f8] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.18 to US-001.20 (code metrics and coverage badges, MIL-010 task 1); reviewed (RC-070) | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.18 to US-001.20 (code metrics and coverage badges, MIL-010 task 1); reviewed (RC-070) | [9ca9673] |
 
 ---
 
@@ -319,3 +319,4 @@ behaviour is tested rather than built.
 [UC-008]: ./uc-008/uc.md
 [MIL-010]: ./milestones/mil-010-code-metrics-badges.md
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
+[9ca9673]: https://git.tirsystem.com/TirSystem/github-action/commit/9ca9673b00351cf913966f347c4da09890ed3f1f

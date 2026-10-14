@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-073 (ADR-0010: the coverage report as an artifact, MIL-010 task 6) | pending |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-074 (MIL-010 results of tasks 3, 6 and 8) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-073 (ADR-0010: the coverage report as an artifact, MIL-010 task 6) | [5c5a1d1] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-074 (MIL-010 results of tasks 3, 6 and 8) | [5c5a1d1] |
 
 ---
 
@@ -248,3 +248,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
+[5c5a1d1]: https://git.tirsystem.com/TirSystem/github-action/commit/5c5a1d19d96a6979b4f6141e736957174ba686a9

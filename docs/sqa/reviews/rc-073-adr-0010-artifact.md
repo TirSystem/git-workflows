@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted | [0dc5132] |
 
 ---
 
@@ -52,3 +52,4 @@ Go - all applicable criteria pass; the amendment keeps the decisions of the user
 
 [ADR-0010]: ../../adr/adr-0010-code-metrics-badges-contract.md
 [QC-ADR-001]: ../../../framework/qc/artifacts/qc-adr.md
+[0dc5132]: https://git.tirsystem.com/TirSystem/github-action/commit/0dc5132a2ea419ba05035ee3594cec63335c240b

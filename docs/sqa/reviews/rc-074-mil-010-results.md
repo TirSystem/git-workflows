@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted | [5c5a1d1] |
 
 ---
 
@@ -48,3 +48,4 @@ Go - the recorded results support the criteria 1 to 8; criterion 9 is decided af
 
 [MIL-010]: ../../milestones/mil-010-code-metrics-badges.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[5c5a1d1]: https://git.tirsystem.com/TirSystem/github-action/commit/5c5a1d19d96a6979b4f6141e736957174ba686a9

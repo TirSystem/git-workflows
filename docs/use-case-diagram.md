@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the use case Consume a Workflow Update (UC-007) (RC-045) | [4cf52af] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the use case Show Code Metrics and Coverage Badges (UC-008); reviewed (RC-071) | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the use case Show Code Metrics and Coverage Badges (UC-008); reviewed (RC-071) | [9ca9673] |
 
 ---
 
@@ -110,3 +110,4 @@ UC4 ..> UC1 : <<extend>>
 [UC-007]: ./uc-007/uc.md
 [UC-008]: ./uc-008/uc.md
 [4cf52af]: https://git.tirsystem.com/TirSystem/github-action/commit/4cf52afe00f546c6b20424fb8dfc12796ffd9296
+[9ca9673]: https://git.tirsystem.com/TirSystem/github-action/commit/9ca9673b00351cf913966f347c4da09890ed3f1f
