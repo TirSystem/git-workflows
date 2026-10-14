@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | UCD-001 |
-| CrossReference | [SA-001], [BC-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007] |
+| CrossReference | [SA-001], [BC-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007], [UC-008] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the use case Release a Reusable Workflow (UC-006) | [044d8ba] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Added the use case Consume a Workflow Update (UC-007) (RC-045) | [4cf52af] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Added the use case Consume a Workflow Update (UC-007) (RC-045) | [4cf52af] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the use case Show Code Metrics and Coverage Badges (UC-008); reviewed (RC-071) | [9ca9673] |
 
 ---
 
@@ -46,6 +46,7 @@ rectangle "Reusable Workflow Collection" <<System>> {
   usecase "Run Project Quality Checks" as UC5
   usecase "Release a Reusable Workflow" as UC6
   usecase "Consume a Workflow Update" as UC7
+  usecase "Show Code Metrics and Coverage Badges" as UC8
 }
 
 DevOps --> UC1
@@ -57,6 +58,7 @@ Operator --> UC2
 Operator --> UC4
 Engineer --> UC5
 Engineer --> UC7
+Engineer --> UC8
 UC1 --> Gitea
 UC1 --> GitHub
 UC3 ..> UC2 : <<include>>
@@ -70,7 +72,7 @@ UC4 ..> UC1 : <<extend>>
 | --- | --- | --- | --- |
 | DevOps Professional | `<<Actor>>` | S05 | Synchronize Repository Metadata, Configure Workflow Credentials, Onboard a Repository, Diagnose a Failed Workflow, Release a Reusable Workflow |
 | Platform Operator | `<<Actor>>` | S03 | Configure Workflow Credentials, Diagnose a Failed Workflow |
-| Software Engineer | `<<Actor>>` | S02 | Run Project Quality Checks, Consume a Workflow Update |
+| Software Engineer | `<<Actor>>` | S02 | Run Project Quality Checks, Consume a Workflow Update, Show Code Metrics and Coverage Badges |
 | Gitea Instance | `<<System>>` | - | Synchronize Repository Metadata (source of description and topics) |
 | GitHub | `<<System>>` | S04 (audience of the mirror) | Synchronize Repository Metadata (target) |
 
@@ -85,6 +87,7 @@ UC4 ..> UC1 : <<extend>>
 | Run Project Quality Checks | Software Engineer | Lint, format and type checks run on every change and report a pass or a fail |
 | Release a Reusable Workflow | DevOps Professional | A validated, versioned update that consumers can pin |
 | Consume a Workflow Update | Software Engineer | A new version is adopted safely, one repository first |
+| Show Code Metrics and Coverage Badges | Software Engineer | The size and the coverage of the code are visible as badges that follow every push |
 
 ## Relationships
 
@@ -104,6 +107,7 @@ UC4 ..> UC1 : <<extend>>
 [UC-004]: ./uc-004/uc.md
 [UC-005]: ./uc-005/uc.md
 [UC-006]: ./uc-006/uc.md
-[044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051
 [UC-007]: ./uc-007/uc.md
+[UC-008]: ./uc-008/uc.md
 [4cf52af]: https://git.tirsystem.com/TirSystem/github-action/commit/4cf52afe00f546c6b20424fb8dfc12796ffd9296
+[9ca9673]: https://git.tirsystem.com/TirSystem/github-action/commit/9ca9673b00351cf913966f347c4da09890ed3f1f

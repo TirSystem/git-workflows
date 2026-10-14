@@ -20,6 +20,19 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-10-14
+
+### Added
+
+- The reusable workflow `code-metrics.yml` (ADR-0010, MIL-010). It counts the
+  code files and the lines of code (without comment and blank lines) of a
+  repository, reads a Cobertura XML coverage report that the caller uploads as an
+  artifact, and commits three SVG badges (code files, lines of code, coverage) to
+  a `badges` branch. It needs `contents: write` and no secret; the inputs are
+  `working-directory`, `exclude`, `coverage-report`, `coverage-artifact`,
+  `coverage-warn`, `coverage-good`, `badges-branch` and `tools-ref`. See
+  `guides/code-metrics.md`.
+
 ## [2.0.0] - 2026-10-14
 
 ### Breaking

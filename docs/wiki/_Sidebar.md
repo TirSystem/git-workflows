@@ -11,6 +11,7 @@
 - [Quality checks (Python, shell)](QualityChecksPythonShell)
 - [Quality checks (C and C++)](QualityChecksCpp)
 - [Quality checks (C#)](QualityChecksCSharp)
+- [Code metrics](CodeMetrics)
 - [Upgrading](Upgrading)
 - [Capabilities](Capabilities)
 
@@ -23,6 +24,7 @@
 - [Kvalitetskontrol (Python, shell)](QualityChecksPythonShell.da)
 - [Kvalitetskontrol (C og C++)](QualityChecksCpp.da)
 - [Kvalitetskontrol (C#)](QualityChecksCSharp.da)
+- [Kodemålinger](CodeMetrics.da)
 - [Opgradering](Upgrading.da)
 - [Kapabiliteter](Capabilities.da)
 
@@ -35,5 +37,6 @@
 - [Semakan kualiti (Python, shell)](QualityChecksPythonShell.ms)
 - [Semakan kualiti (C dan C++)](QualityChecksCpp.ms)
 - [Semakan kualiti (C#)](QualityChecksCSharp.ms)
+- [Metrik kod](CodeMetrics.ms)
 - [Menaik taraf](Upgrading.ms)
 - [Keupayaan](Capabilities.ms)

@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [RC-052], [RC-053], [RC-054], [RC-055], [RC-056], [RC-057], [RC-058], [RC-059], [RC-060], [RC-061], [RC-062], [RC-063], [RC-064], [RC-065], [RC-066], [RC-067], [RC-068], [ADR-0007], [ADR-0008], [ADR-0009], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [UC-008], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [RC-052], [RC-053], [RC-054], [RC-055], [RC-056], [RC-057], [RC-058], [RC-059], [RC-060], [RC-061], [RC-062], [RC-063], [RC-064], [RC-065], [RC-066], [RC-067], [RC-068], [RC-069], [RC-070], [RC-071], [RC-072], [RC-073], [RC-074], [ADR-0007], [ADR-0008], [ADR-0009], [ADR-0010], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-066 (MIL-009 outcome) | [95abc18] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-010, RC-067 and RC-068 (code metrics and coverage badges) | [5002450] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-073 (ADR-0010: the coverage report as an artifact, MIL-010 task 6) | [5c5a1d1] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-074 (MIL-010 results of tasks 3, 6 and 8) | [5c5a1d1] |
 
 ---
 
@@ -31,6 +31,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-002] | MIL | [BC-001], [PP-001], [MIL-001] | [MIL-003], [MIL-005] | [RC-005], [RC-027] |
 | [MIL-003] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-004] | [RC-006], [RC-028], [RC-033], [RC-039] |
 | [MIL-004] | MIL | [BC-001], [PP-001], [MIL-003] | - | [RC-007], [RC-029], [RC-034], [RC-048] |
+| [ADR-0010] | ADR | [MIL-010], [UC-008], [US-001], [ADR-0005], [ADR-0006] | - | [RC-072], [RC-073] |
 | [RC-001] | RC | [BC-001] | - | - |
 | [RC-002] | RC | [PP-001] | - | - |
 | [RC-003] | RC | [MIL-001] | - | - |
@@ -42,7 +43,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-007] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004], [ADR-0008] | - | [RC-052], [RC-055], [RC-059] |
 | [MIL-008] | MIL | [BC-001], [PP-001], [MIL-006], [ADR-0004] | [MIL-009] | [RC-060], [RC-061] |
 | [MIL-009] | MIL | [BC-001], [PP-001], [MIL-008], [ADR-0004], [ADR-0006], [ADR-0009] | - | [RC-064], [RC-066] |
-| [MIL-010] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004] | - | [RC-068] |
+| [MIL-010] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004] | - | [RC-068], [RC-074] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
@@ -59,8 +60,8 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-016] | RC | [MIL-006] | - | - |
 | [RC-017] | RC | [PP-001] | - | - |
 | [RC-018] | RC | [ADR-0004] | - | - |
-| [UCD-001] | UCD | [SA-001], [BC-001] | [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007] | [RC-019], [RC-035], [RC-040], [RC-045] |
-| [US-001] | US | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-007] | [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007] | [RC-020], [RC-036], [RC-041], [RC-046], [RC-057] |
+| [UCD-001] | UCD | [SA-001], [BC-001] | [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007], [UC-008] | [RC-019], [RC-035], [RC-040], [RC-045], [RC-071] |
+| [US-001] | US | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-007] | [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007], [UC-008] | [RC-020], [RC-036], [RC-041], [RC-046], [RC-057], [RC-070] |
 | [UC-001] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-021] |
 | [UC-002] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-022] |
 | [UC-003] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-023] |
@@ -73,6 +74,7 @@ updated whenever an artifact instance is created or reviewed.
 | [ADR-0008] | ADR | [MIL-007], [UC-005], [US-001], [ADR-0005], [ADR-0006] | - | [RC-054] |
 | [ADR-0009] | ADR | [MIL-008], [ADR-0003], [ADR-0004], [ADR-0005], [ADR-0006] | - | [RC-063] |
 | [UC-007] | UC | [UCD-001], [US-001], [SA-001] | - | [RC-044] |
+| [UC-008] | UC | [UCD-001], [US-001], [SA-001], [MIL-010] | - | [RC-069] |
 | [RC-019] | RC | [UCD-001] | - | - |
 | [RC-020] | RC | [US-001] | - | - |
 | [RC-021] | RC | [UC-001] | - | - |
@@ -123,6 +125,12 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-066] | RC | [MIL-009] | - | - |
 | [RC-067] | RC | [BC-001] | - | - |
 | [RC-068] | RC | [MIL-010], [PP-001] | - | - |
+| [RC-069] | RC | [UC-008] | - | - |
+| [RC-070] | RC | [US-001] | - | - |
+| [RC-071] | RC | [UCD-001] | - | - |
+| [RC-072] | RC | [ADR-0010] | - | - |
+| [RC-073] | RC | [ADR-0010] | - | - |
+| [RC-074] | RC | [MIL-010] | - | - |
 
 ## Coverage Notes
 
@@ -146,6 +154,7 @@ updated whenever an artifact instance is created or reviewed.
 [MIL-008]: ../milestones/mil-008-wiki-reusable-workflow.md
 [MIL-010]: ../milestones/mil-010-code-metrics-badges.md
 [MIL-009]: ../milestones/mil-009-migrate-wiki-callers-and-remove-scoped-workflow.md
+[ADR-0010]: ../adr/adr-0010-code-metrics-badges-contract.md
 [RC-001]: ./reviews/rc-001-business-case.md
 [RC-002]: ./reviews/rc-002-project-plan.md
 [RC-003]: ./reviews/rc-003-mil-001.md
@@ -224,15 +233,19 @@ updated whenever an artifact instance is created or reviewed.
 [RC-066]: ./reviews/rc-066-mil-009-outcome.md
 [RC-067]: ./reviews/rc-067-bc-001-o5.md
 [RC-068]: ./reviews/rc-068-mil-010-plan.md
+[RC-069]: ./reviews/rc-069-uc-008.md
+[RC-070]: ./reviews/rc-070-us-001-metrics.md
+[RC-071]: ./reviews/rc-071-ucd-001-metrics.md
+[RC-072]: ./reviews/rc-072-adr-0010.md
+[RC-073]: ./reviews/rc-073-adr-0010-artifact.md
+[RC-074]: ./reviews/rc-074-mil-010-results.md
 [ADR-0008]: ../adr/adr-0008-cpp-csharp-quality-check-contract.md
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0007]: ../adr/adr-0007-release-publish-destination.md
 [UC-007]: ../uc-007/uc.md
+[UC-008]: ../uc-008/uc.md
 [UC-006]: ../uc-006/uc.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
-[faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
-[1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
-[95abc18]: https://git.tirsystem.com/TirSystem/github-action/commit/95abc18a95d70c065b979123b8f8de22173af90c
-[5002450]: https://git.tirsystem.com/TirSystem/github-action/commit/50024505fe788b1c5e3021c0d1fc3d079590070e
+[5c5a1d1]: https://git.tirsystem.com/TirSystem/github-action/commit/5c5a1d19d96a6979b4f6141e736957174ba686a9

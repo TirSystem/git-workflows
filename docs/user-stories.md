@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | US-001 |
-| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007], [MIL-007] |
+| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007], [MIL-007], [UC-008], [MIL-010] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | Added US-001.16 and US-001.17 (C++ and C# checks, MIL-007 task 1) | [32b5ab6] |
-| 2026-10-11 | Accepted | Jens Tirsvad Nielsen | S01 | US-001.16 and US-001.17 reviewed (RC-057) and accepted; the Purpose and Scope names the later stories | [1bc56f8] |
+| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | US-001.16 and US-001.17 reviewed (RC-057) and accepted; the Purpose and Scope names the later stories | [1bc56f8] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.18 to US-001.20 (code metrics and coverage badges, MIL-010 task 1); reviewed (RC-070) | [9ca9673] |
 
 ---
 
@@ -21,7 +21,8 @@ These stories cover the P1 use cases of the Project Plan that MIL-002 delivers
 credentials, onboarding a repository and diagnosing a failed run. Roles are the
 actors of [UCD-001]. Later stories cover quality checks (US-001.09, US-001.10 and, for
 C++ and C#, US-001.16 and US-001.17), releases and updates (US-001.11 to
-US-001.15). Stories for the wiki (MIL-005, MIL-006) are not written yet.
+US-001.15) and the code metrics and coverage badges (US-001.18 to
+US-001.20). Stories for the wiki (MIL-005, MIL-006) are not written yet.
 
 ## Story List
 
@@ -248,9 +249,50 @@ US-001.15). Stories for the wiki (MIL-005, MIL-006) are not written yet.
 | --- | --- | --- |
 | [UC-005], [MIL-007] | fits one iteration | none |
 
+### US-001.18 — The size of the code is visible as badges
+
+**As a** Software Engineer, **I want** badges that show the number of code files and the number of lines of code without comment and blank lines, **so that** the size of the project is visible in its README without a service outside the instance.
+
+**Acceptance Criteria**
+
+- Given a repository that calls the shared code-metrics workflow, when a change is pushed, then a badge for the code files and a badge for the lines of code show the numbers of that revision.
+- Given a file with a comment line, a blank line and a code line, when the lines are counted, then only the code line is counted as a line of code.
+- Given a repository without a file of a supported language, when the workflow runs, then it passes with a notice and the badges show zero.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-008], [MIL-010] | fits one iteration | none |
+
+### US-001.19 — The coverage is visible as a badge
+
+**As a** Software Engineer, **I want** a badge that shows how much of the code my tests cover, **so that** a drop in coverage is seen as soon as it is pushed.
+
+**Acceptance Criteria**
+
+- Given a repository that supplies a coverage report, when a change is pushed, then a coverage badge shows the percentage of the report, and its colour follows the thresholds of the contract.
+- Given a coverage report that is missing or that cannot be read, when the workflow runs, then it fails with a `[configuration]` message that names the report file and no coverage badge is changed.
+- Given a repository that supplies no coverage report, when the workflow runs, then it passes with a notice and publishes no coverage badge.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-008], [MIL-010] | fits one iteration | none |
+
+### US-001.20 — A run with unchanged numbers changes nothing
+
+**As a** Software Engineer, **I want** the workflow to commit nothing when the numbers did not change, **so that** the history of the repository is not filled with badge commits.
+
+**Acceptance Criteria**
+
+- Given a push after which none of the three badges would differ, when the workflow runs, then no commit is made.
+- Given a push after which a number changed, when the workflow runs, then one commit changes only the badge files, and the workflow does not start again from that commit.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-008], [MIL-010] | fits one iteration | none |
+
 ## INVEST Check
 
-All seventeen stories are independent of each other except that US-001.05 and
+All twenty stories are independent of each other except that US-001.05 and
 US-001.06 build on US-001.04 (the secrets must exist before a repository can
 run the workflow). Each states one goal and can be negotiated, delivers value
 to the named role, is small enough for one iteration, and has acceptance
@@ -274,5 +316,7 @@ behaviour is tested rather than built.
 [UC-005]: ./uc-005/uc.md
 [UC-006]: ./uc-006/uc.md
 [UC-007]: ./uc-007/uc.md
-[32b5ab6]: https://git.tirsystem.com/TirSystem/github-action/commit/32b5ab62ab5a82638b71b8fcfb43a819e92ab346
+[UC-008]: ./uc-008/uc.md
+[MIL-010]: ./milestones/mil-010-code-metrics-badges.md
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
+[9ca9673]: https://git.tirsystem.com/TirSystem/github-action/commit/9ca9673b00351cf913966f347c4da09890ed3f1f

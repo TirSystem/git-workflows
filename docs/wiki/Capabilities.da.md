@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 7c310ccc1a66 -->
+<!-- translation of Capabilities.md, source sha256 f8d7f293f1fd -->
 
 > Dette er en oversættelse af [`Capabilities`](Capabilities). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -16,4 +16,5 @@ Rækker, der siger Implementeret eller Vejledninger er skrevet, findes i dag. Re
 | Publicering af et repositorys wiki fra `docs/wiki/` gennem et kaldt workflow | Implementeret som det genbrugelige workflow `.gitea/workflows/publish-wiki-pages.yml`, med offline-tests; kaldt af hvert repository, der publicerer en wiki, og dette repositorys egen wiki er i `docs/wiki/` (MIL-008, MIL-009) |
 | Fælles kvalitetskontrol (Python og shell) | Implementeret som det genbrugelige workflow `.gitea/workflows/quality-checks.yml`, med offline-tests og et forsøg i en anden organisation; taget i brug i RepoFoundry ([vejledning](QualityChecksPythonShell.da)) |
 | Fælles kvalitetskontrol (C og C++, C#) | Implementeret som de genbrugelige workflows `.gitea/workflows/quality-checks-cpp.yml` og `.gitea/workflows/quality-checks-csharp.yml` med præcise værktøjsversioner og offline-tests; endnu ikke brugt i et andet repository (MIL-007) ([vejledning til C og C++](QualityChecksCpp.da), [vejledning til C#](QualityChecksCSharp.da)) |
+| Kodemålinger og dækningsbadges | Implementeret som det genbrugelige workflow `.gitea/workflows/code-metrics.yml` med en tæller, en Cobertura-læser, en SVG-renderer og offline-tests; afprøvet i et kasserepository, endnu ikke brugt i et projektrepository (MIL-010) ([vejledning](CodeMetrics.da)) |
 | Versioneret udgivelse og publicering | Udgivelsesproces, changelog og opgraderingsvejledning er defineret; udgivelsesworkflowet findes, og `v1.0.0` er udgivet (MIL-004) ([vejledning](Upgrading.da)) |
