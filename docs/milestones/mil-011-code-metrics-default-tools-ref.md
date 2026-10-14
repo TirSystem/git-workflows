@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-076), accepted by the author in chat as stand-in for S01 | [02e3794] |
 | 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of task 1 (reproduction and the defaults of the five workflows); reviewed (RC-077), accepted by the AI as stand-in for S01 in autonomous mode | [e11c43f] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added the results of tasks 2 to 5 (the fix, the test, the guides, the run on the instance); reviewed in RC-078, the release follows | pending |
 
 ---
 
@@ -99,6 +99,14 @@ The defaults of the five reusable workflows at `v2.1.0` (`v1` is `1.2.2`, `v2` i
 
 Only `code-metrics.yml` is broken. The other four resolve, but a caller at `@v2` runs their scripts from `1.2.2` and not from `2.1.0`; `tools/publish_wiki.py` changed in `2.0.0` (it requires `WIKI_PRUNE` and no longer reads a marker). Whether that is a defect is decided in task 2.
 
+
+Tasks 2 to 5 were done on 2026-10-14 on the branch `mil-011-fix`:
+
+- **Fix (task 2):** the file `MAJOR_TAG` holds the current major (`v2`); the default `tools-ref` of the five reusable workflows is `v2`, and the header comment of `code-metrics.yml` calls it at `@v2`. The four workflows other than `code-metrics.yml` followed the older major only by default and changed no behaviour for a caller at `@v1`; for a caller at `@v2` the scripts now come from the same major as the workflow.
+- **Test (task 3):** `tests/test_tools_ref.py` ties `MAJOR_TAG` to the highest major of the changelog and checks every reusable workflow's default and script. With `default: "v1"` seeded in `code-metrics.yml` three tests failed; restored, they pass. The suite passes (540 tests).
+- **Guides (task 4):** `guides/code-metrics.md`, `guides/upgrading.md`, the three quality-check guides, `README.md` and the wiki pages in English, Danish and Bahasa Malaysia; the amendments of ADR-0005, ADR-0008, ADR-0009 and ADR-0010. A search for `code-metrics.yml@v1` finds none.
+- **Instance (task 5):** the workflow at `@mil-011-fix` with every input at its default except `badges-branch` ran as run 1509 (job 1649): `tools-ref` resolved to `v2`, the scripts were fetched, and the badges were committed to `badges-verify` (commit `041d991`).
+
 ---
 
 [BC-001]: ../business-case.md
@@ -107,5 +115,4 @@ Only `code-metrics.yml` is broken. The other four resolve, but a caller at `@v2`
 [ADR-0010]: ../adr/adr-0010-code-metrics-badges-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [PP-001]: ../project-plan.md
-[02e3794]: https://git.tirsystem.com/TirSystem/github-action/commit/02e3794d7b05799af2544ca303c99271da788e82
 [e11c43f]: https://git.tirsystem.com/TirSystem/github-action/commit/e11c43f0a41e7dd9647f7804947d6e464407a597
