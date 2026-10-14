@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-068) | [5002450] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Results of tasks 3, 6 and 8 added: the report as an artifact of the caller (ADR-0010), adoption in a throwaway repository with seeded change and failure; reviewed (RC-074) | [5c5a1d1] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Results of tasks 3, 6 and 8 added: the report as an artifact of the caller (ADR-0010), adoption in a throwaway repository with seeded change and failure; reviewed (RC-074) | [5c5a1d1] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Task 9 results added: released as 2.1.0; outcome reviewed (RC-075) | pending |
 
 ---
 
@@ -164,6 +164,26 @@ repository of a project with a real coverage report. The throwaway repository
 `TirSystem/code-metrics-adoption` is left in place because deleting a
 repository is an action the run stops on; it is listed in the summary for the
 user to delete.
+
+Task 9 was run on 2026-10-14. The implementation was merged in pull request
+164 after its checks were green; the user merged it, because the host refused
+the merge through the API with a required check `Publish wiki / *` that the
+branch protection API does not list and that nothing in this repository
+reports. The Release workflow was run for 2.1.0 on the merge commit
+`16faffa`: a dry run (run 1462) and then the release (run 1463), both green.
+
+| Check | Result |
+| --- | --- |
+| Tag | `v2.1.0` and the moved major tag `v2` both point at `16faffa` |
+| Release page | `v2.1.0`, not a draft, with the changelog entry as its text (`Added`: the workflow `code-metrics.yml`) |
+| Callable at the major tag | `.gitea/workflows/code-metrics.yml` and `tools/count_loc.py` are served at `v2` and `v2.1.0` |
+| Checks on `main` after the merge | validation, milestone publishing, wiki publishing and the metadata sync all green (runs 1458 to 1461) |
+
+Go/No-Go criteria of this milestone at its close: 1 to 8 as in the results
+above; 9 (a release makes it available, and the changelog, the README table and
+the wiki name it) is met by the release of 2.1.0. Success criterion 5 of the
+Business Case (a repository besides this one shows the badges) is met in a
+throwaway repository only; a project repository has not adopted it yet.
 
 ---
 
