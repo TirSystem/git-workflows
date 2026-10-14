@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [22fc323] |
 
 ---
 
@@ -53,3 +53,4 @@ Go - all criteria pass. The scoped delivery and the marker are replaced and remo
 [ADR-0009]: ../../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [QC-ADR-001]: ../../../framework/qc/artifacts/qc-adr.md
 [MIL-009]: ../../milestones/mil-009-migrate-wiki-callers-and-remove-scoped-workflow.md
+[22fc323]: https://git.tirsystem.com/TirSystem/github-action/commit/22fc323b41074ee0029ea2f07445a8e329e15d15

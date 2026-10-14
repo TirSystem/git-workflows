@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | MIL-009, PP-001 and RC-064 accepted | [2f267df] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-065 (ADR-0004 superseded by ADR-0009) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-065 (ADR-0004 superseded by ADR-0009) | [22fc323] |
 
 ---
 
@@ -227,3 +227,4 @@ updated whenever an artifact instance is created or reviewed.
 [faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
 [2f267df]: https://git.tirsystem.com/TirSystem/github-action/commit/2f267df2a270087cb7dc482af4ce4f4341e97b03
+[22fc323]: https://git.tirsystem.com/TirSystem/github-action/commit/22fc323b41074ee0029ea2f07445a8e329e15d15

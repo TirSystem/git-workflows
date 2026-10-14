@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Reviewed (RC-018): the `prune` variant added to the evaluated options | [b22a2cd] |
-| 2026-10-14 | Superseded by ADR-0009 | Jens Tirsvad Nielsen | AI as stand-in for S01 | The scoped delivery and the `wiki/.publish` marker are replaced by the reusable workflow of ADR-0009 and removed (MIL-009); the token and the empty-folder rules stand and are carried by ADR-0009; reviewed (RC-065) | pending |
+| 2026-10-14 | Superseded by ADR-0009 | Jens Tirsvad Nielsen | AI as stand-in for S01 | The scoped delivery and the `wiki/.publish` marker are replaced by the reusable workflow of ADR-0009 and removed (MIL-009); the token and the empty-folder rules stand and are carried by ADR-0009; reviewed (RC-065) | [22fc323] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -117,3 +117,4 @@ The rules that follow from it:
 [ADR-0002]: ./adr-0002-s01-approves-as-stand-in.md
 [ADR-0009]: ./adr-0009-wiki-publishing-reusable-workflow.md
 [b22a2cd]: https://git.tirsystem.com/TirSystem/github-action/commit/b22a2cd59235078656c4440b945b787f88fbd345
+[22fc323]: https://git.tirsystem.com/TirSystem/github-action/commit/22fc323b41074ee0029ea2f07445a8e329e15d15
