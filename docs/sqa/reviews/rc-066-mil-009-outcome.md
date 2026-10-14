@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [95abc18] |
 
 ---
 
@@ -49,3 +49,4 @@ Go - the gate is met: all seven criteria are Go (criterion 5 with a recorded not
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
 [RC-064]: ./rc-064-mil-009-plan.md
 [ADR-0004]: ../../adr/adr-0004-shared-wiki-publishing-opt-in.md
+[95abc18]: https://git.tirsystem.com/TirSystem/github-action/commit/95abc18a95d70c065b979123b8f8de22173af90c
