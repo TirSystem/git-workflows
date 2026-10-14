@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-075 (MIL-010 outcome, release 2.1.0) | [aa20e56] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-011 and RC-076 (fix the defaults of the code metrics workflow) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-011 and RC-076 (fix the defaults of the code metrics workflow) | [3d7a9df] |
 
 ---
 
@@ -255,3 +255,4 @@ updated whenever an artifact instance is created or reviewed.
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [aa20e56]: https://git.tirsystem.com/TirSystem/github-action/commit/aa20e56110f4c2fab91a8432ba008ee8300926a2
+[3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e

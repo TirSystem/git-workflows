@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat as stand-in for S01, after three corrections found in the first read | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat as stand-in for S01, after three corrections found in the first read | [3d7a9df] |
 
 ---
 
@@ -64,3 +64,4 @@ Go - all criteria pass after three corrections found in the first read (the O5 w
 [ADR-0006]: ../../adr/adr-0006-release-process-and-version-pinning.md
 [RC-068]: ./rc-068-mil-010-plan.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
