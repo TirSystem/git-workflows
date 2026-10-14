@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-009 |
-| CrossReference | [BC-001], [MIL-008], [ADR-0004], [ADR-0006], [ADR-0009] |
+| CrossReference | [BC-001], [MIL-008], [ADR-0004], [ADR-0006], [ADR-0009] , [RC-066] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [2b53ee6] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Plan accepted in chat with the defaults: target date 2026-11-30 confirmed, `027-sandbox` and `028-pomodoro` do not publish, framework release 0.7.0; reviewed (RC-064) | [2f267df] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Plan accepted in chat with the defaults: target date 2026-11-30 confirmed, `027-sandbox` and `028-pomodoro` do not publish, framework release 0.7.0; reviewed (RC-064) | [2f267df] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Verification results recorded for tasks 1 to 8; outcome reviewed (RC-066) | pending |
 
 ---
 
@@ -81,12 +81,28 @@ marker as an opt-in removed; ADR-0004 marked superseded; and the major release
 
 ---
 
+## Verification results
+
+Recorded on 2026-10-14 by the autonomous run.
+
+| # | Criterion | Result |
+| --- | --- | --- |
+| 1 | The framework is released as 0.7.0 with the template and `process/wiki.md`, and each repository pins it | Go: tag `v0.7.0` on `70fc558`. `sqa-and-qc`, `repo-foundry`, `021-snake-game`, `024-snake` and `025-weather` pin it; `sqa-qc-framework` and `sqa-qc-checklists` have no `framework/` submodule to pin |
+| 2 | Each of the seven repositories publishes from `docs/wiki/` through a caller and has no `wiki/.publish` | Go: `sqa-and-qc` #168, `sqa-qc-framework` #47, `sqa-qc-checklists` #17, `repo-foundry` #96, `021-snake-game` #29, `024-snake` #46, `025-weather` #31 |
+| 3 | The wiki of each equals its `docs/wiki/` after the first run | Go: 0 differences read back through the API (10, 16, 13, 19, 4, 4 and 4 pages); each first run succeeded |
+| 4 | A scan of every repository of the four organisations finds no `wiki/.publish` | Go: 48 repositories scanned, none found |
+| 5 | The scoped workflow, the marker path, their tests and the marker text are removed | Go with a note: pull request #151; `wiki/.publish` remains only in the changelog, the ADRs, the milestone and review records and the sentence of the upgrading guide that explains the removal |
+| 6 | ADR-0004 is `Superseded by ADR-0009` with a review record, and ADR-0009 links back | Go: RC-065 |
+| 7 | Release 2.0.0 is published with a Breaking entry, `v2` points to it, and `v1` still points to 1.2.2 | Go: `v2.0.0` and `v2` on `6e8e548`, `v1` and `v1.2.2` on `9bf0a2b`; the release page shows the Breaking group |
+
+Things that did not go as planned: the three Udemy pull requests were opened through a script that hit a network timeout once and was repeated; the `repo-foundry` test suite fails two tests on `main` and on the branch alike (pre-existing, not caused by this milestone).
+
 ---
 
 [BC-001]: ../business-case.md
+[RC-066]: ../sqa/reviews/rc-066-mil-009-outcome.md
 [MIL-008]: ./mil-008-wiki-reusable-workflow.md
 [ADR-0004]: ../adr/adr-0004-shared-wiki-publishing-opt-in.md
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
-[2b53ee6]: https://git.tirsystem.com/TirSystem/github-action/commit/2b53ee6d21babdefc30556b92c3300c6cd956898
 [2f267df]: https://git.tirsystem.com/TirSystem/github-action/commit/2f267df2a270087cb7dc482af4ce4f4341e97b03
