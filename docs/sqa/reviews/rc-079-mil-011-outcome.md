@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; Go; accepted by the AI as stand-in for S01 in autonomous mode, not independent | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; Go; accepted by the AI as stand-in for S01 in autonomous mode, not independent | [4aa3fd3] |
 
 ---
 
@@ -47,3 +47,4 @@ Go - all eight criteria pass. The defect is fixed in release 2.1.1: the default 
 [RC-078]: ./rc-078-mil-011-fix.md
 [RC-076]: ./rc-076-mil-011-plan.md
 [RC-077]: ./rc-077-mil-011-task-1-results.md
+[4aa3fd3]: https://git.tirsystem.com/TirSystem/github-action/commit/4aa3fd38f97c26a5d52abc566e958759583ccb85

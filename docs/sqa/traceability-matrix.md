@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-077 and RC-078 (MIL-011 task 1 results, and the fix of the defaults) | [a6892c3] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-079 (MIL-011 outcome, release 2.1.1) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-079 (MIL-011 outcome, release 2.1.1) | [4aa3fd3] |
 
 ---
 
@@ -262,3 +262,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [a6892c3]: https://git.tirsystem.com/TirSystem/github-action/commit/a6892c372aca9f2e12826a4c3b260290a0656ecb
+[4aa3fd3]: https://git.tirsystem.com/TirSystem/github-action/commit/4aa3fd38f97c26a5d52abc566e958759583ccb85
