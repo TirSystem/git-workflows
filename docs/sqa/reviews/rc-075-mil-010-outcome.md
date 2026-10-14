@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted | [aa20e56] |
 
 ---
 
@@ -49,3 +49,4 @@ Go - the milestone is complete: every Go/No-Go criterion is met and the workflow
 
 [MIL-010]: ../../milestones/mil-010-code-metrics-badges.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[aa20e56]: https://git.tirsystem.com/TirSystem/github-action/commit/aa20e56110f4c2fab91a8432ba008ee8300926a2
