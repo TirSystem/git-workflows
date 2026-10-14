@@ -103,6 +103,33 @@ Case sets no deadline.
 | 8 | Adopt the workflow in one other repository | Onboard a real repository, or a throwaway one when none fits, show the badges in its README and verify a seeded change that moves the coverage badge. Fix the gaps in the guide that appear. | No | |
 | 9 | Release | Add the changelog entry (a new workflow is a minor change, ADR-0006) and run the Release workflow; record the results in this milestone and review it. | No | |
 
+## Verification results
+
+Task 3 was run on 2026-10-14 with a throwaway branch, `verify-badges-delivery`,
+in `TirSystem/github-action` (run 1418, success). One job on `ubuntu-latest`
+with `permissions: contents: write` checked the repository out, created an
+orphan branch `badges-verify` with one SVG file and a commit message ending in
+`[skip ci]`, and pushed it with the token of the run (the credential that
+`actions/checkout` stores); it then requested the raw URL.
+
+| Fact | Result |
+| --- | --- |
+| Push with the token of the run | Accepted: `git push origin HEAD:refs/heads/badges-verify` created the branch; no secret and no personal access token was needed |
+| Raw URL on the instance | `https://git.tirsystem.com/TirSystem/github-action/raw/branch/badges-verify/code-files.svg` answers `200`, `Content-Type: image/svg+xml`, `Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox`, `Cache-Control: public, max-age=21600` (six hours) |
+| The branch on the GitHub mirror | The push mirror (`sync_on_commit`, every 8 h otherwise) copied the branch within seconds; `https://raw.githubusercontent.com/TirSystem/github-action/badges-verify/code-files.svg` answers `200`, `Content-Type: image/svg+xml`, `Cache-Control: max-age=300` |
+| Repository visibility | Public; a README image on GitHub reads the raw URL, which needs no token |
+
+The SVG is served as an image on both hosts, so it renders in a README on the
+instance and on the mirror; the content security policy rules out script and
+external references inside the file, as ADR-0010 requires. The six-hour
+cache on the instance means a changed badge can show the old number for up to
+six hours there; the guide says so. Not covered by this task: a private
+repository (the raw URL then needs a login, so a badge does not render for an
+anonymous reader), and the rendering inside a Gitea README, which is the same
+`<img>` request. The throwaway branches `verify-badges-delivery` and
+`badges-verify` are left in place because deleting a branch is an action the
+run stops on; they are listed in the summary for the user to delete.
+
 ---
 
 [BC-001]: ../business-case.md
