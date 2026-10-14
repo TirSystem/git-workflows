@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-066 (MIL-009 outcome) | [95abc18] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-010, RC-067 and RC-068 (code metrics and coverage badges) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-010, RC-067 and RC-068 (code metrics and coverage badges) | [5002450] |
 
 ---
 
@@ -235,3 +235,4 @@ updated whenever an artifact instance is created or reviewed.
 [faf13b2]: https://git.tirsystem.com/TirSystem/github-action/commit/faf13b2c2a4901c0171977de1ffc2841023f537a
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
 [95abc18]: https://git.tirsystem.com/TirSystem/github-action/commit/95abc18a95d70c065b979123b8f8de22173af90c
+[5002450]: https://git.tirsystem.com/TirSystem/github-action/commit/50024505fe788b1c5e3021c0d1fc3d079590070e

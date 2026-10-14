@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Scope: wiki pages in English, Danish and Bahasa Malaysia | [08ef26a] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Objective O5, scope item and success criterion 5: shared workflow for code metrics and coverage badges (MIL-010); reviewed (RC-067) | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Objective O5, scope item and success criterion 5: shared workflow for code metrics and coverage badges (MIL-010); reviewed (RC-067) | [5002450] |
 
 ---
 
@@ -155,3 +155,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 
 [SA-001]: ./stakeholder-analysis.md
 [08ef26a]: https://git.tirsystem.com/TirSystem/github-action/commit/08ef26a6d3eb98c066b45634c2271e578e6c0a0b
+[5002450]: https://git.tirsystem.com/TirSystem/github-action/commit/50024505fe788b1c5e3021c0d1fc3d079590070e

@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-068) | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-068) | [5002450] |
 
 ---
 
@@ -111,3 +111,4 @@ Case sets no deadline.
 [MIL-004]: ./mil-004-versioned-release.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
+[5002450]: https://git.tirsystem.com/TirSystem/github-action/commit/50024505fe788b1c5e3021c0d1fc3d079590070e
