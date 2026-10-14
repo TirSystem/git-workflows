@@ -13,7 +13,9 @@ name: Code metrics
 #
 # It counts the code files and the lines of code of the repository (comment
 # and blank lines are not counted), reads an optional Cobertura XML coverage
-# report and commits three SVG badges to a branch of the calling repository.
+# report (an artifact of an earlier job of the caller, or a file of the
+# repository) and commits three SVG badges to a branch of the calling
+# repository.
 # It runs no test, needs no secret and writes only the badges branch.
 on:
   workflow_call:
@@ -28,6 +30,10 @@ on:
         default: ""
       coverage-report:
         description: "Path, relative to the repository root, of a Cobertura XML coverage report; empty writes no coverage badge"
+        type: string
+        default: ""
+      coverage-artifact:
+        description: "Name of an artifact, uploaded by an earlier job of the same run, that holds the coverage report; empty reads coverage-report from the checkout"
         type: string
         default: ""
       coverage-warn:
@@ -57,6 +63,7 @@ jobs:
       WORKING_DIRECTORY: ${{ inputs.working-directory }}
       EXCLUDE: ${{ inputs.exclude }}
       COVERAGE_REPORT: ${{ inputs.coverage-report }}
+      COVERAGE_ARTIFACT: ${{ inputs.coverage-artifact }}
       COVERAGE_WARN: ${{ inputs.coverage-warn }}
       COVERAGE_GOOD: ${{ inputs.coverage-good }}
       BADGES_BRANCH: ${{ inputs.badges-branch }}
@@ -73,6 +80,13 @@ jobs:
 
       - name: Validate the inputs
         run: bash shared-scripts/tools/code-metrics.sh validate
+
+      - name: Download the coverage report
+        if: ${{ inputs.coverage-artifact != '' }}
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: ${{ inputs.coverage-artifact }}
+          path: coverage-artifact
 
       - name: Count the code and write the badges
         run: bash shared-scripts/tools/code-metrics.sh measure

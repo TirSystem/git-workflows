@@ -40,6 +40,7 @@ class TestDefinition:
             "working-directory": ".",
             "exclude": "",
             "coverage-report": "",
+            "coverage-artifact": "",
             "coverage-warn": "60",
             "coverage-good": "80",
             "badges-branch": "badges",
@@ -59,6 +60,7 @@ class TestDefinition:
             "WORKING_DIRECTORY",
             "EXCLUDE",
             "COVERAGE_REPORT",
+            "COVERAGE_ARTIFACT",
             "COVERAGE_WARN",
             "COVERAGE_GOOD",
             "BADGES_BRANCH",
@@ -139,6 +141,7 @@ def run(command: str, repo: Path, tmp_path: Path, python3_bin: Path, **env: str)
             "WORKING_DIRECTORY": ".",
             "EXCLUDE": "",
             "COVERAGE_REPORT": "",
+            "COVERAGE_ARTIFACT": "",
             "COVERAGE_WARN": "60",
             "COVERAGE_GOOD": "80",
             "BADGES_BRANCH": "badges",
@@ -187,6 +190,7 @@ class TestValidate:
             ("WORKING_DIRECTORY", "../x", "working-directory must be a relative path"),
             ("WORKING_DIRECTORY", "nope", "working-directory 'nope' does not exist"),
             ("COVERAGE_REPORT", "/tmp/c.xml", "coverage-report must be a relative path"),
+            ("COVERAGE_ARTIFACT", "cov", "coverage-artifact 'cov' needs coverage-report"),
             ("BADGES_BRANCH", "main", "must not be a default branch"),
             ("BADGES_BRANCH", "master", "must not be a default branch"),
             ("BADGES_BRANCH", "", "must not be a default branch"),
@@ -254,6 +258,30 @@ class TestPublish:
         result = measure_and_publish(repo, tmp_path, python3_bin, COVERAGE_REPORT="cov.xml")
         assert result.returncode == 0, result.stdout
         assert "coverage.svg" in branch_files(remote)
+
+    def test_a_report_from_an_artifact_is_read_below_the_artifact_directory(
+        self, repo, remote, tmp_path, python3_bin
+    ):
+        artifact = repo / "coverage-artifact"
+        artifact.mkdir()
+        (artifact / "cov.xml").write_text(COVERAGE, newline="\n")
+        result = measure_and_publish(
+            repo, tmp_path, python3_bin, COVERAGE_ARTIFACT="coverage", COVERAGE_REPORT="cov.xml"
+        )
+        assert result.returncode == 0, result.stdout
+        assert "coverage.svg" in branch_files(remote)
+
+    def test_a_report_missing_from_the_artifact_names_the_path(self, repo, tmp_path, python3_bin):
+        result = run(
+            "measure",
+            repo,
+            tmp_path,
+            python3_bin,
+            COVERAGE_ARTIFACT="coverage",
+            COVERAGE_REPORT="cov.xml",
+        )
+        assert result.returncode == 1
+        assert "coverage-report 'coverage-artifact/cov.xml' does not exist" in result.stdout
 
     def test_a_missing_report_fails_names_the_file_and_changes_nothing(
         self, repo, remote, tmp_path, python3_bin

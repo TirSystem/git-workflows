@@ -10,8 +10,8 @@
 #                              and nothing when none of them changed
 #
 # Settings come from the environment, never from interpolated expressions:
-#   WORKING_DIRECTORY, EXCLUDE, COVERAGE_REPORT, COVERAGE_WARN, COVERAGE_GOOD,
-#   BADGES_BRANCH, BADGES_OUT (the directory of the badge files; a temporary
+#   WORKING_DIRECTORY, EXCLUDE, COVERAGE_REPORT, COVERAGE_ARTIFACT,
+#   COVERAGE_WARN, COVERAGE_GOOD, BADGES_BRANCH, BADGES_OUT (the directory of the badge files; a temporary
 #   directory under RUNNER_TEMP by default).
 # Every failure is printed as ::error::[category] message.
 
@@ -41,6 +41,9 @@ validate_inputs() {
     relative_path "$COVERAGE_REPORT" ||
       fail "coverage-report must be a relative path inside the repository."
   fi
+  if [ -n "$COVERAGE_ARTIFACT" ] && [ -z "$COVERAGE_REPORT" ]; then
+    fail "coverage-artifact '$COVERAGE_ARTIFACT' needs coverage-report, the file inside the artifact."
+  fi
   case "$BADGES_BRANCH" in
     main | master | HEAD | "") fail "badges-branch '$BADGES_BRANCH' must not be a default branch." ;;
   esac
@@ -55,9 +58,13 @@ measure() {
   python3 "$TOOLS_DIR/count_loc.py" \
     --directory "$WORKING_DIRECTORY" --exclude "$EXCLUDE" --output "$metrics"
   rm -rf "$OUT_DIR"
+  report="$COVERAGE_REPORT"
+  if [ -n "$COVERAGE_ARTIFACT" ]; then
+    report="coverage-artifact/$COVERAGE_REPORT"
+  fi
   python3 "$TOOLS_DIR/badges.py" \
     --metrics "$metrics" --output-dir "$OUT_DIR" \
-    --coverage-report "$COVERAGE_REPORT" \
+    --coverage-report "$report" \
     --coverage-warn "$COVERAGE_WARN" --coverage-good "$COVERAGE_GOOD"
   rm -f "$metrics"
 }

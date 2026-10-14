@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-072) | pending |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-072) | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | The report reaches the workflow as an artifact of the caller's run (input `coverage-artifact`), because a called workflow runs in its own job; reviewed (RC-073) | pending |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -112,8 +113,15 @@ The rules that follow from it:
   and a report with no valid lines are failures with the category
   `[configuration]` that names the file; no coverage badge is written. An
   empty `coverage-report` means no coverage badge and a notice. The workflow
-  does not run tests; the caller runs them before the call and the report
-  must be in the workspace (the same job, or an artifact the caller fetched).
+  does not run tests. A called workflow runs in its own job, so it cannot see
+  the files of the caller's test job: the caller runs its tests in an earlier
+  job, uploads the report as an artifact and gives the artifact's name as the
+  input `coverage-artifact`. The workflow then downloads that artifact into
+  the directory `coverage-artifact` of its workspace and `coverage-report`
+  names the file inside the artifact. Without `coverage-artifact`,
+  `coverage-report` is a path in the checkout of the repository (a report the
+  repository commits). `coverage-artifact` without `coverage-report` is a
+  `[configuration]` failure.
 - **Badges.** Three flat SVG files with a label and a value, written to the
   root of the `badges` branch with fixed names: `code-files.svg` (label
   `code files`), `code-lines.svg` (label `lines of code`) and `coverage.svg`
@@ -135,7 +143,8 @@ The rules that follow from it:
   the guide tells a caller to start the workflow on pushes to its default
   branch only.
 - **Inputs.** `working-directory` (default `.`), `exclude` (default empty),
-  `coverage-report` (default empty), `coverage-warn` (default `60`),
+  `coverage-report` (default empty), `coverage-artifact` (default empty),
+  `coverage-warn` (default `60`),
   `coverage-good` (default `80`), `badges-branch` (default `badges`) and
   `tools-ref` (default `v1`; pin it to the same exact tag as the workflow).
   There is no tool version input: the tools are files of this repository and
@@ -174,12 +183,16 @@ The rules that follow from it:
   `contents: read` of the quality checks; a caller that grants less cannot use
   it. The write is limited to the `badges` branch by the script, not by the
   host.
-- A caller must run its tests and produce a Cobertura XML report before the
-  call; other formats need a conversion until a later release adds them.
+- A caller must run its tests and produce a Cobertura XML report in an
+  earlier job and upload it as an artifact; other formats need a conversion
+  until a later release adds them. The download needs the artifact service
+  of the instance to serve a called workflow, which task 8 of MIL-010
+  verifies.
 - A fixed set of thresholds and colours; a caller can move the two thresholds
   only.
 - Security: the script runs with a token that can write to the repository.
-  The files are ours and no code is downloaded, but a caller that pins
+  The files are ours and no code is downloaded (the artifact is a report that
+  is parsed as XML with entity declarations refused), but a caller that pins
   `tools-ref` to a moving ref takes later changes of the script; the guide
   says to pin the exact tag. The script writes only the four named files, and
   the branch name input is validated so that it cannot name the default branch

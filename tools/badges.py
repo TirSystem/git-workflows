@@ -35,21 +35,21 @@ class ConfigurationError(Exception):
 def read_coverage(path: Path) -> int:
     """Return the line coverage of a Cobertura XML report as a whole percent, half up."""
     if not path.is_file():
-        raise ConfigurationError(f"coverage-report '{path}' does not exist.")
+        raise ConfigurationError(f"coverage-report '{path.as_posix()}' does not exist.")
     data = path.read_bytes()
     if b"<!ENTITY" in data:
         raise ConfigurationError(
-            f"coverage-report '{path}' declares entities, which are refused."
+            f"coverage-report '{path.as_posix()}' declares entities, which are refused."
         )
     try:
         root = ElementTree.fromstring(data)
     except ElementTree.ParseError as error:
         raise ConfigurationError(
-            f"coverage-report '{path}' is not well-formed XML: {error}."
+            f"coverage-report '{path.as_posix()}' is not well-formed XML: {error}."
         ) from error
     if root.tag != "coverage":
         raise ConfigurationError(
-            f"coverage-report '{path}' is not a Cobertura report (root element '{root.tag}')."
+            f"coverage-report '{path.as_posix()}' is not a Cobertura report (root element '{root.tag}')."
         )
     covered, valid = root.get("lines-covered"), root.get("lines-valid")
     try:
@@ -57,27 +57,27 @@ def read_coverage(path: Path) -> int:
             covered_lines, valid_lines = int(covered), int(valid)
             if valid_lines <= 0:
                 raise ConfigurationError(
-                    f"coverage-report '{path}' has no valid lines."
+                    f"coverage-report '{path.as_posix()}' has no valid lines."
                 )
             if not 0 <= covered_lines <= valid_lines:
                 raise ConfigurationError(
-                    f"coverage-report '{path}' has lines-covered outside 0..lines-valid."
+                    f"coverage-report '{path.as_posix()}' has lines-covered outside 0..lines-valid."
                 )
             fraction = Decimal(covered_lines) / Decimal(valid_lines)
         else:
             rate = root.get("line-rate")
             if rate is None:
                 raise ConfigurationError(
-                    f"coverage-report '{path}' has neither lines-valid and lines-covered nor line-rate."
+                    f"coverage-report '{path.as_posix()}' has neither lines-valid and lines-covered nor line-rate."
                 )
             fraction = Decimal(rate)
             if not Decimal(0) <= fraction <= Decimal(1):
                 raise ConfigurationError(
-                    f"coverage-report '{path}' has a line-rate outside 0..1."
+                    f"coverage-report '{path.as_posix()}' has a line-rate outside 0..1."
                 )
     except (ValueError, InvalidOperation) as error:
         raise ConfigurationError(
-            f"coverage-report '{path}' has a value that is not a number."
+            f"coverage-report '{path.as_posix()}' has a value that is not a number."
         ) from error
     return int((fraction * 100).quantize(Decimal(1), rounding=ROUND_HALF_UP))
 
