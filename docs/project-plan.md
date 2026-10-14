@@ -10,13 +10,13 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-010 (code metrics and coverage badges); reviewed (RC-068) | [5002450] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-011 (fix the defaults of the code metrics workflow); not yet reviewed | [02e3794] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-011 (fix the defaults of the code metrics workflow); reviewed (RC-076), accepted by the author in chat as stand-in for S01 | [02e3794] |
 
 ---
 
 ## Purpose
 
-This plan schedules ten milestones that move the repository from one
+This plan schedules eleven milestones that move the repository from one
 workflow with known defects to a documented, versioned collection of shared
 workflows. The Business Case sets no deadline, so the dates are the plan's own; they were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -83,8 +83,7 @@ Project starts 2026-10-05
 | Gitea Actions workflows for software engineers (quality checks for C++ and C#) | [MIL-007] |
 | The wiki publisher as a workflow that repositories call, from docs/wiki | [MIL-008] |
 | Moving every publishing repository to the called workflow and removing the scoped one | [MIL-009] |
-| A shared workflow for code metrics and coverage badges | [MIL-010] |
-| The code metrics workflow works with its documented defaults | [MIL-011] |
+| A shared workflow for code metrics and coverage badges | [MIL-010], [MIL-011] |
 
 ## Dependencies
 
