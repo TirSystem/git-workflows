@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-072) | [0dc5132] |
 | 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | The report reaches the workflow as an artifact of the caller's run (input `coverage-artifact`), because a called workflow runs in its own job; reviewed (RC-073) | [0dc5132] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -207,6 +207,14 @@ The rules that follow from it:
 - [ADR-0006] — adding a language, or changing a colour or a default, is a
   release under its rules; raising a default threshold is breaking.
 
+
+## Amendment (MIL-011)
+
+The default of the input `tools-ref` in the code metrics contract is the current major tag, defined once in the file
+`MAJOR_TAG` of this repository (`v2` from release 2.1.1), and no longer `v1`. A default must
+name a tag that holds the script the workflow runs; a test checks it. Callers at `@v1` are
+not affected: the `v1` tag keeps the `v1` workflow files.
+
 ---
 
 [MIL-010]: ../milestones/mil-010-code-metrics-badges.md
@@ -215,3 +223,4 @@ The rules that follow from it:
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [0dc5132]: https://git.tirsystem.com/TirSystem/github-action/commit/0dc5132a2ea419ba05035ee3594cec63335c240b
+[eaa0e30]: https://git.tirsystem.com/TirSystem/github-action/commit/eaa0e30beaa097dfeb1c07c814a71d02a6987060

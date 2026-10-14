@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-075 (MIL-010 outcome, release 2.1.0) | [aa20e56] |
 | 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-011 and RC-076 (fix the defaults of the code metrics workflow) | [3d7a9df] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-077 and RC-078 (MIL-011 task 1 results, and the fix of the defaults) | [a6892c3] |
 
 ---
 
@@ -44,7 +44,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-008] | MIL | [BC-001], [PP-001], [MIL-006], [ADR-0004] | [MIL-009] | [RC-060], [RC-061] |
 | [MIL-009] | MIL | [BC-001], [PP-001], [MIL-008], [ADR-0004], [ADR-0006], [ADR-0009] | - | [RC-064], [RC-066] |
 | [MIL-010] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004] | [MIL-011] | [RC-068], [RC-074], [RC-075] |
-| [MIL-011] | MIL | [BC-001], [PP-001], [MIL-010], [ADR-0006], [ADR-0010] | - | [RC-076] |
+| [MIL-011] | MIL | [BC-001], [PP-001], [MIL-010], [ADR-0006], [ADR-0010] | - | [RC-076], [RC-077], [RC-078] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
@@ -134,6 +134,8 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-074] | RC | [MIL-010] | - | - |
 | [RC-075] | RC | [MIL-010] | - | - |
 | [RC-076] | RC | [MIL-011], [PP-001] | - | - |
+| [RC-077] | RC | [MIL-011] | - | - |
+| [RC-078] | RC | [MIL-011] | - | - |
 
 ## Coverage Notes
 
@@ -245,6 +247,8 @@ updated whenever an artifact instance is created or reviewed.
 [RC-074]: ./reviews/rc-074-mil-010-results.md
 [RC-075]: ./reviews/rc-075-mil-010-outcome.md
 [RC-076]: ./reviews/rc-076-mil-011-plan.md
+[RC-077]: ./reviews/rc-077-mil-011-task-1-results.md
+[RC-078]: ./reviews/rc-078-mil-011-fix.md
 [ADR-0008]: ../adr/adr-0008-cpp-csharp-quality-check-contract.md
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0007]: ../adr/adr-0007-release-publish-destination.md
@@ -254,5 +258,5 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
-[aa20e56]: https://git.tirsystem.com/TirSystem/github-action/commit/aa20e56110f4c2fab91a8432ba008ee8300926a2
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
+[a6892c3]: https://git.tirsystem.com/TirSystem/github-action/commit/a6892c372aca9f2e12826a4c3b260290a0656ecb

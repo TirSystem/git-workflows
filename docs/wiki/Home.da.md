@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 810981fb9bc8 -->
+<!-- translation of Home.md, source sha256 9b967f9e1aff -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -237,7 +237,7 @@ deactivate Workflow
 
 ### Kodemålinger og dækningsbadges
 
-Et genbrugeligt workflow, der tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer) i et repository og udgiver dem sammen med testdækningen som tre SVG-badges på en `badges`-gren, kaldt med `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v1` (ADR-0010). Det kræver `contents: write` og kører ingen test: et tidligere job hos kalderen frembringer en dækningsrapport i Cobertura XML-format og uploader den som artefakt ([vejledning](CodeMetrics.da)).
+Et genbrugeligt workflow, der tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer) i et repository og udgiver dem sammen med testdækningen som tre SVG-badges på en `badges`-gren, kaldt med `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Det kræver `contents: write` og kører ingen test: et tidligere job hos kalderen frembringer en dækningsrapport i Cobertura XML-format og uploader den som artefakt ([vejledning](CodeMetrics.da)).
 
 #### Workflow
 
@@ -247,7 +247,7 @@ title Code metrics and coverage badges (reusable workflow)
 
 autonumber
 
-actor "Calling repository\nuses: ...code-metrics.yml@v1" as Caller
+actor "Calling repository\nuses: ...code-metrics.yml@v2" as Caller
 participant "Gitea Actions\ncode-metrics" as Workflow
 participant "Branch badges\nof the caller" as Branch
 

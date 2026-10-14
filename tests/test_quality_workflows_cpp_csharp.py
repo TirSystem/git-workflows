@@ -68,7 +68,7 @@ class TestDefinition:
             "ref": "${{ inputs.tools-ref }}",
             "path": "shared-scripts",
         }
-        assert inputs_of(workflow)["tools-ref"]["default"] == "v1"
+        assert inputs_of(workflow)["tools-ref"]["default"] == (REPO_ROOT / "MAJOR_TAG").read_text(encoding="utf-8").strip()
 
     def test_inputs_reach_the_script_only_through_the_environment(
         self,

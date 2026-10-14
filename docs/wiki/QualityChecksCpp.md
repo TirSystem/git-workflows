@@ -37,7 +37,7 @@ jobs:
 | `compile-commands-dir` | empty | Directory, relative to the repository root, with a `compile_commands.json` that your pipeline built before the call; when set, clang-tidy uses it and ignores `std` |
 | `clang-format-version` | `23.1.3` | Exact version of the clang-format package |
 | `clang-tidy-version` | `22.1.8` | Exact version of the clang-tidy package |
-| `tools-ref` | `v1` | Tag or branch of `TirSystem/github-action` from which the script `tools/quality-checks-cpp.sh` is fetched |
+| `tools-ref` | `v2` | Tag or branch of `TirSystem/github-action` from which the script `tools/quality-checks-cpp.sh` is fetched |
 
 Reference the workflow at the major tag (`@v1`) or at an exact tag, never at
 `main`. A call at an exact tag is pinned completely only when `tools-ref` names

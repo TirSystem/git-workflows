@@ -44,7 +44,7 @@ class TestDefinition:
             "coverage-warn": "60",
             "coverage-good": "80",
             "badges-branch": "badges",
-            "tools-ref": "v1",
+            "tools-ref": (WORKFLOW.parent.parent.parent / "MAJOR_TAG").read_text(encoding="utf-8").strip(),
         }
 
     def test_asks_for_contents_write_and_nothing_else_and_needs_no_secret(self, document):

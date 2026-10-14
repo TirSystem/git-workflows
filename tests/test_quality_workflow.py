@@ -46,7 +46,7 @@ class TestDefinition:
         }
         assert inputs["languages"]["default"] == "python,shell"
         assert inputs["working-directory"]["default"] == "."
-        assert inputs["tools-ref"]["default"] == "v1"
+        assert inputs["tools-ref"]["default"] == (REPO_ROOT / "MAJOR_TAG").read_text(encoding="utf-8").strip()
 
     def test_tool_versions_are_pinned_to_the_adr(self, document):
         inputs = document[True]["workflow_call"]["inputs"]

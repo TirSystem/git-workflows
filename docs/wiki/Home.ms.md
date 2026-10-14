@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 810981fb9bc8 -->
+<!-- translation of Home.md, source sha256 9b967f9e1aff -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -237,7 +237,7 @@ deactivate Workflow
 
 ### Metrik kod dan lencana liputan
 
-Aliran kerja boleh guna semula yang mengira fail kod dan baris kod (tanpa baris komen dan baris kosong) sesebuah repositori dan menerbitkannya, bersama liputan ujian, sebagai tiga lencana SVG pada cabang `badges`, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v1` (ADR-0010). Ia memerlukan `contents: write` dan tidak menjalankan sebarang ujian: kerja yang lebih awal oleh pemanggil menghasilkan laporan liputan format Cobertura XML dan memuat naiknya sebagai artifak ([panduan](CodeMetrics.ms)).
+Aliran kerja boleh guna semula yang mengira fail kod dan baris kod (tanpa baris komen dan baris kosong) sesebuah repositori dan menerbitkannya, bersama liputan ujian, sebagai tiga lencana SVG pada cabang `badges`, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Ia memerlukan `contents: write` dan tidak menjalankan sebarang ujian: kerja yang lebih awal oleh pemanggil menghasilkan laporan liputan format Cobertura XML dan memuat naiknya sebagai artifak ([panduan](CodeMetrics.ms)).
 
 #### Aliran kerja
 
@@ -247,7 +247,7 @@ title Code metrics and coverage badges (reusable workflow)
 
 autonumber
 
-actor "Calling repository\nuses: ...code-metrics.yml@v1" as Caller
+actor "Calling repository\nuses: ...code-metrics.yml@v2" as Caller
 participant "Gitea Actions\ncode-metrics" as Workflow
 participant "Branch badges\nof the caller" as Branch
 

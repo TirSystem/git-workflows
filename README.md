@@ -240,7 +240,7 @@ deactivate Workflow
 
 ### 🏅 Code metrics
 
-A reusable workflow that counts the code files and the lines of code (without comment and blank lines) of a repository and publishes them, with the test coverage, as three SVG badges on a `badges` branch, called with `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v1` (ADR-0010). It needs `contents: write` and runs no test: an earlier job of the caller produces a Cobertura XML coverage report and uploads it as an artifact ([guide](guides/code-metrics.md)).
+A reusable workflow that counts the code files and the lines of code (without comment and blank lines) of a repository and publishes them, with the test coverage, as three SVG badges on a `badges` branch, called with `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). It needs `contents: write` and runs no test: an earlier job of the caller produces a Cobertura XML coverage report and uploads it as an artifact ([guide](guides/code-metrics.md)).
 
 #### 🔀 Workflow
 
@@ -250,7 +250,7 @@ title Code metrics and coverage badges (reusable workflow)
 
 autonumber
 
-actor "Calling repository\nuses: ...code-metrics.yml@v1" as Caller
+actor "Calling repository\nuses: ...code-metrics.yml@v2" as Caller
 participant "Gitea Actions\ncode-metrics" as Workflow
 participant "Branch badges\nof the caller" as Branch
 
