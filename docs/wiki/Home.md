@@ -13,17 +13,16 @@ A collection of reusable Gitea Actions workflows for DevOps professionals and so
 
 This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It contains ten workflows: metadata sync to the GitHub mirror, wiki publishing (scoped, and reusable for repositories that call it), shared quality checks for Python and shell, for C and C++ and for C#, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
+It contains nine workflows: metadata sync to the GitHub mirror, wiki publishing (called by each repository), shared quality checks for Python and shell, for C and C++ and for C#, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Ten workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
+Nine workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push to `main`, manual, daily 03:17 UTC | Copies the description and topics of a Gitea repository to its GitHub push mirror |
-| Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, opt-in with `wiki/.publish`; deprecated, replaced by the reusable workflow below (ADR-0009) | push to `main` that changes `wiki/**`, manual | Publishes the pages in `wiki/` to the repository wiki |
 | Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-wiki-pages.yml) | Reusable (`workflow_call`) | a call from another repository | Publishes the pages in `docs/wiki/` (or the folder named by `wiki_dir`) to the wiki of the calling repository |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Reusable (`workflow_call`) | a call from another repository | Runs ruff, mypy, shellcheck and shfmt on the tracked files and changes nothing |
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs clang-format and clang-tidy at exact versions on the tracked C and C++ files and changes nothing |
@@ -95,50 +94,6 @@ else GitHub API denies access
     GitHub --> Workflow: HTTP error
     Workflow --> Trigger: Workflow fails
 end
-deactivate Workflow
-@enduml
-```
-
-### Publish wiki (scoped, deprecated)
-
-Publishes `wiki/` to the repository wiki, only in a repository that has opted in with `wiki/.publish`. The word `prune` in that file also deletes pages that are not in `wiki/`.
-
-#### Workflow
-
-```plantuml
-@startuml
-title Publish wiki/ to the repository wiki
-
-autonumber
-
-actor "Push to main that changes wiki/**,\nor manual trigger" as Trigger
-participant "Gitea Actions\npublish-wiki" as Workflow
-participant "shared-scripts\n(tools/publish_wiki.py at v1)" as Script
-participant "Gitea wiki API" as Wiki
-
-Trigger -> Workflow: Start workflow
-activate Workflow
-Workflow -> Script: Check out the repository and the script, run it
-activate Script
-
-alt wiki/.publish does not exist
-  Script --> Workflow: Log that publishing is not enabled and succeed\n(nothing is written)
-else wiki/ has no Markdown pages
-  Script --> Workflow: Fail with [configuration]\n(an empty wiki/ never deletes pages)
-else
-  Script -> Script: Read the marker (empty, or the word prune)\nand TOKEN_FOR_GITEA_WIKI
-  Script -> Wiki: GET repository (preflight)
-  Wiki --> Script: Wiki is enabled, token accepted
-  Script -> Wiki: GET pages
-  Wiki --> Script: Existing pages
-  Script -> Wiki: Create new pages, update changed pages
-  opt marker says prune
-    Script -> Wiki: Delete pages that are not in wiki/
-  end
-  Script --> Workflow: Log created, updated and deleted counts
-end
-deactivate Script
-Workflow --> Trigger: Workflow result
 deactivate Workflow
 @enduml
 ```

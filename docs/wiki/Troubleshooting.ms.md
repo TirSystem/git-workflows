@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 c68827295812 -->
+<!-- translation of Troubleshooting.md, source sha256 cad6363616e8 -->
 
 > Ini ialah terjemahan [`Troubleshooting`](Troubleshooting). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -31,7 +31,6 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 | `Could not determine the Gitea source repository.` | configuration | Larian tiada nama repositori; laporkan sebagai kecacatan |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Kekalkan satu push mirror GitHub |
 | `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Penerbitan wiki sahaja: repositori memanggil aliran kerja tetapi organisasinya tiada secret itu, atau panggilan tidak menghantarnya; simpannya dan hantar dalam `secrets:` (lihat [credentials.md](Credentials.ms)) |
-| `wiki/.publish may only be empty or contain the word 'prune'.` | configuration | Penerbitan wiki melalui aliran kerja scoped yang lebih lama sahaja: biarkan penanda kosong, atau letakkan hanya perkataan `prune` di dalamnya |
 | `The prune input must be 'true' or 'false'` | configuration | Penerbitan wiki sahaja: tetapkan `prune` dalam panggilan kepada `"true"` atau `"false"` |
 | `The wiki folder ... does not exist` | configuration | Penerbitan wiki sahaja: tetapkan `wiki_dir` dalam panggilan kepada folder yang mengandungi halaman (lalai `docs/wiki`) |
 | `... HTTP 403 ...` semasa menerbitkan wiki | permissions | Penerbitan wiki sahaja: token memerlukan `write:repository` dan akses tulis kepada repositori ini |
@@ -53,9 +52,7 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not synced.` Larian berjaya tetapi tiada apa-apa disegerakkan. Semak bahawa versi Gitea menyokong API push mirror dan jalankan semula.
 
-`No wiki/.publish marker in <owner>/<repo>; wiki publishing is not enabled for this repository.` Larian Publish wiki scoped yang lebih lama berjaya dan tidak menulis apa-apa. Repositori belum memilih menyertainya; panggil aliran kerja boleh guna semula **Publish wiki pages** (lihat [onboarding.md](Onboarding.ms)) jika ia sepatutnya menerbitkan.
-
-`<n> page(s) are in the wiki but not in <folder>/ and were kept; set the prune input to true to delete them.` Larian berjaya. Halaman yang hanya ada dalam wiki dibiarkan melainkan panggilan menetapkan `prune: "true"` (dengan aliran kerja scoped yang lebih lama: perkataan `prune` dalam `wiki/.publish`).
+`<n> page(s) are in the wiki but not in <folder>/ and were kept; set the prune input to true to delete them.` Larian berjaya. Halaman yang hanya ada dalam wiki dibiarkan melainkan panggilan menetapkan `prune: "true"`.
 
 ## Masalah runner
 

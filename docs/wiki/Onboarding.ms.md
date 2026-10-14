@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 4de4897fb3b7 -->
+<!-- translation of Onboarding.md, source sha256 1bc66efd5874 -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -55,8 +55,6 @@ Aliran kerja boleh guna semula **Publish wiki pages** menyalin halaman Markdown 
    `wiki_dir` lalai ialah `docs/wiki`. `prune: "true"` turut memadam halaman wiki yang tiada dalam folder itu, supaya wiki sentiasa sama dengan folder; lalai `false` mengekalkannya.
 4. Simpan `TOKEN_FOR_GITEA_WIKI` sebagai secret organisasi repositori, dengan skop yang tertera dalam [credentials.md](Credentials.ms).
 5. Gabungkan perubahan ke `main`. Log mesti berakhir dengan `Published <n> page(s) to the wiki of <owner>/<repo>`.
-
-Repositori yang masih mempunyai penanda `wiki/.publish` diterbitkan oleh aliran kerja scoped yang lebih lama, yang dibuang apabila setiap repositori mempunyai panggilan. Alihkan halaman ke `docs/wiki/` dan tambah panggilan sebelum itu.
 
 ## Runners
 

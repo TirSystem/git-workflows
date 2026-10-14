@@ -85,10 +85,6 @@ The wiki has English and the product owner's language as a minimum.
 5. Merge the change to `main`. The log must end with `Published <n> page(s) to
    the wiki of <owner>/<repo>`.
 
-A repository that still has the marker `wiki/.publish` is published by the
-older scoped workflow, which is removed once every repository has a call.
-Move the pages to `docs/wiki/` and add the call before that.
-
 ## Runners
 
 | Item | Value |

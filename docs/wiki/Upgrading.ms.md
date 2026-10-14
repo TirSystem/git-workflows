@@ -1,4 +1,4 @@
-<!-- translation of Upgrading.md, source sha256 7fba937279b1 -->
+<!-- translation of Upgrading.md, source sha256 1e6a40ed1320 -->
 
 > Ini ialah terjemahan [`Upgrading`](Upgrading). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -20,7 +20,7 @@ Keluaran yang memecahkan keserasian mendapat versi major baharu (`v2`), jadi sal
 
 Aliran kerja semakan kualiti (`quality-checks.yml`, `quality-checks-cpp.yml` dan `quality-checks-csharp.yml`) mengambil skripnya pada inputnya `tools-ref`, yang lalai ialah `v1`. Untuk menyematkan satu sepenuhnya, panggil pada tag tepat dan tetapkan `tools-ref` kepada tag yang sama; jika tidak, skrip mengikuti tag major.
 
-Dua aliran kerja scoped (**Sync GitHub mirror metadata** dan **Publish wiki**) dihantar oleh instans dan tidak terdapat dalam baris `uses:` anda; anda tidak boleh menyematkannya, tetapi ia mengambil skripnya pada tag major.
+Aliran kerja scoped **Sync GitHub mirror metadata** dihantar oleh instans dan tidak terdapat dalam baris `uses:` anda; anda tidak boleh menyematkannya, tetapi ia mengambil skripnya pada tag major. Penerbitan wiki ialah aliran kerja boleh guna semula yang anda panggil (`publish-wiki-pages.yml`); aliran kerja scoped **Publish wiki** dan penanda `wiki/.publish` telah dibuang dalam 2.0.0, jadi repositori yang masih mempunyai penanda itu tidak lagi menerbitkan sehingga ia memanggil aliran kerja boleh guna semula (lihat panduan permulaan).
 
 ## Membaca satu catatan changelog
 
