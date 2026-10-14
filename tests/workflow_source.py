@@ -13,7 +13,6 @@ WORKFLOW_DIRS = (
 )
 SYNC_WORKFLOW = WORKFLOW_DIRS[0] / "sync-github-metadata.yml"
 SYNC_SCRIPT = REPO_ROOT / "tools" / "sync_github_metadata.py"
-PUBLISH_WORKFLOW = WORKFLOW_DIRS[0] / "publish-wiki.yml"
 PUBLISH_SCRIPT = REPO_ROOT / "tools" / "publish_wiki.py"
 
 _HEREDOC = re.compile(

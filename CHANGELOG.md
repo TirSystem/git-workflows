@@ -20,6 +20,31 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-10-14
+
+### Breaking
+
+- The scoped workflow `publish-wiki.yml` and the `wiki/.publish` marker are
+  removed (ADR-0009, MIL-009). A repository publishes its wiki by calling the
+  reusable workflow `publish-wiki-pages.yml`; one that still has the marker no
+  longer publishes. The seven repositories that used the scoped workflow on
+  2026-10-13 have a caller (checked on 2026-10-14). A repository that has
+  `wiki/.publish` moves `wiki/` to `docs/wiki/`, copies
+  `templates/ci/publish-wiki.yml` of the SQA and QC framework (0.7.0 or later)
+  to `.gitea/workflows/publish-wiki.yml` and removes the marker.
+- `tools/publish_wiki.py` requires `WIKI_PRUNE` (`true` or `false`) and no longer
+  reads a marker; `WIKI_DIR` defaults to `docs/wiki`.
+
+### Changed
+
+- The README, the onboarding, troubleshooting and upgrading guides and the
+  wiki pages (English, Danish, Bahasa Malaysia) no longer describe the scoped
+  workflow or the marker.
+- ADR-0004 is `Superseded by ADR-0009`.
+- Callers of `quality-checks.yml`, `quality-checks-cpp.yml`,
+  `quality-checks-csharp.yml`, `release.yml` and `publish-wiki-pages.yml` need no
+  change; `v1` stays at 1.2.2 and `v2` is the new moving major tag.
+
 ## [1.2.2] - 2026-10-13
 
 ### Added

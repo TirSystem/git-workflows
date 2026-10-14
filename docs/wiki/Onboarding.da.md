@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 4de4897fb3b7 -->
+<!-- translation of Onboarding.md, source sha256 1bc66efd5874 -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -55,8 +55,6 @@ Det genbrugelige workflow **Publish wiki pages** kopierer Markdown-siderne i `do
    `wiki_dir` er som standard `docs/wiki`. `prune: "true"` sletter også wiki-sider, der ikke findes i mappen, så wikien altid er lig med mappen; standarden `false` beholder dem.
 4. Gem `TOKEN_FOR_GITEA_WIKI` som en secret i repositoryets organisation med det scope, der står i [credentials.md](Credentials.da).
 5. Flet ændringen til `main`. Loggen skal slutte med `Published <n> page(s) to the wiki of <owner>/<repo>`.
-
-Et repository, der stadig har markøren `wiki/.publish`, publiceres af det ældre scoped workflow, som fjernes, når alle repositories har et kald. Flyt siderne til `docs/wiki/` og tilføj kaldet, før det sker.
 
 ## Runners
 

@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 b6796554f4eb -->
+<!-- translation of Home.md, source sha256 074ce16f3435 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -13,17 +13,16 @@ Koleksi aliran kerja (workflow) Gitea Actions yang boleh digunakan semula untuk 
 
 Repositori ini ialah koleksi pusat bagi automasi yang boleh digunakan semula untuk repositori TirSystem. Repositori utama berada di `git.tirsystem.com` (Gitea) dan dicerminkan dengan push ke GitHub.
 
-Ia mengandungi sepuluh aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki (scoped, dan boleh guna semula bagi repositori yang memanggilnya), semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
+Ia mengandungi sembilan aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki (dipanggil oleh setiap repositori), semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
 
 
 ## Aliran kerja
 
-Terdapat sepuluh aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
+Terdapat sembilan aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
 
 | Aliran kerja | Fail | Jenis | Bermula apabila | Tujuan |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push ke `main`, manual, setiap hari 03:17 UTC | Menyalin penerangan dan topik repositori Gitea ke push mirror GitHub-nya |
-| Publish wiki | [`publish-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki.yml) | Scoped, pilih menyertai dengan `wiki/.publish`; usang, sedang diganti oleh aliran kerja boleh guna semula di bawah (ADR-0009) | push ke `main` yang mengubah `wiki/**`, manual | Menerbitkan halaman dalam `wiki/` ke wiki repositori |
 | Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-wiki-pages.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menerbitkan halaman dalam `docs/wiki/` (atau folder yang dinamakan oleh `wiki_dir`) ke wiki repositori pemanggil |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan ruff, mypy, shellcheck dan shfmt pada fail yang dijejaki dan tidak mengubah apa-apa |
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan clang-format dan clang-tidy pada versi tepat pada fail C dan C++ yang dijejaki dan tidak mengubah apa-apa |
@@ -95,50 +94,6 @@ else GitHub API denies access
     GitHub --> Workflow: HTTP error
     Workflow --> Trigger: Workflow fails
 end
-deactivate Workflow
-@enduml
-```
-
-### Menerbitkan wiki (scoped, usang)
-
-Menerbitkan `wiki/` ke wiki repositori, hanya dalam repositori yang telah menyertai dengan `wiki/.publish`. Perkataan `prune` dalam fail itu juga memadam halaman yang tiada dalam `wiki/`.
-
-#### Aliran kerja
-
-```plantuml
-@startuml
-title Publish wiki/ to the repository wiki
-
-autonumber
-
-actor "Push to main that changes wiki/**,\nor manual trigger" as Trigger
-participant "Gitea Actions\npublish-wiki" as Workflow
-participant "shared-scripts\n(tools/publish_wiki.py at v1)" as Script
-participant "Gitea wiki API" as Wiki
-
-Trigger -> Workflow: Start workflow
-activate Workflow
-Workflow -> Script: Check out the repository and the script, run it
-activate Script
-
-alt wiki/.publish does not exist
-  Script --> Workflow: Log that publishing is not enabled and succeed\n(nothing is written)
-else wiki/ has no Markdown pages
-  Script --> Workflow: Fail with [configuration]\n(an empty wiki/ never deletes pages)
-else
-  Script -> Script: Read the marker (empty, or the word prune)\nand TOKEN_FOR_GITEA_WIKI
-  Script -> Wiki: GET repository (preflight)
-  Wiki --> Script: Wiki is enabled, token accepted
-  Script -> Wiki: GET pages
-  Wiki --> Script: Existing pages
-  Script -> Wiki: Create new pages, update changed pages
-  opt marker says prune
-    Script -> Wiki: Delete pages that are not in wiki/
-  end
-  Script --> Workflow: Log created, updated and deleted counts
-end
-deactivate Script
-Workflow --> Trigger: Workflow result
 deactivate Workflow
 @enduml
 ```

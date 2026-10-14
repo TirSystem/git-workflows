@@ -33,7 +33,6 @@ never starts, or stops before the step) is a **runner** problem.
 | `Could not determine the Gitea source repository.` | configuration | The run has no repository name; report as a defect |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Keep one GitHub push mirror |
 | `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Wiki publishing only: the repository calls the workflow but its organization has no such secret, or the call does not pass it; store it and pass it in `secrets:` (see [credentials.md](Credentials)) |
-| `wiki/.publish may only be empty or contain the word 'prune'.` | configuration | Wiki publishing through the older scoped workflow only: leave the marker empty, or put only the word `prune` in it |
 | `The prune input must be 'true' or 'false'` | configuration | Wiki publishing only: set `prune` in the call to `"true"` or `"false"` |
 | `The wiki folder ... does not exist` | configuration | Wiki publishing only: set `wiki_dir` in the call to the folder with the pages (default `docs/wiki`) |
 | `... HTTP 403 ...` while publishing the wiki | permissions | Wiki publishing only: the token needs `write:repository` and write access to this repository |
@@ -60,15 +59,9 @@ settings.
 synced.` The run succeeds but nothing was synced. Check that the Gitea
 version supports the push mirror API and re-run.
 
-`No wiki/.publish marker in <owner>/<repo>; wiki publishing is not enabled for
-this repository.` The older scoped Publish wiki run succeeds and writes
-nothing. The repository has not opted in; call the reusable workflow
-**Publish wiki pages** (see [onboarding.md](Onboarding)) if it should publish.
-
 `<n> page(s) are in the wiki but not in <folder>/ and were kept; set the prune
 input to true to delete them.` The run succeeds. Pages that exist only in the
-wiki are left alone unless the call sets `prune: "true"` (with the older scoped
-workflow: the word `prune` in `wiki/.publish`).
+wiki are left alone unless the call sets `prune: "true"`.
 
 ## Runner problems
 

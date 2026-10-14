@@ -7,7 +7,7 @@ import urllib.error
 import pytest
 import yaml
 
-from workflow_source import PUBLISH_WORKFLOW, REPO_ROOT, load_publish_module
+from workflow_source import REPO_ROOT, load_publish_module
 
 REUSABLE_WORKFLOW = REPO_ROOT / ".gitea" / "workflows" / "publish-wiki-pages.yml"
 
@@ -25,22 +25,6 @@ def b64(text: str) -> str:
     return base64.b64encode(text.encode()).decode()
 
 
-class TestParseMarker:
-    @pytest.mark.parametrize(
-        ("text", "expected"),
-        [("", False), ("  \n", False), (None, False), ("prune", True), (" prune\n", True)],
-    )
-    def test_reads_the_empty_marker_and_the_prune_word(self, publish_wiki, text, expected):
-        assert publish_wiki.parse_marker(text) is expected
-
-    @pytest.mark.parametrize("text", ["Prune", "prune: true", "delete", "prune\nmore"])
-    def test_rejects_anything_else(self, publish_wiki, text):
-        with pytest.raises(publish_wiki.WorkflowError) as caught:
-            publish_wiki.parse_marker(text)
-        assert caught.value.category == "configuration"
-        assert "prune" in str(caught.value)
-
-
 class TestParseGiteaToken:
     def test_returns_the_stripped_token(self, publish_wiki):
         assert publish_wiki.parse_gitea_token(" abc \n") == "abc"
@@ -54,17 +38,15 @@ class TestParseGiteaToken:
 
 
 class TestReadPages:
-    def test_reads_markdown_files_by_stem_and_ignores_the_marker(self, publish_wiki, tmp_path):
+    def test_reads_markdown_files_by_stem_and_ignores_other_files(self, publish_wiki, tmp_path):
         (tmp_path / "Home.md").write_bytes(b"home")
         (tmp_path / "Home.da.md").write_bytes(b"hjem")
-        (tmp_path / ".publish").write_bytes(b"prune")
         (tmp_path / "Notes.txt").write_bytes(b"ignored")
         assert publish_wiki.read_pages(tmp_path) == {"Home": b"home", "Home.da": b"hjem"}
 
     def test_rejects_a_directory_without_pages_so_the_wiki_is_never_wiped(
         self, publish_wiki, tmp_path
     ):
-        (tmp_path / ".publish").write_text("prune", encoding="utf-8")
         with pytest.raises(publish_wiki.WorkflowError, match="no Markdown pages"):
             publish_wiki.read_pages(tmp_path)
 
@@ -143,7 +125,7 @@ def environment(monkeypatch, tmp_path):
     wiki_dir.mkdir()
     (wiki_dir / "Home.md").write_text("home v2", encoding="utf-8")
     (wiki_dir / "Credentials.md").write_text("credentials", encoding="utf-8")
-    (wiki_dir / ".publish").write_text("prune\n", encoding="utf-8")
+    monkeypatch.setenv("WIKI_PRUNE", "true")
     monkeypatch.setenv("WIKI_DIR", str(wiki_dir))
     monkeypatch.setenv("GITEA_API_URL", f"{API}/")
     monkeypatch.setenv("SOURCE_REPOSITORY", "TirSystem/repo")
@@ -154,58 +136,6 @@ def environment(monkeypatch, tmp_path):
 def run_main(publish_wiki, gitea):
     publish_wiki.request_json = gitea
     return publish_wiki.main()
-
-
-class TestOptIn:
-    def test_a_repository_without_the_marker_is_never_written_to(
-        self, publish_wiki, environment, capsys
-    ):
-        (environment / ".publish").unlink()
-        gitea = FakeGitea(publish_wiki, wiki={"Old": b64("hand written")})
-
-        assert run_main(publish_wiki, gitea) == 0
-
-        assert gitea.calls == []
-        assert "wiki publishing is not enabled" in capsys.readouterr().out
-        assert gitea.wiki == {"Old": b64("hand written")}
-
-    def test_a_repository_without_the_marker_does_not_need_the_secret(
-        self, publish_wiki, environment, monkeypatch
-    ):
-        (environment / ".publish").unlink()
-        monkeypatch.setenv("WIKI_CREDENTIALS", "")
-        assert run_main(publish_wiki, FakeGitea(publish_wiki)) == 0
-
-    def test_a_repository_without_a_wiki_directory_is_skipped(
-        self, publish_wiki, monkeypatch, tmp_path
-    ):
-        monkeypatch.setenv("WIKI_DIR", str(tmp_path / "missing"))
-        monkeypatch.setenv("SOURCE_REPOSITORY", "TirSystem/repo")
-        gitea = FakeGitea(publish_wiki)
-        assert run_main(publish_wiki, gitea) == 0
-        assert gitea.calls == []
-
-    def test_an_opted_in_repository_without_the_secret_fails_before_any_request(
-        self, publish_wiki, environment, monkeypatch
-    ):
-        monkeypatch.setenv("WIKI_CREDENTIALS", "")
-        gitea = FakeGitea(publish_wiki)
-
-        with pytest.raises(publish_wiki.WorkflowError, match="TOKEN_FOR_GITEA_WIKI"):
-            run_main(publish_wiki, gitea)
-
-        assert gitea.calls == []
-
-    def test_an_unknown_marker_content_is_refused_before_any_request(
-        self, publish_wiki, environment
-    ):
-        (environment / ".publish").write_text("mirror everything", encoding="utf-8")
-        gitea = FakeGitea(publish_wiki)
-
-        with pytest.raises(publish_wiki.WorkflowError, match="prune"):
-            run_main(publish_wiki, gitea)
-
-        assert gitea.calls == []
 
 
 class TestPublish:
@@ -227,9 +157,9 @@ class TestPublish:
         assert "0 created, 1 updated, 1 deleted" in capsys.readouterr().out
 
     def test_without_prune_pages_outside_the_source_are_kept(
-        self, publish_wiki, environment, capsys
+        self, publish_wiki, environment, capsys, monkeypatch
     ):
-        (environment / ".publish").write_text("", encoding="utf-8")
+        monkeypatch.setenv("WIKI_PRUNE", "false")
         gitea = FakeGitea(
             publish_wiki, wiki={"Home": b64("home v1"), "Old": b64("hand written")}
         )
@@ -302,11 +232,11 @@ class TestPageIdentity:
     """A wiki that already has pages named with spaces, as Gitea stores them."""
 
     def test_a_file_named_with_a_space_updates_the_existing_page(
-        self, publish_wiki, environment
+        self, publish_wiki, environment, monkeypatch
     ):
         (environment / "Home.md").unlink()
         (environment / "Credentials.md").unlink()
-        (environment / ".publish").write_text("", encoding="utf-8")
+        monkeypatch.setenv("WIKI_PRUNE", "false")
         (environment / "Home da.md").write_text("hjem v2", encoding="utf-8")
         gitea = FakeGitea(publish_wiki, wiki={"Home-da": b64("hjem v1")})
 
@@ -457,7 +387,6 @@ class TestExplicitPrune:
 
     @pytest.fixture()
     def explicit(self, environment, monkeypatch):
-        (environment / ".publish").unlink()
         monkeypatch.setenv("WIKI_PRUNE", "false")
         return environment
 
@@ -567,38 +496,12 @@ class TestReusableWorkflow:
         assert fetch["ref"] == "${{ inputs.tools-ref }}"
 
 
-class TestWorkflow:
-    @pytest.fixture()
-    def document(self):
-        return yaml.safe_load(PUBLISH_WORKFLOW.read_text(encoding="utf-8"))
-
-    def test_runs_only_on_main_when_wiki_changes_or_by_hand(self, document):
-        triggers = document[True]  # PyYAML reads the key `on` as True
-        assert triggers["push"]["branches"] == ["main"]
-        assert triggers["push"]["paths"] == ["wiki/**"]
-        assert "workflow_dispatch" in triggers
-
-    def test_job_has_read_only_permissions(self, document):
-        assert document["jobs"]["publish-wiki"]["permissions"] == {"contents": "read"}
-
-    def test_secret_is_passed_only_through_the_environment_and_has_no_fallback(self, document):
-        text = PUBLISH_WORKFLOW.read_text(encoding="utf-8")
-        assert "secrets.TOKEN_FOR_GITEA }}" not in text
-        publish_step = document["jobs"]["publish-wiki"]["steps"][-1]
-        assert publish_step["env"]["WIKI_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_WIKI }}"
-        assert "secrets" not in publish_step["run"]
-
-    def test_the_scoped_workflow_runs_the_script_file(self, document):
-        assert (REPO_ROOT / "tools" / "publish_wiki.py").is_file()
-        steps = document["jobs"]["publish-wiki"]["steps"]
-        assert "python3 - <<" not in PUBLISH_WORKFLOW.read_text(encoding="utf-8")
-        assert steps[0]["uses"].startswith("actions/checkout@")
-        assert steps[1]["with"] == {
-            "repository": "TirSystem/github-action",
-            "ref": "v1",
-            "path": "shared-scripts",
-        }
-        assert steps[-1]["run"] == "python3 shared-scripts/tools/publish_wiki.py"
+def test_the_scoped_workflow_is_gone_and_the_script_has_no_marker_path():
+    """ADR-0009, MIL-009: the scoped publish-wiki.yml and the marker are removed."""
+    assert not (REPO_ROOT / ".gitea" / "scoped_workflows" / "publish-wiki.yml").exists()
+    source = (REPO_ROOT / "tools" / "publish_wiki.py").read_text(encoding="utf-8")
+    assert "MARKER_NAME" not in source
+    assert "parse_marker" not in source
 
 
 def test_this_repository_publishes_docs_wiki_through_the_reusable_workflow():

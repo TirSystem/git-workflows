@@ -27,9 +27,13 @@ The quality-checks workflows (`quality-checks.yml`, `quality-checks-cpp.yml` and
 defaults to `v1`. To pin one completely, call it at an exact tag and set
 `tools-ref` to the same tag; otherwise the script follows the major tag.
 
-The two scoped workflows (**Sync GitHub mirror metadata** and **Publish
-wiki**) are delivered by the instance and are not in your `uses:` lines; you
-cannot pin them, but they fetch their scripts at the major tag.
+The scoped workflow **Sync GitHub mirror metadata** is delivered by the
+instance and is not in your `uses:` lines; you cannot pin it, but it fetches its
+script at the major tag. Wiki publishing is a reusable workflow you call
+(`publish-wiki-pages.yml`); the scoped **Publish wiki** workflow and its
+`wiki/.publish` marker were removed in 2.0.0, so a repository that still has the
+marker no longer publishes until it calls the reusable workflow (see the
+onboarding guide).
 
 ## Reading a changelog entry
 

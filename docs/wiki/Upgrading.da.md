@@ -1,4 +1,4 @@
-<!-- translation of Upgrading.md, source sha256 7fba937279b1 -->
+<!-- translation of Upgrading.md, source sha256 1e6a40ed1320 -->
 
 > Dette er en oversættelse af [`Upgrading`](Upgrading). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -20,7 +20,7 @@ En udgivelse, der bryder kompatibiliteten, får en ny major-version (`v2`), så 
 
 Kvalitetskontrol-workflowene (`quality-checks.yml`, `quality-checks-cpp.yml` og `quality-checks-csharp.yml`) henter deres script ved deres input `tools-ref`, som som standard er `v1`. For at fastlåse et helt skal du kalde det ved et præcist tag og sætte `tools-ref` til samme tag; ellers følger scriptet major-tagget.
 
-De to scoped workflows (**Sync GitHub mirror metadata** og **Publish wiki**) leveres af instansen og står ikke i dine `uses:`-linjer; du kan ikke fastlåse dem, men de henter deres scripts ved major-tagget.
+Det scoped workflow **Sync GitHub mirror metadata** leveres af instansen og står ikke i dine `uses:`-linjer; du kan ikke fastlåse det, men det henter sit script ved major-tagget. Publicering af wiki er et genbrugeligt workflow, du kalder (`publish-wiki-pages.yml`); det scoped workflow **Publish wiki** og dets markør `wiki/.publish` blev fjernet i 2.0.0, så et repository, der stadig har markøren, publicerer ikke mere, før det kalder det genbrugelige workflow (se introduktionsguiden).
 
 ## Aflæsning af en changelog-post
 

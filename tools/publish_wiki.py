@@ -1,19 +1,15 @@
 """Publish the pages of a folder to the Gitea wiki of the repository.
 
-Run by the reusable workflow publish-wiki.yml, which a repository calls
-(MIL-008), and by the scoped workflow of the same name until it is removed.
-The reusable workflow sets WIKI_PRUNE: the caller is the opt-in, and the
-folder must exist. The scoped workflow leaves WIKI_PRUNE unset: a repository
-publishes only when it has opted in with WIKI_DIR/.publish (ADR-0004), and the
-word prune in that file lets the run delete wiki pages that are not in the
-folder. It reads its settings from the environment:
+Run by the reusable workflow publish-wiki-pages.yml, which a repository calls
+(ADR-0009). The caller is the opt-in: the workflow sets WIKI_PRUNE and the
+folder must exist. It reads its settings from the environment:
 
     GITEA_API_URL        Gitea API base, for example https://host/api/v1
     SOURCE_REPOSITORY    owner/repo of the repository whose wiki is written
     WIKI_CREDENTIALS     the Gitea token, as clear text (TOKEN_FOR_GITEA_WIKI)
-    WIKI_DIR             directory with the pages (default: wiki)
-    WIKI_PRUNE           true or false: delete pages that are not in the
-                         folder; when set, no .publish marker is read
+    WIKI_DIR             directory with the pages (default: docs/wiki)
+    WIKI_PRUNE           true or false, required: delete pages that are not in
+                         the folder
 
 Every failure is printed as ``ERROR: [category] message`` with the categories
 configuration, credentials, permissions and api; no secret value is printed.
@@ -32,8 +28,7 @@ from pathlib import Path
 PAGE_LIMIT = 50
 REQUEST_TIMEOUT_SECONDS = 30
 COMMIT_MESSAGE = "Publish wiki from the repository"
-MARKER_NAME = ".publish"
-PRUNE_WORD = "prune"
+DEFAULT_WIKI_DIR = "docs/wiki"
 
 
 class WorkflowError(RuntimeError):
@@ -79,19 +74,6 @@ def request_json(url, method="GET", headers=None, body=None):
         raise WorkflowError("api", detail) from None
     except (urllib.error.URLError, TimeoutError) as error:
         raise WorkflowError("api", f"Gitea API is unreachable ({error}).") from None
-
-
-def parse_marker(text):
-    """Return True when the marker asks for pruning, False when it is empty."""
-    word = (text or "").strip()
-    if not word:
-        return False
-    if word == PRUNE_WORD:
-        return True
-    raise WorkflowError(
-        "configuration",
-        f"wiki/{MARKER_NAME} may only be empty or contain the word '{PRUNE_WORD}'.",
-    )
 
 
 def parse_prune_setting(text):
@@ -254,27 +236,16 @@ def publish(pages, wiki_url, headers, send, prune):
 
 
 def main():
-    wiki_dir = Path(os.environ.get("WIKI_DIR", "wiki"))
+    wiki_dir = Path(os.environ.get("WIKI_DIR", DEFAULT_WIKI_DIR))
     owner, repo = split_repository(os.environ.get("SOURCE_REPOSITORY"))
 
-    prune_setting = os.environ.get("WIKI_PRUNE")
-    if prune_setting is None:
-        marker = wiki_dir / MARKER_NAME
-        if not marker.is_file():
-            print(
-                f"No {wiki_dir}/{MARKER_NAME} marker in {owner}/{repo}; "
-                "wiki publishing is not enabled for this repository."
-            )
-            return 0
-        prune = parse_marker(marker.read_text(encoding="utf-8"))
-    else:
-        prune = parse_prune_setting(prune_setting)
-        if not wiki_dir.is_dir():
-            raise WorkflowError(
-                "configuration",
-                f"The wiki folder {wiki_dir} does not exist in {owner}/{repo}; "
-                "set the wiki_dir input to the folder with the pages.",
-            )
+    prune = parse_prune_setting(os.environ.get("WIKI_PRUNE"))
+    if not wiki_dir.is_dir():
+        raise WorkflowError(
+            "configuration",
+            f"The wiki folder {wiki_dir} does not exist in {owner}/{repo}; "
+            "set the wiki_dir input to the folder with the pages.",
+        )
 
     pages = read_pages(wiki_dir)
     token = parse_gitea_token(os.environ.get("WIKI_CREDENTIALS"))
@@ -316,12 +287,7 @@ def main():
     if result["kept"]:
         print(
             f"{len(result['kept'])} page(s) are in the wiki but not in "
-            f"{wiki_dir}/ and were kept; "
-            + (
-                f"put the word '{PRUNE_WORD}' in {wiki_dir}/{MARKER_NAME} to delete them."
-                if prune_setting is None
-                else "set the prune input to true to delete them."
-            )
+            f"{wiki_dir}/ and were kept; set the prune input to true to delete them."
         )
     return 0
 
