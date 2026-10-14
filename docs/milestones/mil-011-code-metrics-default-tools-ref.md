@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-076), accepted by the author in chat as stand-in for S01 | [02e3794] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added the results of task 1 (reproduction and the defaults of the five workflows) | [e11c43f] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-076), accepted by the author in chat as stand-in for S01 | [02e3794] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of task 1 (reproduction and the defaults of the five workflows); reviewed (RC-077), accepted by the AI as stand-in for S01 in autonomous mode | [e11c43f] |
 
 ---
 

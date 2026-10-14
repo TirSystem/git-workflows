@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCpp.md, source sha256 6faa57183a11 -->
+<!-- translation of QualityChecksCpp.md, source sha256 29d1e1390494 -->
 
 > Ini ialah terjemahan [`QualityChecksCpp`](QualityChecksCpp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -34,7 +34,7 @@ jobs:
 | `compile-commands-dir` | kosong | Direktori, relatif kepada akar repositori, dengan `compile_commands.json` yang dibina oleh saluran paip anda sebelum panggilan; apabila ditetapkan, clang-tidy menggunakannya dan mengabaikan `std` |
 | `clang-format-version` | `23.1.3` | Versi tepat pakej clang-format |
 | `clang-tidy-version` | `22.1.8` | Versi tepat pakej clang-tidy |
-| `tools-ref` | `v1` | Tag atau cabang `TirSystem/github-action` tempat skrip `tools/quality-checks-cpp.sh` diambil |
+| `tools-ref` | `v2` | Tag atau cabang `TirSystem/github-action` tempat skrip `tools/quality-checks-cpp.sh` diambil |
 
 Rujuk aliran kerja pada tag major (`@v1`) atau pada tag tepat, jangan sekali-kali pada `main`. Panggilan pada tag tepat hanya disematkan sepenuhnya apabila `tools-ref` menamakan tag yang sama. Lihat panduan naik taraf. Versi alat adalah tepat: versi alat yang lebih baharu ialah keluaran baharu repositori ini, bukan perubahan senyap.
 

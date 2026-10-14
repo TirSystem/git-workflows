@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [01b9c29] |
 | 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Review findings fixed (RC-063): the product owner's language is spelled out, the security consequence is named, and the secret passing is recorded as verified | [8c2c52e] |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | pending |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -92,6 +92,14 @@ The rules that follow from it:
 - [MIL-008] — the plan this decision belongs to.
 - [ADR-0004] — its scoped delivery and marker parts are replaced once the
   scoped workflow is removed; its token and safety rules stand.
+
+
+## Amendment (MIL-011)
+
+The default of the input `tools-ref` in the wiki publishing contract is the current major tag, defined once in the file
+`MAJOR_TAG` of this repository (`v2` from release 2.1.1), and no longer `v1`. A default must
+name a tag that holds the script the workflow runs; a test checks it. Callers at `@v1` are
+not affected: the `v1` tag keeps the `v1` workflow files.
 
 ---
 

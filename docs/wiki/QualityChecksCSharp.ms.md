@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCSharp.md, source sha256 36e34031e0b9 -->
+<!-- translation of QualityChecksCSharp.md, source sha256 a024fde8d1b3 -->
 
 > Ini ialah terjemahan [`QualityChecksCSharp`](QualityChecksCSharp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -32,7 +32,7 @@ jobs:
 | `working-directory` | `.` | Direktori, relatif kepada akar repositori, yang failnya disemak |
 | `project` | kosong | Fail solution atau projek, relatif kepada `working-directory`; kosong menggunakan satu-satunya `*.sln` atau `*.slnx` yang dijejaki, jika tiada maka satu-satunya `*.csproj` yang dijejaki di situ |
 | `dotnet-sdk-version` | `10.0.401` | Versi tepat .NET SDK, 10 atau lebih baharu; saluran seperti `10.0`, julat dan versi di bawah 10 ditolak |
-| `tools-ref` | `v1` | Tag atau cabang `TirSystem/github-action` tempat skrip `tools/quality-checks-csharp.sh` diambil |
+| `tools-ref` | `v2` | Tag atau cabang `TirSystem/github-action` tempat skrip `tools/quality-checks-csharp.sh` diambil |
 
 Rujuk aliran kerja pada tag major (`@v1`) atau pada tag tepat, jangan sekali-kali pada `main`. Panggilan pada tag tepat hanya disematkan sepenuhnya apabila `tools-ref` menamakan tag yang sama. Lihat panduan naik taraf. Versi SDK adalah tepat: menaikkan nilai lalai ialah keluaran baharu repositori ini, bukan perubahan senyap.
 

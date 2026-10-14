@@ -20,6 +20,19 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Fixed
+
+- `code-metrics.yml` could not be called as documented. Its guide, header
+  comment and `tools-ref` default named `v1`, which has neither the workflow nor
+  `tools/code-metrics.sh`: a call at `@v1` created no run, and a call at `@v2`
+  with the defaults failed in "Validate the inputs" (exit 127). The default
+  `tools-ref` of `code-metrics.yml`, `quality-checks.yml`,
+  `quality-checks-cpp.yml`, `quality-checks-csharp.yml` and
+  `publish-wiki-pages.yml` is now the current major (`v2`), defined once in
+  `MAJOR_TAG`, and a test fails when a default differs from it or names a tag
+  without the script. The guides, README and wiki pages call
+  `code-metrics.yml` at `@v2`.
+
 ## [2.1.0] - 2026-10-14
 
 ### Added

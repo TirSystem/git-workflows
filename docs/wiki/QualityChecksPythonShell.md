@@ -38,7 +38,7 @@ jobs:
 | `mypy-version` | `1.11.2` | Version of mypy |
 | `shellcheck-py-version` | `0.10.0.1` | Version of the shellcheck-py package (ShellCheck 0.10.0) |
 | `shfmt-py-version` | `3.11.0.2` | Version of the shfmt-py package (shfmt 3.11.0) |
-| `tools-ref` | `v1` | Tag or branch of `TirSystem/github-action` from which the script `tools/quality-checks.sh` is fetched |
+| `tools-ref` | `v2` | Tag or branch of `TirSystem/github-action` from which the script `tools/quality-checks.sh` is fetched |
 
 Reference the workflow at the major tag (`@v1`) or at an exact tag
 (`@v1.0.0`), never at `main` and never at the branch of a pull request: that

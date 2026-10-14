@@ -27,7 +27,7 @@ on:
       tools-ref:
         description: "Tag or branch of TirSystem/github-action whose tools/quality-checks-csharp.sh is run; pin it to the exact tag together with the workflow"
         type: string
-        default: "v1"
+        default: "v2"
 
 jobs:
   quality-checks-csharp:

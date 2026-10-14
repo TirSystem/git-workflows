@@ -31,7 +31,7 @@ on:
       tools-ref:
         description: "Tag or branch of TirSystem/github-action whose tools/publish_wiki.py is run; pin it to the exact tag together with the workflow"
         type: string
-        default: "v1"
+        default: "v2"
     secrets:
       TOKEN_FOR_GITEA_WIKI:
         description: "Gitea token with write access to the wiki of the calling repository"
