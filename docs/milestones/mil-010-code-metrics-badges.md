@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-068) | [5002450] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; reviewed (RC-068) | [5002450] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Results of tasks 3, 6 and 8 added: the report as an artifact of the caller (ADR-0010), adoption in a throwaway repository with seeded change and failure; reviewed (RC-074) | pending |
 
 ---
 
@@ -129,6 +130,40 @@ anonymous reader), and the rendering inside a Gitea README, which is the same
 `<img>` request. The throwaway branches `verify-badges-delivery` and
 `badges-verify` are left in place because deleting a branch is an action the
 run stops on; they are listed in the summary for the user to delete.
+
+Task 6 changed the contract once while it was implemented. A called workflow
+runs in its own job, so it cannot read a report that the caller's test job
+wrote in its workspace; a report the repository commits is the only file it can
+see. ADR-0010 was amended (RC-073): the caller uploads the report as an
+artifact and names it in the new input `coverage-artifact`; the workflow
+downloads it with `actions/download-artifact` into the directory
+`coverage-artifact` and `coverage-report` names the file inside it. The scope
+and the three badges did not change.
+
+Task 8 was run on 2026-10-14 in a throwaway private repository of the
+organisation, `TirSystem/code-metrics-adoption` (no repository of a project
+fits, and the user's plan allows a throwaway). It holds a two-file Python
+module with tests and a workflow of two jobs: the tests with `pytest-cov`
+upload `coverage.xml` as the artifact `coverage`, and the second job calls
+`code-metrics.yml` and `tools-ref` of the branch `mil-010-implementation` of
+this repository, before its merge.
+
+| Step | Result |
+| --- | --- |
+| Baseline (run 1423) | All steps pass, including `Download the coverage report` with `actions/download-artifact@v4.1.8` on Gitea 1.27.3; the `badges` branch is created with one commit by `code-metrics` and the message `Update code metrics badges [skip ci]`; `code-files.svg` shows 2, `code-lines.svg` 28 (the hand count of the two files), `coverage.svg` 100% in green `#44cc11` |
+| The push of the badges | No run was started by it: the runs of the repository are the two of the push to `main` (the metrics workflow and the scoped sync) |
+| Seeded change (run 1425): two tests removed | The coverage badge reads 60% in yellow `#dfb317`; one new commit on `badges` that changes the badge files; the files and the lines badges changed with the tests |
+| Seeded failure (run 1429): `coverage-report` names a file that does not exist | The job `code-metrics` fails: `::error::[configuration] coverage-report 'coverage-artifact/nope.xml' does not exist.`; `badges` is unchanged (two commits) |
+| README | Its three Markdown images render as `<img>` of the raw URLs of the `badges` branch (checked with the markdown API of the instance); the raw URLs answer `image/svg+xml` as in task 3 |
+
+Not covered: a run that changes nothing (the unchanged case is covered by the
+offline tests, not by a run), two runs that write the branch at the same time
+(covered by an offline test with a rejecting remote, not on the instance), the
+rendering for a reader who is not signed in to a private repository, and a
+repository of a project with a real coverage report. The throwaway repository
+`TirSystem/code-metrics-adoption` is left in place because deleting a
+repository is an action the run stops on; it is listed in the summary for the
+user to delete.
 
 ---
 

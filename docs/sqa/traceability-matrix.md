@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [UC-008], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [RC-052], [RC-053], [RC-054], [RC-055], [RC-056], [RC-057], [RC-058], [RC-059], [RC-060], [RC-061], [RC-062], [RC-063], [RC-064], [RC-065], [RC-066], [RC-067], [RC-068], [RC-069], [RC-070], [RC-071], [RC-072], [RC-073], [ADR-0007], [ADR-0008], [ADR-0009], [ADR-0010], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [UC-008], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [RC-052], [RC-053], [RC-054], [RC-055], [RC-056], [RC-057], [RC-058], [RC-059], [RC-060], [RC-061], [RC-062], [RC-063], [RC-064], [RC-065], [RC-066], [RC-067], [RC-068], [RC-069], [RC-070], [RC-071], [RC-072], [RC-073], [RC-074], [ADR-0007], [ADR-0008], [ADR-0009], [ADR-0010], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0010, RC-072 (contract of the code metrics badges, MIL-010 task 2) | pending |
 | 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-073 (ADR-0010: the coverage report as an artifact, MIL-010 task 6) | pending |
+| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-074 (MIL-010 results of tasks 3, 6 and 8) | pending |
 
 ---
 
@@ -43,7 +43,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-007] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004], [ADR-0008] | - | [RC-052], [RC-055], [RC-059] |
 | [MIL-008] | MIL | [BC-001], [PP-001], [MIL-006], [ADR-0004] | [MIL-009] | [RC-060], [RC-061] |
 | [MIL-009] | MIL | [BC-001], [PP-001], [MIL-008], [ADR-0004], [ADR-0006], [ADR-0009] | - | [RC-064], [RC-066] |
-| [MIL-010] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004] | - | [RC-068] |
+| [MIL-010] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004] | - | [RC-068], [RC-074] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
@@ -130,6 +130,7 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-071] | RC | [UCD-001] | - | - |
 | [RC-072] | RC | [ADR-0010] | - | - |
 | [RC-073] | RC | [ADR-0010] | - | - |
+| [RC-074] | RC | [MIL-010] | - | - |
 
 ## Coverage Notes
 
@@ -237,6 +238,7 @@ updated whenever an artifact instance is created or reviewed.
 [RC-071]: ./reviews/rc-071-ucd-001-metrics.md
 [RC-072]: ./reviews/rc-072-adr-0010.md
 [RC-073]: ./reviews/rc-073-adr-0010-artifact.md
+[RC-074]: ./reviews/rc-074-mil-010-results.md
 [ADR-0008]: ../adr/adr-0008-cpp-csharp-quality-check-contract.md
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0007]: ../adr/adr-0007-release-publish-destination.md
