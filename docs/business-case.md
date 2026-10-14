@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | A mirrored repository has at most one GitHub push mirror; repositories without one are skipped | [0c06789] |
-| 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Scope: wiki pages in English, Danish and Bahasa Malaysia | [08ef26a] |
+| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Scope: wiki pages in English, Danish and Bahasa Malaysia | [08ef26a] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Objective O5, scope item and success criterion 5: shared workflow for code metrics and coverage badges (MIL-010); reviewed (RC-067) | pending |
 
 ---
 
@@ -59,6 +59,9 @@ made once.
   diagnosis for every workflow.
 - **O4:** Offer shared quality-check and release workflows, versioned so
   consumers can adopt changes deliberately.
+- **O5:** Offer a shared workflow that counts the code files and the lines of
+  code (without comment and blank lines) of a repository, reads its coverage
+  report and publishes the three results as SVG badges.
 
 ## Scope
 
@@ -68,6 +71,7 @@ made once.
 - Documentation for DevOps professionals and software engineers.
 - A Gitea wiki with the same documentation in English, Danish and Bahasa Malaysia (MIL-005).
 - Validation of workflow files and their documentation.
+- A shared workflow for code metrics and coverage badges (MIL-010).
 
 ### Out of Scope
 
@@ -104,6 +108,7 @@ accepted plans.
 | 2 | Canonical copies per workflow | 1 | Count of files per workflow name |
 | 3 | Documented use cases that are implemented or marked planned | 100% | README capability table against workflows present |
 | 4 | Repositories consuming a shared workflow | At least 1 besides this one by MIL-002 | Consumer list in README |
+| 5 | Repositories that show the code metrics and coverage badges from the shared workflow | At least 1 besides this one by MIL-010 | README of the consuming repository |
 
 ## Risks
 
@@ -149,5 +154,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 ---
 
 [SA-001]: ./stakeholder-analysis.md
-[0c06789]: https://git.tirsystem.com/TirSystem/github-action/commit/0c06789a2779382672712cd483f4964b28a0ebe9
 [08ef26a]: https://git.tirsystem.com/TirSystem/github-action/commit/08ef26a6d3eb98c066b45634c2271e578e6c0a0b
