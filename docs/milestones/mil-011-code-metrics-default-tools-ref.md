@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [02e3794] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-076), accepted by the author in chat as stand-in for S01 | [02e3794] |
 
 ---
 
@@ -49,7 +49,7 @@ A patch release (`2.1.1`, [ADR-0006]) in which: the default `tools-ref` of every
 
 | Business Case objective / KPI / user story | Reference |
 | --- | --- |
-| Business Case objective O5 (shared workflows that a repository can call without writing its own) | [BC-001] |
+| Business Case objective O5: a shared workflow that counts the code files and lines of code, reads the coverage report and publishes the three results as SVG badges; the workflow cannot be called as documented until this milestone is done | [BC-001] |
 | User stories | [US-001] (no new story: the tasks below are technical, and the story of [MIL-010] for the badges stays as written) |
 
 ## Ownership
