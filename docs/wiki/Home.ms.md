@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 9b967f9e1aff -->
+<!-- translation of Home.md, source sha256 9b84b5cf7534 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -13,12 +13,12 @@ Koleksi aliran kerja (workflow) Gitea Actions yang boleh digunakan semula untuk 
 
 Repositori ini ialah koleksi pusat bagi automasi yang boleh digunakan semula untuk repositori TirSystem. Repositori utama berada di `git.tirsystem.com` (Gitea) dan dicerminkan dengan push ke GitHub.
 
-Ia mengandungi sepuluh aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki (dipanggil oleh setiap repositori), semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, metrik kod dan lencana liputan, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
+Ia mengandungi sebelas aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki (dipanggil oleh setiap repositori), semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, metrik kod dan lencana liputan, semakan bahawa komen ditulis dalam bahasa Inggeris, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
 
 
 ## Aliran kerja
 
-Terdapat sepuluh aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
+Terdapat sebelas aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
 
 | Aliran kerja | Fail | Jenis | Bermula apabila | Tujuan |
 | --- | --- | --- | --- | --- |
@@ -28,6 +28,7 @@ Terdapat sepuluh aliran kerja dalam repositori ini. Aliran kerja **scoped** diha
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan clang-format dan clang-tidy pada versi tepat pada fail C dan C++ yang dijejaki dan tidak mengubah apa-apa |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan `dotnet format` dan `dotnet build` pada .NET SDK 10 atau lebih baharu yang tepat dan tidak mengubah apa-apa |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/code-metrics.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Mengira fail kod dan baris kod (tanpa baris komen dan baris kosong), membaca laporan liputan Cobertura dan melakukan commit tiga lencana SVG ke cabang `badges` |
+| English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/english-comments.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain, pada pull request | Menilai bahasa komen dan docstring yang ditambah oleh pull request, menggagalkan larian apabila ada yang bukan bahasa Inggeris dan menulis satu komen pada pull request yang menyebut penulisnya |
 | Publish own wiki | [`publish-own-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-own-wiki.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/wiki/**`, manual | Memanggil aliran kerja boleh guna semula Publish wiki pages untuk wiki repositori ini |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Repositori ini sahaja | manual | Mencipta tag versi, halaman keluaran dan tag major selepas semakan |
 | Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go |
@@ -275,6 +276,46 @@ else
   Workflow -> Branch: One commit with [skip ci]
   Workflow --> Caller: Badges published
 end
+deactivate Workflow
+@enduml
+```
+
+### Komen dalam bahasa Inggeris
+
+Aliran kerja boleh guna semula yang menyemak bahawa komen dan docstring yang ditambah oleh pull request ditulis dalam bahasa Inggeris, menggagalkan larian apabila ada yang tidak, dan menulis satu komen pada pull request yang menyebut penulisnya. Ia tidak mengubah sebarang fail dan tidak menghantar teks sumber keluar daripada instans; menandakan semakan sebagai wajib dalam perlindungan cabang ialah yang menyekat penggabungan ([panduan](EnglishComments.ms), ADR-0012).
+
+#### Aliran kerja
+
+```plantuml
+@startuml
+title English comments check (reusable workflow)
+
+autonumber
+
+actor "Pull request
+uses: ...english-comments.yml@v2" as Caller
+participant "Gitea Actions
+english-comments" as Workflow
+participant "Gitea REST API" as Gitea
+
+Caller -> Workflow: workflow_call with scope, exclude,
+allowed-words-file, threshold and min-words
+activate Workflow
+
+Workflow -> Workflow: Check out the full history and the shared scripts
+Workflow -> Workflow: Install the pinned language detector
+Workflow -> Workflow: Read the comments on the added lines
+Workflow -> Workflow: Remove paths, options, identifiers and allowed words
+Workflow -> Workflow: Judge the language of each comment block
+
+alt a block is not English
+  Workflow -> Gitea: Create or update one comment that mentions the author
+  Workflow --> Caller: run failed (the required check blocks the merge)
+else all blocks are English
+  Workflow -> Gitea: Mark an earlier comment resolved
+  Workflow --> Caller: run passed
+end
+
 deactivate Workflow
 @enduml
 ```

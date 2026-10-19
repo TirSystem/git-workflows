@@ -17,11 +17,11 @@ A collection of reusable Gitea Actions workflows for DevOps professionals and so
 
 This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It contains ten workflows: metadata sync to the GitHub mirror, wiki publishing (called by each repository), shared quality checks for Python and shell, for C and C++ and for C#, code metrics and coverage badges, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#-workflows).
+It contains eleven workflows: metadata sync to the GitHub mirror, wiki publishing (called by each repository), shared quality checks for Python and shell, for C and C++ and for C#, code metrics and coverage badges, a check that comments are in English, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#-workflows).
 
 ## 🔧 Workflows
 
-Ten workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
+Eleven workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |
 | --- | --- | --- | --- | --- |
@@ -31,6 +31,7 @@ Ten workflows live in this repository. A **scoped** workflow is delivered by the
 | Quality checks C++ | [`quality-checks-cpp.yml`](.gitea/workflows/quality-checks-cpp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs clang-format and clang-tidy at exact versions on the tracked C and C++ files and changes nothing |
 | Quality checks C# | [`quality-checks-csharp.yml`](.gitea/workflows/quality-checks-csharp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs `dotnet format` and `dotnet build` on an exact .NET SDK 10 or later and changes nothing |
 | Code metrics | [`code-metrics.yml`](.gitea/workflows/code-metrics.yml) | Reusable (`workflow_call`) | a call from another repository | Counts the code files and the lines of code (without comment and blank lines), reads a Cobertura coverage report and commits three SVG badges to a `badges` branch |
+| English comments | [`english-comments.yml`](.gitea/workflows/english-comments.yml) | Reusable (`workflow_call`) | a call from another repository, on a pull request | Judges the language of the comments and docstrings a pull request adds, fails the run when one is not English and writes one comment on the pull request that mentions the author |
 | Publish own wiki | [`publish-own-wiki.yml`](.gitea/workflows/publish-own-wiki.yml) | This repository only | push to `main` that changes `docs/wiki/**`, manual | Calls the reusable Publish wiki pages workflow for the wiki of this repository |
 | Release | [`release.yml`](.gitea/workflows/release.yml) | This repository only | manual | Creates the version tag, the release page and the major tag after the checks |
 | Publish accepted milestones | [`sync-milestones.yml`](.gitea/workflows/sync-milestones.yml) | This repository only | push to `main` that changes `docs/milestones/**` or `docs/sqa/reviews/**`, manual (dry run by default) | Creates or updates the Gitea milestone and issues of every milestone that is Accepted with a Go review |
@@ -278,6 +279,46 @@ else
   Workflow -> Branch: One commit with [skip ci]
   Workflow --> Caller: Badges published
 end
+deactivate Workflow
+@enduml
+```
+
+### 🔤 English comments
+
+A reusable workflow that checks that the comments and docstrings a pull request adds are written in English, fails the run when one is not, and writes one comment on the pull request that mentions the author. It changes no file and sends no source text outside the instance; marking the check as required in the branch protection is what blocks the merge ([guide](guides/english-comments.md), ADR-0012).
+
+#### 🔀 Workflow
+
+```plantuml
+@startuml
+title English comments check (reusable workflow)
+
+autonumber
+
+actor "Pull request
+uses: ...english-comments.yml@v2" as Caller
+participant "Gitea Actions
+english-comments" as Workflow
+participant "Gitea REST API" as Gitea
+
+Caller -> Workflow: workflow_call with scope, exclude,
+allowed-words-file, threshold and min-words
+activate Workflow
+
+Workflow -> Workflow: Check out the full history and the shared scripts
+Workflow -> Workflow: Install the pinned language detector
+Workflow -> Workflow: Read the comments on the added lines
+Workflow -> Workflow: Remove paths, options, identifiers and allowed words
+Workflow -> Workflow: Judge the language of each comment block
+
+alt a block is not English
+  Workflow -> Gitea: Create or update one comment that mentions the author
+  Workflow --> Caller: run failed (the required check blocks the merge)
+else all blocks are English
+  Workflow -> Gitea: Mark an earlier comment resolved
+  Workflow --> Caller: run passed
+end
+
 deactivate Workflow
 @enduml
 ```
@@ -546,6 +587,7 @@ Rows that say Implemented or Guides written exist today. The rest is planned and
 | Shared quality checks (Python and shell) | Implemented as the reusable workflow `.gitea/workflows/quality-checks.yml`, with offline tests and a trial in a second organization; adopted in RepoFoundry ([guide](guides/quality-checks.md)) |
 | Shared quality checks (C and C++, C#) | Implemented as the reusable workflows `.gitea/workflows/quality-checks-cpp.yml` and `.gitea/workflows/quality-checks-csharp.yml` with exact tool versions and offline tests; not yet used in another repository (MIL-007) ([C and C++ guide](guides/quality-checks-cpp.md), [C# guide](guides/quality-checks-csharp.md)) |
 | Code metrics and coverage badges | Implemented and released in 2.1.0 as the reusable workflow `.gitea/workflows/code-metrics.yml` with a counter, a Cobertura reader, an SVG renderer and offline tests; tried in a throwaway repository, not yet used in a project repository (MIL-010) ([guide](guides/code-metrics.md)) |
+| English comments | Implemented as the reusable workflow `.gitea/workflows/english-comments.yml` with a comment extractor, a language detector measured on a corpus (ADR-0012), a pull request comment and offline tests; not yet run on the instance or required by any repository (MIL-013) ([guide](guides/english-comments.md)) |
 | Versioned release and publishing | Release process, changelog and upgrade guide defined; the release workflow exists and `v1.0.0` is released (MIL-004) ([guide](guides/upgrading.md)) |
 
 ## 📄 License
