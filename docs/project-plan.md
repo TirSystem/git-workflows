@@ -4,25 +4,26 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-010 (code metrics and coverage badges); reviewed (RC-068) | [5002450] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-011 (fix the defaults of the code metrics workflow); reviewed (RC-076), accepted by the author in chat as stand-in for S01 | [02e3794] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-011 (fix the defaults of the code metrics workflow); reviewed (RC-076), accepted by the author in chat as stand-in for S01 | [02e3794] |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-012 (VPN actions for deployment); reviewed (RC-080), accepted by the author in chat as stand-in for S01 | [c5d5941] |
 
 ---
 
 ## Purpose
 
-This plan schedules eleven milestones that move the repository from one
+This plan schedules twelve milestones that move the repository from one
 workflow with known defects to a documented, versioned collection of shared
 workflows. The Business Case sets no deadline, so the dates are the plan's own; they were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
 ## Planning Assumptions
 
 - Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26; MIL-007 follows in January 2027 (2027-01-04 to 2027-01-16, confirmed on 2026-10-11 by S01). MIL-008 amends the shared wiki publishing of MIL-006 and runs in parallel with the October and November windows: its work started on 2026-10-13 and its decision date is its own Target Date, 2026-11-15. MIL-009 follows MIL-008 and runs from 2026-11-16 to its proposed Target Date, 2026-11-30, confirmed by S01 in chat on 2026-10-14. MIL-010 (code metrics and coverage badges) follows MIL-007 in January 2027, from 2027-01-18 to its Target Date, 2027-01-30, accepted by the user in chat on 2026-10-14.
+- MIL-012 (VPN actions for deployment) runs from 2026-10-26 to its Target Date, 2026-11-06, proposed by the author and accepted by S01 in chat on 2026-10-19; it overlaps MIL-002 and MIL-003, which do not touch the runners' network.
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -41,6 +42,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Migrate the wiki callers and remove the scoped workflow | [MIL-009] | 2026-11-16 to 2026-11-30 | 2026-11-30 | S05 | None yet | Seven repositories publish through a caller, scoped workflow removed, ADR-0004 superseded, released as 2.0.0 | Not created yet (the sync creates it when MIL-009 is Accepted) |
 | Code metrics and coverage badges | [MIL-010] | 2027-01-18 to 2027-01-30 | 2027-01-30 | S05 | None yet (task 1 writes them) | Reusable workflow that counts code files and lines of code, reads coverage and commits SVG badges, released | Not created yet (the sync creates it when MIL-010 is Accepted) |
 | Fix the defaults of the code metrics workflow | [MIL-011] | 2026-10-14 to 2026-10-23 | 2026-10-23 | S05 | None (technical tasks) | Patch release 2.1.1: the default `tools-ref` of every reusable workflow names a tag that holds its scripts, a test for it, guides and wiki at `@v2`, the framework Badges page without the workaround | Not created yet (the sync creates it when MIL-011 is Accepted) |
+| VPN actions for deployment | [MIL-012] | 2026-10-26 to 2026-11-06 | 2026-11-06 | S05 | None (technical tasks) | Release 2.2.0: composite actions `connect-wireguard` and `connect-tailscale` verified on a runner of the instance, with guides, wiki in three languages and the framework templates pinned to the release | Not created yet (the sync creates it when MIL-012 is Accepted) |
 
 ```plantuml
 @startgantt
@@ -67,6 +69,8 @@ Project starts 2026-10-05
 [MIL-010 Go/No-Go] happens 2027-01-30
 [MIL-011 Defaults fix] starts 2026-10-14 and ends 2026-10-23
 [MIL-011 Go/No-Go] happens 2026-10-23
+[MIL-012 VPN actions] starts 2026-10-26 and ends 2026-11-06
+[MIL-012 Go/No-Go] happens 2026-11-06
 @endgantt
 ```
 
@@ -84,6 +88,7 @@ Project starts 2026-10-05
 | The wiki publisher as a workflow that repositories call, from docs/wiki | [MIL-008] |
 | Moving every publishing repository to the called workflow and removing the scoped one | [MIL-009] |
 | A shared workflow for code metrics and coverage badges | [MIL-010], [MIL-011] |
+| Shared composite actions that connect a deployment job to a private network through WireGuard or Tailscale | [MIL-012] |
 
 ## Dependencies
 
@@ -93,6 +98,7 @@ MIL-001 → MIL-002 → MIL-003 → MIL-004
    MIL-003 + MIL-004 → MIL-007
                       MIL-006 → MIL-008 → MIL-009
    MIL-003 + MIL-004 → MIL-010 → MIL-011
+   MIL-004 + MIL-011 → MIL-012
 ```
 
 A No-Go moves every later window by the rework time of the failed milestone.
@@ -106,6 +112,7 @@ A No-Go moves every later window by the rework time of the failed milestone.
 | Eight repositories still publish through the scoped workflow that MIL-008 deprecates (MIL-008 task 5) | Removing it would stop their wikis | It is deprecated and kept; a follow-up milestone migrates them and removes it in a major release (RC-061). |
 | An organisation has no `TOKEN_FOR_GITEA_WIKI` secret, or a repository fails its first run (MIL-009 tasks 3 and 4) | The wiki of that repository stops updating | MIL-009 task 5 reads each wiki back after the first run; the scoped workflow is removed only after every repository passes. |
 | The token of a run cannot push to a `badges` branch, or the SVG does not render on the mirror (MIL-010) | The delivery of the badges changes shape | MIL-010 task 3 verifies it first; fall back to a badge file in a path of the default branch or to a run artifact. |
+| The runner cannot give a job `NET_ADMIN` and `/dev/net/tun`, or `tailscaled` does not survive to the next step (MIL-012) | The actions need another shape (a different start of the daemon, or userspace mode only) | MIL-012 tasks 2 to 4 verify it first on a runner of the instance; the release waits for criteria 2 and 3. |
 | Security review by S05 is a bottleneck | Milestone decisions slip | Keep milestones small and plan review time before each decision date. |
 
 ## Open Issues
@@ -282,6 +289,7 @@ no tests, no release process.
 [MIL-009]: ./milestones/mil-009-migrate-wiki-callers-and-remove-scoped-workflow.md
 [MIL-010]: ./milestones/mil-010-code-metrics-badges.md
 [MIL-011]: ./milestones/mil-011-code-metrics-default-tools-ref.md
+[MIL-012]: ./milestones/mil-012-vpn-actions-for-deployment.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
@@ -292,5 +300,5 @@ no tests, no release process.
 [Milestone MIL-008]: https://git.tirsystem.com/TirSystem/github-action/milestone/152
 [b74ee0e]: https://git.tirsystem.com/TirSystem/github-action/commit/b74ee0e5cfd04f25ba5f2c1addc80699147c479a
 [2f267df]: https://git.tirsystem.com/TirSystem/github-action/commit/2f267df2a270087cb7dc482af4ce4f4341e97b03
-[5002450]: https://git.tirsystem.com/TirSystem/github-action/commit/50024505fe788b1c5e3021c0d1fc3d079590070e
 [02e3794]: https://git.tirsystem.com/TirSystem/github-action/commit/02e3794d7b05799af2544ca303c99271da788e82
+[c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
