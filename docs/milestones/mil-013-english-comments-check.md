@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-083), accepted by the author in chat as stand-in for S01 with target date 2026-11-20 | pending |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-083), accepted by the author in chat as stand-in for S01 with target date 2026-11-20 | [e35b1c5] |
 
 ---
 
@@ -106,3 +106,4 @@ Release `2.3.0` of this repository ([ADR-0006]: a new capability is a minor rele
 [PP-001]: ../project-plan.md
 [RC-083]: ../sqa/reviews/rc-083-mil-013-plan.md
 [RC-084]: ../sqa/reviews/rc-084-bc-001-o7.md
+[e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357

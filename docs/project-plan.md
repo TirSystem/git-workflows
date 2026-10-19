@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-012 (VPN actions for deployment); reviewed (RC-080), accepted by the author in chat as stand-in for S01 | [c5d5941] |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-013 (source code comments are in English); reviewed (RC-083), accepted by the author in chat as stand-in for S01 | pending |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-013 (source code comments are in English); reviewed (RC-083), accepted by the author in chat as stand-in for S01 | [e35b1c5] |
 
 ---
 
@@ -307,3 +307,4 @@ no tests, no release process.
 [Milestone MIL-007]: https://git.tirsystem.com/TirSystem/github-action/milestone/95
 [Milestone MIL-008]: https://git.tirsystem.com/TirSystem/github-action/milestone/152
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
+[e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357

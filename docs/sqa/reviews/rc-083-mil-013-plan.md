@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat as stand-in for S01, after one correction found in the first read | pending |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat as stand-in for S01, after one correction found in the first read | [e35b1c5] |
 
 ---
 
@@ -71,3 +71,4 @@ Go - all criteria pass after one correction found in the first read (the stale "
 [RC-080]: ./rc-080-mil-012-plan.md
 [RC-084]: ./rc-084-bc-001-o7.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357

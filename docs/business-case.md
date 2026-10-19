@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Objective O6, scope item, assumption, constraint and success criterion 6: shared actions that bring a VPN up for a deployment job (MIL-012); reviewed (RC-081), accepted by the author in chat as stand-in for S01 | [c5d5941] |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Objective O7, scope item, assumption, constraint and success criterion 7: a shared workflow that checks that the comments in source code are in English (MIL-013); reviewed (RC-084), accepted by the author in chat as stand-in for S01 | pending |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Objective O7, scope item, assumption, constraint and success criterion 7: a shared workflow that checks that the comments in source code are in English (MIL-013); reviewed (RC-084), accepted by the author in chat as stand-in for S01 | [e35b1c5] |
 
 ---
 
@@ -169,3 +169,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 
 [SA-001]: ./stakeholder-analysis.md
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
+[e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
