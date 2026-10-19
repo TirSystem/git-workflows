@@ -1,0 +1,116 @@
+name: English comments
+
+# Reusable workflow (MIL-013, ADR-0012). A repository calls it on its pull
+# requests with
+#
+#   on:
+#     pull_request:
+#   jobs:
+#     english-comments:
+#       uses: TirSystem/github-action/.gitea/workflows/english-comments.yml@v2
+#
+# It reads the comments and docstrings that the pull request adds, judges their
+# language, fails the run when one is not English and writes one comment on the
+# pull request that mentions the author. It changes no file. Mark the check as
+# required in the branch protection of the target branch to block the merge
+# (the workflow cannot do that).
+on:
+  workflow_call:
+    inputs:
+      scope:
+        description: "changed: the comments on the lines the pull request adds; all: every tracked file"
+        type: string
+        default: "changed"
+      exclude:
+        description: "Comma list of file name or path patterns that are not checked (* and ** are wildcards)"
+        type: string
+        default: ""
+      allowed-words-file:
+        description: "File of the repository with words that are never judged, one per line"
+        type: string
+        default: ""
+      threshold:
+        description: "Probability, above 0 and at most 1, from which a comment counts as not English (ADR-0012)"
+        type: string
+        default: "0.6"
+      min-words:
+        description: "A comment with fewer words is not judged (ADR-0012)"
+        type: string
+        default: "3"
+      langid-version:
+        description: "Version of the langid package"
+        type: string
+        default: "1.1.6"
+      numpy-version:
+        description: "Version of numpy, which langid needs"
+        type: string
+        default: "2.1.3"
+      tools-ref:
+        description: "Tag or branch of TirSystem/github-action whose tools/english_comments.py is run; pin it to the exact tag together with the workflow"
+        type: string
+        default: "v2"
+    secrets:
+      REPORT_TOKEN:
+        description: "Optional Gitea token that may comment on pull requests; without it the token of the run is used"
+        required: false
+
+jobs:
+  english-comments:
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SCOPE: ${{ inputs.scope }}
+      EXCLUDE: ${{ inputs.exclude }}
+      ALLOWED_WORDS: ${{ inputs.allowed-words-file }}
+      THRESHOLD: ${{ inputs.threshold }}
+      MIN_WORDS: ${{ inputs.min-words }}
+      LANGID_VERSION: ${{ inputs.langid-version }}
+      NUMPY_VERSION: ${{ inputs.numpy-version }}
+      BASE_REF: ${{ gitea.base_ref }}
+      FINDINGS_FILE: /tmp/english-comments-findings.json
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Fetch the shared scripts
+        uses: actions/checkout@v4.2.2
+        with:
+          repository: TirSystem/github-action
+          ref: ${{ inputs.tools-ref }}
+          path: shared-scripts
+
+      - name: Install the language detector
+        run: |
+          python3 -m venv /tmp/english-comments-venv
+          /tmp/english-comments-venv/bin/pip install --quiet "langid==${LANGID_VERSION}" "numpy==${NUMPY_VERSION}"
+
+      - name: Check the comments
+        id: check
+        continue-on-error: true
+        run: >-
+          /tmp/english-comments-venv/bin/python shared-scripts/tools/english_comments.py check
+          --scope "$SCOPE" --base "origin/$BASE_REF" --exclude "shared-scripts/**,$EXCLUDE"
+          --allowed-words "$ALLOWED_WORDS" --threshold "$THRESHOLD" --min-words "$MIN_WORDS"
+          --output "$FINDINGS_FILE"
+
+      - name: Tell the author
+        if: ${{ always() && gitea.event_name == 'pull_request' }}
+        continue-on-error: true
+        env:
+          GITEA_API_URL: ${{ gitea.api_url }}
+          SOURCE_REPOSITORY: ${{ gitea.repository }}
+          PR_NUMBER: ${{ gitea.event.pull_request.number }}
+          PR_AUTHOR: ${{ gitea.event.pull_request.user.login }}
+          RUN_URL: ${{ gitea.server_url }}/${{ gitea.repository }}/actions/runs/${{ gitea.run_number }}
+          REPORT_TOKEN: ${{ secrets.REPORT_TOKEN || gitea.token }}
+        run: python3 shared-scripts/tools/english_comments_report.py
+
+      - name: Fail the run when a comment is not in English
+        if: ${{ steps.check.outcome == 'failure' }}
+        run: exit 1

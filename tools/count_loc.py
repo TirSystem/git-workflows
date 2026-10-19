@@ -161,8 +161,17 @@ def _skip_string(line: str, start: int, quote: str, escapes: bool) -> int:
     return len(line)
 
 
-def _scan_line(line: str, language: Language, state: _State) -> tuple[bool, bool]:
-    """Scan one line; return (has_code, has_comment) and update the state."""
+def _scan_line(
+    line: str,
+    language: Language,
+    state: _State,
+    comments: list[str] | None = None,
+) -> tuple[bool, bool]:
+    """Scan one line; return (has_code, has_comment) and update the state.
+
+    When ``comments`` is given, the text of every comment on the line is
+    appended to it (the English-comments check, ADR-0012, reads that text).
+    """
     has_code = False
     has_comment = False
     i = 0
@@ -174,6 +183,9 @@ def _scan_line(line: str, language: Language, state: _State) -> tuple[bool, bool
             has_comment = True
             end = line.find(block[1], i)
             nested = line.find(block[0], i) if language.nested_block else -1
+            if comments is not None:
+                stop = nested if nested != -1 and (end == -1 or nested < end) else end
+                comments.append(line[i : size if stop == -1 else stop])
             if nested != -1 and (end == -1 or nested < end):
                 state.block_depth += 1
                 i = nested + len(block[0])
@@ -212,6 +224,8 @@ def _scan_line(line: str, language: Language, state: _State) -> tuple[bool, bool
         if comment is not None and line.startswith(comment, i):
             word_start = i == 0 or line[i - 1] in _WORD_START
             if word_start or not language.hash_at_word_start:
+                if comments is not None:
+                    comments.append(line[i + len(comment) :])
                 return has_code, True
         if language.triple_quotes and (
             line.startswith('"""', i) or line.startswith("'''", i)

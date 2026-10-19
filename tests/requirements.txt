@@ -3,3 +3,5 @@ PyYAML>=6,<7
 coverage>=7,<8
 shellcheck-py==0.10.0.1
 shfmt-py==3.11.0.2
+langid==1.1.6
+numpy==2.1.3

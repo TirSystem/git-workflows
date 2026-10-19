@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 9b967f9e1aff -->
+<!-- translation of Home.md, source sha256 9b84b5cf7534 -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -13,12 +13,12 @@ En samling af genbrugelige Gitea Actions-workflows til DevOps-professionelle og 
 
 Dette repository er den centrale samling af genbrugelig automatisering til TirSystems repositories. Det primære repository ligger på `git.tirsystem.com` (Gitea) og spejles med push til GitHub.
 
-Det indeholder ti workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki (kaldt af hvert repository), fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, kodemålinger og dækningsbadges, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
+Det indeholder elleve workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki (kaldt af hvert repository), fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, kodemålinger og dækningsbadges, en kontrol af, at kommentarer er på engelsk, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Der er ti workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
+Der er elleve workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
 
 | Workflow | Fil | Type | Starter ved | Formål |
 | --- | --- | --- | --- | --- |
@@ -28,6 +28,7 @@ Der er ti workflows i dette repository. Et **scoped** workflow leveres af instan
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører clang-format og clang-tidy i præcise versioner på de sporede C- og C++-filer og ændrer intet |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører `dotnet format` og `dotnet build` på et præcist .NET SDK 10 eller nyere og ændrer intet |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/code-metrics.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer), læser en Cobertura-dækningsrapport og committer tre SVG-badges til en `badges`-gren |
+| English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/english-comments.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository, på en pull request | Bedømmer sproget i de kommentarer og docstrings, en pull request tilføjer, lader kørslen fejle, når én ikke er engelsk, og skriver én kommentar på pull requesten, der nævner forfatteren |
 | Publish own wiki | [`publish-own-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-own-wiki.yml) | Kun dette repository | push til `main`, der ændrer `docs/wiki/**`, manuelt | Kalder det genbrugelige workflow Publish wiki pages for dette repositorys wiki |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Kun dette repository | manuelt | Opretter versionstagget, udgivelsessiden og major-tagget efter kontrollerne |
 | Publicering af accepterede milepæle | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Kun dette repository | push til `main`, der ændrer `docs/milestones/**` eller `docs/sqa/reviews/**`, manuelt (tørkørsel som standard) | Opretter eller opdaterer Gitea-milepælen og issues for hver milepæl, der er Accepted med en Go-gennemgang |
@@ -275,6 +276,46 @@ else
   Workflow -> Branch: One commit with [skip ci]
   Workflow --> Caller: Badges published
 end
+deactivate Workflow
+@enduml
+```
+
+### Engelske kommentarer
+
+Et genbrugeligt workflow, der kontrollerer, at de kommentarer og docstrings, en pull request tilføjer, er skrevet på engelsk, lader kørslen fejle, når én ikke er det, og skriver én kommentar på pull requesten, der nævner forfatteren. Det ændrer ingen fil og sender ingen kildetekst ud af instansen; at markere kontrollen som påkrævet i grenbeskyttelsen er det, der blokerer sammenfletningen ([vejledning](EnglishComments.da), ADR-0012).
+
+#### Workflow
+
+```plantuml
+@startuml
+title English comments check (reusable workflow)
+
+autonumber
+
+actor "Pull request
+uses: ...english-comments.yml@v2" as Caller
+participant "Gitea Actions
+english-comments" as Workflow
+participant "Gitea REST API" as Gitea
+
+Caller -> Workflow: workflow_call with scope, exclude,
+allowed-words-file, threshold and min-words
+activate Workflow
+
+Workflow -> Workflow: Check out the full history and the shared scripts
+Workflow -> Workflow: Install the pinned language detector
+Workflow -> Workflow: Read the comments on the added lines
+Workflow -> Workflow: Remove paths, options, identifiers and allowed words
+Workflow -> Workflow: Judge the language of each comment block
+
+alt a block is not English
+  Workflow -> Gitea: Create or update one comment that mentions the author
+  Workflow --> Caller: run failed (the required check blocks the merge)
+else all blocks are English
+  Workflow -> Gitea: Mark an earlier comment resolved
+  Workflow --> Caller: run passed
+end
+
 deactivate Workflow
 @enduml
 ```

@@ -13,12 +13,12 @@ A collection of reusable Gitea Actions workflows for DevOps professionals and so
 
 This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It contains ten workflows: metadata sync to the GitHub mirror, wiki publishing (called by each repository), shared quality checks for Python and shell, for C and C++ and for C#, code metrics and coverage badges, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
+It contains eleven workflows: metadata sync to the GitHub mirror, wiki publishing (called by each repository), shared quality checks for Python and shell, for C and C++ and for C#, code metrics and coverage badges, a check that comments are in English, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Ten workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
+Eleven workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |
 | --- | --- | --- | --- | --- |
@@ -28,6 +28,7 @@ Ten workflows live in this repository. A **scoped** workflow is delivered by the
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs clang-format and clang-tidy at exact versions on the tracked C and C++ files and changes nothing |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs `dotnet format` and `dotnet build` on an exact .NET SDK 10 or later and changes nothing |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/code-metrics.yml) | Reusable (`workflow_call`) | a call from another repository | Counts the code files and the lines of code (without comment and blank lines), reads a Cobertura coverage report and commits three SVG badges to a `badges` branch |
+| English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/english-comments.yml) | Reusable (`workflow_call`) | a call from another repository, on a pull request | Judges the language of the comments and docstrings a pull request adds, fails the run when one is not English and writes one comment on the pull request that mentions the author |
 | Publish own wiki | [`publish-own-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-own-wiki.yml) | This repository only | push to `main` that changes `docs/wiki/**`, manual | Calls the reusable Publish wiki pages workflow for the wiki of this repository |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | This repository only | manual | Creates the version tag, the release page and the major tag after the checks |
 | Publish accepted milestones | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | This repository only | push to `main` that changes `docs/milestones/**` or `docs/sqa/reviews/**`, manual (dry run by default) | Creates or updates the Gitea milestone and issues of every milestone that is Accepted with a Go review |
@@ -275,6 +276,46 @@ else
   Workflow -> Branch: One commit with [skip ci]
   Workflow --> Caller: Badges published
 end
+deactivate Workflow
+@enduml
+```
+
+### English comments
+
+A reusable workflow that checks that the comments and docstrings a pull request adds are written in English, fails the run when one is not, and writes one comment on the pull request that mentions the author. It changes no file and sends no source text outside the instance; marking the check as required in the branch protection is what blocks the merge ([guide](EnglishComments), ADR-0012).
+
+#### Workflow
+
+```plantuml
+@startuml
+title English comments check (reusable workflow)
+
+autonumber
+
+actor "Pull request
+uses: ...english-comments.yml@v2" as Caller
+participant "Gitea Actions
+english-comments" as Workflow
+participant "Gitea REST API" as Gitea
+
+Caller -> Workflow: workflow_call with scope, exclude,
+allowed-words-file, threshold and min-words
+activate Workflow
+
+Workflow -> Workflow: Check out the full history and the shared scripts
+Workflow -> Workflow: Install the pinned language detector
+Workflow -> Workflow: Read the comments on the added lines
+Workflow -> Workflow: Remove paths, options, identifiers and allowed words
+Workflow -> Workflow: Judge the language of each comment block
+
+alt a block is not English
+  Workflow -> Gitea: Create or update one comment that mentions the author
+  Workflow --> Caller: run failed (the required check blocks the merge)
+else all blocks are English
+  Workflow -> Gitea: Mark an earlier comment resolved
+  Workflow --> Caller: run passed
+end
+
 deactivate Workflow
 @enduml
 ```

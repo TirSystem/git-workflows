@@ -12,6 +12,7 @@
 - [Quality checks (C and C++)](QualityChecksCpp)
 - [Quality checks (C#)](QualityChecksCSharp)
 - [Code metrics](CodeMetrics)
+- [English comments](EnglishComments)
 - [Upgrading](Upgrading)
 - [Capabilities](Capabilities)
 
@@ -25,6 +26,7 @@
 - [Kvalitetskontrol (C og C++)](QualityChecksCpp.da)
 - [Kvalitetskontrol (C#)](QualityChecksCSharp.da)
 - [Kodemålinger](CodeMetrics.da)
+- [Engelske kommentarer](EnglishComments.da)
 - [Opgradering](Upgrading.da)
 - [Kapabiliteter](Capabilities.da)
 
@@ -38,5 +40,6 @@
 - [Semakan kualiti (C dan C++)](QualityChecksCpp.ms)
 - [Semakan kualiti (C#)](QualityChecksCSharp.ms)
 - [Metrik kod](CodeMetrics.ms)
+- [Komen dalam bahasa Inggeris](EnglishComments.ms)
 - [Menaik taraf](Upgrading.ms)
 - [Keupayaan](Capabilities.ms)
