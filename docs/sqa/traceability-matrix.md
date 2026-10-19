@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [ADR-0011], [UC-008], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [RC-052], [RC-053], [RC-054], [RC-055], [RC-056], [RC-057], [RC-058], [RC-059], [RC-060], [RC-061], [RC-062], [RC-063], [RC-064], [RC-065], [RC-066], [RC-067], [RC-068], [RC-069], [RC-070], [RC-071], [RC-072], [RC-073], [RC-074], [RC-075], [RC-076], [RC-077], [RC-078], [RC-079], [RC-080], [RC-081], [RC-082], [ADR-0007], [ADR-0008], [ADR-0009], [ADR-0010], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
+| CrossReference | [BC-001], [SA-001], [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [ADR-0011], [UC-008], [RC-001], [RC-002], [RC-003], [RC-004], [RC-005], [RC-006], [RC-007], [RC-008], [RC-009], [RC-010], [RC-011], [RC-012], [RC-013], [RC-014], [RC-015], [RC-016], [RC-017], [RC-018], [RC-019], [RC-020], [RC-021], [RC-022], [RC-023], [RC-024], [RC-025], [RC-026], [RC-027], [RC-028], [RC-029], [RC-030], [RC-031], [RC-032], [RC-033], [RC-034], [RC-035], [RC-036], [RC-037], [RC-038], [RC-039], [RC-040], [RC-041], [RC-042], [RC-043], [RC-044], [RC-045], [RC-046], [RC-047], [RC-048], [RC-049], [RC-050], [RC-051], [RC-052], [RC-053], [RC-054], [RC-055], [RC-056], [RC-057], [RC-058], [RC-059], [RC-060], [RC-061], [RC-062], [RC-063], [RC-064], [RC-065], [RC-066], [RC-067], [RC-068], [RC-069], [RC-070], [RC-071], [RC-072], [RC-073], [RC-074], [RC-075], [RC-076], [RC-077], [RC-078], [RC-079], [RC-080], [RC-081], [RC-082], [RC-083], [RC-084], [ADR-0007], [ADR-0008], [ADR-0009], [ADR-0010], [UC-007], [UC-006], [ADR-0006], [UC-005], [ADR-0005], [UCD-001], [US-001], [UC-001], [UC-002], [UC-003], [UC-004], [ADR-0001], [ADR-0002], [ADR-0003], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-012 (VPN actions for deployment), RC-080 and RC-081 (its plan and objective O6); CrossReference lists RC-076 to RC-079 | [c5d5941] |
 | 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0011 and RC-082 (MIL-012 results of tasks 1, 6 and the review fixes) | [3325bea] |
+| 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-013 (English comments check), RC-083 and RC-084 (its plan and objective O7) | [e35b1c5] |
 
 ---
 
@@ -25,8 +25,8 @@ updated whenever an artifact instance is created or reviewed.
 | Artifact Instance | Type | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- |
 | [SA-001] | SA | - | [BC-001], [UCD-001] | [RC-004] |
-| [BC-001] | BC | [SA-001] | [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-012] | [RC-001], [RC-008], [RC-067], [RC-081] |
-| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [US-001] | [RC-002], [RC-009], [RC-015], [RC-017], [RC-025], [RC-032], [RC-053], [RC-062], [RC-064], [RC-068], [RC-080] |
+| [BC-001] | BC | [SA-001] | [PP-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-012], [MIL-013] | [RC-001], [RC-008], [RC-067], [RC-081], [RC-084] |
+| [PP-001] | PP | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [US-001] | [RC-002], [RC-009], [RC-015], [RC-017], [RC-025], [RC-032], [RC-053], [RC-062], [RC-064], [RC-068], [RC-080], [RC-083] |
 | [MIL-001] | MIL | [BC-001], [PP-001] | [MIL-002] | [RC-003], [RC-026] |
 | [MIL-002] | MIL | [BC-001], [PP-001], [MIL-001] | [MIL-003], [MIL-005] | [RC-005], [RC-027] |
 | [MIL-003] | MIL | [BC-001], [PP-001], [MIL-002] | [MIL-004] | [RC-006], [RC-028], [RC-033], [RC-039] |
@@ -47,6 +47,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-010] | MIL | [BC-001], [PP-001], [MIL-003], [MIL-004] | [MIL-011] | [RC-068], [RC-074], [RC-075] |
 | [MIL-011] | MIL | [BC-001], [PP-001], [MIL-010], [ADR-0006], [ADR-0010] | [MIL-012] | [RC-076], [RC-077], [RC-078], [RC-079] |
 | [MIL-012] | MIL | [BC-001], [PP-001], [MIL-004], [MIL-011], [ADR-0006], [ADR-0011] | - | [RC-080], [RC-082] |
+| [MIL-013] | MIL | [BC-001], [PP-001], [MIL-004], [MIL-010], [MIL-011], [ADR-0005], [ADR-0006], [ADR-0010] | - | [RC-083] |
 | [RC-007] | RC | [MIL-004] | - | - |
 | [RC-008] | RC | [BC-001] | - | - |
 | [RC-009] | RC | [PP-001] | - | - |
@@ -142,6 +143,8 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-080] | RC | [MIL-012], [PP-001] | - | - |
 | [RC-081] | RC | [BC-001] | - | - |
 | [RC-082] | RC | [MIL-012] | - | - |
+| [RC-083] | RC | [MIL-013], [PP-001] | - | - |
+| [RC-084] | RC | [BC-001] | - | - |
 
 ## Coverage Notes
 
@@ -166,6 +169,7 @@ updated whenever an artifact instance is created or reviewed.
 [MIL-010]: ../milestones/mil-010-code-metrics-badges.md
 [MIL-011]: ../milestones/mil-011-code-metrics-default-tools-ref.md
 [MIL-012]: ../milestones/mil-012-vpn-actions-for-deployment.md
+[MIL-013]: ../milestones/mil-013-english-comments-check.md
 [MIL-009]: ../milestones/mil-009-migrate-wiki-callers-and-remove-scoped-workflow.md
 [ADR-0010]: ../adr/adr-0010-code-metrics-badges-contract.md
 [ADR-0011]: ../adr/adr-0011-vpn-composite-actions.md
@@ -261,6 +265,8 @@ updated whenever an artifact instance is created or reviewed.
 [RC-080]: ./reviews/rc-080-mil-012-plan.md
 [RC-081]: ./reviews/rc-081-bc-001-o6.md
 [RC-082]: ./reviews/rc-082-mil-012-results.md
+[RC-083]: ./reviews/rc-083-mil-013-plan.md
+[RC-084]: ./reviews/rc-084-bc-001-o7.md
 [ADR-0008]: ../adr/adr-0008-cpp-csharp-quality-check-contract.md
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0007]: ../adr/adr-0007-release-publish-destination.md
@@ -271,5 +277,5 @@ updated whenever an artifact instance is created or reviewed.
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
-[c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
 [3325bea]: https://git.tirsystem.com/TirSystem/github-action/commit/3325bea772304b54e8dfffad592b4afadc3ec2b8
+[e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
