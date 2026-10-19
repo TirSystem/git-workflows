@@ -28,9 +28,13 @@ inputs:
     required: false
     default: ""
   version:
-    description: "Tailscale version to install when tailscale is not on the runner, e.g. 1.80.2. Pin it; latest is allowed"
+    description: "Exact Tailscale version to install when tailscale is not on the runner, e.g. 1.80.2. Empty uses the installed tailscale and fails when there is none"
     required: false
-    default: "latest"
+    default: ""
+  sha256:
+    description: "Optional SHA-256 of the downloaded archive tailscale_<version>_<arch>.tgz; the install fails when it differs"
+    required: false
+    default: ""
   userspace-networking:
     description: >-
       true runs tailscaled without a TUN device (no NET_ADMIN needed); tailnet
@@ -70,6 +74,7 @@ runs:
         TS_TAGS: ${{ inputs.tags }}
         TS_HOSTNAME: ${{ inputs.hostname }}
         TS_VERSION: ${{ inputs.version }}
+        TS_SHA256: ${{ inputs.sha256 }}
         TS_USERSPACE: ${{ inputs.userspace-networking }}
         TS_ARGS: ${{ inputs.args }}
         TS_TIMEOUT: ${{ inputs.timeout }}
