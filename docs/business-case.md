@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Scope: wiki pages in English, Danish and Bahasa Malaysia | [08ef26a] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Objective O5, scope item and success criterion 5: shared workflow for code metrics and coverage badges (MIL-010); reviewed (RC-067) | [5002450] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Objective O5, scope item and success criterion 5: shared workflow for code metrics and coverage badges (MIL-010); reviewed (RC-067) | [5002450] |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Objective O6, scope item, assumption, constraint and success criterion 6: shared actions that bring a VPN up for a deployment job (MIL-012); reviewed (RC-081), accepted by the author in chat as stand-in for S01 | pending |
 
 ---
 
@@ -62,6 +62,9 @@ made once.
 - **O5:** Offer a shared workflow that counts the code files and the lines of
   code (without comment and blank lines) of a repository, reads its coverage
   report and publishes the three results as SVG badges.
+- **O6:** Offer shared, versioned actions that bring a VPN (WireGuard or
+  Tailscale) up for a deployment job on a Gitea runner, so the job can reach a
+  private network.
 
 ## Scope
 
@@ -72,6 +75,7 @@ made once.
 - A Gitea wiki with the same documentation in English, Danish and Bahasa Malaysia (MIL-005).
 - Validation of workflow files and their documentation.
 - A shared workflow for code metrics and coverage badges (MIL-010).
+- Shared composite actions that connect a deployment job to a private network through WireGuard or Tailscale (MIL-012).
 
 ### Out of Scope
 
@@ -109,6 +113,7 @@ accepted plans.
 | 3 | Documented use cases that are implemented or marked planned | 100% | README capability table against workflows present |
 | 4 | Repositories consuming a shared workflow | At least 1 besides this one by MIL-002 | Consumer list in README |
 | 5 | Repositories that show the code metrics and coverage badges from the shared workflow | At least 1 besides this one by MIL-010 | README of the consuming repository |
+| 6 | VPN actions that connect a deployment job on the instance, with no secret in the run log | 2 (WireGuard and Tailscale) by MIL-012 | Recorded runs of MIL-012 tasks 3 to 5 |
 
 ## Risks
 
@@ -124,11 +129,13 @@ accepted plans.
 - The Gitea instance has Actions enabled and an `ubuntu-latest` runner with `python3`.
 - A mirrored repository has at most one GitHub push mirror. Repositories without a GitHub mirror are skipped successfully.
 - S01 (Product Owner) and S05 (DevOps owner and security authority) are both maintainers.
+- For the VPN actions (MIL-012), S03 provides a runner whose container has the capability `NET_ADMIN` and the device `/dev/net/tun`, and the test peers; the actions do not configure the runner.
 
 ## Constraints
 
 - Workflows use only tools available on the runner; the current workflow uses the Python standard library only.
 - Secrets are supplied as repository or organization secrets, never committed.
+- A VPN key or token never appears in a log, an artifact or a command line (MIL-012).
 - Nothing is written under `src/` or `tests/` before the matching milestone is accepted.
 
 ## Cost–Benefit Assessment
@@ -154,5 +161,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 ---
 
 [SA-001]: ./stakeholder-analysis.md
-[08ef26a]: https://git.tirsystem.com/TirSystem/github-action/commit/08ef26a6d3eb98c066b45634c2271e578e6c0a0b
 [5002450]: https://git.tirsystem.com/TirSystem/github-action/commit/50024505fe788b1c5e3021c0d1fc3d079590070e
