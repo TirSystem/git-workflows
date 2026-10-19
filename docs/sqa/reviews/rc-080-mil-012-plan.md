@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat as stand-in for S01, after three corrections found in the first read | pending |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat as stand-in for S01, after three corrections found in the first read | [c5d5941] |
 
 ---
 
@@ -70,3 +70,4 @@ Go - all criteria pass after three corrections found in the first read (the oper
 [RC-076]: ./rc-076-mil-011-plan.md
 [RC-081]: ./rc-081-bc-001-o6.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b

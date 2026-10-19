@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Objective O5, scope item and success criterion 5: shared workflow for code metrics and coverage badges (MIL-010); reviewed (RC-067) | [5002450] |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Objective O6, scope item, assumption, constraint and success criterion 6: shared actions that bring a VPN up for a deployment job (MIL-012); reviewed (RC-081), accepted by the author in chat as stand-in for S01 | pending |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Objective O6, scope item, assumption, constraint and success criterion 6: shared actions that bring a VPN up for a deployment job (MIL-012); reviewed (RC-081), accepted by the author in chat as stand-in for S01 | [c5d5941] |
 
 ---
 
@@ -162,3 +162,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 
 [SA-001]: ./stakeholder-analysis.md
 [5002450]: https://git.tirsystem.com/TirSystem/github-action/commit/50024505fe788b1c5e3021c0d1fc3d079590070e
+[c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b

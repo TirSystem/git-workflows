@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-080), accepted by the author in chat as stand-in for S01 with target date 2026-11-06 | pending |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-080), accepted by the author in chat as stand-in for S01 with target date 2026-11-06 | [c5d5941] |
 
 ---
 
@@ -100,3 +100,4 @@ Release `2.2.0` of this repository with two composite actions, `actions/connect-
 [RC-081]: ../sqa/reviews/rc-081-bc-001-o6.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [PP-001]: ../project-plan.md
+[c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
