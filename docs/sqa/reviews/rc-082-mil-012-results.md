@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat as stand-in for S01 | pending |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat as stand-in for S01 | [3325bea] |
 
 ---
 
@@ -62,3 +62,4 @@ Go - the results recorded are accurate and claim no more than the evidence shows
 [RC-080]: ./rc-080-mil-012-plan.md
 [RC-081]: ./rc-081-bc-001-o6.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[3325bea]: https://git.tirsystem.com/TirSystem/github-action/commit/3325bea772304b54e8dfffad592b4afadc3ec2b8

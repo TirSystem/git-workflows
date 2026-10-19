@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-012 (VPN actions for deployment), RC-080 and RC-081 (its plan and objective O6); CrossReference lists RC-076 to RC-079 | [c5d5941] |
-| 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0011 and RC-082 (MIL-012 results of tasks 1, 6 and the review fixes) | pending |
+| 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0011 and RC-082 (MIL-012 results of tasks 1, 6 and the review fixes) | [3325bea] |
 
 ---
 
@@ -272,3 +272,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
+[3325bea]: https://git.tirsystem.com/TirSystem/github-action/commit/3325bea772304b54e8dfffad592b4afadc3ec2b8

@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [3325bea] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -65,3 +65,4 @@ A VPN for deployment is delivered as **a composite action of this repository**, 
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [ADR-0009]: ./adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0010]: ./adr-0010-code-metrics-badges-contract.md
+[3325bea]: https://git.tirsystem.com/TirSystem/github-action/commit/3325bea772304b54e8dfffad592b4afadc3ec2b8
