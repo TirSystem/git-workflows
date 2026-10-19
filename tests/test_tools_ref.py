@@ -58,8 +58,31 @@ def current_major():
     return MAJOR_TAG_FILE.read_text(encoding="utf-8").strip()
 
 
+def released_in_any_tag(path):
+    """True when some version tag holds the file; False for a script not released yet."""
+    tags = subprocess.run(
+        ["git", "-C", str(REPO_ROOT), "tag", "--list", "v*"],
+        capture_output=True,
+        text=True,
+        check=False,
+    ).stdout.split()
+    return any(
+        subprocess.run(
+            ["git", "-C", str(REPO_ROOT), "cat-file", "-e", f"{tag}:{path}"],
+            capture_output=True,
+            check=False,
+        ).returncode
+        == 0
+        for tag in tags
+    )
+
+
 def script_in_tag(tag, path):
-    """True when the tag holds the file; True when the tag is not in this checkout."""
+    """True when the tag holds the file; True when the tag is not in this checkout.
+
+    A script that no tag holds yet is new in the unreleased version: the release
+    moves the major tag to it, so it does not count as missing (MIL-013).
+    """
     known = subprocess.run(
         ["git", "-C", str(REPO_ROOT), "rev-parse", "--verify", "--quiet", f"refs/tags/{tag}"],
         capture_output=True,
@@ -72,7 +95,7 @@ def script_in_tag(tag, path):
         capture_output=True,
         check=False,
     )
-    return holds.returncode == 0
+    return holds.returncode == 0 or not released_in_any_tag(path)
 
 
 def test_major_tag_file_names_the_highest_major_of_the_changelog():
