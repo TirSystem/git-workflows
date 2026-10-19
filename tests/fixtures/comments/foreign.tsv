@@ -1,0 +1,139 @@
+lang	text	origin
+da	hent brugeren fra databasen	written
+da	Denne funktion beregner totalen for kurven	written
+da	vi skal huske at lukke forbindelsen bagefter	written
+da	TODO: ret fejlen når listen er tom	written
+da	returnerer sandt hvis filen findes	written
+da	Gem resultatet i en midlertidig mappe	written
+da	her tjekker vi om brugeren har adgang	written
+da	læs konfigurationen fra miljøvariablerne	written
+da	hvis der ikke er noget svar, prøver vi igen	written
+da	Opret en ny forbindelse til serveren	written
+da	dette er en midlertidig løsning indtil videre	written
+da	loop gennem alle filerne og tæl linjerne	written
+da	Vi bruger en cache for at spare tid	written
+da	fejlbesked skal vises til brugeren	written
+da	sorter listen efter dato, nyeste først	written
+da	ingen grund til at gentage kaldet	written
+da	Kontroller at tokenet ikke er udløbet	written
+da	slet de gamle filer før vi starter	written
+da	Her håndterer vi alle undtagelser	written
+da	afrund til nærmeste hele tal	written
+da	venter på at serveren bliver klar	written
+da	Parametrene er valgfrie, standardværdien er nul	written
+da	kald funktionen to gange for at være sikker	written
+da	skriv loggen til disken hver time	written
+da	Det her virker kun på Linux	written
+da	vi springer tomme linjer over	written
+da	opdater tælleren når en ny post kommer ind	written
+da	fjern dubletter fra resultatet	written
+da	Brug en kø så arbejdet ikke blokerer	written
+da	den øverste mappe i projektet	written
+da	gennemløb træet fra roden og ned	written
+da	Denne klasse holder styr på sessionerne	written
+da	hvis navnet er tomt, brug standardnavnet	written
+da	tjek om porten er optaget	written
+da	Beregn gennemsnittet af de sidste ti målinger	written
+da	vi skal have en bedre løsning her senere	written
+da	Sæt tiden til midnat	written
+da	læser hele filen ind i hukommelsen	written
+da	Pas på, her kan der opstå en kapløbstilstand	written
+da	flyt filen til arkivmappen	written
+da	Dette er kun til test	written
+da	slå op i tabellen efter navn	written
+da	henter næste side af resultaterne	written
+da	hvorfor gør vi det her? Fordi serveren kræver det	written
+da	gem ændringerne og luk vinduet	written
+ms	dapatkan pengguna daripada pangkalan data	written
+ms	Fungsi ini mengira jumlah bagi troli	written
+ms	kita perlu ingat untuk menutup sambungan selepas itu	written
+ms	TODO: betulkan ralat apabila senarai kosong	written
+ms	mengembalikan benar jika fail wujud	written
+ms	Simpan hasil dalam folder sementara	written
+ms	di sini kita semak sama ada pengguna mempunyai akses	written
+ms	baca konfigurasi daripada pemboleh ubah persekitaran	written
+ms	jika tiada jawapan, kita cuba lagi	written
+ms	Buat sambungan baharu ke pelayan	written
+ms	ini penyelesaian sementara buat masa ini	written
+ms	ulang semua fail dan kira baris	written
+ms	Kita guna cache untuk jimat masa	written
+ms	mesej ralat mesti dipaparkan kepada pengguna	written
+ms	susun senarai mengikut tarikh, yang terbaru dahulu	written
+ms	tidak perlu mengulang panggilan	written
+ms	Semak bahawa token belum tamat tempoh	written
+ms	padam fail lama sebelum kita mulakan	written
+ms	Di sini kita mengendalikan semua pengecualian	written
+ms	bundarkan kepada nombor bulat yang terdekat	written
+ms	menunggu pelayan sedia	written
+ms	Parameter adalah pilihan, nilai lalai ialah sifar	written
+ms	panggil fungsi dua kali untuk pastikan	written
+ms	tulis log ke cakera setiap jam	written
+ms	Ini hanya berfungsi pada Linux	written
+ms	kita langkau baris kosong	written
+ms	kemas kini pembilang apabila rekod baharu masuk	written
+ms	buang pendua daripada hasil	written
+ms	Guna giliran supaya kerja tidak menyekat	written
+ms	folder teratas dalam projek	written
+ms	lalui pokok dari akar ke bawah	written
+ms	Kelas ini menjejaki sesi	written
+ms	jika nama kosong, guna nama lalai	written
+ms	semak sama ada port sedang digunakan	written
+ms	Kira purata sepuluh ukuran terakhir	written
+ms	kita perlukan penyelesaian yang lebih baik nanti	written
+ms	Tetapkan masa kepada tengah malam	written
+ms	membaca seluruh fail ke dalam memori	written
+ms	Awas, di sini boleh berlaku keadaan perlumbaan	written
+ms	alihkan fail ke folder arkib	written
+ms	Ini hanya untuk ujian	written
+ms	cari dalam jadual mengikut nama	written
+ms	mendapatkan halaman seterusnya bagi hasil	written
+ms	kenapa kita buat begini? Kerana pelayan memerlukannya	written
+ms	simpan perubahan dan tutup tetingkap	written
+de	Hole den Benutzer aus der Datenbank	written
+de	Diese Funktion berechnet die Summe des Warenkorbs	written
+de	wir müssen die Verbindung danach schließen	written
+de	Gibt wahr zurück, wenn die Datei existiert	written
+de	Speichere das Ergebnis in einem temporären Ordner	written
+de	hier prüfen wir, ob der Benutzer Zugriff hat	written
+de	Lies die Konfiguration aus den Umgebungsvariablen	written
+de	wenn keine Antwort kommt, versuchen wir es erneut	written
+de	Das ist nur eine vorläufige Lösung	written
+de	Fehlermeldung muss dem Benutzer angezeigt werden	written
+de	lösche die alten Dateien, bevor wir anfangen	written
+de	Achtung, hier kann ein Wettlauf entstehen	written
+sv	hämta användaren från databasen	written
+sv	Den här funktionen räknar ut summan av varukorgen	written
+sv	vi måste stänga anslutningen efteråt	written
+sv	returnerar sant om filen finns	written
+sv	Spara resultatet i en tillfällig mapp	written
+sv	här kontrollerar vi om användaren har åtkomst	written
+sv	läs konfigurationen från miljövariablerna	written
+sv	om det inte kommer något svar försöker vi igen	written
+sv	Det här är bara en tillfällig lösning	written
+sv	felmeddelandet ska visas för användaren	written
+sv	ta bort de gamla filerna innan vi börjar	written
+sv	Se upp, här kan det uppstå en tävlingssituation	written
+no	hent brukeren fra databasen	written
+no	Denne funksjonen beregner summen av handlekurven	written
+no	vi må huske å lukke forbindelsen etterpå	written
+no	returnerer sant hvis filen finnes	written
+no	Lagre resultatet i en midlertidig mappe	written
+no	her sjekker vi om brukeren har tilgang	written
+no	les konfigurasjonen fra miljøvariablene	written
+no	hvis det ikke kommer noe svar, prøver vi igjen	written
+no	Dette er bare en midlertidig løsning	written
+no	feilmeldingen skal vises til brukeren	written
+no	slett de gamle filene før vi begynner	written
+no	Pass på, her kan det oppstå en kappløpstilstand	written
+fr	récupère l'utilisateur depuis la base de données	written
+fr	Cette fonction calcule le total du panier	written
+fr	il faut penser à fermer la connexion ensuite	written
+fr	renvoie vrai si le fichier existe	written
+fr	Enregistre le résultat dans un dossier temporaire	written
+fr	ici on vérifie si l'utilisateur a accès	written
+fr	lit la configuration depuis les variables d'environnement	written
+fr	s'il n'y a pas de réponse, on réessaie	written
+fr	Ce n'est qu'une solution provisoire	written
+fr	le message d'erreur doit être affiché à l'utilisateur	written
+fr	supprime les anciens fichiers avant de commencer	written
+fr	Attention, une condition de concurrence peut survenir ici	written
