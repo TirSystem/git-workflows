@@ -15,7 +15,17 @@
 WG_DIR="${WG_DIR:-/etc/wireguard}"
 WG_QUICK="${WG_QUICK:-wg-quick}"
 WG_PING="${WG_PING:-ping}"
-SUDO="${WG_SUDO-sudo}"
+# sudo is used only when the job is not root: a job container runs as root and
+# often has no sudo. WG_SUDO overrides it (empty for none).
+if [ -n "${WG_SUDO+x}" ]; then
+  SUDO="$WG_SUDO"
+elif [ "$(id -u)" = "0" ]; then
+  SUDO=""
+else
+  SUDO="sudo"
+fi
+# variables that must reach wg-quick through sudo, which resets the environment
+WG_QUICK_ENV=()
 
 fail() {
   echo "::error::[$1] $2"
@@ -23,14 +33,24 @@ fail() {
 }
 
 mask_secrets() {
-  local value line
+  local value line key
   for value in "${WG_PRIVATE_KEY:-}" "${WG_PRESHARED_KEY:-}"; do
     [ -n "$value" ] && echo "::add-mask::$value"
   done
-  # every line of a full configuration is masked, so a key cannot leak in pieces
+  # a full configuration: mask the value of every PrivateKey and PresharedKey
+  # line, and nothing else, so the rest of the log stays readable
   while IFS= read -r line; do
-    line="${line#"${line%%[![:space:]]*}"}"
-    [ -n "$line" ] && echo "::add-mask::$line"
+    line="${line//$''/}"
+    key="${line%%=*}"
+    key="${key//[[:space:]]/}"
+    case "${key,,}" in
+      privatekey | presharedkey)
+        value="${line#*=}"
+        value="${value#"${value%%[![:space:]]*}"}"
+        value="${value%"${value##*[![:space:]]}"}"
+        [ -n "$value" ] && echo "::add-mask::$value"
+        ;;
+    esac
   done <<<"${WG_CONFIG:-}"
   return 0
 }
@@ -50,6 +70,11 @@ render_config() {
   for name in WG_PRIVATE_KEY WG_ADDRESS WG_PEER_PUBLIC_KEY WG_ENDPOINT WG_ALLOWED_IPS; do
     [ -n "${!name:-}" ] ||
       fail configuration "set config, or all of private-key, address, peer-public-key, endpoint and allowed-ips ($name is empty)."
+  done
+  for name in WG_PRIVATE_KEY WG_ADDRESS WG_PEER_PUBLIC_KEY WG_ENDPOINT WG_ALLOWED_IPS WG_PRESHARED_KEY WG_DNS; do
+    # a line break would add directives (PostUp runs as root) to the file
+    [[ "${!name:-}" != *[[:cntrl:]]* ]] ||
+      fail configuration "$name must be one line without control characters."
   done
   [[ "$WG_KEEPALIVE" =~ ^[0-9]+$ ]] ||
     fail configuration "persistent-keepalive must be a number of seconds."
@@ -77,7 +102,7 @@ choose_implementation() {
     return 0
   fi
   if command -v wireguard-go >/dev/null 2>&1 || $SUDO apt-get install -y -qq wireguard-go 2>/dev/null; then
-    export WG_QUICK_USERSPACE_IMPLEMENTATION=wireguard-go
+    WG_QUICK_ENV=(WG_QUICK_USERSPACE_IMPLEMENTATION=wireguard-go)
     echo "No kernel WireGuard module; using wireguard-go."
   else
     fail environment "the runner has no WireGuard kernel module and wireguard-go could not be installed; the runner container needs NET_ADMIN and /dev/net/tun (see guides/vpn-wireguard.md)."
@@ -97,8 +122,12 @@ tunnel_up() {
   $SUDO install -d -m 700 "$WG_DIR"
   (umask 077 && printf '%s\n' "$rendered" | $SUDO tee "$conf" >/dev/null)
   $SUDO chmod 600 "$conf"
-  $SUDO "$WG_QUICK" up "$WG_INTERFACE" ||
+  # env keeps the userspace variable through sudo; the file holds the key, so
+  # it is removed when the interface does not come up
+  if ! $SUDO env ${WG_QUICK_ENV[@]+"${WG_QUICK_ENV[@]}"} "$WG_QUICK" up "$WG_INTERFACE"; then
+    $SUDO rm -f "$conf"
     fail connection "wg-quick could not bring $WG_INTERFACE up."
+  fi
   if [ -n "${WG_HEALTH_CHECK_HOST:-}" ]; then
     "$WG_PING" -c 3 -W 5 "$WG_HEALTH_CHECK_HOST" >/dev/null 2>&1 ||
       fail connection "health-check-host '$WG_HEALTH_CHECK_HOST' does not answer through the tunnel."
@@ -119,10 +148,10 @@ main() {
   WG_INTERFACE="${WG_INTERFACE:-wg0}"
   WG_KEEPALIVE="${WG_KEEPALIVE:-25}"
   case "${1:-}" in
-  mask) mask_secrets ;;
-  up) tunnel_up ;;
-  down) tunnel_down ;;
-  *) fail configuration "unknown command '${1:-}'; use mask, up or down." ;;
+    mask) mask_secrets ;;
+    up) tunnel_up ;;
+    down) tunnel_down ;;
+    *) fail configuration "unknown command '${1:-}'; use mask, up or down." ;;
   esac
 }
 

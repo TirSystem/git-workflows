@@ -4,7 +4,8 @@ The composite action `actions/connect-wireguard` brings a WireGuard tunnel up on
 a Gitea Actions runner, so the next steps of the same job (a deployment over
 SSH, a database migration) can reach hosts that are not on the internet. It is
 the WireGuard counterpart of the Tailscale action. It is **experimental**: it
-lives on a branch until a trial shows it is wanted.
+is on `main` but not released, and it has not yet run on a runner with a real
+tunnel (MIL-012).
 
 A tunnel belongs to one job: every job that deploys brings its own tunnel up
 and takes it down. It cannot be a reusable workflow, because a called workflow
@@ -20,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4.2.2
 
       - name: Connect the VPN
-        uses: TirSystem/github-action/actions/connect-wireguard@v2
+        uses: TirSystem/github-action/actions/connect-wireguard@main
         with:
           config: ${{ secrets.WG_CONFIG }}
           health-check-host: 10.8.0.1
@@ -30,17 +31,17 @@ jobs:
 
       - name: Disconnect the VPN
         if: always()
-        uses: TirSystem/github-action/actions/connect-wireguard@v2
+        uses: TirSystem/github-action/actions/connect-wireguard@main
         with:
           action: down
 ```
 
 If the short form does not resolve on your instance (Gitea looks for the action
 on the host set in `DEFAULT_ACTIONS_URL`), use the full address:
-`https://git.tirsystem.com/TirSystem/github-action/actions/connect-wireguard@v2`.
+`https://git.tirsystem.com/TirSystem/github-action/actions/connect-wireguard@main`.
 
-To try the branch before it is released, replace `@v2` with
-`@wireguard-vpn-action`.
+Until release 2.2.0 the actions exist only on `main`, so the examples call
+`@main`; `@v2` does not contain them yet. After the release, use `@v2`.
 
 ## Inputs
 
@@ -71,8 +72,9 @@ To try the branch before it is released, replace `@v2` with
 A tunnel needs a network interface, so the runner needs more than a plain job
 container:
 
-- the job runs as root or can use `sudo` (the action installs
-  `wireguard-tools` with `apt` when it is missing, so a Debian or Ubuntu image);
+- the job runs as root, or `sudo` is available (the action uses `sudo` only
+  when the job is not root, and installs `wireguard-tools` with `apt` when it is
+  missing, so a Debian or Ubuntu image);
 - the container has the capability `NET_ADMIN` and the device `/dev/net/tun`.
   In the `act_runner` configuration set under `container:`
   `options: "--cap-add=NET_ADMIN --device=/dev/net/tun"`;
@@ -85,9 +87,13 @@ privilege.
 
 ## What the action does
 
-- masks the keys in the log before anything else;
+- masks the keys in the log before anything else (the values of `PrivateKey`
+  and `PresharedKey` of a full configuration, and the key inputs);
+- refuses an input that holds a line break, because an extra line in the file
+  could add a `PostUp` command that runs as root;
 - writes `/etc/wireguard/<interface>.conf` with mode 600 and brings it up with
-  `wg-quick`;
+  `wg-quick` (through `env`, so the `wireguard-go` choice survives `sudo`); the
+  file is removed again when the interface does not come up;
 - prints errors as `::error::[category] message`, with the categories
   `configuration`, `environment` and `connection`;
 - on `down` takes the interface down and deletes the file.
