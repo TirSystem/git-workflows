@@ -20,6 +20,11 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Added
+
+- `actions/connect-wireguard`, a composite action that brings a WireGuard tunnel up on a Gitea Actions runner for a deployment, with the guide `guides/vpn-wireguard.md`. Experimental.
+- `actions/connect-tailscale`, a composite action for Gitea Actions that joins a Tailscale network for a deployment (the Gitea counterpart of the marketplace action `tailscale/github-action`), with the guide `guides/vpn-tailscale.md`. Experimental.
+
 ## [2.1.1] - 2026-10-14
 
 ### Fixed
