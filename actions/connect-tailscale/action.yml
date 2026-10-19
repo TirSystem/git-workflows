@@ -1,0 +1,77 @@
+name: Connect Tailscale
+description: >-
+  Joins a Tailscale network (tailnet) from a Gitea Actions runner, so the next
+  steps of the job (a deployment) can reach hosts on the tailnet. Written for
+  Gitea Actions; it replaces the GitHub marketplace action tailscale/github-action,
+  which is not verified on Gitea. Run it again with action "down" in a last step
+  with if always().
+
+inputs:
+  action:
+    description: "up joins the tailnet; down logs the node out and stops tailscaled"
+    required: false
+    default: "up"
+  authkey:
+    description: "A Tailscale auth key (a secret). Use an ephemeral, tagged, pre-authorized key. Give authkey or oauth-secret, not both"
+    required: false
+    default: ""
+  oauth-secret:
+    description: "The secret of a Tailscale OAuth client with the scope auth_keys (a secret). Needs tags"
+    required: false
+    default: ""
+  tags:
+    description: "ACL tags of the node, comma separated, e.g. tag:ci. Required with oauth-secret"
+    required: false
+    default: ""
+  hostname:
+    description: "Name of the node in the tailnet. Empty uses the runner name"
+    required: false
+    default: ""
+  version:
+    description: "Tailscale version to install when tailscale is not on the runner, e.g. 1.80.2. Pin it; latest is allowed"
+    required: false
+    default: "latest"
+  userspace-networking:
+    description: >-
+      true runs tailscaled without a TUN device (no NET_ADMIN needed); tailnet
+      hosts are then reached through the SOCKS5 proxy localhost:1055, e.g. ssh -o
+      ProxyCommand="nc -X 5 -x localhost:1055 %h %p". false creates a TUN device.
+    required: false
+    default: "false"
+  args:
+    description: "Extra arguments for tailscale up, e.g. --accept-routes. Never put a secret here"
+    required: false
+    default: ""
+  timeout:
+    description: "Seconds to wait for the node to come up"
+    required: false
+    default: "60"
+  health-check-host:
+    description: "Optional tailnet host that must answer a Tailscale ping, else the step fails"
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Mask the secrets
+      shell: bash
+      env:
+        TS_AUTHKEY: ${{ inputs.authkey }}
+        TS_OAUTH_SECRET: ${{ inputs.oauth-secret }}
+      run: bash "${{ gitea.action_path }}/connect-tailscale.sh" mask
+
+    - name: Run the Tailscale step
+      shell: bash
+      env:
+        TS_ACTION: ${{ inputs.action }}
+        TS_AUTHKEY: ${{ inputs.authkey }}
+        TS_OAUTH_SECRET: ${{ inputs.oauth-secret }}
+        TS_TAGS: ${{ inputs.tags }}
+        TS_HOSTNAME: ${{ inputs.hostname }}
+        TS_VERSION: ${{ inputs.version }}
+        TS_USERSPACE: ${{ inputs.userspace-networking }}
+        TS_ARGS: ${{ inputs.args }}
+        TS_TIMEOUT: ${{ inputs.timeout }}
+        TS_HEALTH_CHECK_HOST: ${{ inputs.health-check-host }}
+      run: bash "${{ gitea.action_path }}/connect-tailscale.sh" "$TS_ACTION"
