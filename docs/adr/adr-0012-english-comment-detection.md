@@ -50,13 +50,15 @@ The two English comments `langid` flagged without a threshold are lines that are
 
 A comment is judged **not English** when `langid` 1.1.6, restricted to `en da no sv de fr ms id nl`, with normalised probabilities, ranks a language other than English first with a probability of at least **0.6**, after this pre-filter, and only when the filter leaves **at least three words**:
 
-- remove URLs and tokens that contain `/`, `\`, `::`, `_` or a digit, and camelCase tokens; split the rest on `-`;
+- drop every token that is not a word: a token with a code character (`/ \ { } [ ] " ` = < > | $ @ # % & + ^ ~ *`), an underscore, a digit or `::` (a path, a URL, a JSON key, an identifier); a token that starts with `-` (an option), contains `.` (a file name), is written in capitals (an acronym or a constant) or is camelCase; a leading label such as `Usage:` or `Note:`; and the words of the allowed-words file. Split what is left on `-`;
 - keep a token only if it is letters, with at most one inner apostrophe (letters include `æ ø å ä ö ü` and the other letters of Latin scripts);
 - a comment with fewer than three words left is **not judged** (it passes), and so is a comment that holds only identifiers, URLs or numbers.
 
 On the corpus this gives 0 false positives in 300 English comments, Danish 44/45 (97.8 %), Malay 41/45 (91.1 %), and 48/48 for the other languages, meeting criterion 1 of [MIL-013]. The threshold, the minimum of three words and the candidate languages are inputs of the workflow with these values as defaults; the rates are a test that fails when the code changes them (task 7).
 
 The versions are pinned (`langid==1.1.6`, `numpy` at a pinned version) and installed in the job's virtual environment like the other tools ([ADR-0005]). Nothing is downloaded at run time and nothing is sent to a service.
+
+The rules of the pre-filter came from the build, not from the first measurement. A scan of this repository with the first version of the filter found two false positives that the corpus did not contain: a docstring with a JSON example (`{"files": 3, "lines": 120, ...}`, judged French with probability 1.0) and `Usage:` lines with options and a file name (judged French with 0.6 and 0.88). The code-character, option, file-name, acronym and label rules above remove them; the corpus rates stayed the same, and the repository (31 source files) now gives no finding. Tests of the check keep both cases (the JSON docstring and the `Usage:` lines), so a change to the filter is measured against them.
 
 ## Consequences
 
