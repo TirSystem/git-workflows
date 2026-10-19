@@ -7,14 +7,24 @@
 #
 # Settings come from the environment, never from interpolated expressions:
 #   TS_AUTHKEY, TS_OAUTH_SECRET, TS_TAGS, TS_HOSTNAME, TS_VERSION, TS_USERSPACE,
-#   TS_ARGS, TS_TIMEOUT, TS_HEALTH_CHECK_HOST. TS_TAILSCALE, TS_TAILSCALED,
-#   TS_SUDO and TS_STATE_DIR name the commands and the work folder, for the tests.
+#   TS_SHA256, TS_ARGS, TS_TIMEOUT, TS_HEALTH_CHECK_HOST. TS_TAILSCALE,
+#   TS_TAILSCALED, TS_SUDO, TS_STATE_DIR, TS_START_WAIT (tries) and
+#   TS_WAIT_INTERVAL (seconds) name the commands, the work folder and the waits,
+#   for the tests.
 # The auth key is passed to tailscale in a file of mode 600, never on a command
 # line. Every failure is printed as ::error::[category] message.
 
 TS_TAILSCALE="${TS_TAILSCALE:-tailscale}"
 TS_TAILSCALED="${TS_TAILSCALED:-tailscaled}"
-SUDO="${TS_SUDO-sudo}"
+# sudo is used only when the job is not root: a job container runs as root and
+# often has no sudo. TS_SUDO overrides it (empty for none).
+if [ -n "${TS_SUDO+x}" ]; then
+  SUDO="$TS_SUDO"
+elif [ "$(id -u)" = "0" ]; then
+  SUDO=""
+else
+  SUDO="sudo"
+fi
 STATE_DIR="${TS_STATE_DIR:-${RUNNER_TEMP:-/tmp}/tailscale}"
 
 fail() {
@@ -46,11 +56,13 @@ validate_inputs() {
   fi
   [[ "$TS_TIMEOUT" =~ ^[0-9]+$ ]] ||
     fail configuration "timeout must be a number of seconds."
-  [[ "$TS_VERSION" =~ ^(latest|[0-9]+\.[0-9]+\.[0-9]+)$ ]] ||
-    fail configuration "version must be latest or like 1.80.2."
+  [[ "$TS_VERSION" =~ ^([0-9]+\.[0-9]+\.[0-9]+)?$ ]] ||
+    fail configuration "version must be an exact version like 1.80.2."
+  [[ "${TS_SHA256:-}" =~ ^([0-9a-fA-F]{64})?$ ]] ||
+    fail configuration "sha256 must be 64 hexadecimal digits."
   case "$TS_USERSPACE" in
-  true | false) ;;
-  *) fail configuration "userspace-networking must be true or false." ;;
+    true | false) ;;
+    *) fail configuration "userspace-networking must be true or false." ;;
   esac
   [[ "${TS_HOSTNAME:-}" =~ ^[a-zA-Z0-9-]*$ ]] ||
     fail configuration "hostname may hold letters, digits and hyphens only."
@@ -58,14 +70,16 @@ validate_inputs() {
 
 machine_arch() {
   case "$(uname -m)" in
-  x86_64 | amd64) echo amd64 ;;
-  aarch64 | arm64) echo arm64 ;;
-  *) fail environment "no Tailscale build for $(uname -m)." ;;
+    x86_64 | amd64) echo amd64 ;;
+    aarch64 | arm64) echo arm64 ;;
+    *) fail environment "no Tailscale build for $(uname -m)." ;;
   esac
 }
 
 install_tools() {
   command -v "$TS_TAILSCALE" >/dev/null 2>&1 && command -v "$TS_TAILSCALED" >/dev/null 2>&1 && return 0
+  [ -n "$TS_VERSION" ] ||
+    fail configuration "tailscale is not on the runner; set version (for example 1.80.2) so it can be installed."
   local arch url tmp
   arch="$(machine_arch)"
   url="https://pkgs.tailscale.com/stable/tailscale_${TS_VERSION}_${arch}.tgz"
@@ -73,6 +87,10 @@ install_tools() {
   tmp="$(mktemp -d)"
   curl -fsSL "$url" -o "$tmp/tailscale.tgz" ||
     fail environment "could not download $url."
+  if [ -n "${TS_SHA256:-}" ]; then
+    echo "${TS_SHA256}  $tmp/tailscale.tgz" | sha256sum -c --quiet - ||
+      fail environment "the downloaded archive does not match sha256."
+  fi
   tar -xzf "$tmp/tailscale.tgz" -C "$tmp" --strip-components=1 ||
     fail environment "could not unpack the Tailscale archive."
   $SUDO install -m 755 "$tmp/tailscale" "$tmp/tailscaled" /usr/local/bin/ ||
@@ -80,13 +98,34 @@ install_tools() {
   rm -rf "$tmp"
 }
 
+daemon_answers() {
+  "$TS_TAILSCALE" version --daemon >/dev/null 2>&1
+}
+
 start_daemon() {
+  # a daemon that already runs belongs to the host; this action would log it out
+  if daemon_answers; then
+    fail environment "a tailscaled already runs on this runner; the action starts its own and must not take over the host's. Use it on a job container."
+  fi
   local args=(--state=mem:)
   if [ "$TS_USERSPACE" = "true" ]; then
     args+=(--tun=userspace-networking --socks5-server=localhost:1055)
   fi
   mkdir -p "$STATE_DIR"
   $SUDO nohup "$TS_TAILSCALED" "${args[@]}" >"$STATE_DIR/tailscaled.log" 2>&1 &
+  : >"$STATE_DIR/started-by-action"
+  wait_for_daemon
+}
+
+# wait_for_daemon: tailscaled needs a moment to create its socket
+wait_for_daemon() {
+  local tries="${TS_START_WAIT:-30}" i
+  for ((i = 0; i < tries; i++)); do
+    daemon_answers && return 0
+    sleep "${TS_WAIT_INTERVAL:-1}"
+  done
+  fail connection "tailscaled did not answer in $tries tries; the last lines of its log: $(tail -n 5 "$STATE_DIR/tailscaled.log" 2>/dev/null | tr '
+' ' ')"
 }
 
 # write_key_file: the auth key in a file of mode 600; prints its path
@@ -127,6 +166,11 @@ tailnet_up() {
 }
 
 tailnet_down() {
+  # only a daemon this action started is logged out and stopped
+  if [ ! -f "$STATE_DIR/started-by-action" ]; then
+    echo "This action did not start tailscaled on this runner; nothing to do."
+    return 0
+  fi
   $SUDO "$TS_TAILSCALE" logout 2>/dev/null || echo "The node was not logged in."
   $SUDO "$TS_TAILSCALE" down 2>/dev/null || true
   $SUDO pkill -x "$(basename "$TS_TAILSCALED")" 2>/dev/null || true
@@ -138,12 +182,12 @@ main() {
   set -uo pipefail
   TS_USERSPACE="${TS_USERSPACE:-false}"
   TS_TIMEOUT="${TS_TIMEOUT:-60}"
-  TS_VERSION="${TS_VERSION:-latest}"
+  TS_VERSION="${TS_VERSION:-}"
   case "${1:-}" in
-  mask) mask_secrets ;;
-  up) tailnet_up ;;
-  down) tailnet_down ;;
-  *) fail configuration "unknown command '${1:-}'; use mask, up or down." ;;
+    mask) mask_secrets ;;
+    up) tailnet_up ;;
+    down) tailnet_down ;;
+    *) fail configuration "unknown command '${1:-}'; use mask, up or down." ;;
   esac
 }
 

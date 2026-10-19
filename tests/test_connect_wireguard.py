@@ -131,6 +131,40 @@ class TestUp:
         assert "::error::[connection]" in result.stdout
 
 
+def make_exec(path: Path, body: str) -> Path:
+    path.write_text(body, encoding="utf-8")
+    path.chmod(path.stat().st_mode | stat.S_IXUSR)
+    return path
+
+
+class TestEnvironment:
+    def test_the_userspace_variable_reaches_wg_quick_through_sudo(self, tmp_path):
+        # a sudo that resets the environment, as the real one does
+        sudo = make_exec(
+            tmp_path / "sudo-reset",
+            '#!/usr/bin/env bash\nexec env -i "PATH=$PATH" "STUB_LOG=$STUB_LOG" "$@"\n',
+        )
+        quick = make_exec(
+            tmp_path / "quick-env",
+            '#!/usr/bin/env bash\necho "$WG_QUICK_USERSPACE_IMPLEMENTATION $*" >> "$STUB_LOG"\n',
+        )
+        result = run(tmp_path, "up", **FIELDS, WG_SUDO=str(sudo), WG_QUICK=str(quick))
+        assert result.returncode == 0, result.stdout + result.stderr
+        assert "wireguard-go up wg0" in (tmp_path / "log").read_text(encoding="utf-8")
+
+    def test_a_field_with_a_line_break_is_refused(self, tmp_path):
+        result = run(tmp_path, "up", **{**FIELDS, "WG_ALLOWED_IPS": "10.8.0.0/24\nPostUp = id"})
+        assert result.returncode == 1
+        assert "WG_ALLOWED_IPS must be one line" in result.stdout
+        assert not (tmp_path / "etc" / "wg0.conf").exists()
+
+    def test_the_key_file_is_removed_when_wg_quick_fails(self, tmp_path):
+        failing = make_exec(tmp_path / "quick-fail", "#!/usr/bin/env bash\nexit 1\n")
+        result = run(tmp_path, "up", **FIELDS, WG_QUICK=str(failing))
+        assert result.returncode == 1
+        assert not (tmp_path / "etc" / "wg0.conf").exists()
+
+
 class TestDownAndMask:
     def test_down_removes_the_config(self, tmp_path):
         run(tmp_path, "up", **FIELDS)
@@ -141,7 +175,8 @@ class TestDownAndMask:
     def test_mask_prints_every_secret(self, tmp_path):
         result = run(tmp_path, "mask", WG_PRIVATE_KEY=KEY, WG_CONFIG="[Interface]\nPrivateKey = abc")
         assert f"::add-mask::{KEY}" in result.stdout
-        assert "::add-mask::PrivateKey = abc" in result.stdout
+        assert "::add-mask::abc" in result.stdout
+        assert "[Interface]" not in result.stdout  # only the key values are masked
 
     def test_unknown_command_fails(self, tmp_path):
         assert run(tmp_path, "sideways").returncode == 1

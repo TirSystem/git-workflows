@@ -4,12 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-012 |
-| CrossReference | [BC-001], [US-001], [MIL-004], [MIL-011], [ADR-0006] |
+| CrossReference | [BC-001], [US-001], [MIL-004], [MIL-011], [ADR-0006], [ADR-0011] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-080), accepted by the author in chat as stand-in for S01 with target date 2026-11-06 | [c5d5941] |
+| 2026-10-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-080), accepted by the author in chat as stand-in for S01 with target date 2026-11-06 | [c5d5941] |
+| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of tasks 1, 6 and 9 and the fixes from the review of the first pull request; reviewed (RC-082), accepted by the author in chat as stand-in for S01 | [3325bea] |
 
 ---
 
@@ -86,6 +87,28 @@ Release `2.2.0` of this repository with two composite actions, `actions/connect-
 | 11 | Pin the framework templates | In `TirSystem/sqa-qc-framework`, change `@wireguard-vpn-action` to `@v2` in the two templates and the branch guide, remove the "experimental" notes that the release resolves, and open the pull request after release 2.2.0. This is a change in another repository, in its own pull request. | No | |
 | 12 | Review | Record `RC-*` for this milestone, the actions with their tests, and the guides, each with a verdict. | No | |
 
+
+## Verification results
+
+Task 1 was run on 2026-10-19 with the throwaway branch `verify-subfolder-action`, which calls both actions in the short form (`TirSystem/github-action/actions/<name>@<ref>`) and with the full address (`https://git.tirsystem.com/TirSystem/github-action/actions/<name>@<ref>`), with every input empty, so that a resolved action fails with its own `[configuration]` message.
+
+| Call | Result | Evidence |
+| --- | --- | --- |
+| Either form at `@wireguard-vpn-action` | Fails before the step: `Unable to resolve wireguard-vpn-action: reference not found`. The branch had been deleted when its pull request merged, so the ref did not exist; this is not a defect of the form. | run 417 (`2424`) |
+| Short form at `@main`, both actions | Resolves and runs: the log shows `Run Pre ...@main`, the action's `mask` step and its main step, which fails with `[configuration] set config, or all of private-key, ... (WG_PRIVATE_KEY is empty)` and `[configuration] give authkey or oauth-secret` | run 418 (`2425`), jobs `wg-short`, `ts-short` |
+| Full address at `@main`, both actions | The same result as the short form | run 418, jobs `wg-full`, `ts-full` |
+
+Both forms resolve. The short form is the one the guides show; the full address stays in the guides as the fallback. `gitea.action_path` is set (the script path in the log is under `/var/run/act/actions/<id>/actions/<name>/`). A `uses:` of a branch that no longer exists fails with "reference not found", so a caller of an experimental ref breaks when its branch is deleted.
+
+Tasks 6 and 9 were done on 2026-10-19 on the branch `mil-012-review-fixes-and-docs`:
+
+- **Lint (task 6):** `tools/lint-action-scripts.sh` runs shellcheck and shfmt on `actions/**/*.sh`; `validate-workflows.yml` runs it with pinned tools (`shellcheck-py==0.10.0.1`, `shfmt-py==3.11.0.2`, from `tests/requirements.txt`), and `.editorconfig` sets the shell format (two spaces, indented case labels, as the shell conventions say). `tests/test_lint_action_scripts.py` seeds a shellcheck problem and a badly formatted script and shows both fail, and shows the scripts of the actions pass.
+- **Decision (task 9):** [ADR-0011] (Proposed). Objective O6 and the Project Plan entries were added at the acceptance of this milestone ([RC-080], [RC-081]).
+
+The review of pull request 194 (ten findings) is answered in the same branch: `tailscaled` is waited for before `tailscale up`; the `wireguard-go` choice survives `sudo`; `sudo` is used only when the job is not root; a `tailscaled` that already runs on the runner is not taken over and `down` leaves a daemon it did not start; the Tailscale install needs an exact `version`, with an optional `sha256`; a configuration field with a line break is refused; only the key values are masked; the key file is removed when `wg-quick` fails; and the guides call `@main` until the release. These are offline-tested with stubs; tasks 3 and 4 still have to show them on a runner.
+
+Tasks 2, 3, 4, 5, 7, 8, 10, 11 and 12 are open: they need the trial runner (task 2), which is the operator's, or follow the verified guides (tasks 7 and 8) or the release (tasks 10 and 11).
+
 ---
 
 [BC-001]: ../business-case.md
@@ -98,6 +121,9 @@ Release `2.2.0` of this repository with two composite actions, `actions/connect-
 [MIL-012]: ./mil-012-vpn-actions-for-deployment.md
 [RC-080]: ../sqa/reviews/rc-080-mil-012-plan.md
 [RC-081]: ../sqa/reviews/rc-081-bc-001-o6.md
+[RC-082]: ../sqa/reviews/rc-082-mil-012-results.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
+[ADR-0011]: ../adr/adr-0011-vpn-composite-actions.md
 [PP-001]: ../project-plan.md
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
+[3325bea]: https://git.tirsystem.com/TirSystem/github-action/commit/3325bea772304b54e8dfffad592b4afadc3ec2b8

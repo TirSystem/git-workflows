@@ -36,6 +36,11 @@ case "$1" in
     done
     exit "${UP_EXIT:-0}" ;;
   ping) exit "${PING_EXIT:-0}" ;;
+  version)
+    # the daemon answers only after tailscaled was started, and after DAEMON_DELAY calls
+    [ -f "$STUB_DAEMON" ] || exit 1
+    n=$(( $(cat "$STUB_DAEMON") + 1 )); echo "$n" > "$STUB_DAEMON"
+    [ "$n" -gt "${DAEMON_DELAY:-0}" ] ;;
 esac
 """
 
@@ -52,13 +57,19 @@ def make_stub(path: Path, body: str) -> None:
 
 def run(tmp_path: Path, command: str, **env: str) -> subprocess.CompletedProcess:
     make_stub(tmp_path / "tailscale", TAILSCALE_STUB)
-    make_stub(tmp_path / "tailscaled", "#!/usr/bin/env bash\necho \"$*\" >> \"$STUB_LOG\"\n")
+    make_stub(
+        tmp_path / "tailscaled",
+        '#!/usr/bin/env bash\necho "$*" >> "$STUB_LOG"\necho 0 > "$STUB_DAEMON"\n',
+    )
     full = {
         "PATH": f"{tmp_path}:{os.environ['PATH']}",
         "TS_SUDO": "",
         "TS_STATE_DIR": str(tmp_path / "state"),
         "STUB_LOG": str(tmp_path / "log"),
         "STUB_KEY": str(tmp_path / "key"),
+        "STUB_DAEMON": str(tmp_path / "daemon"),
+        "TS_WAIT_INTERVAL": "0.05",
+        "TS_START_WAIT": "100",
         **env,
     }
     return subprocess.run(
@@ -77,7 +88,7 @@ class TestDefinition:
     def test_inputs_are_the_contract(self, document):
         assert set(document["inputs"]) == {
             "action", "authkey", "oauth-secret", "tags", "hostname", "version",
-            "userspace-networking", "args", "timeout", "health-check-host",
+            "sha256", "userspace-networking", "args", "timeout", "health-check-host",
         }
 
     def test_uses_gitea_contexts_only(self):
@@ -124,6 +135,8 @@ class TestUp:
             ({"TS_AUTHKEY": AUTHKEY, "TS_TAGS": "ci"}, "tags must look like"),
             ({"TS_AUTHKEY": AUTHKEY, "TS_TIMEOUT": "soon"}, "timeout"),
             ({"TS_AUTHKEY": AUTHKEY, "TS_VERSION": "1.x"}, "version"),
+            ({"TS_AUTHKEY": AUTHKEY, "TS_VERSION": "latest"}, "version"),
+            ({"TS_AUTHKEY": AUTHKEY, "TS_SHA256": "abc"}, "sha256"),
             ({"TS_AUTHKEY": AUTHKEY, "TS_USERSPACE": "yes"}, "userspace-networking"),
             ({"TS_AUTHKEY": AUTHKEY, "TS_HOSTNAME": "bad name"}, "hostname"),
         ],
@@ -146,6 +159,40 @@ class TestUp:
         result = run(tmp_path, "up", TS_AUTHKEY=AUTHKEY, TS_HEALTH_CHECK_HOST="db", PING_EXIT="1")
         assert result.returncode == 1
         assert "health-check-host" in result.stdout
+
+
+class TestDaemon:
+    def test_waits_until_the_daemon_answers(self, tmp_path):
+        result = run(tmp_path, "up", TS_AUTHKEY=AUTHKEY, DAEMON_DELAY="5")
+        assert result.returncode == 0, result.stdout
+        assert "up --auth-key" in log(tmp_path)
+
+    def test_a_daemon_that_never_answers_fails_before_up(self, tmp_path):
+        result = run(tmp_path, "up", TS_AUTHKEY=AUTHKEY, DAEMON_DELAY="1000", TS_START_WAIT="3")
+        assert result.returncode == 1
+        assert "::error::[connection] tailscaled did not answer" in result.stdout
+        assert "up --auth-key" not in log(tmp_path)
+
+    def test_a_daemon_of_the_host_is_not_taken_over(self, tmp_path):
+        (tmp_path / "daemon").write_text("0", encoding="utf-8")
+        result = run(tmp_path, "up", TS_AUTHKEY=AUTHKEY)
+        assert result.returncode == 1
+        assert "::error::[environment] a tailscaled already runs" in result.stdout
+        calls = log(tmp_path)  # only the probe ran: no second daemon, no up
+        assert "--state=mem:" not in calls
+        assert "up --auth-key" not in calls
+
+    def test_down_leaves_a_daemon_it_did_not_start(self, tmp_path):
+        (tmp_path / "daemon").write_text("0", encoding="utf-8")
+        result = run(tmp_path, "down")
+        assert result.returncode == 0
+        assert "nothing to do" in result.stdout
+        assert not (tmp_path / "log").exists()
+
+    def test_without_tailscale_a_version_is_required(self, tmp_path):
+        result = run(tmp_path, "up", TS_AUTHKEY=AUTHKEY, TS_TAILSCALE="no-such-tailscale")
+        assert result.returncode == 1
+        assert "::error::[configuration] tailscale is not on the runner; set version" in result.stdout
 
 
 class TestDownAndMask:

@@ -26,3 +26,9 @@ jobs:
 
       - name: Check the coverage of the tools
         run: .venv/bin/python -m coverage report
+
+      - name: Lint the shell scripts of the actions
+        env:
+          SHELLCHECK: .venv/bin/shellcheck
+          SHFMT: .venv/bin/shfmt
+        run: bash tools/lint-action-scripts.sh actions
