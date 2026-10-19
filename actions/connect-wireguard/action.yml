@@ -1,0 +1,85 @@
+name: Connect WireGuard
+description: >-
+  Brings up a WireGuard tunnel on a Gitea Actions runner, so the next steps of
+  the job (a deployment) can reach hosts on a private network. Run it again
+  with action "down" in a last step with if always().
+
+inputs:
+  action:
+    description: "up brings the tunnel up; down takes it down and removes the configuration"
+    required: false
+    default: "up"
+  config:
+    description: >-
+      A complete wg-quick configuration, stored as a Gitea secret. When set, the
+      individual inputs below are ignored.
+    required: false
+    default: ""
+  private-key:
+    description: "Private key of this runner (a secret)"
+    required: false
+    default: ""
+  address:
+    description: "Address of this runner inside the tunnel, e.g. 10.8.0.2/32"
+    required: false
+    default: ""
+  peer-public-key:
+    description: "Public key of the WireGuard server"
+    required: false
+    default: ""
+  endpoint:
+    description: "Address of the WireGuard server as host:port"
+    required: false
+    default: ""
+  allowed-ips:
+    description: "Networks routed through the tunnel, comma separated. Never 0.0.0.0/0 unless the deployment needs it"
+    required: false
+    default: ""
+  preshared-key:
+    description: "Optional preshared key (a secret)"
+    required: false
+    default: ""
+  dns:
+    description: "Optional DNS server for the tunnel"
+    required: false
+    default: ""
+  persistent-keepalive:
+    description: "Seconds between keepalive packets, 0 turns them off"
+    required: false
+    default: "25"
+  interface:
+    description: "Name of the interface"
+    required: false
+    default: "wg0"
+  health-check-host:
+    description: "Optional host behind the tunnel that must answer a ping, else the step fails"
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Mask the secrets
+      shell: bash
+      env:
+        WG_CONFIG: ${{ inputs.config }}
+        WG_PRIVATE_KEY: ${{ inputs.private-key }}
+        WG_PRESHARED_KEY: ${{ inputs.preshared-key }}
+      run: bash "${{ gitea.action_path }}/connect-wireguard.sh" mask
+
+    - name: Run the WireGuard step
+      shell: bash
+      env:
+        WG_ACTION: ${{ inputs.action }}
+        WG_CONFIG: ${{ inputs.config }}
+        WG_PRIVATE_KEY: ${{ inputs.private-key }}
+        WG_ADDRESS: ${{ inputs.address }}
+        WG_PEER_PUBLIC_KEY: ${{ inputs.peer-public-key }}
+        WG_ENDPOINT: ${{ inputs.endpoint }}
+        WG_ALLOWED_IPS: ${{ inputs.allowed-ips }}
+        WG_PRESHARED_KEY: ${{ inputs.preshared-key }}
+        WG_DNS: ${{ inputs.dns }}
+        WG_KEEPALIVE: ${{ inputs.persistent-keepalive }}
+        WG_INTERFACE: ${{ inputs.interface }}
+        WG_HEALTH_CHECK_HOST: ${{ inputs.health-check-host }}
+      run: bash "${{ gitea.action_path }}/connect-wireguard.sh" "$WG_ACTION"
