@@ -1,11 +1,12 @@
 """Find comments in source code that are not written in English (MIL-013, ADR-0012).
 
 Run by .gitea/workflows/english-comments.yml. It reads the comments and docstrings
-of the source files of the languages of ADR-0010, joins the lines of one comment
-block, and judges the block with ``langid`` (restricted to a few candidate
-languages) after removing everything that is not a word: paths, options,
-identifiers, numbers and the words of the allowed-words file. A block with fewer
-than ``--min-words`` words left is not judged.
+of the source files of the languages of ADR-0010 and judges each comment line
+with ``langid`` (restricted to a few candidate languages) after removing
+everything that is not a word: paths, options, identifiers, numbers and the words
+of the allowed-words file. When no line of a block of consecutive comment lines
+is flagged, the block is judged as a whole, so a sentence cut over short lines is
+not missed. A text with fewer than ``--min-words`` words left is not judged.
 
 Usage:
     python tools/english_comments.py check [--directory DIR] [--scope changed|all]
@@ -38,6 +39,9 @@ from pathlib import Path
 
 DEFAULT_THRESHOLD = 0.6
 DEFAULT_MIN_WORDS = 3
+# a single line of a longer block is judged more strictly than a whole block (ADR-0012)
+LINE_THRESHOLD = 0.7
+LINE_MIN_WORDS = 4
 MAX_FILE_BYTES = 1_000_000
 CANDIDATES = ["en", "da", "no", "sv", "de", "fr", "ms", "id", "nl"]
 LANGUAGE_NAMES = {
@@ -149,16 +153,15 @@ def extract(path: str, text: str) -> list[tuple[int, str]]:
     return sorted((n, t) for n, t in found if t and not _PRAGMA.match(t))
 
 
-def blocks(lines: list[tuple[int, str]]) -> list[tuple[int, int, str]]:
-    """Join comment lines on consecutive line numbers: (first line, last line, text)."""
-    joined: list[tuple[int, int, str]] = []
+def groups(lines: list[tuple[int, str]]) -> list[list[tuple[int, str]]]:
+    """Group comment lines on consecutive line numbers: one group is one comment block."""
+    found: list[list[tuple[int, str]]] = []
     for number, text in lines:
-        if joined and joined[-1][1] in (number, number - 1):
-            first, _, previous = joined[-1]
-            joined[-1] = (first, number, f"{previous} {text}")
+        if found and found[-1][-1][0] in (number, number - 1):
+            found[-1].append((number, text))
         else:
-            joined.append((number, number, text))
-    return joined
+            found.append([(number, text)])
+    return found
 
 
 def words(text: str, allowed: frozenset[str] = frozenset()) -> list[str]:
@@ -169,7 +172,7 @@ def words(text: str, allowed: frozenset[str] = frozenset()) -> list[str]:
         tokens = tokens[1:]  # a label such as "Usage:" or "Note:" is not prose
     for token in tokens:
         if len(token) > 1 and token[0] == "." and token[1].isalpha():
-            continue  # a hidden file such as .clang-format
+            continue  # a dotfile, for example one of a linter
         token = token.strip("().,;:!?")
         # a token with code characters (quotes, braces, `=`, `/`, `_`, digits) is not a word
         if not token or _NOT_WORD_CHARS.search(token) or "::" in token:
@@ -225,14 +228,30 @@ def check_text(
 ) -> list[Finding]:
     """Findings of one file; with ``lines`` only the blocks that touch those line numbers."""
     findings: list[Finding] = []
-    for first, last, body in blocks(extract(path, text)):
+    for group in groups(extract(path, text)):
+        body = " ".join(line for _, line in group)
         if IGNORE_MARKER.search(body):
             continue
-        if lines is not None and not any(first <= n <= last for n in lines):
-            continue
-        verdict = judge(body, allowed, threshold, min_words)
-        if verdict:
-            findings.append(Finding(path, first, last, verdict[0], round(verdict[1], 2), body))
+        found: list[Finding] = []
+        if len(group) > 1:
+            # each line on its own, so an English line cannot hide a Danish one next to it
+            found = [
+                Finding(path, number, number, verdict[0], round(verdict[1], 2), line)
+                for number, line in group
+                if (
+                    verdict := judge(
+                        line, allowed, max(threshold, LINE_THRESHOLD), max(min_words, LINE_MIN_WORDS)
+                    )
+                )
+            ]
+        if not found and (verdict := judge(body, allowed, threshold, min_words)):
+            # the block as a whole, so a sentence cut over short lines is not missed
+            found = [Finding(path, group[0][0], group[-1][0], verdict[0], round(verdict[1], 2), body)]
+        findings += [
+            f
+            for f in found
+            if lines is None or any(f.line <= n <= f.end_line for n in lines)
+        ]
     return findings
 
 

@@ -51,7 +51,10 @@ the check still fails the run, but no comment is written.
 The comments and docstrings of the files of the languages in the code counter
 ([code metrics](CodeMetrics)): Python, shell, PowerShell, C, C++, C#, Java,
 JavaScript, TypeScript, Go, Rust and SQL. Strings and code are not read.
-Consecutive comment lines are judged as one block.
+Consecutive comment lines form a block. Each line of a block is judged on its own
+(at least four words and a probability of at least 0.7), so an English line cannot
+hide a Danish one next to it; when no line is flagged, the block is judged as a whole
+(at least `min-words` words and `threshold`), so a sentence cut over short lines is not missed.
 
 Before a block is judged, everything that is not a word is removed: paths, URLs,
 options (`--output`), file names, identifiers (`snake_case`, `camelCase`),

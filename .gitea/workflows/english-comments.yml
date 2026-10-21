@@ -100,14 +100,15 @@ jobs:
           --output "$FINDINGS_FILE"
 
       - name: Tell the author
-        if: ${{ always() && gitea.event_name == 'pull_request' }}
+        # in a called workflow gitea.event_name is workflow_call, so ask for the pull request itself
+        if: ${{ always() && gitea.event.pull_request.number != '' }}
         continue-on-error: true
         env:
           GITEA_API_URL: ${{ gitea.api_url }}
           SOURCE_REPOSITORY: ${{ gitea.repository }}
           PR_NUMBER: ${{ gitea.event.pull_request.number }}
           PR_AUTHOR: ${{ gitea.event.pull_request.user.login }}
-          RUN_URL: ${{ gitea.server_url }}/${{ gitea.repository }}/actions/runs/${{ gitea.run_number }}
+          RUN_URL: ${{ gitea.server_url }}/${{ gitea.repository }}/actions/runs/${{ gitea.run_id }}
           REPORT_TOKEN: ${{ secrets.REPORT_TOKEN || gitea.token }}
         run: python3 shared-scripts/tools/english_comments_report.py
 

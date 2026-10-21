@@ -114,9 +114,9 @@ class TestExtract:
     def test_a_file_of_an_unknown_language_has_no_comments(self):
         assert ec.extract("notes.md", "# Heading\n") == []
 
-    def test_consecutive_lines_are_one_block(self):
+    def test_consecutive_lines_are_one_group(self):
         lines = [(1, "a"), (2, "b"), (4, "c"), (5, "d"), (5, "e")]
-        assert ec.blocks(lines) == [(1, 2, "a b"), (4, 5, "c d e")]
+        assert ec.groups(lines) == [[(1, "a"), (2, "b")], [(4, "c"), (5, "d"), (5, "e")]]
 
 
 class TestCheckText:
@@ -133,6 +133,20 @@ class TestCheckText:
         text = self.DANISH + "x = 1\n" + self.DANISH
         assert [f.line for f in ec.check_text("a.py", text, {3})] == [3]
         assert ec.check_text("a.py", text, {2}) == []
+
+    def test_a_danish_line_next_to_an_english_line_is_still_found(self):
+        english = "# This function adds the totals of the basket together and returns the sum\n"
+        findings = ec.check_text("a.py", english + self.DANISH)
+        assert [(f.line, f.end_line, f.language) for f in findings] == [(2, 2, "da")]
+
+    def test_a_sentence_cut_over_short_lines_is_judged_as_a_whole(self):
+        text = "# Denne funktion\n# beregner totalen\n# for kurven\n# og gemmer resultatet\n"
+        [finding] = ec.check_text("a.py", text)
+        assert (finding.line, finding.end_line, finding.language) == (1, 4, "da")
+
+    def test_only_a_flagged_line_is_reported_when_the_block_is_mixed(self):
+        text = self.DANISH + "# and this line is plain English text about the totals\n"
+        assert [f.line for f in ec.check_text("a.py", text, {2})] == []
 
     def test_the_marker_skips_the_block(self):
         text = self.DANISH.rstrip() + "  # english-comments: ignore\n"
