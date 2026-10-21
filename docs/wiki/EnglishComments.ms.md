@@ -1,4 +1,4 @@
-<!-- translation of EnglishComments.md, source sha256 98f3d6e44d62 -->
+<!-- translation of EnglishComments.md, source sha256 9dafcabbc807 -->
 
 > Ini ialah terjemahan [`EnglishComments`](EnglishComments). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -28,9 +28,6 @@ jobs:
       exclude: "docs/generated/**"
       allowed-words-file: .english-comments-allowed-words
 ```
-
-Sehingga keluaran 2.3.0, aliran kerja hanya wujud pada `main`, jadi panggil dengan `@main`; `@v2` belum
-mengandunginya.
 
 | Input | Lalai | Maksud |
 | --- | --- | --- |

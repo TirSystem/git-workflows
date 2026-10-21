@@ -20,6 +20,8 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-10-21
+
 ### Added
 
 - `english-comments.yml`, a reusable workflow that judges the language of the comments and docstrings a pull request adds, fails the run when one is not English and writes one comment on the pull request that mentions the author (ADR-0012), with the scripts `tools/english_comments.py` and `tools/english_comments_report.py`, the guide `guides/english-comments.md` and wiki pages in three languages. The scanner of `tools/count_loc.py` can return the text of the comments it finds.
