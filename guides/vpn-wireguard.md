@@ -4,8 +4,8 @@ The composite action `actions/connect-wireguard` brings a WireGuard tunnel up on
 a Gitea Actions runner, so the next steps of the same job (a deployment over
 SSH, a database migration) can reach hosts that are not on the internet. It is
 the WireGuard counterpart of the Tailscale action. It is **experimental**: it
-is on `main` but not released, and it has not yet run on a runner with a real
-tunnel (MIL-012).
+is released in 2.2.0, and it has not yet run on a runner with a real tunnel
+(MIL-012).
 
 A tunnel belongs to one job: every job that deploys brings its own tunnel up
 and takes it down. It cannot be a reusable workflow, because a called workflow
@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4.2.2
 
       - name: Connect the VPN
-        uses: TirSystem/github-action/actions/connect-wireguard@main
+        uses: TirSystem/github-action/actions/connect-wireguard@v2
         with:
           config: ${{ secrets.WG_CONFIG }}
           health-check-host: 10.8.0.1
@@ -31,17 +31,14 @@ jobs:
 
       - name: Disconnect the VPN
         if: always()
-        uses: TirSystem/github-action/actions/connect-wireguard@main
+        uses: TirSystem/github-action/actions/connect-wireguard@v2
         with:
           action: down
 ```
 
 If the short form does not resolve on your instance (Gitea looks for the action
 on the host set in `DEFAULT_ACTIONS_URL`), use the full address:
-`https://git.tirsystem.com/TirSystem/github-action/actions/connect-wireguard@main`.
-
-Until release 2.2.0 the actions exist only on `main`, so the examples call
-`@main`; `@v2` does not contain them yet. After the release, use `@v2`.
+`https://git.tirsystem.com/TirSystem/github-action/actions/connect-wireguard@v2`.
 
 ## Inputs
 

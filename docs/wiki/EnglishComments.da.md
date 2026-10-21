@@ -1,4 +1,4 @@
-<!-- translation of EnglishComments.md, source sha256 98f3d6e44d62 -->
+<!-- translation of EnglishComments.md, source sha256 9dafcabbc807 -->
 
 > Dette er en oversættelse af [`EnglishComments`](EnglishComments). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -27,9 +27,6 @@ jobs:
       exclude: "docs/generated/**"
       allowed-words-file: .english-comments-allowed-words
 ```
-
-Indtil udgivelse 2.3.0 findes workflowet kun på `main`, så kald det med `@main`; `@v2` indeholder det
-endnu ikke.
 
 | Input | Standard | Betydning |
 | --- | --- | --- |

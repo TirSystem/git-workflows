@@ -28,9 +28,6 @@ jobs:
       allowed-words-file: .english-comments-allowed-words
 ```
 
-Until release 2.3.0 the workflow exists only on `main`, so call it at `@main`; `@v2` does not
-contain it yet.
-
 | Input | Default | Meaning |
 | --- | --- | --- |
 | `scope` | `changed` | `changed` checks the comments on the lines the pull request adds; `all` checks every tracked file |

@@ -5,7 +5,7 @@ a Gitea Actions runner, so the next steps of the same job (a deployment over
 SSH, a migration) can reach hosts on the tailnet. It does what the GitHub
 marketplace action `tailscale/github-action` does, written for Gitea Actions:
 that action is built for GitHub and has not been verified on Gitea. It is
-**experimental**: it is on `main` but not released, and it has not yet run on a
+**experimental**: it is released in 2.2.0, and it has not yet run on a
 runner with a real tailnet (MIL-012). For a plain tunnel without a third-party service, see
 [WireGuard](vpn-wireguard.md).
 
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4.2.2
 
       - name: Connect Tailscale
-        uses: TirSystem/github-action/actions/connect-tailscale@main
+        uses: TirSystem/github-action/actions/connect-tailscale@v2
         with:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
@@ -35,17 +35,14 @@ jobs:
 
       - name: Disconnect Tailscale
         if: always()
-        uses: TirSystem/github-action/actions/connect-tailscale@main
+        uses: TirSystem/github-action/actions/connect-tailscale@v2
         with:
           action: down
 ```
 
 If the short form does not resolve on your instance (Gitea looks for the action
 on the host set in `DEFAULT_ACTIONS_URL`), use the full address:
-`https://git.tirsystem.com/TirSystem/github-action/actions/connect-tailscale@main`.
-
-Until release 2.2.0 the actions exist only on `main`, so the examples call
-`@main`; `@v2` does not contain them yet. After the release, use `@v2`.
+`https://git.tirsystem.com/TirSystem/github-action/actions/connect-tailscale@v2`.
 
 ## Inputs
 
