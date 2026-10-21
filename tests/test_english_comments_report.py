@@ -268,6 +268,11 @@ class TestWorkflow:
         assert "event_name" not in tell["if"]
         assert "gitea.event.pull_request.number != ''" in tell["if"]
 
+    def test_the_link_to_the_run_uses_the_run_id(self, document):
+        # the URL of a run on the instance holds its id, not its number (MIL-013 task 8)
+        tell = next(s for s in document["jobs"]["english-comments"]["steps"] if s.get("name") == "Tell the author")
+        assert tell["env"]["RUN_URL"].endswith("/actions/runs/${{ gitea.run_id }}")
+
     def test_inputs_reach_the_scripts_as_environment_variables_only(self, document):
         for step in document["jobs"]["english-comments"]["steps"]:
             assert "inputs." not in step.get("run", "")

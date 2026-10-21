@@ -108,7 +108,7 @@ jobs:
           SOURCE_REPOSITORY: ${{ gitea.repository }}
           PR_NUMBER: ${{ gitea.event.pull_request.number }}
           PR_AUTHOR: ${{ gitea.event.pull_request.user.login }}
-          RUN_URL: ${{ gitea.server_url }}/${{ gitea.repository }}/actions/runs/${{ gitea.run_number }}
+          RUN_URL: ${{ gitea.server_url }}/${{ gitea.repository }}/actions/runs/${{ gitea.run_id }}
           REPORT_TOKEN: ${{ secrets.REPORT_TOKEN || gitea.token }}
         run: python3 shared-scripts/tools/english_comments_report.py
 
