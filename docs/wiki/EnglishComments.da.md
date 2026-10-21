@@ -1,4 +1,4 @@
-<!-- translation of EnglishComments.md, source sha256 866ce29fd1ea -->
+<!-- translation of EnglishComments.md, source sha256 98f3d6e44d62 -->
 
 > Dette er en oversættelse af [`EnglishComments`](EnglishComments). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -52,7 +52,10 @@ kommentar.
 Kommentarerne og docstrings i filer på de sprog, kodetælleren kender
 ([kodemålinger](CodeMetrics)): Python, shell, PowerShell, C, C++, C#, Java,
 JavaScript, TypeScript, Go, Rust og SQL. Strenge og kode læses ikke. Kommentarlinjer
-efter hinanden bedømmes som én blok.
+efter hinanden danner en blok. Hver linje i en blok bedømmes for sig (mindst fire ord og en
+sandsynlighed på mindst 0,7), så en engelsk linje ikke kan skjule en dansk ved siden af; når ingen linje
+markeres, bedømmes blokken som helhed (mindst `min-words` ord og `threshold`), så en sætning delt over korte
+linjer ikke overses.
 
 Før en blok bedømmes, fjernes alt, der ikke er et ord: stier, URL'er, tilvalg
 (`--output`), filnavne, identifikatorer (`snake_case`, `camelCase`), tal,

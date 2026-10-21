@@ -1,4 +1,4 @@
-<!-- translation of EnglishComments.md, source sha256 866ce29fd1ea -->
+<!-- translation of EnglishComments.md, source sha256 98f3d6e44d62 -->
 
 > Ini ialah terjemahan [`EnglishComments`](EnglishComments). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -52,7 +52,10 @@ semakan masih menggagalkan larian, tetapi tiada komen ditulis.
 Komen dan docstring dalam fail bahasa yang dikenali oleh pengira kod
 ([metrik kod](CodeMetrics)): Python, shell, PowerShell, C, C++, C#, Java,
 JavaScript, TypeScript, Go, Rust dan SQL. String dan kod tidak dibaca. Baris komen
-yang berturutan dinilai sebagai satu blok.
+yang berturutan membentuk satu blok. Setiap baris dalam blok dinilai secara berasingan (sekurang-kurangnya
+empat perkataan dan kebarangkalian sekurang-kurangnya 0.7), jadi baris bahasa Inggeris tidak dapat menyembunyikan
+baris bahasa Denmark di sebelahnya; apabila tiada baris ditandakan, blok dinilai secara keseluruhan
+(sekurang-kurangnya `min-words` perkataan dan `threshold`), supaya ayat yang dipecahkan kepada baris pendek tidak terlepas.
 
 Sebelum sesuatu blok dinilai, segala yang bukan perkataan dibuang: laluan, URL,
 pilihan (`--output`), nama fail, pengecam (`snake_case`, `camelCase`), nombor,
