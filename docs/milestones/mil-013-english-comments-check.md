@@ -4,12 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-013 |
-| CrossReference | [BC-001], [US-001], [MIL-004], [MIL-010], [MIL-011], [ADR-0005], [ADR-0006], [ADR-0010] |
+| CrossReference | [BC-001], [US-001], [MIL-004], [MIL-010], [MIL-011], [ADR-0005], [ADR-0006], [ADR-0010], [ADR-0012] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-083), accepted by the author in chat as stand-in for S01 with target date 2026-11-20 | [e35b1c5] |
+| 2026-10-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-083), accepted by the author in chat as stand-in for S01 with target date 2026-11-20 | [e35b1c5] |
+| 2026-10-21 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of tasks 1 to 8, 10 and 13 and the three defects found in the trial; reviewed (RC-085), accepted by the author in chat as stand-in for S01 | pending |
 
 ---
 
@@ -90,6 +91,28 @@ Release `2.3.0` of this repository ([ADR-0006]: a new capability is a minor rele
 | 13 | Add MIL-013 to the Business Case and the Project Plan | Objective O7, the scope item and a success criterion in [BC-001]; the schedule row, Gantt bar, scope entry, dependency and a plan risk (false positives on short comments) in [PP-001]; the traceability rows. | No | |
 | 14 | Review | Record `RC-*` for this milestone, the workflow, the scripts, the tests and the guides, each with a verdict. | No | |
 
+
+## Verification results
+
+**Tasks 1 to 7, 10 and 13** were done on 2026-10-19 to 2026-10-21 and merged in pull request 211 (and 196 for task 13): the corpus (300 English, 45 Danish, 45 Malay, 48 other), [ADR-0012] (`Proposed`, not yet reviewed), the extractor and detector, the report script, the reusable workflow `english-comments.yml`, 673 offline tests with 98 % coverage of `tools/`, and the guide, README and wiki in three languages. The detector flags 0 of 300 English comments, 44 of 45 Danish and 41 of 45 Malay comments and all 48 of the others; the Danish and Malay comments were written for the test and not checked by a native reader.
+
+**Task 8 (trial on the instance)** was run on 2026-10-21 with the throwaway branch `verify-english-comments` and its pull request 213 (closed, not merged). The sample file holds an English comment, a Danish comment directly under it, a Malay comment, and a Danish comment marked `english-comments: ignore`.
+
+| Run | What was called | Result |
+| --- | --- | --- |
+| 433 (id 2478), first call at `@main` | the workflow of pull request 211 | Fetched the shared scripts, installed `langid` and `numpy` on the runner, found only the Malay comment (line 9, `id` 0.66); the Danish line next to the English one was **missed** (defect 1). The step "Tell the author" was **skipped**, so no comment was written (defect 2). The run failed. |
+| 435 and 437 (ids 2480, 2482), a debug workflow | the contexts of a called workflow | `gitea.event_name` is `workflow_call`; `gitea.event.pull_request.number` (213), the author login and `gitea.base_ref` (`main`) are set. The conditions `always()`, `always() && ...pull_request.number != ''`, `... && ...pull_request.number`, `... && ...pull_request` and `... && gitea.base_ref != ''` ran the step; `gitea.event_name == 'pull_request'` and `github.event_name == 'pull_request'` did not. |
+| 440 (id 2485), the fix branch | `english-comments.yml@mil-013-judge-each-line` | Both the Danish line (6, `da` 1.0) and the Malay line (9) were found, the marked line was not reported, the run failed, and the Actions bot (`gitea-actions`) wrote **one** comment (id 8715) that mentions `@Tirsvad` and lists the two findings. |
+| 443 (id 2488) | the same, with another Danish comment | "Updated the comment of the check": still one comment (id 8715), with the new text. |
+| 445 (id 2490) | both comments rewritten in English | The run passed, the failing step was skipped, and the comment was marked resolved (a "passes" text, no mention). |
+| 447 (id 2492) | a Malay comment again | The comment updated; its link `.../actions/runs/2492` equals the `html_url` of the run (defect 3 fixed: the first version linked the run number 440). |
+
+The three defects are fixed in pull request 212 (open at the time of writing): (1) a block of several lines is judged line by line first (at least four words, probability 0.7), then as a whole; (2) the author step asks for `gitea.event.pull_request.number != ''` instead of the event name; (3) the comment links the run by its id. Each has a test.
+
+**Secrets:** the four `english-comments` jobs of runs 440, 443, 445 and 447 were searched for `token <20 or more characters>`, `basic <base64>`, `bearer` and for the value of the token used from this machine; nothing was found. `REPORT_TOKEN` is printed as `***` and the clone header as `AUTHORIZATION: basic ***`. The detector made no network call; the only calls were to the Gitea API of the instance.
+
+**Not shown by the trial:** a call at `@main` of the corrected workflow (it follows the merge of pull request 212); a pull request from a fork (read-only token); a custom `REPORT_TOKEN` secret; the check as a required status that blocks the merge (task 9); and the call of the workflow by this repository (task 11). Tasks 9, 11, 12 and 14 are open.
+
 ---
 
 [BC-001]: ../business-case.md
@@ -106,4 +129,6 @@ Release `2.3.0` of this repository ([ADR-0006]: a new capability is a minor rele
 [PP-001]: ../project-plan.md
 [RC-083]: ../sqa/reviews/rc-083-mil-013-plan.md
 [RC-084]: ../sqa/reviews/rc-084-bc-001-o7.md
+[RC-085]: ../sqa/reviews/rc-085-mil-013-results.md
+[ADR-0012]: ../adr/adr-0012-english-comment-detection.md
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
