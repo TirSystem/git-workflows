@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-083), accepted by the author in chat as stand-in for S01 with target date 2026-11-20 | [e35b1c5] |
-| 2026-10-21 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of tasks 1 to 8, 10 and 13 and the three defects found in the trial; reviewed (RC-085), accepted by the author in chat as stand-in for S01 | pending |
+| 2026-10-21 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of tasks 1 to 8, 10 and 13 and the three defects found in the trial; reviewed (RC-085), accepted by the author in chat as stand-in for S01 | [88f852a] |
 
 ---
 
@@ -132,3 +132,4 @@ The three defects are fixed in pull request 212 (open at the time of writing): (
 [RC-085]: ../sqa/reviews/rc-085-mil-013-results.md
 [ADR-0012]: ../adr/adr-0012-english-comment-detection.md
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
+[88f852a]: https://git.tirsystem.com/TirSystem/github-action/commit/88f852af9398468b91e88fe0190ce5c35dcf0fa2

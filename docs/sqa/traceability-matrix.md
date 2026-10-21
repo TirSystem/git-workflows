@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-013 (English comments check), RC-083 and RC-084 (its plan and objective O7) | [e35b1c5] |
-| 2026-10-21 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0012 and RC-085 (MIL-013 results of the trial) | pending |
+| 2026-10-21 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0012 and RC-085 (MIL-013 results of the trial) | [88f852a] |
 
 ---
 
@@ -282,3 +282,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
+[88f852a]: https://git.tirsystem.com/TirSystem/github-action/commit/88f852af9398468b91e88fe0190ce5c35dcf0fa2
