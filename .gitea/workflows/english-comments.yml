@@ -100,7 +100,8 @@ jobs:
           --output "$FINDINGS_FILE"
 
       - name: Tell the author
-        if: ${{ always() && gitea.event_name == 'pull_request' }}
+        # in a called workflow gitea.event_name is workflow_call, so ask for the pull request itself
+        if: ${{ always() && gitea.event.pull_request.number != '' }}
         continue-on-error: true
         env:
           GITEA_API_URL: ${{ gitea.api_url }}

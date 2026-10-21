@@ -262,6 +262,12 @@ class TestWorkflow:
         assert tell["continue-on-error"] is True and "always()" in tell["if"]
         assert "steps.check.outcome == 'failure'" in steps["Fail the run when a comment is not in English"]["if"]
 
+    def test_the_author_step_asks_for_the_pull_request_not_for_the_event_name(self, document):
+        # in a called workflow gitea.event_name is workflow_call (seen on the instance, MIL-013 task 8)
+        tell = next(s for s in document["jobs"]["english-comments"]["steps"] if s.get("name") == "Tell the author")
+        assert "event_name" not in tell["if"]
+        assert "gitea.event.pull_request.number != ''" in tell["if"]
+
     def test_inputs_reach_the_scripts_as_environment_variables_only(self, document):
         for step in document["jobs"]["english-comments"]["steps"]:
             assert "inputs." not in step.get("run", "")
