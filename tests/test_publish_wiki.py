@@ -492,7 +492,7 @@ class TestReusableWorkflow:
 
     def test_the_script_is_fetched_at_the_tools_ref(self, document):
         fetch = document["jobs"]["publish-wiki"]["steps"][1]["with"]
-        assert fetch["repository"] == "TirSystem/github-action"
+        assert fetch["repository"] == "TirSystem/git-workflows"
         assert fetch["ref"] == "${{ inputs.tools-ref }}"
 
 

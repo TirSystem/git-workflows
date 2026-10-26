@@ -1,7 +1,7 @@
 name: Sync GitHub mirror metadata
 
 # Scoped workflow: it runs in every repository of an organization. The script
-# is a file of TirSystem/github-action (tools/sync_github_metadata.py), fetched
+# is a file of TirSystem/git-workflows (tools/sync_github_metadata.py), fetched
 # with a checkout so that it is readable, lintable and tested as a file
 # (MIL-004 task 6). The repository is public, so no token is needed.
 on:
@@ -21,7 +21,7 @@ jobs:
       - name: Fetch the shared script
         uses: actions/checkout@v4.2.2
         with:
-          repository: TirSystem/github-action
+          repository: TirSystem/git-workflows
           ref: v1
           path: shared-scripts
 

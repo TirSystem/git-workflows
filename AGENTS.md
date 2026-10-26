@@ -87,7 +87,7 @@ to be open.
 | --- | --- | --- | --- |
 | `TirSystem/SQA-QC-Checklists` | the QC checklists (`qc/artifacts/`, `qc/code/`) | `sqa-qc-framework` | a commit, pinned as the `qc/` submodule |
 | `TirSystem/sqa-qc-framework` | the skills, process documents, catalog, templates (`templates/ci/`) and scripts | every project, as the `framework/` submodule | a release tag (`v0.5.2`, ...) |
-| `TirSystem/github-action` | the shared workflows (`quality-checks`, `release`), the scoped workflows (`publish-wiki`, `sync-github-metadata`) and the scripts they call (`tools/`) | every repository of the organisation, by `uses:` and `ref:` | a release tag and a moving major tag (`v1`), made by its release workflow |
+| `TirSystem/git-workflows` | the shared workflows (`quality-checks`, `release`), the scoped workflows (`publish-wiki`, `sync-github-metadata`) and the scripts they call (`tools/`) | every repository of the organisation, by `uses:` and `ref:` | a release tag and a moving major tag (`v1`), made by its release workflow |
 | `TirSystem/sqa-and-qc` | the SQA and AI project management: project artifacts, review records, the traceability matrix | itself | the pull request that merges it |
 
 Where a thing lives:
@@ -96,10 +96,10 @@ Where a thing lives:
   reaches this project by moving the pin. The review record of a checklist is
   written in the project that reviews it (`docs/sqa/reviews/`), not in the
   checklist repository.
-- A workflow that other repositories call is changed in `github-action` and
+- A workflow that other repositories call is changed in `git-workflows` and
   released there. A workflow a project copies from `templates/ci/` is changed
   in the framework; the project updates its copy after the pin moves.
-- A script a workflow needs is a file (`tools/` of `github-action`, or
+- A script a workflow needs is a file (`tools/` of `git-workflows`, or
   `scripts/` of the framework for the templates), never a long `run:` block
   (`QC-WF-001` criterion 20).
 - The workflows under `.gitea/workflows/` are this project's own copies of
@@ -108,7 +108,7 @@ Where a thing lives:
 A change that spans repositories:
 
 1. One pull request per repository, in dependency order: checklists, then
-   framework, then `github-action` and the projects. A pull request names the
+   framework, then `git-workflows` and the projects. A pull request names the
    ones it depends on in its description.
 2. A downstream repository moves a pin only to a merged commit or tag of the
    upstream, never to an unmerged branch.

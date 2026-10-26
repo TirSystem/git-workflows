@@ -1,6 +1,6 @@
 <!-- Generated from guides/onboarding.md by tools/build_wiki.py. Edit the source, not this page. -->
 
-> This page is generated from [`guides/onboarding.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/onboarding.md). Changes made here are overwritten the next time the wiki is published.
+> This page is generated from [`guides/onboarding.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/onboarding.md). Changes made here are overwritten the next time the wiki is published.
 
 English | [Dansk](Onboarding.da) | [Bahasa Melayu](Onboarding.ms)
 
@@ -9,7 +9,7 @@ English | [Dansk](Onboarding.da) | [Bahasa Melayu](Onboarding.ms)
 How a DevOps professional makes a TirSystem repository use the shared
 **Sync GitHub mirror metadata** workflow, and which runners it needs. Only
 this workflow exists today; the quality-check and release workflows are
-planned (see the [Project Plan](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/docs/project-plan.md)).
+planned (see the [Project Plan](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/docs/project-plan.md)).
 
 ## What has been verified
 
@@ -59,7 +59,7 @@ The wiki has English and the product owner's language as a minimum.
 1. Enable the wiki in the repository settings.
 2. Add Markdown pages to `docs/wiki/`. The file name is the page name: `Home.md`
    is the home page. A hyphen in the name is a space in the page name:
-   `Home-da.md` is the page "Home da", and a link to it is `[Dansk](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/Home-da)`.
+   `Home-da.md` is the page "Home da", and a link to it is `[Dansk](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/Home-da)`.
 3. Add a workflow, for example `.gitea/workflows/publish-wiki.yml`, that calls
    the reusable workflow:
 
@@ -70,7 +70,7 @@ The wiki has English and the product owner's language as a minimum.
        paths: [ "docs/wiki/**" ]
    jobs:
      wiki:
-       uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1
+       uses: TirSystem/git-workflows/.gitea/workflows/publish-wiki-pages.yml@v1
        with:
          prune: "true"
        secrets:

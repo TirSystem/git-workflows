@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4.2.2
 
       - name: Connect the VPN
-        uses: TirSystem/github-action/actions/connect-wireguard@v2
+        uses: TirSystem/git-workflows/actions/connect-wireguard@v2
         with:
           config: ${{ secrets.WG_CONFIG }}
           health-check-host: 10.8.0.1
@@ -31,14 +31,14 @@ jobs:
 
       - name: Disconnect the VPN
         if: always()
-        uses: TirSystem/github-action/actions/connect-wireguard@v2
+        uses: TirSystem/git-workflows/actions/connect-wireguard@v2
         with:
           action: down
 ```
 
 If the short form does not resolve on your instance (Gitea looks for the action
 on the host set in `DEFAULT_ACTIONS_URL`), use the full address:
-`https://git.tirsystem.com/TirSystem/github-action/actions/connect-wireguard@v2`.
+`https://git.tirsystem.com/TirSystem/git-workflows/actions/connect-wireguard@v2`.
 
 ## Inputs
 

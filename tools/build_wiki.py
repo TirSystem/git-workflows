@@ -19,7 +19,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 WIKI_DIR = REPO_ROOT / "docs" / "wiki"
-SOURCE_BASE_URL = "https://git.tirsystem.com/TirSystem/github-action/src/branch/main"
+SOURCE_BASE_URL = "https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main"
 GENERATOR = "tools/build_wiki.py"
 
 # Leading emoji and symbols in README headings; removed so anchors stay stable.

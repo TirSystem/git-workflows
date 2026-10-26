@@ -1,12 +1,12 @@
 <!-- Generated from README.md by tools/build_wiki.py. Edit the source, not this page. -->
 
-> This page is generated from [`README.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/README.md). Changes made here are overwritten the next time the wiki is published.
+> This page is generated from [`README.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/README.md). Changes made here are overwritten the next time the wiki is published.
 
 English | [Dansk](Capabilities.da) | [Bahasa Melayu](Capabilities.ms)
 
 ## Capabilities
 
-Rows that say Implemented or Guides written exist today. The rest is planned and tracked in the [Project Plan](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/docs/project-plan.md), which also describes each use case.
+Rows that say Implemented or Guides written exist today. The rest is planned and tracked in the [Project Plan](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/docs/project-plan.md), which also describes each use case.
 
 | Capability | Status |
 | --- | --- |

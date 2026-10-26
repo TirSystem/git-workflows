@@ -4,7 +4,7 @@ name: Quality checks
 #
 #   jobs:
 #     quality:
-#       uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1
+#       uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v1
 #
 # It checks the Python and shell files of the repository with pinned tools,
 # changes no file and needs no secret.
@@ -36,7 +36,7 @@ on:
         type: string
         default: "3.11.0.2"
       tools-ref:
-        description: "Tag or branch of TirSystem/github-action whose tools/quality-checks.sh is run; pin it to the exact tag together with the workflow"
+        description: "Tag or branch of TirSystem/git-workflows whose tools/quality-checks.sh is run; pin it to the exact tag together with the workflow"
         type: string
         default: "v2"
 
@@ -61,7 +61,7 @@ jobs:
       - name: Fetch the shared script
         uses: actions/checkout@v4.2.2
         with:
-          repository: TirSystem/github-action
+          repository: TirSystem/git-workflows
           ref: ${{ inputs.tools-ref }}
           path: shared-scripts
 

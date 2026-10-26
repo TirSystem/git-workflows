@@ -8,7 +8,7 @@ name: Publish wiki
 #       paths: [ "docs/wiki/**" ]
 #   jobs:
 #     wiki:
-#       uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1
+#       uses: TirSystem/git-workflows/.gitea/workflows/publish-wiki-pages.yml@v1
 #       secrets:
 #         TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
 #
@@ -29,7 +29,7 @@ on:
         type: string
         default: "false"
       tools-ref:
-        description: "Tag or branch of TirSystem/github-action whose tools/publish_wiki.py is run; pin it to the exact tag together with the workflow"
+        description: "Tag or branch of TirSystem/git-workflows whose tools/publish_wiki.py is run; pin it to the exact tag together with the workflow"
         type: string
         default: "v2"
     secrets:
@@ -50,7 +50,7 @@ jobs:
       - name: Fetch the shared script
         uses: actions/checkout@v4.2.2
         with:
-          repository: TirSystem/github-action
+          repository: TirSystem/git-workflows
           ref: ${{ inputs.tools-ref }}
           path: shared-scripts
 

@@ -64,7 +64,7 @@ The wiki has English and the product owner's language as a minimum.
        paths: [ "docs/wiki/**" ]
    jobs:
      wiki:
-       uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1
+       uses: TirSystem/git-workflows/.gitea/workflows/publish-wiki-pages.yml@v1
        with:
          prune: "true"
        secrets:

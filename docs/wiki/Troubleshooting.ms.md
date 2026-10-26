@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 cad6363616e8 -->
+<!-- translation of Troubleshooting.md, source sha256 8d1373b72756 -->
 
 > Ini ialah terjemahan [`Troubleshooting`](Troubleshooting). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
