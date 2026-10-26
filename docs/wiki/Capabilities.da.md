@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 a8c14f722a77 -->
+<!-- translation of Capabilities.md, source sha256 b09c3b44caec -->
 
 > Dette er en oversættelse af [`Capabilities`](Capabilities). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -6,7 +6,7 @@
 
 ## Funktionalitet
 
-Rækker, der siger Implementeret eller Vejledninger er skrevet, findes i dag. Resten er planlagt og følges i [projektplanen](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/docs/project-plan.md), som også beskriver hver enkelt use case.
+Rækker, der siger Implementeret eller Vejledninger er skrevet, findes i dag. Resten er planlagt og følges i [projektplanen](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/docs/project-plan.md), som også beskriver hver enkelt use case.
 
 | Funktionalitet | Status |
 | --- | --- |

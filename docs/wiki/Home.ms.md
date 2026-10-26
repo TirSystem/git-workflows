@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 9b84b5cf7534 -->
+<!-- translation of Home.md, source sha256 f726872da8b9 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -22,17 +22,17 @@ Terdapat sebelas aliran kerja dalam repositori ini. Aliran kerja **scoped** diha
 
 | Aliran kerja | Fail | Jenis | Bermula apabila | Tujuan |
 | --- | --- | --- | --- | --- |
-| Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push ke `main`, manual, setiap hari 03:17 UTC | Menyalin penerangan dan topik repositori Gitea ke push mirror GitHub-nya |
-| Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-wiki-pages.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menerbitkan halaman dalam `docs/wiki/` (atau folder yang dinamakan oleh `wiki_dir`) ke wiki repositori pemanggil |
-| Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan ruff, mypy, shellcheck dan shfmt pada fail yang dijejaki dan tidak mengubah apa-apa |
-| Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan clang-format dan clang-tidy pada versi tepat pada fail C dan C++ yang dijejaki dan tidak mengubah apa-apa |
-| Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan `dotnet format` dan `dotnet build` pada .NET SDK 10 atau lebih baharu yang tepat dan tidak mengubah apa-apa |
-| Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/code-metrics.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Mengira fail kod dan baris kod (tanpa baris komen dan baris kosong), membaca laporan liputan Cobertura dan melakukan commit tiga lencana SVG ke cabang `badges` |
-| English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/english-comments.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain, pada pull request | Menilai bahasa komen dan docstring yang ditambah oleh pull request, menggagalkan larian apabila ada yang bukan bahasa Inggeris dan menulis satu komen pada pull request yang menyebut penulisnya |
-| Publish own wiki | [`publish-own-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-own-wiki.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/wiki/**`, manual | Memanggil aliran kerja boleh guna semula Publish wiki pages untuk wiki repositori ini |
-| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Repositori ini sahaja | manual | Mencipta tag versi, halaman keluaran dan tag major selepas semakan |
-| Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go |
-| Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | Repositori ini sahaja | pull request, push ke `main`, manual | Menghurai setiap aliran kerja sebagai YAML dan menjalankan ujian luar talian |
+| Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push ke `main`, manual, setiap hari 03:17 UTC | Menyalin penerangan dan topik repositori Gitea ke push mirror GitHub-nya |
+| Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/publish-wiki-pages.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menerbitkan halaman dalam `docs/wiki/` (atau folder yang dinamakan oleh `wiki_dir`) ke wiki repositori pemanggil |
+| Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan ruff, mypy, shellcheck dan shfmt pada fail yang dijejaki dan tidak mengubah apa-apa |
+| Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan clang-format dan clang-tidy pada versi tepat pada fail C dan C++ yang dijejaki dan tidak mengubah apa-apa |
+| Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan `dotnet format` dan `dotnet build` pada .NET SDK 10 atau lebih baharu yang tepat dan tidak mengubah apa-apa |
+| Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/code-metrics.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Mengira fail kod dan baris kod (tanpa baris komen dan baris kosong), membaca laporan liputan Cobertura dan melakukan commit tiga lencana SVG ke cabang `badges` |
+| English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/english-comments.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain, pada pull request | Menilai bahasa komen dan docstring yang ditambah oleh pull request, menggagalkan larian apabila ada yang bukan bahasa Inggeris dan menulis satu komen pada pull request yang menyebut penulisnya |
+| Publish own wiki | [`publish-own-wiki.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/publish-own-wiki.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/wiki/**`, manual | Memanggil aliran kerja boleh guna semula Publish wiki pages untuk wiki repositori ini |
+| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/release.yml) | Repositori ini sahaja | manual | Mencipta tag versi, halaman keluaran dan tag major selepas semakan |
+| Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/sync-milestones.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go |
+| Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml) | Repositori ini sahaja | pull request, push ke `main`, manual | Menghurai setiap aliran kerja sebagai YAML dan menjalankan ujian luar talian |
 
 ### Menyegerakkan metadata GitHub
 
@@ -102,7 +102,7 @@ deactivate Workflow
 
 ### Semakan kualiti
 
-Aliran kerja boleh guna semula untuk Python dan shell, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1` (lihat [panduan](QualityChecksPythonShell)).
+Aliran kerja boleh guna semula untuk Python dan shell, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v1` (lihat [panduan](QualityChecksPythonShell)).
 
 #### Aliran kerja
 
@@ -148,7 +148,7 @@ deactivate Workflow
 
 ### Semakan kualiti C++
 
-Aliran kerja boleh guna semula untuk C dan C++, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositori mesti mempunyai `.clang-format`; `.clang-tidy` dan pangkalan data kompilasi adalah pilihan.
+Aliran kerja boleh guna semula untuk C dan C++, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositori mesti mempunyai `.clang-format`; `.clang-tidy` dan pangkalan data kompilasi adalah pilihan.
 
 #### Aliran kerja
 
@@ -193,7 +193,7 @@ deactivate Workflow
 
 ### Semakan kualiti C#
 
-Aliran kerja boleh guna semula untuk C#, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Ia memasang .NET SDK tepat yang diberikan oleh `dotnet-sdk-version` (10 atau lebih baharu) dan memerlukan rangkaian untuk pemulihan pakej.
+Aliran kerja boleh guna semula untuk C#, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Ia memasang .NET SDK tepat yang diberikan oleh `dotnet-sdk-version` (10 atau lebih baharu) dan memerlukan rangkaian untuk pemulihan pakej.
 
 #### Aliran kerja
 
@@ -238,7 +238,7 @@ deactivate Workflow
 
 ### Metrik kod dan lencana liputan
 
-Aliran kerja boleh guna semula yang mengira fail kod dan baris kod (tanpa baris komen dan baris kosong) sesebuah repositori dan menerbitkannya, bersama liputan ujian, sebagai tiga lencana SVG pada cabang `badges`, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Ia memerlukan `contents: write` dan tidak menjalankan sebarang ujian: kerja yang lebih awal oleh pemanggil menghasilkan laporan liputan format Cobertura XML dan memuat naiknya sebagai artifak ([panduan](CodeMetrics.ms)).
+Aliran kerja boleh guna semula yang mengira fail kod dan baris kod (tanpa baris komen dan baris kosong) sesebuah repositori dan menerbitkannya, bersama liputan ujian, sebagai tiga lencana SVG pada cabang `badges`, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Ia memerlukan `contents: write` dan tidak menjalankan sebarang ujian: kerja yang lebih awal oleh pemanggil menghasilkan laporan liputan format Cobertura XML dan memuat naiknya sebagai artifak ([panduan](CodeMetrics.ms)).
 
 #### Aliran kerja
 
@@ -322,7 +322,7 @@ deactivate Workflow
 
 ### Keluaran
 
-Dimulakan secara manual oleh penyelenggara; dengan `dry_run` `true` (lalai) ia hanya menyemak (lihat [proses keluaran](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/release-process.md)).
+Dimulakan secara manual oleh penyelenggara; dengan `dry_run` `true` (lalai) ia hanya menyemak (lihat [proses keluaran](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)).
 
 #### Aliran kerja
 
@@ -380,7 +380,7 @@ on:
     paths: [ "docs/wiki/**" ]
 jobs:
   wiki:
-    uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1
+    uses: TirSystem/git-workflows/.gitea/workflows/publish-wiki-pages.yml@v1
     secrets:
       TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
 ```
@@ -548,7 +548,7 @@ Tiada kebergantungan perlu dipasang; aliran kerja hanya menggunakan pustaka stan
 
 1. Klon repositori:
    ```bash
-   git clone ssh://git@git.tirsystem.com:10022/TirSystem/github-action.git
+   git clone ssh://git@git.tirsystem.com:10022/TirSystem/git-workflows.git
    ```
 2. Tambah rahsia yang disenaraikan di bawah [Keperluan](#keperluan) ke tetapan repositori dalam Gitea.
 3. Konfigurasikan push mirror GitHub dalam tetapan repositori.
@@ -571,6 +571,6 @@ python -m coverage run -m pytest -q tests
 python -m coverage report
 ```
 
-Semakan yang sama dijalankan pada setiap pull request dan setiap push ke `main` melalui [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml). Semakan itu menghurai setiap aliran kerja sebagai YAML, memastikan tiada yang menanam Python, mengkompil skrip dalam `tools/`, memerlukan kebenaran kerja yang jelas, dan menguji penghuraian kelayakan (credentials), penghuraian alamat push mirror serta aliran penyegerakan dan penerbitan terhadap API palsu. Larian gagal apabila liputan baris dan cabang `tools/` di bawah 95% (`.coveragerc`).
+Semakan yang sama dijalankan pada setiap pull request dan setiap push ke `main` melalui [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml). Semakan itu menghurai setiap aliran kerja sebagai YAML, memastikan tiada yang menanam Python, mengkompil skrip dalam `tools/`, memerlukan kebenaran kerja yang jelas, dan menguji penghuraian kelayakan (credentials), penghuraian alamat push mirror serta aliran penyegerakan dan penerbitan terhadap API palsu. Larian gagal apabila liputan baris dan cabang `tools/` di bawah 95% (`.coveragerc`).
 
 Selepas perubahan pada aliran kerja penyegerakan, cetuskan juga **Sync GitHub mirror metadata** secara manual dalam Gitea dan bandingkan penerangan dan topik pada cermin GitHub.

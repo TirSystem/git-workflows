@@ -64,7 +64,7 @@ class TestDefinition:
         steps = load(workflow)["jobs"][job]["steps"]
         fetch = next(step for step in steps if step.get("name") == "Fetch the shared script")
         assert fetch["with"] == {
-            "repository": "TirSystem/github-action",
+            "repository": "TirSystem/git-workflows",
             "ref": "${{ inputs.tools-ref }}",
             "path": "shared-scripts",
         }

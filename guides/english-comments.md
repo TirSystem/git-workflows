@@ -16,7 +16,7 @@ on:
 
 jobs:
   english-comments:
-    uses: TirSystem/github-action/.gitea/workflows/english-comments.yml@v2
+    uses: TirSystem/git-workflows/.gitea/workflows/english-comments.yml@v2
     with:
       exclude: "docs/generated/**"
       allowed-words-file: .english-comments-allowed-words

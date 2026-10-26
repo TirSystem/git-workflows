@@ -38,7 +38,7 @@ def test_sync_workflow_embeds_no_script_and_runs_the_file():
     assert embedded_python(SYNC_WORKFLOW) == []
     document = yaml.safe_load(SYNC_WORKFLOW.read_text(encoding="utf-8"))
     steps = document["jobs"]["sync-metadata"]["steps"]
-    assert steps[0]["with"]["repository"] == "TirSystem/github-action"
+    assert steps[0]["with"]["repository"] == "TirSystem/git-workflows"
     assert steps[-1]["run"] == "python3 shared-scripts/tools/sync_github_metadata.py"
 
 

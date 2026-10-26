@@ -1,6 +1,6 @@
 <!-- Generated from guides/troubleshooting.md by tools/build_wiki.py. Edit the source, not this page. -->
 
-> This page is generated from [`guides/troubleshooting.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/troubleshooting.md). Changes made here are overwritten the next time the wiki is published.
+> This page is generated from [`guides/troubleshooting.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/troubleshooting.md). Changes made here are overwritten the next time the wiki is published.
 
 English | [Dansk](Troubleshooting.da) | [Bahasa Melayu](Troubleshooting.ms)
 

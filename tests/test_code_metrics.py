@@ -78,7 +78,7 @@ class TestDefinition:
         steps = document["jobs"]["code-metrics"]["steps"]
         fetch = next(step for step in steps if step.get("name") == "Fetch the shared scripts")
         assert fetch["with"] == {
-            "repository": "TirSystem/github-action",
+            "repository": "TirSystem/git-workflows",
             "ref": "${{ inputs.tools-ref }}",
             "path": "shared-scripts",
         }

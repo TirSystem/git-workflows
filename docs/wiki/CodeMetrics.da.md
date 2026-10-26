@@ -1,4 +1,4 @@
-<!-- translation of CodeMetrics.md, source sha256 03134e97a78a -->
+<!-- translation of CodeMetrics.md, source sha256 8cdd72522593 -->
 
 > Dette er en oversættelse af [`CodeMetrics`](CodeMetrics). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -34,7 +34,7 @@ jobs:
     needs: tests
     permissions:
       contents: write
-    uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2
+    uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2
     with:
       coverage-artifact: coverage
       coverage-report: coverage.xml
@@ -49,7 +49,7 @@ jobs:
 | `coverage-warn` | `60` | Dækning i procent, under hvilken badget er rødt |
 | `coverage-good` | `80` | Dækning i procent, fra hvilken badget er grønt; derimellem er det gult |
 | `badges-branch` | `badges` | Gren, der indeholder badge-filerne; den oprettes, hvis den ikke findes |
-| `tools-ref` | `v2` | Tag eller gren i `TirSystem/github-action`, hvorfra scripts i `tools/` hentes |
+| `tools-ref` | `v2` | Tag eller gren i `TirSystem/git-workflows`, hvorfra scripts i `tools/` hentes |
 
 Reference workflowet ved major-tagget (`@v1`) eller ved et præcist tag, aldrig ved `main`. Et kald ved et præcist tag er kun fuldt fastlåst, når `tools-ref` navngiver samme tag. Se opgraderingsvejledningen. Start workflowet kun ved push til din standardgren: badge-committet har `[skip ci]` og laves med kørslens token, som ikke starter en ny kørsel, men en trigger på alle grene ville skrive ét commit pr. gren.
 

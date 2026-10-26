@@ -1,6 +1,6 @@
 <!-- Generated from guides/quality-checks-csharp.md by tools/build_wiki.py. Edit the source, not this page. -->
 
-> This page is generated from [`guides/quality-checks-csharp.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/quality-checks-csharp.md). Changes made here are overwritten the next time the wiki is published.
+> This page is generated from [`guides/quality-checks-csharp.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/quality-checks-csharp.md). Changes made here are overwritten the next time the wiki is published.
 
 English | [Dansk](QualityChecksCSharp.da) | [Bahasa Melayu](QualityChecksCSharp.ms)
 
@@ -26,7 +26,7 @@ jobs:
   quality:
     permissions:
       contents: read
-    uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1
+    uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1
     with:
       project: src/App.sln
 ```
@@ -36,7 +36,7 @@ jobs:
 | `working-directory` | `.` | Directory, relative to the repository root, whose files are checked |
 | `project` | empty | Solution or project file, relative to `working-directory`; empty uses the single `*.sln` or `*.slnx`, else the single `*.csproj`, that is tracked there |
 | `dotnet-sdk-version` | `10.0.401` | Exact version of the .NET SDK, 10 or later; a channel such as `10.0`, a range and a version below 10 are refused |
-| `tools-ref` | `v2` | Tag or branch of `TirSystem/github-action` from which the script `tools/quality-checks-csharp.sh` is fetched |
+| `tools-ref` | `v2` | Tag or branch of `TirSystem/git-workflows` from which the script `tools/quality-checks-csharp.sh` is fetched |
 
 Reference the workflow at the major tag (`@v1`) or at an exact tag, never at
 `main`. A call at an exact tag is pinned completely only when `tools-ref` names

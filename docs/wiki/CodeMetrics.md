@@ -1,6 +1,6 @@
 <!-- Generated from guides/code-metrics.md by tools/build_wiki.py. Edit the source, not this page. -->
 
-> This page is generated from [`guides/code-metrics.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/code-metrics.md). Changes made here are overwritten the next time the wiki is published.
+> This page is generated from [`guides/code-metrics.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/code-metrics.md). Changes made here are overwritten the next time the wiki is published.
 
 English | [Dansk](CodeMetrics.da) | [Bahasa Melayu](CodeMetrics.ms)
 
@@ -40,7 +40,7 @@ jobs:
     needs: tests
     permissions:
       contents: write
-    uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2
+    uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2
     with:
       coverage-artifact: coverage
       coverage-report: coverage.xml
@@ -55,7 +55,7 @@ jobs:
 | `coverage-warn` | `60` | Coverage in percent below which the badge is red |
 | `coverage-good` | `80` | Coverage in percent from which the badge is green; in between it is yellow |
 | `badges-branch` | `badges` | Branch that holds the badge files; it is created when it does not exist |
-| `tools-ref` | `v2` | Tag or branch of `TirSystem/github-action` from which the scripts in `tools/` are fetched |
+| `tools-ref` | `v2` | Tag or branch of `TirSystem/git-workflows` from which the scripts in `tools/` are fetched |
 
 Reference the workflow at the major tag (`@v2`) or at an exact tag, never at
 `main`. A call at an exact tag is pinned completely only when `tools-ref` names

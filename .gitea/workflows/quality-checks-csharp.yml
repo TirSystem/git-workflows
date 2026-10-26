@@ -4,7 +4,7 @@ name: Quality checks C#
 #
 #   jobs:
 #     quality:
-#       uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1
+#       uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1
 #
 # It checks the C# solution or project of the repository with `dotnet format`
 # and `dotnet build` (warnings as errors) on an exact .NET SDK 10 or later,
@@ -25,7 +25,7 @@ on:
         type: string
         default: "10.0.401"
       tools-ref:
-        description: "Tag or branch of TirSystem/github-action whose tools/quality-checks-csharp.sh is run; pin it to the exact tag together with the workflow"
+        description: "Tag or branch of TirSystem/git-workflows whose tools/quality-checks-csharp.sh is run; pin it to the exact tag together with the workflow"
         type: string
         default: "v2"
 
@@ -47,7 +47,7 @@ jobs:
       - name: Fetch the shared script
         uses: actions/checkout@v4.2.2
         with:
-          repository: TirSystem/github-action
+          repository: TirSystem/git-workflows
           ref: ${{ inputs.tools-ref }}
           path: shared-scripts
 
