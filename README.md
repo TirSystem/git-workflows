@@ -21,6 +21,8 @@ It contains eleven workflows: metadata sync to the GitHub mirror, wiki publishin
 
 ## 🔧 Workflows
 
+When a repository should use each workflow in its SQA and QC is set out in the [adoption rules](guides/adoption-rules.md).
+
 Eleven workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |

@@ -119,6 +119,23 @@ A change that spans repositories:
    inside the accepted plan only if the plan names it; otherwise the run stops
    and reports.
 
+## Workflow adoption rules
+
+When a workflow is added to this repository (`.gitea/workflows/`,
+`.gitea/scoped_workflows/`) or a composite action to `actions/`, the same pull
+request adds its rule for when a repository uses it in SQA and QC:
+
+1. A row in `guides/adoption-rules.md` with the columns *Use when*, *Do not use
+   when* and *What it gives SQA and QC*. The condition is checkable from the
+   repository itself (a file type, a test report, a wiki folder), never
+   "when useful".
+2. The workflow's guide and its README section link to that row, and the
+   README workflow table and count stay in step.
+3. A workflow that applies to every repository (scoped) or only to this one
+   says so in the row instead of leaving it empty.
+4. The rule is changed in the same pull request as the workflow when the
+   workflow's behaviour changes; the CHANGELOG entry names it.
+
 ## Workflow order
 
 Business Case, Stakeholder Analysis, Project Plan, milestones, tasks synced as

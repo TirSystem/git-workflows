@@ -20,6 +20,10 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Added
+
+- The [adoption rules](guides/adoption-rules.md): for each workflow, when a repository uses it in SQA and QC. A new workflow adds its rule in the same pull request (`AGENTS.md`).
+
 ## [2.2.0] - 2026-10-21
 
 ### Added
