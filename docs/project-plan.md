@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-013 (source code comments are in English); reviewed (RC-083), accepted by the author in chat as stand-in for S01 | [e35b1c5] |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-014 (wiki publishing as a scoped workflow, reversing part of ADR-0009); reviewed (RC-086), accepted by the author in chat as stand-in for S01 | pending |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-014 (wiki publishing as a scoped workflow, reversing part of ADR-0009); reviewed (RC-086), accepted by the author in chat as stand-in for S01 | [1fd6ae4] |
 
 ---
 
@@ -315,3 +315,4 @@ no tests, no release process.
 [Milestone MIL-008]: https://git.tirsystem.com/TirSystem/github-action/milestone/152
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
+[1fd6ae4]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1fd6ae4ee07202dcd57caffdd267758ea20af005

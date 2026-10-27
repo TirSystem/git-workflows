@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; Accepted on a Go review (RC-086); accepted by the author in chat on 2026-10-27 as stand-in for S01, not independent | pending |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; Accepted on a Go review (RC-086); accepted by the author in chat on 2026-10-27 as stand-in for S01, not independent | [1fd6ae4] |
 
 ---
 
@@ -92,3 +92,4 @@ repository; and the major release 3.0.0 with the tag `v3`.
 [ADR-0009]: ../adr/adr-0009-wiki-publishing-reusable-workflow.md
 [ADR-0013]: ../adr/adr-0013-wiki-publishing-scoped-workflow.md
 [RC-086]: ../sqa/reviews/rc-086-adr-0013-mil-014-pp-001.md
+[1fd6ae4]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1fd6ae4ee07202dcd57caffdd267758ea20af005

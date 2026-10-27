@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; Accepted on a Go review (RC-086); accepted by the author in chat on 2026-10-27 as stand-in for S01, not independent | pending |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; Accepted on a Go review (RC-086); accepted by the author in chat on 2026-10-27 as stand-in for S01, not independent | [1fd6ae4] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -99,3 +99,4 @@ The rules that follow from it:
 [ADR-0004]: ./adr-0004-shared-wiki-publishing-opt-in.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [ADR-0009]: ./adr-0009-wiki-publishing-reusable-workflow.md
+[1fd6ae4]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1fd6ae4ee07202dcd57caffdd267758ea20af005

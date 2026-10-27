@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-19 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [1988305] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -87,3 +87,4 @@ The rules of the pre-filter came from the build, not from the first measurement.
 [MIL-013]: ../milestones/mil-013-english-comments-check.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0010]: ./adr-0010-code-metrics-badges-contract.md
+[1988305]: https://git.tirsystem.com/TirSystem/git-workflows/commit/198830588caa5047ff2cee4382b8f2a9bd391bff
