@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; accepted on a Go review (RC-087); accepted by the author in chat on 2026-10-27 as stand-in for S01, not independent | [851b24c] |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Updated to pull request 218 (live files renamed) and the removed required check: purpose, deliverable, criterion 5 and tasks 1, 3 and 4; reviewed (RC-088), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Updated to pull request 218 (live files renamed) and the removed required check: purpose, deliverable, criterion 5 and tasks 1, 3 and 4; reviewed (RC-088), accepted by the author in chat as stand-in for S01, not independent | [081a17d] |
 
 ---
 
@@ -97,3 +97,4 @@ change.
 [RC-087]: ../sqa/reviews/rc-087-mil-015.md
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
 [RC-088]: ../sqa/reviews/rc-088-mil-015-update.md
+[081a17d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/081a17d07f4c7d7145cdc50984c669dfb798b48d

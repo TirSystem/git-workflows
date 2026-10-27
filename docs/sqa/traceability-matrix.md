@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-27 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-015 (rename to git-workflows) and RC-087 (its review) | [851b24c] |
-| 2026-10-27 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-088 (MIL-015 updated to pull request 218) | pending |
+| 2026-10-27 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-088 (MIL-015 updated to pull request 218) | [081a17d] |
 
 ---
 
@@ -294,3 +294,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
+[081a17d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/081a17d07f4c7d7145cdc50984c669dfb798b48d

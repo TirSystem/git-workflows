@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-015 (rename the repository references to git-workflows; the repository was called github-action); reviewed (RC-087), accepted by the author in chat as stand-in for S01 | [851b24c] |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Updated MIL-015 to pull request 218 and the removed required check; reviewed (RC-088), accepted by the author in chat as stand-in for S01 | pending |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Updated MIL-015 to pull request 218 and the removed required check; reviewed (RC-088), accepted by the author in chat as stand-in for S01 | [081a17d] |
 
 ---
 
@@ -322,3 +322,4 @@ no tests, no release process.
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
+[081a17d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/081a17d07f4c7d7145cdc50984c669dfb798b48d

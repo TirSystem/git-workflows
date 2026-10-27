@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-10-27 as stand-in for S01 | pending |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-10-27 as stand-in for S01 | [081a17d] |
 
 ---
 
@@ -74,3 +74,4 @@ Go. The update is smaller than the plan accepted in RC-087: tasks 1 and 3 are do
 [RC-087]: ./rc-087-mil-015.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
 [QC-PP-001]: ../../../framework/qc/artifacts/qc-project-plan.md
+[081a17d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/081a17d07f4c7d7145cdc50984c669dfb798b48d
