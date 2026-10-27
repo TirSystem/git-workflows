@@ -40,9 +40,9 @@ class TestGiteaToken:
 
 class TestSplitRepository:
     def test_splits_owner_and_repo(self, sync):
-        assert sync["split_repository"]("TirSystem/github-action") == (
+        assert sync["split_repository"]("TirSystem/git-workflows") == (
             "TirSystem",
-            "github-action",
+            "git-workflows",
         )
 
     @pytest.mark.parametrize("value", [None, "", "owner", "/repo", "owner/"])

@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCSharp.md, source sha256 a024fde8d1b3 -->
+<!-- translation of QualityChecksCSharp.md, source sha256 8b222eda2f0c -->
 
 > Ini ialah terjemahan [`QualityChecksCSharp`](QualityChecksCSharp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 

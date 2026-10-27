@@ -1,4 +1,4 @@
-<!-- translation of EnglishComments.md, source sha256 9dafcabbc807 -->
+<!-- translation of EnglishComments.md, source sha256 41005bb2c7f4 -->
 
 > Ini ialah terjemahan [`EnglishComments`](EnglishComments). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 

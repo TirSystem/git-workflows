@@ -1,4 +1,4 @@
-<!-- translation of Upgrading.md, source sha256 d709c35bf035 -->
+<!-- translation of Upgrading.md, source sha256 cd7640274c6d -->
 
 > Ini ialah terjemahan [`Upgrading`](Upgrading). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 

@@ -1,4 +1,4 @@
-<!-- translation of EnglishComments.md, source sha256 9dafcabbc807 -->
+<!-- translation of EnglishComments.md, source sha256 41005bb2c7f4 -->
 
 > Dette er en oversættelse af [`EnglishComments`](EnglishComments). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 

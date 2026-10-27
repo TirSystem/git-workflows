@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 80ee274b3ae9 -->
+<!-- translation of Onboarding.md, source sha256 1073637428ce -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -6,7 +6,7 @@
 
 # Tilslutning af et repository
 
-Sådan får en DevOps-professionel et TirSystem-repository til at bruge det fælles workflow **Sync GitHub mirror metadata**, og hvilke runners det kræver. Kun dette workflow findes i dag; workflows til kvalitetskontrol og udgivelse er planlagt (se [projektplanen](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/docs/project-plan.md)).
+Sådan får en DevOps-professionel et TirSystem-repository til at bruge det fælles workflow **Sync GitHub mirror metadata**, og hvilke runners det kræver. Kun dette workflow findes i dag; workflows til kvalitetskontrol og udgivelse er planlagt (se [projektplanen](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/docs/project-plan.md)).
 
 ## Hvad er verificeret
 

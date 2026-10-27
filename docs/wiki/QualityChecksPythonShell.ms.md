@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksPythonShell.md, source sha256 ef64b44b88ad -->
+<!-- translation of QualityChecksPythonShell.md, source sha256 30749ff155ea -->
 
 > Ini ialah terjemahan [`QualityChecksPythonShell`](QualityChecksPythonShell). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 

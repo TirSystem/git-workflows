@@ -1,6 +1,6 @@
 <!-- Generated from guides/code-metrics.md by tools/build_wiki.py. Edit the source, not this page. -->
 
-> This page is generated from [`guides/code-metrics.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/code-metrics.md). Changes made here are overwritten the next time the wiki is published.
+> This page is generated from [`guides/code-metrics.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/code-metrics.md). Changes made here are overwritten the next time the wiki is published.
 
 English | [Dansk](CodeMetrics.da) | [Bahasa Melayu](CodeMetrics.ms)
 

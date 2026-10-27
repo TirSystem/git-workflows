@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 80ee274b3ae9 -->
+<!-- translation of Onboarding.md, source sha256 1073637428ce -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -6,7 +6,7 @@
 
 # Menyertakan sebuah repositori
 
-Cara seorang profesional DevOps menjadikan repositori TirSystem menggunakan aliran kerja bersama **Sync GitHub mirror metadata**, dan runner yang diperlukannya. Hanya aliran kerja ini yang wujud sekarang; aliran kerja semakan kualiti dan keluaran dirancang (lihat [Pelan Projek](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/docs/project-plan.md)).
+Cara seorang profesional DevOps menjadikan repositori TirSystem menggunakan aliran kerja bersama **Sync GitHub mirror metadata**, dan runner yang diperlukannya. Hanya aliran kerja ini yang wujud sekarang; aliran kerja semakan kualiti dan keluaran dirancang (lihat [Pelan Projek](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/docs/project-plan.md)).
 
 ## Perkara yang telah disahkan
 

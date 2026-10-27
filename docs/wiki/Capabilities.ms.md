@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 a88297d313fa -->
+<!-- translation of Capabilities.md, source sha256 2f30825f19a1 -->
 
 > Ini ialah terjemahan [`Capabilities`](Capabilities). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -6,7 +6,7 @@
 
 ## Keupayaan
 
-Baris yang menyatakan Dilaksanakan atau Panduan telah ditulis wujud hari ini. Selebihnya dirancang dan dijejaki dalam [Pelan Projek](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/docs/project-plan.md), yang juga menerangkan setiap kes guna (use case).
+Baris yang menyatakan Dilaksanakan atau Panduan telah ditulis wujud hari ini. Selebihnya dirancang dan dijejaki dalam [Pelan Projek](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/docs/project-plan.md), yang juga menerangkan setiap kes guna (use case).
 
 | Keupayaan | Status |
 | --- | --- |

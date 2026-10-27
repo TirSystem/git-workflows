@@ -159,7 +159,7 @@ en	The pages in wiki/ match what README.md and guides/ produce.	tests/test_build
 en	The scoped workflow sets WIKI_PRUNE: the docs/wiki folder is the opt-in.	tests/test_publish_wiki.py
 en	The wiki of this repository equals docs/wiki/ (ADR-0009): the folder is the opt-in.	tests/test_publish_wiki.py
 en	The workflow checks out the calling repository, fetches this file into	tools/code-metrics.sh
-en	TirSystem/github-action (tools/publish_wiki.py), fetched at v2.	.gitea/scoped_workflows/publish-wiki-pages.yml
+en	TirSystem/git-workflows (tools/publish_wiki.py), fetched at v2.	.gitea/scoped_workflows/publish-wiki-pages.yml
 en	Translate an exclude pattern: `*` stops at `/`, `**` crosses it, `?` is one character.	tools/count_loc.py
 en	Translations (ADR-0001): `<Page>.<code>` written by hand in docs/wiki/.	tools/build_wiki.py
 en	True when the tag holds the file; True when the tag is not in this checkout.	tests/test_tools_ref.py
@@ -222,7 +222,7 @@ en	for the tests.	actions/connect-tailscale/connect-tailscale.sh
 en	idempotent, but the host records the edit).	.gitea/workflows/sync-milestones.yml
 en	installed it on 2026-10-11 at the request of S01.	.gitea/workflows/sync-milestones.yml
 en	into shared-scripts/ and runs one command per step:	tools/quality-checks-cpp.sh
-en	is a file of TirSystem/github-action (tools/sync_github_metadata.py), fetched	.gitea/scoped_workflows/sync-github-metadata.yml
+en	is a file of TirSystem/git-workflows (tools/sync_github_metadata.py), fetched	.gitea/scoped_workflows/sync-github-metadata.yml
 en	is created or updated as a Milestone with its tasks as Issues. A Proposed	.gitea/workflows/sync-milestones.yml
 en	it is removed when the interface does not come up	actions/connect-wireguard/connect-wireguard.sh
 en	it, up to the top of the repository: clang-format and clang-tidy find their	tools/quality-checks-cpp.sh
@@ -279,10 +279,10 @@ en	the stub records its arguments and, for `up`, the content of the key file	tes
 en	the tools are in the virtual environment of the interpreter that runs the tests	tests/test_lint_action_scripts.py
 en	type: ignore[index]	tools/changelog.py
 en	type: ignore[return-value]	tools/changelog.py
-en	uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2	.gitea/workflows/code-metrics.yml
-en	uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1	.gitea/workflows/quality-checks-cpp.yml
-en	uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1	.gitea/workflows/quality-checks-csharp.yml
-en	uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1	.gitea/workflows/quality-checks.yml
+en	uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2	.gitea/workflows/code-metrics.yml
+en	uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-cpp.yml@v1	.gitea/workflows/quality-checks-cpp.yml
+en	uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1	.gitea/workflows/quality-checks-csharp.yml
+en	uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v1	.gitea/workflows/quality-checks.yml
 en	validate-workflows.yml measures tools/ and fails below the .coveragerc limit.	tests/test_workflows.py
 en	validate-workflows.yml runs it on every pull request and push to main.	tools/lint-action-scripts.sh
 en	variables that must reach wg-quick through sudo, which resets the environment	actions/connect-wireguard/connect-wireguard.sh

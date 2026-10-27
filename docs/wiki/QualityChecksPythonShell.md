@@ -1,6 +1,6 @@
 <!-- Generated from guides/quality-checks.md by tools/build_wiki.py. Edit the source, not this page. -->
 
-> This page is generated from [`guides/quality-checks.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/quality-checks.md). Changes made here are overwritten the next time the wiki is published.
+> This page is generated from [`guides/quality-checks.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/quality-checks.md). Changes made here are overwritten the next time the wiki is published.
 
 English | [Dansk](QualityChecksPythonShell.da) | [Bahasa Melayu](QualityChecksPythonShell.ms)
 

@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCpp.md, source sha256 29d1e1390494 -->
+<!-- translation of QualityChecksCpp.md, source sha256 47b2acf3df76 -->
 
 > Ini ialah terjemahan [`QualityChecksCpp`](QualityChecksCpp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 

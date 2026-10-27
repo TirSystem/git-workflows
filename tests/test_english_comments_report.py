@@ -285,4 +285,4 @@ class TestWorkflow:
     def test_uses_gitea_contexts_only(self):
         text = WORKFLOW.read_text(encoding="utf-8")
         assert "gitea.event.pull_request.user.login" in text
-        assert "github." not in text.replace("TirSystem/github-action", "")
+        assert "github." not in text.replace("TirSystem/git-workflows", "")

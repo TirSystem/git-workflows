@@ -4,7 +4,7 @@ name: Quality checks C++
 #
 #   jobs:
 #     quality:
-#       uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1
+#       uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-cpp.yml@v1
 #
 # It checks the C and C++ files of the repository with clang-format and
 # clang-tidy at exact versions, changes no file and needs no secret. The
@@ -34,7 +34,7 @@ on:
         type: string
         default: "22.1.8"
       tools-ref:
-        description: "Tag or branch of TirSystem/github-action whose tools/quality-checks-cpp.sh is run; pin it to the exact tag together with the workflow"
+        description: "Tag or branch of TirSystem/git-workflows whose tools/quality-checks-cpp.sh is run; pin it to the exact tag together with the workflow"
         type: string
         default: "v2"
 
@@ -58,7 +58,7 @@ jobs:
       - name: Fetch the shared script
         uses: actions/checkout@v4.2.2
         with:
-          repository: TirSystem/github-action
+          repository: TirSystem/git-workflows
           ref: ${{ inputs.tools-ref }}
           path: shared-scripts
 

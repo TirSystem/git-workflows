@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 8b4275aaa089 -->
+<!-- translation of Credentials.md, source sha256 0e3225fcefe0 -->
 
 > Dette er en oversættelse af [`Credentials`](Credentials). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 

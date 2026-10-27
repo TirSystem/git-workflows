@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCSharp.md, source sha256 a024fde8d1b3 -->
+<!-- translation of QualityChecksCSharp.md, source sha256 8b222eda2f0c -->
 
 > Dette er en oversættelse af [`QualityChecksCSharp`](QualityChecksCSharp). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 

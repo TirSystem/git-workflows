@@ -1,4 +1,4 @@
-<!-- translation of CodeMetrics.md, source sha256 03134e97a78a -->
+<!-- translation of CodeMetrics.md, source sha256 f5bd05223699 -->
 
 > Ini ialah terjemahan [`CodeMetrics`](CodeMetrics). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 

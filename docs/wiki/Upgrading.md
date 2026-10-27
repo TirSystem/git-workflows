@@ -1,6 +1,6 @@
 <!-- Generated from guides/upgrading.md by tools/build_wiki.py. Edit the source, not this page. -->
 
-> This page is generated from [`guides/upgrading.md`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/guides/upgrading.md). Changes made here are overwritten the next time the wiki is published.
+> This page is generated from [`guides/upgrading.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/upgrading.md). Changes made here are overwritten the next time the wiki is published.
 
 English | [Dansk](Upgrading.da) | [Bahasa Melayu](Upgrading.ms)
 

@@ -497,7 +497,7 @@ class TestScopedWorkflow:
 
     def test_the_script_is_fetched_at_v2(self, steps):
         fetch = steps["Fetch the shared script"]["with"]
-        assert fetch["repository"] == "TirSystem/github-action"
+        assert fetch["repository"] == "TirSystem/git-workflows"
         assert fetch["ref"] == "v2"
 
     def test_the_folder_check_decides_whether_the_fetch_and_publish_steps_run(self, steps):
