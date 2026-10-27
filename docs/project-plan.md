@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-014 (wiki publishing as a scoped workflow, reversing part of ADR-0009); reviewed (RC-086), accepted by the author in chat as stand-in for S01 | [1fd6ae4] |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-015 (rename the repository references to git-workflows; the repository was called github-action); reviewed (RC-087), accepted by the author in chat as stand-in for S01 | [851b24c] |
+| 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-015 (rename the repository references to git-workflows; the repository was called github-action); reviewed (RC-087), accepted by the author in chat as stand-in for S01 | [851b24c] |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Updated MIL-015 to pull request 218 and the removed required check; reviewed (RC-088), accepted by the author in chat as stand-in for S01 | pending |
 
 ---
 
@@ -26,7 +26,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 - MIL-012 (VPN actions for deployment) runs from 2026-10-26 to its Target Date, 2026-11-06, proposed by the author and accepted by S01 in chat on 2026-10-19; it overlaps MIL-002 and MIL-003, which do not touch the runners' network.
 - MIL-013 (source code comments are in English) runs from 2026-11-09 to its Target Date, 2026-11-20, proposed by the author and accepted by S01 in chat on 2026-10-19; it overlaps MIL-009, whose work is on wiki callers and does not touch the runners or the reviewer of the check.
 - MIL-014 (publish wiki pages as a scoped workflow) runs from 2026-11-23 to its Target Date, 2026-11-27, proposed by the author; it follows MIL-013 so that release 3.0.0 carries one breaking change, and it reverses part of ADR-0009. S01 confirms the dates when accepting it.
-- MIL-015 (rename the repository references to git-workflows) runs from 2026-10-28 to its Target Date, 2026-11-06, proposed by the author because the branch protection of `main` requires a check named after the old repository name; it overlaps MIL-012. Its documentation task follows the merge of MIL-014. The repository was called `github-action` until its rename; the milestones, ADRs and review records written under that name are not rewritten.
+- MIL-015 (rename the repository references to git-workflows) runs from 2026-10-28 to its Target Date, 2026-11-06, proposed by the author because the branch protection of `main` required a check named after the old repository name; it overlaps MIL-012. Pull request 218 renamed the live files and the check was removed on 2026-10-27, so the milestone keeps the callers, the check of the old name on the instance, the 16 project documents for S01 and the release. Its documentation task follows the merge of MIL-014. The repository was called `github-action` until its rename; the milestones, ADRs and review records written under that name are not rewritten.
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -321,5 +321,4 @@ no tests, no release process.
 [Milestone MIL-008]: https://git.tirsystem.com/TirSystem/github-action/milestone/152
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
-[1fd6ae4]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1fd6ae4ee07202dcd57caffdd267758ea20af005
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
