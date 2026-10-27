@@ -4,19 +4,19 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-012 (VPN actions for deployment); reviewed (RC-080), accepted by the author in chat as stand-in for S01 | [c5d5941] |
-| 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-013 (source code comments are in English); reviewed (RC-083), accepted by the author in chat as stand-in for S01 | [e35b1c5] |
+| 2026-10-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-013 (source code comments are in English); reviewed (RC-083), accepted by the author in chat as stand-in for S01 | [e35b1c5] |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-014 (wiki publishing as a scoped workflow, reversing part of ADR-0009); reviewed (RC-086), accepted by the author in chat as stand-in for S01 | pending |
 
 ---
 
 ## Purpose
 
-This plan schedules thirteen milestones that move the repository from one
+This plan schedules fourteen milestones that move the repository from one
 workflow with known defects to a documented, versioned collection of shared
 workflows. The Business Case sets no deadline, so the dates are the plan's own; they were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -25,6 +25,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 - Week 1 starts 2026-10-05; phases are two weeks long; the last decision is 2026-12-26; MIL-007 follows in January 2027 (2027-01-04 to 2027-01-16, confirmed on 2026-10-11 by S01). MIL-008 amends the shared wiki publishing of MIL-006 and runs in parallel with the October and November windows: its work started on 2026-10-13 and its decision date is its own Target Date, 2026-11-15. MIL-009 follows MIL-008 and runs from 2026-11-16 to its proposed Target Date, 2026-11-30, confirmed by S01 in chat on 2026-10-14. MIL-010 (code metrics and coverage badges) follows MIL-007 in January 2027, from 2027-01-18 to its Target Date, 2027-01-30, accepted by the user in chat on 2026-10-14.
 - MIL-012 (VPN actions for deployment) runs from 2026-10-26 to its Target Date, 2026-11-06, proposed by the author and accepted by S01 in chat on 2026-10-19; it overlaps MIL-002 and MIL-003, which do not touch the runners' network.
 - MIL-013 (source code comments are in English) runs from 2026-11-09 to its Target Date, 2026-11-20, proposed by the author and accepted by S01 in chat on 2026-10-19; it overlaps MIL-009, whose work is on wiki callers and does not touch the runners or the reviewer of the check.
+- MIL-014 (publish wiki pages as a scoped workflow) runs from 2026-11-23 to its Target Date, 2026-11-27, proposed by the author; it follows MIL-013 so that release 3.0.0 carries one breaking change, and it reverses part of ADR-0009. S01 confirms the dates when accepting it.
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -45,6 +46,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Fix the defaults of the code metrics workflow | [MIL-011] | 2026-10-14 to 2026-10-23 | 2026-10-23 | S05 | None (technical tasks) | Patch release 2.1.1: the default `tools-ref` of every reusable workflow names a tag that holds its scripts, a test for it, guides and wiki at `@v2`, the framework Badges page without the workaround | Not created yet (the sync creates it when MIL-011 is Accepted) |
 | VPN actions for deployment | [MIL-012] | 2026-10-26 to 2026-11-06 | 2026-11-06 | S05 | None (technical tasks) | Release 2.2.0: composite actions `connect-wireguard` and `connect-tailscale` verified on a runner of the instance, with guides, wiki in three languages and the framework templates pinned to the release | Not created yet (the sync creates it when MIL-012 is Accepted) |
 | Source code comments are in English | [MIL-013] | 2026-11-09 to 2026-11-20 | 2026-11-20 | S05 | None (technical tasks) | Release 2.3.0: reusable workflow `english-comments.yml` that fails a pull request with a non-English comment and tells the author, with its ADR, tests, guides and wiki, and the rule proposed in the framework | Not created yet (the sync creates it when MIL-013 is Accepted) |
+| Publish wiki pages as a scoped workflow | [MIL-014] | 2026-11-23 to 2026-11-27 | 2026-11-27 | S05 | None (technical tasks) | Release 3.0.0: scoped publish-wiki-pages workflow opted into by the docs/wiki folder, reusable workflow and the seven callers removed, ADR-0009 superseded | Not created yet (the sync runs after acceptance) |
 
 ```plantuml
 @startgantt
@@ -75,6 +77,8 @@ Project starts 2026-10-05
 [MIL-012 Go/No-Go] happens 2026-11-06
 [MIL-013 English comments] starts 2026-11-09 and ends 2026-11-20
 [MIL-013 Go/No-Go] happens 2026-11-20
+[MIL-014 Scoped wiki] starts 2026-11-23 and ends 2026-11-27
+[MIL-014 Go/No-Go] happens 2026-11-27
 @endgantt
 ```
 
@@ -94,6 +98,7 @@ Project starts 2026-10-05
 | A shared workflow for code metrics and coverage badges | [MIL-010], [MIL-011] |
 | Shared composite actions that connect a deployment job to a private network through WireGuard or Tailscale | [MIL-012] |
 | A shared workflow that checks that comments in source code are in English and tells the author | [MIL-013] |
+| The wiki publisher as a scoped workflow again, opt-in by the docs/wiki folder, without callers | [MIL-014] |
 
 ## Dependencies
 
@@ -105,6 +110,7 @@ MIL-001 → MIL-002 → MIL-003 → MIL-004
    MIL-003 + MIL-004 → MIL-010 → MIL-011
    MIL-004 + MIL-011 → MIL-012
    MIL-004 + MIL-010 + MIL-011 → MIL-013
+                 MIL-009 + MIL-013 → MIL-014
 ```
 
 A No-Go moves every later window by the rework time of the failed milestone.
@@ -120,11 +126,11 @@ A No-Go moves every later window by the rework time of the failed milestone.
 | The token of a run cannot push to a `badges` branch, or the SVG does not render on the mirror (MIL-010) | The delivery of the badges changes shape | MIL-010 task 3 verifies it first; fall back to a badge file in a path of the default branch or to a run artifact. |
 | The runner cannot give a job `NET_ADMIN` and `/dev/net/tun`, or `tailscaled` does not survive to the next step (MIL-012) | The actions need another shape (a different start of the daemon, or userspace mode only) | MIL-012 tasks 2 to 4 verify it first on a runner of the instance; the release waits for criteria 2 and 3. |
 | The check calls a correct comment non-English, or misses a Danish or Malay one (MIL-013) | Authors lose trust in the check, or it is turned off | MIL-013 tasks 1 and 2 measure the method on a corpus before anything is built, and the exception marker and the allowed-words file (criterion 4) take care of the rest. |
+| A repository with a `docs/wiki/` folder starts publishing a wiki its owner did not want, or its first scoped run fails (MIL-014) | An unwanted wiki is written with the organization token, or a wiki stops updating | MIL-014 tasks 2 and 6 list every repository with the folder before the release and read each wiki back after its first run; the reusable workflow stays at `v2` for a repository that needs it. |
 | Security review by S05 is a bottleneck | Milestone decisions slip | Keep milestones small and plan review time before each decision date. |
 
 ## Open Issues
 
-- No QC checklist exists for the Project Plan.
 - The P1 candidates are written as brief use cases (UC-001 to UC-004) with a use case diagram (UCD-001) and user stories (US-001). The P2 and P3 candidates have no use case document yet.
 
 ## Appendix: Use Case Candidates and Prioritisation
@@ -298,6 +304,7 @@ no tests, no release process.
 [MIL-011]: ./milestones/mil-011-code-metrics-default-tools-ref.md
 [MIL-012]: ./milestones/mil-012-vpn-actions-for-deployment.md
 [MIL-013]: ./milestones/mil-013-english-comments-check.md
+[MIL-014]: ./milestones/mil-014-wiki-publishing-scoped-again.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
