@@ -9,7 +9,7 @@ import yaml
 
 from workflow_source import REPO_ROOT, load_publish_module
 
-REUSABLE_WORKFLOW = REPO_ROOT / ".gitea" / "workflows" / "publish-wiki-pages.yml"
+SCOPED_WORKFLOW = REPO_ROOT / ".gitea" / "scoped_workflows" / "publish-wiki-pages.yml"
 
 API = "https://git.example.test/api/v1"
 REPO_URL = f"{API}/repos/TirSystem/repo"
@@ -383,7 +383,7 @@ class TestRequestJson:
 
 
 class TestExplicitPrune:
-    """The reusable workflow sets WIKI_PRUNE: the caller is the opt-in (MIL-008)."""
+    """The scoped workflow sets WIKI_PRUNE: the docs/wiki folder is the opt-in."""
 
     @pytest.fixture()
     def explicit(self, environment, monkeypatch):
@@ -428,7 +428,7 @@ class TestExplicitPrune:
         monkeypatch.setenv("WIKI_DIR", str(tmp_path / "docs" / "wiki"))
         gitea = FakeGitea(publish_wiki)
 
-        with pytest.raises(publish_wiki.WorkflowError, match="wiki_dir") as caught:
+        with pytest.raises(publish_wiki.WorkflowError, match="WIKI_DIR") as caught:
             run_main(publish_wiki, gitea)
 
         assert caught.value.category == "configuration"
@@ -460,59 +460,65 @@ class TestExplicitPrune:
         assert gitea.calls == []
 
 
-class TestReusableWorkflow:
+class TestScopedWorkflow:
     @pytest.fixture()
     def document(self):
-        return yaml.safe_load(REUSABLE_WORKFLOW.read_text(encoding="utf-8"))
+        return yaml.safe_load(SCOPED_WORKFLOW.read_text(encoding="utf-8"))
 
-    def test_is_called_and_has_no_other_trigger(self, document):
-        assert list(document[True]) == ["workflow_call"]
+    @pytest.fixture()
+    def steps(self, document):
+        return {step.get("id", step["name"]): step for step in document["jobs"]["publish-wiki"]["steps"]}
 
-    def test_the_folder_defaults_to_docs_wiki_and_nothing_is_pruned_by_default(self, document):
-        inputs = document[True]["workflow_call"]["inputs"]
-        assert inputs["wiki_dir"]["default"] == "docs/wiki"
-        assert inputs["prune"]["default"] == "false"
+    def test_runs_on_a_push_to_main_and_by_hand_without_inputs(self, document):
+        triggers = document[True]
+        assert list(triggers) == ["push", "workflow_dispatch"]
+        assert triggers["push"]["branches"] == ["main"]
+        assert not triggers["workflow_dispatch"]
 
-    def test_the_token_is_a_declared_secret_without_a_fallback(self, document):
-        text = REUSABLE_WORKFLOW.read_text(encoding="utf-8")
-        assert document[True]["workflow_call"]["secrets"]["TOKEN_FOR_GITEA_WIKI"]["required"]
+    def test_a_push_runs_only_when_docs_wiki_changes(self, document):
+        assert document[True]["push"]["paths"] == ["docs/wiki/**"]
+
+    def test_the_token_is_read_from_the_secret_without_a_fallback(self, document):
+        text = SCOPED_WORKFLOW.read_text(encoding="utf-8")
+        step = document["jobs"]["publish-wiki"]["steps"][-1]
+        assert step["env"]["WIKI_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_WIKI }}"
         assert "secrets.TOKEN_FOR_GITEA }}" not in text
         assert "github.token" not in text
 
     def test_job_has_read_only_permissions(self, document):
         assert document["jobs"]["publish-wiki"]["permissions"] == {"contents": "read"}
 
-    def test_the_inputs_reach_the_script_through_the_environment(self, document):
+    def test_the_settings_reach_the_script_through_the_environment(self, document):
         step = document["jobs"]["publish-wiki"]["steps"][-1]
-        assert step["env"]["WIKI_DIR"] == "${{ inputs.wiki_dir }}"
-        assert step["env"]["WIKI_PRUNE"] == "${{ inputs.prune }}"
-        assert step["env"]["WIKI_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_WIKI }}"
+        assert step["env"]["WIKI_DIR"] == "docs/wiki"
+        assert step["env"]["WIKI_PRUNE"] == "false"
         assert step["run"] == "python3 shared-scripts/tools/publish_wiki.py"
         assert "inputs." not in step["run"]
 
-    def test_the_script_is_fetched_at_the_tools_ref(self, document):
-        fetch = document["jobs"]["publish-wiki"]["steps"][1]["with"]
+    def test_the_script_is_fetched_at_v2(self, steps):
+        fetch = steps["Fetch the shared script"]["with"]
         assert fetch["repository"] == "TirSystem/github-action"
-        assert fetch["ref"] == "${{ inputs.tools-ref }}"
+        assert fetch["ref"] == "v2"
+
+    def test_the_folder_check_decides_whether_the_fetch_and_publish_steps_run(self, steps):
+        assert steps["source"]["name"] == "Look for the wiki folder"
+        assert "-d docs/wiki" in steps["source"]["run"]
+        condition = "steps.source.outputs.found == 'true'"
+        assert steps["Fetch the shared script"]["if"] == condition
+        assert steps["Publish the pages to the wiki"]["if"] == condition
 
 
-def test_the_scoped_workflow_is_gone_and_the_script_has_no_marker_path():
-    """ADR-0009, MIL-009: the scoped publish-wiki.yml and the marker are removed."""
-    assert not (REPO_ROOT / ".gitea" / "scoped_workflows" / "publish-wiki.yml").exists()
+def test_this_repository_publishes_docs_wiki_through_the_scoped_workflow():
+    """The wiki of this repository equals docs/wiki/ (ADR-0009): the folder is the opt-in."""
+    assert SCOPED_WORKFLOW.is_file()
+    assert not (REPO_ROOT / ".gitea" / "workflows" / "publish-own-wiki.yml").exists()
+    assert not (REPO_ROOT / ".gitea" / "workflows" / "publish-wiki-pages.yml").exists()
+    assert not (REPO_ROOT / "wiki").exists()
+    assert (REPO_ROOT / "docs" / "wiki" / "Home.md").is_file()
+
+
+def test_the_script_has_no_marker_path():
+    """ADR-0009: the marker file is removed."""
     source = (REPO_ROOT / "tools" / "publish_wiki.py").read_text(encoding="utf-8")
     assert "MARKER_NAME" not in source
     assert "parse_marker" not in source
-
-
-def test_this_repository_publishes_docs_wiki_through_the_reusable_workflow():
-    """The wiki of this repository equals docs/wiki/ (ADR-0009, MIL-008 task 4)."""
-    assert not (REPO_ROOT / "wiki").exists()
-    assert (REPO_ROOT / "docs" / "wiki" / "Home.md").is_file()
-    caller = yaml.safe_load(
-        (REPO_ROOT / ".gitea" / "workflows" / "publish-own-wiki.yml").read_text(encoding="utf-8")
-    )
-    job = caller["jobs"]["wiki"]
-    assert job["uses"] == "./.gitea/workflows/publish-wiki-pages.yml"
-    assert job["with"]["wiki_dir"] == "docs/wiki"
-    assert job["with"]["prune"] == "true"
-    assert caller[True]["push"]["paths"] == ["docs/wiki/**"]
