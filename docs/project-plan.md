@@ -4,19 +4,19 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-013 (source code comments are in English); reviewed (RC-083), accepted by the author in chat as stand-in for S01 | [e35b1c5] |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-014 (wiki publishing as a scoped workflow, reversing part of ADR-0009); reviewed (RC-086), accepted by the author in chat as stand-in for S01 | [1fd6ae4] |
+| 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-014 (wiki publishing as a scoped workflow, reversing part of ADR-0009); reviewed (RC-086), accepted by the author in chat as stand-in for S01 | [1fd6ae4] |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-015 (rename the repository references to git-workflows; the repository was called github-action); reviewed (RC-087), accepted by the author in chat as stand-in for S01 | pending |
 
 ---
 
 ## Purpose
 
-This plan schedules fourteen milestones that move the repository from one
+This plan schedules fifteen milestones that move the repository from one
 workflow with known defects to a documented, versioned collection of shared
 workflows. The Business Case sets no deadline, so the dates are the plan's own; they were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -26,6 +26,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 - MIL-012 (VPN actions for deployment) runs from 2026-10-26 to its Target Date, 2026-11-06, proposed by the author and accepted by S01 in chat on 2026-10-19; it overlaps MIL-002 and MIL-003, which do not touch the runners' network.
 - MIL-013 (source code comments are in English) runs from 2026-11-09 to its Target Date, 2026-11-20, proposed by the author and accepted by S01 in chat on 2026-10-19; it overlaps MIL-009, whose work is on wiki callers and does not touch the runners or the reviewer of the check.
 - MIL-014 (publish wiki pages as a scoped workflow) runs from 2026-11-23 to its Target Date, 2026-11-27, proposed by the author; it follows MIL-013 so that release 3.0.0 carries one breaking change, and it reverses part of ADR-0009. S01 confirms the dates when accepting it.
+- MIL-015 (rename the repository references to git-workflows) runs from 2026-10-28 to its Target Date, 2026-11-06, proposed by the author because the branch protection of `main` requires a check named after the old repository name; it overlaps MIL-012. Its documentation task follows the merge of MIL-014. The repository was called `github-action` until its rename; the milestones, ADRs and review records written under that name are not rewritten.
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -47,6 +48,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | VPN actions for deployment | [MIL-012] | 2026-10-26 to 2026-11-06 | 2026-11-06 | S05 | None (technical tasks) | Release 2.2.0: composite actions `connect-wireguard` and `connect-tailscale` verified on a runner of the instance, with guides, wiki in three languages and the framework templates pinned to the release | Not created yet (the sync creates it when MIL-012 is Accepted) |
 | Source code comments are in English | [MIL-013] | 2026-11-09 to 2026-11-20 | 2026-11-20 | S05 | None (technical tasks) | Release 2.3.0: reusable workflow `english-comments.yml` that fails a pull request with a non-English comment and tells the author, with its ADR, tests, guides and wiki, and the rule proposed in the framework | Not created yet (the sync creates it when MIL-013 is Accepted) |
 | Publish wiki pages as a scoped workflow | [MIL-014] | 2026-11-23 to 2026-11-27 | 2026-11-27 | S05 | None (technical tasks) | Release 3.0.0: scoped publish-wiki-pages workflow opted into by the docs/wiki folder, reusable workflow and the seven callers removed, ADR-0009 superseded | Not created yet (the sync runs after acceptance) |
+| Rename the repository references to git-workflows | [MIL-015] | 2026-10-28 to 2026-11-06 | 2026-11-06 | S05 | None (technical tasks) | Code, configuration and user documentation name TirSystem/git-workflows, callers updated, required checks of main producible, released | Not created yet (the sync runs after acceptance) |
 
 ```plantuml
 @startgantt
@@ -79,6 +81,8 @@ Project starts 2026-10-05
 [MIL-013 Go/No-Go] happens 2026-11-20
 [MIL-014 Scoped wiki] starts 2026-11-23 and ends 2026-11-27
 [MIL-014 Go/No-Go] happens 2026-11-27
+[MIL-015 Rename] starts 2026-10-28 and ends 2026-11-06
+[MIL-015 Go/No-Go] happens 2026-11-06
 @endgantt
 ```
 
@@ -99,6 +103,7 @@ Project starts 2026-10-05
 | Shared composite actions that connect a deployment job to a private network through WireGuard or Tailscale | [MIL-012] |
 | A shared workflow that checks that comments in source code are in English and tells the author | [MIL-013] |
 | The wiki publisher as a scoped workflow again, opt-in by the docs/wiki folder, without callers | [MIL-014] |
+| The references to the repository name (workflows, documentation, callers) follow its rename to git-workflows | [MIL-015] |
 
 ## Dependencies
 
@@ -305,6 +310,7 @@ no tests, no release process.
 [MIL-012]: ./milestones/mil-012-vpn-actions-for-deployment.md
 [MIL-013]: ./milestones/mil-013-english-comments-check.md
 [MIL-014]: ./milestones/mil-014-wiki-publishing-scoped-again.md
+[MIL-015]: ./milestones/mil-015-rename-to-git-workflows.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
