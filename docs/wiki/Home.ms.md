@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 b6fa55df68b6 -->
+<!-- translation of Home.md, source sha256 3bb705987743 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -101,7 +101,7 @@ deactivate Workflow
 
 ### Semakan kualiti
 
-Aliran kerja boleh guna semula untuk Python dan shell, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1` (lihat [panduan](QualityChecksPythonShell)).
+Aliran kerja boleh guna semula untuk Python dan shell, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v1` (lihat [panduan](QualityChecksPythonShell)).
 
 #### Aliran kerja
 
@@ -147,7 +147,7 @@ deactivate Workflow
 
 ### Semakan kualiti C++
 
-Aliran kerja boleh guna semula untuk C dan C++, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositori mesti mempunyai `.clang-format`; `.clang-tidy` dan pangkalan data kompilasi adalah pilihan.
+Aliran kerja boleh guna semula untuk C dan C++, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositori mesti mempunyai `.clang-format`; `.clang-tidy` dan pangkalan data kompilasi adalah pilihan.
 
 #### Aliran kerja
 
@@ -192,7 +192,7 @@ deactivate Workflow
 
 ### Semakan kualiti C#
 
-Aliran kerja boleh guna semula untuk C#, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Ia memasang .NET SDK tepat yang diberikan oleh `dotnet-sdk-version` (10 atau lebih baharu) dan memerlukan rangkaian untuk pemulihan pakej.
+Aliran kerja boleh guna semula untuk C#, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Ia memasang .NET SDK tepat yang diberikan oleh `dotnet-sdk-version` (10 atau lebih baharu) dan memerlukan rangkaian untuk pemulihan pakej.
 
 #### Aliran kerja
 
@@ -237,7 +237,7 @@ deactivate Workflow
 
 ### Metrik kod dan lencana liputan
 
-Aliran kerja boleh guna semula yang mengira fail kod dan baris kod (tanpa baris komen dan baris kosong) sesebuah repositori dan menerbitkannya, bersama liputan ujian, sebagai tiga lencana SVG pada cabang `badges`, dipanggil dengan `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Ia memerlukan `contents: write` dan tidak menjalankan sebarang ujian: kerja yang lebih awal oleh pemanggil menghasilkan laporan liputan format Cobertura XML dan memuat naiknya sebagai artifak ([panduan](CodeMetrics.ms)).
+Aliran kerja boleh guna semula yang mengira fail kod dan baris kod (tanpa baris komen dan baris kosong) sesebuah repositori dan menerbitkannya, bersama liputan ujian, sebagai tiga lencana SVG pada cabang `badges`, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Ia memerlukan `contents: write` dan tidak menjalankan sebarang ujian: kerja yang lebih awal oleh pemanggil menghasilkan laporan liputan format Cobertura XML dan memuat naiknya sebagai artifak ([panduan](CodeMetrics.ms)).
 
 #### Aliran kerja
 
@@ -507,7 +507,7 @@ Tiada kebergantungan perlu dipasang; aliran kerja hanya menggunakan pustaka stan
 
 1. Klon repositori:
    ```bash
-   git clone ssh://git@git.tirsystem.com:10022/TirSystem/github-action.git
+   git clone ssh://git@git.tirsystem.com:10022/TirSystem/git-workflows.git
    ```
 2. Tambah rahsia yang disenaraikan di bawah [Keperluan](#keperluan) ke tetapan repositori dalam Gitea.
 3. Konfigurasikan push mirror GitHub dalam tetapan repositori.

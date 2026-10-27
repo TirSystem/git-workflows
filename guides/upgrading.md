@@ -30,7 +30,7 @@ caller workflow, because the scoped workflow publishes `docs/wiki/` on its own
 
 ## Reading a changelog entry
 
-Open `CHANGELOG.md` of `TirSystem/github-action`, or the release page of the tag.
+Open `CHANGELOG.md` of `TirSystem/git-workflows`, or the release page of the tag.
 An entry has up to four groups:
 
 | Group | What it means for you |
@@ -49,7 +49,7 @@ secrets before you upgrade.
    ```yaml
    jobs:
      quality:
-       uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v2
+       uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v2
    ```
 2. Open a pull request and read the run. A failing check shows the tool, the
    file and the message (see the guide for reading quality-check results).

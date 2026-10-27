@@ -1,4 +1,4 @@
-<!-- translation of Upgrading.md, source sha256 cd7640274c6d -->
+<!-- translation of Upgrading.md, source sha256 bc88ef4f6d7c -->
 
 > Dette er en oversættelse af [`Upgrading`](Upgrading). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -24,7 +24,7 @@ De scoped workflows **Sync GitHub mirror metadata** og **Publish wiki pages** le
 
 ## Aflæsning af en changelog-post
 
-Åbn `CHANGELOG.md` i `TirSystem/github-action` eller tagget udgivelsesside. En post har op til fire grupper:
+Åbn `CHANGELOG.md` i `TirSystem/git-workflows` eller tagget udgivelsesside. En post har op til fire grupper:
 
 | Gruppe | Hvad den betyder for dig |
 | --- | --- |
@@ -41,7 +41,7 @@ En post, der ændrer credentials, tokens eller tilladelser, siger det; kontrolle
    ```yaml
    jobs:
      quality:
-       uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v2
+       uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v2
    ```
 2. Åbn en pull request, og læs kørslen. En mislykket kontrol viser værktøj, fil og meddelelse (se vejledningen til aflæsning af kvalitetskontrollens resultater).
 3. For en udgivelse, der bryder kompatibiliteten, følges opgraderingsnoterne i changelog-posten, og trinnet gentages.

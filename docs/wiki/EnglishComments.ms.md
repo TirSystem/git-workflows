@@ -1,4 +1,4 @@
-<!-- translation of EnglishComments.md, source sha256 41005bb2c7f4 -->
+<!-- translation of EnglishComments.md, source sha256 a9533f14d5f5 -->
 
 > Ini ialah terjemahan [`EnglishComments`](EnglishComments). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -23,7 +23,7 @@ on:
 
 jobs:
   english-comments:
-    uses: TirSystem/github-action/.gitea/workflows/english-comments.yml@v2
+    uses: TirSystem/git-workflows/.gitea/workflows/english-comments.yml@v2
     with:
       exclude: "docs/generated/**"
       allowed-words-file: .english-comments-allowed-words

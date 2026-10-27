@@ -1,4 +1,4 @@
-<!-- translation of Upgrading.md, source sha256 cd7640274c6d -->
+<!-- translation of Upgrading.md, source sha256 bc88ef4f6d7c -->
 
 > Ini ialah terjemahan [`Upgrading`](Upgrading). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -24,7 +24,7 @@ Aliran kerja scoped **Sync GitHub mirror metadata** dan **Publish wiki pages** d
 
 ## Membaca satu catatan changelog
 
-Buka `CHANGELOG.md` bagi `TirSystem/github-action`, atau halaman keluaran tag itu. Satu catatan mempunyai sehingga empat kumpulan:
+Buka `CHANGELOG.md` bagi `TirSystem/git-workflows`, atau halaman keluaran tag itu. Satu catatan mempunyai sehingga empat kumpulan:
 
 | Kumpulan | Maksudnya untuk anda |
 | --- | --- |
@@ -41,7 +41,7 @@ Catatan yang mengubah kelayakan (credentials), token atau kebenaran menyatakanny
    ```yaml
    jobs:
      quality:
-       uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v2
+       uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v2
    ```
 2. Buka pull request dan baca larian. Semakan yang gagal menunjukkan alat, fail dan mesej (lihat panduan membaca keputusan semakan kualiti).
 3. Bagi keluaran yang memecahkan keserasian, ikut nota naik taraf dalam catatan changelog, kemudian ulang.

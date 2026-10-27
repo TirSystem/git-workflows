@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4.2.2
 
       - name: Connect Tailscale
-        uses: TirSystem/github-action/actions/connect-tailscale@v2
+        uses: TirSystem/git-workflows/actions/connect-tailscale@v2
         with:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
@@ -35,14 +35,14 @@ jobs:
 
       - name: Disconnect Tailscale
         if: always()
-        uses: TirSystem/github-action/actions/connect-tailscale@v2
+        uses: TirSystem/git-workflows/actions/connect-tailscale@v2
         with:
           action: down
 ```
 
 If the short form does not resolve on your instance (Gitea looks for the action
 on the host set in `DEFAULT_ACTIONS_URL`), use the full address:
-`https://git.tirsystem.com/TirSystem/github-action/actions/connect-tailscale@v2`.
+`https://git.tirsystem.com/TirSystem/git-workflows/actions/connect-tailscale@v2`.
 
 ## Inputs
 

@@ -1,4 +1,4 @@
-<!-- translation of EnglishComments.md, source sha256 41005bb2c7f4 -->
+<!-- translation of EnglishComments.md, source sha256 a9533f14d5f5 -->
 
 > Dette er en oversættelse af [`EnglishComments`](EnglishComments). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -22,7 +22,7 @@ on:
 
 jobs:
   english-comments:
-    uses: TirSystem/github-action/.gitea/workflows/english-comments.yml@v2
+    uses: TirSystem/git-workflows/.gitea/workflows/english-comments.yml@v2
     with:
       exclude: "docs/generated/**"
       allowed-words-file: .english-comments-allowed-words

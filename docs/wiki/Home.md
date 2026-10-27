@@ -18,6 +18,8 @@ It contains ten workflows: metadata sync to the GitHub mirror, wiki publishing (
 
 ## Workflows
 
+When a repository should use each workflow in its SQA and QC is set out in the [adoption rules](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/adoption-rules.md).
+
 Ten workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |
@@ -101,7 +103,7 @@ deactivate Workflow
 
 ### Quality checks
 
-A reusable workflow for Python and shell, called with `uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1` (see the [guide](QualityChecksPythonShell)).
+A reusable workflow for Python and shell, called with `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v1` (see the [guide](QualityChecksPythonShell)).
 
 #### Workflow
 
@@ -147,7 +149,7 @@ deactivate Workflow
 
 ### Quality checks C++
 
-A reusable workflow for C and C++, called with `uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). The repository needs a `.clang-format`; a `.clang-tidy` and a compile database are optional.
+A reusable workflow for C and C++, called with `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). The repository needs a `.clang-format`; a `.clang-tidy` and a compile database are optional.
 
 #### Workflow
 
@@ -192,7 +194,7 @@ deactivate Workflow
 
 ### Quality checks C#
 
-A reusable workflow for C#, called with `uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). It installs the exact .NET SDK given by `dotnet-sdk-version` (10 or later) and needs the network for the package restore.
+A reusable workflow for C#, called with `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). It installs the exact .NET SDK given by `dotnet-sdk-version` (10 or later) and needs the network for the package restore.
 
 #### Workflow
 
@@ -237,7 +239,7 @@ deactivate Workflow
 
 ### Code metrics
 
-A reusable workflow that counts the code files and the lines of code (without comment and blank lines) of a repository and publishes them, with the test coverage, as three SVG badges on a `badges` branch, called with `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). It needs `contents: write` and runs no test: an earlier job of the caller produces a Cobertura XML coverage report and uploads it as an artifact ([guide](CodeMetrics)).
+A reusable workflow that counts the code files and the lines of code (without comment and blank lines) of a repository and publishes them, with the test coverage, as three SVG badges on a `badges` branch, called with `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). It needs `contents: write` and runs no test: an earlier job of the caller produces a Cobertura XML coverage report and uploads it as an artifact ([guide](CodeMetrics)).
 
 #### Workflow
 
@@ -511,7 +513,7 @@ No dependencies need to be installed; the workflow uses only the Python standard
 
 1. Clone the repository:
    ```bash
-   git clone ssh://git@git.tirsystem.com:10022/TirSystem/github-action.git
+   git clone ssh://git@git.tirsystem.com:10022/TirSystem/git-workflows.git
    ```
 2. Add the secrets listed under [Requirements](#requirements) to the repository settings in Gitea.
 3. Configure the GitHub push mirror in the repository settings.

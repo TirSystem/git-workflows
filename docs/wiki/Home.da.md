@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 b6fa55df68b6 -->
+<!-- translation of Home.md, source sha256 3bb705987743 -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -101,7 +101,7 @@ deactivate Workflow
 
 ### Kvalitetskontrol
 
-Et genbrugeligt workflow til Python og shell, kaldt med `uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1` (se [vejledningen](QualityChecksPythonShell)).
+Et genbrugeligt workflow til Python og shell, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v1` (se [vejledningen](QualityChecksPythonShell)).
 
 #### Workflow
 
@@ -147,7 +147,7 @@ deactivate Workflow
 
 ### Kvalitetskontrol C++
 
-Et genbrugeligt workflow til C og C++, kaldt med `uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositoryet skal have en `.clang-format`; en `.clang-tidy` og en compile-database er valgfrie.
+Et genbrugeligt workflow til C og C++, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositoryet skal have en `.clang-format`; en `.clang-tidy` og en compile-database er valgfrie.
 
 #### Workflow
 
@@ -192,7 +192,7 @@ deactivate Workflow
 
 ### Kvalitetskontrol C#
 
-Et genbrugeligt workflow til C#, kaldt med `uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Det installerer det præcise .NET SDK, som `dotnet-sdk-version` angiver (10 eller nyere), og skal bruge netværket til pakkegendannelsen.
+Et genbrugeligt workflow til C#, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Det installerer det præcise .NET SDK, som `dotnet-sdk-version` angiver (10 eller nyere), og skal bruge netværket til pakkegendannelsen.
 
 #### Workflow
 
@@ -237,7 +237,7 @@ deactivate Workflow
 
 ### Kodemålinger og dækningsbadges
 
-Et genbrugeligt workflow, der tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer) i et repository og udgiver dem sammen med testdækningen som tre SVG-badges på en `badges`-gren, kaldt med `uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Det kræver `contents: write` og kører ingen test: et tidligere job hos kalderen frembringer en dækningsrapport i Cobertura XML-format og uploader den som artefakt ([vejledning](CodeMetrics.da)).
+Et genbrugeligt workflow, der tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer) i et repository og udgiver dem sammen med testdækningen som tre SVG-badges på en `badges`-gren, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Det kræver `contents: write` og kører ingen test: et tidligere job hos kalderen frembringer en dækningsrapport i Cobertura XML-format og uploader den som artefakt ([vejledning](CodeMetrics.da)).
 
 #### Workflow
 
@@ -507,7 +507,7 @@ Der skal ikke installeres afhængigheder; workflowet bruger kun Pythons standard
 
 1. Klon repositoryet:
    ```bash
-   git clone ssh://git@git.tirsystem.com:10022/TirSystem/github-action.git
+   git clone ssh://git@git.tirsystem.com:10022/TirSystem/git-workflows.git
    ```
 2. Tilføj de secrets, der er nævnt under [Krav](#krav), til repositoryets indstillinger i Gitea.
 3. Konfigurer GitHub push-spejlet i repositoryets indstillinger.
