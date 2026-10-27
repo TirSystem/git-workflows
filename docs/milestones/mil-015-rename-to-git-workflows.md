@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted on a Go review (RC-087); accepted by the author in chat on 2026-10-27 as stand-in for S01, not independent | pending |
+| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted on a Go review (RC-087); accepted by the author in chat on 2026-10-27 as stand-in for S01, not independent | [851b24c] |
 
 ---
 
@@ -91,3 +91,4 @@ name; and a release that carries the change.
 [MIL-014]: ./mil-014-wiki-publishing-scoped-again.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [RC-087]: ../sqa/reviews/rc-087-mil-015.md
+[851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
