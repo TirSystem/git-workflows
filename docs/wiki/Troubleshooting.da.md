@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 8d1373b72756 -->
+<!-- translation of Troubleshooting.md, source sha256 e4128e7f821c -->
 
 > Dette er en oversættelse af [`Troubleshooting`](Troubleshooting). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -30,9 +30,7 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 | `TOKEN_FOR_GITEA is missing or empty.` | configuration | Tilføj secreten |
 | `Could not determine the Gitea source repository.` | configuration | Kørslen har intet repositorynavn; meld det som en defekt |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Behold ét GitHub push-spejl |
-| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Kun wiki-publicering: repositoryet kalder workflowet, men dets organisation har ingen sådan secret, eller kaldet sender den ikke; gem den og send den i `secrets:` (se [credentials.md](Credentials.da)) |
-| `The prune input must be 'true' or 'false'` | configuration | Kun wiki-publicering: sæt `prune` i kaldet til `"true"` eller `"false"` |
-| `The wiki folder ... does not exist` | configuration | Kun wiki-publicering: sæt `wiki_dir` i kaldet til mappen med siderne (standard `docs/wiki`) |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Kun wiki-publicering: repositoryet har en `docs/wiki/`-mappe, men dets organisation har ingen sådan secret; gem den som en organisations-secret (se [credentials.md](Credentials.da)) |
 | `... HTTP 403 ...` ved publicering af wikien | permissions | Kun wiki-publicering: tokenet skal have `write:repository` og skriveadgang til dette repository |
 | `The wiki is not enabled on <repo>` | configuration | Kun wiki-publicering: aktivér wikien i repositoryets indstillinger |
 | `The wiki source directory ... has no Markdown pages` | configuration | Kun wiki-publicering: mappen har ingen Markdown-sider; intet blev ændret |
@@ -52,7 +50,7 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not synced.` Kørslen lykkes, men intet blev synkroniseret. Kontroller, at Gitea-versionen understøtter push mirror-API'et, og kør igen.
 
-`<n> page(s) are in the wiki but not in <folder>/ and were kept; set the prune input to true to delete them.` Kørslen lykkes. Sider, der kun findes i wikien, lades i fred, medmindre kaldet sætter `prune: "true"`.
+`<n> page(s) are in the wiki but not in <folder>/ and were kept ...` Kørslen lykkes. Sider, der kun findes i wikien, lades altid i fred.
 
 ## Runner-problemer
 

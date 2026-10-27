@@ -3,7 +3,6 @@ en	"string", "char" (a literal of one character) or "none"	tools/count_loc.py
 en	(ADR-0008). The workflow checks out the calling repository, fetches this file	tools/quality-checks-cpp.sh
 en	(MIL-004 task 6). The repository is public, so no token is needed.	.gitea/scoped_workflows/sync-github-metadata.yml
 en	(compile-commands-dir) are optional.	.gitea/workflows/quality-checks-cpp.yml
-en	(tools/publish_wiki.py), fetched at tools-ref.	.gitea/workflows/publish-wiki-pages.yml
 en	----------------------------------------------------------------- helpers	tests/test_quality_workflows_cpp_csharp.py
 en	--------------------------------------------------------------------- C#	tests/test_quality_workflows_cpp_csharp.py
 en	--------------------------------------------------------------------- C++	tests/test_quality_workflows_cpp_csharp.py
@@ -17,7 +16,7 @@ en	A script run: the finished process and the tool calls the stubs logged.	tests
 en	A source file or section needed for a page is missing.	tools/build_wiki.py
 en	A translation has the same code blocks, table rows and heading levels.	tests/test_build_wiki.py
 en	A wiki that already has pages named with spaces, as Gitea stores them.	tests/test_publish_wiki.py
-en	ADR-0009, MIL-009: the scoped publish-wiki.yml and the marker are removed.	tests/test_publish_wiki.py
+en	ADR-0009: the marker file is removed.	tests/test_publish_wiki.py
 en	An exact stable version of the .NET SDK, 10 or later (no channel, no range).	tools/quality-checks-csharp.sh
 en	An input is invalid; the message is printed as a `[configuration]` failure.	tools/badges.py
 en	Answers like the Gitea repository and wiki endpoints.	tests/test_publish_wiki.py
@@ -60,7 +59,6 @@ en	Leading emoji and symbols in README headings; removed so anchors stay stable.
 en	Link text of the sidebar: English, then one list per translation code.	tools/build_wiki.py
 en	Lint the shell scripts of the composite actions (MIL-012 task 6): shellcheck,	tools/lint-action-scripts.sh
 en	MIL-004 Go/No-Go criterion 5: every script is a file under tools/.	tests/test_workflows.py
-en	Markdown pages of wiki_dir to the wiki of the calling repository, creating	.gitea/workflows/publish-wiki-pages.yml
 en	Needs: bash, find, shellcheck, shfmt	tools/lint-action-scripts.sh
 en	No translation follows an older version of its English page.	tests/test_build_wiki.py
 en	Offline tests for the composite action actions/connect-tailscale.	tests/test_connect_tailscale.py
@@ -82,7 +80,6 @@ en	One `## [x]` section of the changelog.	tools/changelog.py
 en	One generated wiki page.	tools/build_wiki.py
 en	Publish accepted milestones to the git host.	.gitea/workflows/sync-milestones.yml
 en	Publish the pages of a folder to the Gitea wiki of the repository.	tools/publish_wiki.py
-en	Publishes the wiki of this repository from docs/wiki/ by calling the	.gitea/workflows/publish-own-wiki.yml
 en	Publishing an empty directory would delete the whole wiki.	tools/publish_wiki.py
 en	PyYAML reads `on` as True	tests/test_code_metrics.py
 en	QC_DOTNET_INSTALL_SCRIPT, QC_DOTNET for tests).	tools/quality-checks-csharp.sh
@@ -125,7 +122,6 @@ en	Return the workflow files of this repository that a caller can use.	tests/tes
 en	Return {page key: content} for every Markdown file in wiki_dir.	tools/publish_wiki.py
 en	Reusable workflow (ADR-0005). A repository calls it with	.gitea/workflows/quality-checks.yml
 en	Reusable workflow (ADR-0008). A repository calls it with	.gitea/workflows/quality-checks-cpp.yml
-en	Reusable workflow (ADR-0009, MIL-008). A repository calls it with	.gitea/workflows/publish-wiki-pages.yml
 en	Reusable workflow (ADR-0010). A repository calls it with	.gitea/workflows/code-metrics.yml
 en	Run a tool as `python tools/<name>` with only the given environment.	tests/test_tool_entrypoints.py
 en	Run it once by hand from the Actions page with dry_run left on: it prints	.gitea/workflows/sync-milestones.yml
@@ -133,6 +129,7 @@ en	Run the generator; return the process exit code.	tools/build_wiki.py
 en	Run the script with a stub wg-quick that records its arguments.	tests/test_connect_wireguard.py
 en	SHELLCHECK_PY_VERSION, SHFMT_PY_VERSION, QC_VENV (and QC_BIN for tests).	tools/quality-checks.sh
 en	Scan one line; return (has_code, has_comment) and update the state.	tools/count_loc.py
+en	Scoped workflow: it runs in every repository of an organization, so there is	.gitea/scoped_workflows/publish-wiki-pages.yml
 en	Scoped workflow: it runs in every repository of an organization. The script	.gitea/scoped_workflows/sync-github-metadata.yml
 en	Secret: TOKEN_FOR_GITEA, the bare Gitea token of the organization (no JSON).	.gitea/workflows/sync-milestones.yml
 en	Settings come from the environment, never from interpolated expressions:	tools/code-metrics.sh
@@ -145,7 +142,6 @@ en	Steps of the reusable workflow .gitea/workflows/quality-checks-csharp.yml	too
 en	Steps of the reusable workflow .gitea/workflows/quality-checks.yml (ADR-0005).	tools/quality-checks.sh
 en	Strip heading emoji and rewrite links, leaving fenced code untouched.	tools/build_wiki.py
 en	Succeeds when one of the named files exists in the working directory or above	tools/quality-checks-cpp.sh
-en	TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}	.gitea/workflows/publish-wiki-pages.yml
 en	TS_ARGS is split on spaces on purpose: it holds flags, never a secret	actions/connect-tailscale/connect-tailscale.sh
 en	TS_AUTHKEY, TS_OAUTH_SECRET, TS_TAGS, TS_HOSTNAME, TS_VERSION, TS_USERSPACE,	actions/connect-tailscale/connect-tailscale.sh
 en	TS_SHA256, TS_ARGS, TS_TIMEOUT, TS_HEALTH_CHECK_HOST. TS_TAILSCALE,	actions/connect-tailscale/connect-tailscale.sh
@@ -154,16 +150,16 @@ en	TS_WAIT_INTERVAL (seconds) name the commands, the work folder and the waits,	
 en	The Home page names each workflow file of the repository and draws it.	tests/test_build_wiki.py
 en	The `if __name__ == "__main__"` block: exit code 1 and ERROR: on stderr.	tests/test_tool_entrypoints.py
 en	The auth key is passed to tailscale in a file of mode 600, never on a command	actions/connect-tailscale/connect-tailscale.sh
-en	The caller file is the opt-in; there is no marker file. It publishes the	.gitea/workflows/publish-wiki-pages.yml
 en	The comment and string rules of one language.	tools/count_loc.py
 en	The commit is the tip of the branch and its validation run is green.	tools/release.py
 en	The default `tools-ref` of every reusable workflow names the current major.	tests/test_tools_ref.py
 en	The exclude patterns of the caller; a pattern without `/` matches a name anywhere.	tools/count_loc.py
 en	The page a link to a source file should point to. The README is the home page.	tools/build_wiki.py
 en	The pages in wiki/ match what README.md and guides/ produce.	tests/test_build_wiki.py
-en	The reusable workflow sets WIKI_PRUNE: the caller is the opt-in (MIL-008).	tests/test_publish_wiki.py
-en	The wiki of this repository equals docs/wiki/ (ADR-0009, MIL-008 task 4).	tests/test_publish_wiki.py
+en	The scoped workflow sets WIKI_PRUNE: the docs/wiki folder is the opt-in.	tests/test_publish_wiki.py
+en	The wiki of this repository equals docs/wiki/ (ADR-0009): the folder is the opt-in.	tests/test_publish_wiki.py
 en	The workflow checks out the calling repository, fetches this file into	tools/code-metrics.sh
+en	TirSystem/git-workflows (tools/publish_wiki.py), fetched at v2.	.gitea/scoped_workflows/publish-wiki-pages.yml
 en	Translate an exclude pattern: `*` stops at `/`, `**` crosses it, `?` is one character.	tools/count_loc.py
 en	Translations (ADR-0001): `<Page>.<code>` written by hand in docs/wiki/.	tools/build_wiki.py
 en	True when the tag holds the file; True when the tag is not in this checkout.	tests/test_tools_ref.py
@@ -196,12 +192,9 @@ en	and `dotnet build` (warnings as errors) on an exact .NET SDK 10 or later,	.gi
 en	and blank lines are not counted), reads an optional Cobertura XML coverage	.gitea/workflows/code-metrics.yml
 en	and nothing when none of them changed	tools/code-metrics.sh
 en	and shfmt in the format .editorconfig sets (two spaces, indented case labels).	tools/lint-action-scripts.sh
-en	and updating pages, and deleting pages that are not in the folder only when	.gitea/workflows/publish-wiki-pages.yml
-en	branches: [ main ]	.gitea/workflows/publish-wiki-pages.yml
 en	branches: [main]	.gitea/workflows/code-metrics.yml
 en	by default); WG_QUICK, WG_SUDO and WG_PING name the commands, for the tests.	actions/connect-wireguard/connect-wireguard.sh
 en	by hand with the version to release; it creates the version tag, the release	.gitea/workflows/release.yml
-en	caller a project copies from framework/templates/ci/publish-wiki.yml, with	.gitea/workflows/publish-own-wiki.yml
 en	changes no file and needs no secret.	.gitea/workflows/quality-checks.yml
 en	changes no file and needs no secret. The package restore needs the network.	.gitea/workflows/quality-checks-csharp.yml
 en	clang-tidy at exact versions, changes no file and needs no secret. The	.gitea/workflows/quality-checks-cpp.yml
@@ -222,16 +215,18 @@ en	connect-wireguard.sh up write the configuration and bring the tunnel up	actio
 en	contents: write	.gitea/workflows/code-metrics.yml
 en	deleted. Each run updates the issues of every accepted milestone (the sync is	.gitea/workflows/sync-milestones.yml
 en	directory under RUNNER_TEMP by default).	tools/code-metrics.sh
+en	docs/wiki to the wiki of the repository, creating and updating pages and	.gitea/scoped_workflows/publish-wiki-pages.yml
 en	env keeps the userspace variable through sudo; the file holds the key, so	actions/connect-wireguard/connect-wireguard.sh
 en	finding must fail the check, as a failing tool does for the other languages.	tools/quality-checks-cpp.sh
 en	for the tests.	actions/connect-tailscale/connect-tailscale.sh
 en	idempotent, but the host records the edit).	.gitea/workflows/sync-milestones.yml
 en	installed it on 2026-10-11 at the request of S01.	.gitea/workflows/sync-milestones.yml
 en	into shared-scripts/ and runs one command per step:	tools/quality-checks-cpp.sh
-en	is a file of TirSystem/github-action (tools/sync_github_metadata.py), fetched	.gitea/scoped_workflows/sync-github-metadata.yml
+en	is a file of TirSystem/git-workflows (tools/sync_github_metadata.py), fetched	.gitea/scoped_workflows/sync-github-metadata.yml
 en	is created or updated as a Milestone with its tasks as Issues. A Proposed	.gitea/workflows/sync-milestones.yml
 en	it is removed when the interface does not come up	actions/connect-wireguard/connect-wireguard.sh
 en	it, up to the top of the repository: clang-format and clang-tidy find their	tools/quality-checks-cpp.sh
+en	keeping the pages that are not in the folder. The script is a file of	.gitea/scoped_workflows/publish-wiki-pages.yml
 en	latest Version History row is Accepted and whose latest review record is a Go	.gitea/workflows/sync-milestones.yml
 en	line, and nothing else, so the rest of the log stays readable	actions/connect-wireguard/connect-wireguard.sh
 en	line. Every failure is printed as ::error::[category] message.	actions/connect-tailscale/connect-tailscale.sh
@@ -239,6 +234,7 @@ en	metrics:	.gitea/workflows/code-metrics.yml
 en	milestone, or one without a Go review, is skipped. Nothing is closed or	.gitea/workflows/sync-milestones.yml
 en	name -> (source, code, comment, blank), counted by hand.	tests/test_count_loc.py
 en	names that start with GITEA_ or GITHUB_.	.gitea/workflows/sync-milestones.yml
+en	no caller and no input. A repository opts in by having a docs/wiki folder; a	.gitea/scoped_workflows/publish-wiki-pages.yml
 en	no final newline	tests/test_count_loc.py
 en	often has no sudo. TS_SUDO overrides it (empty for none).	actions/connect-tailscale/connect-tailscale.sh
 en	often has no sudo. WG_SUDO overrides it (empty for none).	actions/connect-wireguard/connect-wireguard.sh
@@ -249,10 +245,8 @@ en	only the probe ran: no second daemon, no up	tests/test_connect_tailscale.py
 en	outside this repository, so it gets a copy of the repository's file	tests/test_lint_action_scripts.py
 en	page from the changelog entry and moves the major tag, and only when the	.gitea/workflows/release.yml
 en	parsed YAML has no fixed shape	tests/test_quality_workflows_cpp_csharp.py
-en	paths: [ "docs/wiki/**" ]	.gitea/workflows/publish-wiki-pages.yml
 en	permissions:	.gitea/workflows/code-metrics.yml
 en	pretend the kernel has WireGuard and the tools are present	tests/test_connect_wireguard.py
-en	prune is true. The script is a file of this repository	.gitea/workflows/publish-wiki-pages.yml
 en	quality-checks-cpp.sh install install the exact clang tool versions into a venv	tools/quality-checks-cpp.sh
 en	quality-checks-cpp.sh run run clang-format and clang-tidy on the tracked files	tools/quality-checks-cpp.sh
 en	quality-checks-cpp.sh validate check the inputs, before anything is installed	tools/quality-checks-cpp.sh
@@ -267,11 +261,10 @@ en	real/a.py only, not link.py	tests/test_count_loc.py
 en	render_config: the wg-quick configuration on stdout	actions/connect-wireguard/connect-wireguard.sh
 en	report (an artifact of an earlier job of the caller, or a file of the	.gitea/workflows/code-metrics.yml
 en	repository needs a .clang-format; a .clang-tidy and a compile database	.gitea/workflows/quality-checks-cpp.yml
+en	repository without one is skipped. It publishes the Markdown pages of	.gitea/scoped_workflows/publish-wiki-pages.yml
 en	repository) and commits three SVG badges to a branch of the calling	.gitea/workflows/code-metrics.yml
 en	repository, which is checked out as a submodule. Gitea does not accept secret	.gitea/workflows/sync-milestones.yml
 en	repository.	.gitea/workflows/code-metrics.yml
-en	reusable workflow of this repository (ADR-0009, MIL-008 task 4). It is the	.gitea/workflows/publish-own-wiki.yml
-en	secrets:	.gitea/workflows/publish-wiki-pages.yml
 en	shared-scripts/ and runs one command per step:	tools/code-metrics.sh
 en	shellcheck disable=SC2206	actions/connect-tailscale/connect-tailscale.sh
 en	shfmt reads .editorconfig from the folder upwards; a temporary folder is	tests/test_lint_action_scripts.py
@@ -284,15 +277,12 @@ en	the plan and creates nothing. Turn dry_run off only for a real run.	.gitea/wo
 en	the project gets the compiler diagnostics and the static analyzer.	tools/quality-checks-cpp.sh
 en	the stub records its arguments and, for `up`, the content of the key file	tests/test_connect_tailscale.py
 en	the tools are in the virtual environment of the interpreter that runs the tests	tests/test_lint_action_scripts.py
-en	tools-ref is main so that the script that is run is the one of this commit.	.gitea/workflows/publish-own-wiki.yml
-en	two differences: the reusable workflow is called by its local path, and	.gitea/workflows/publish-own-wiki.yml
 en	type: ignore[index]	tools/changelog.py
 en	type: ignore[return-value]	tools/changelog.py
-en	uses: TirSystem/github-action/.gitea/workflows/code-metrics.yml@v2	.gitea/workflows/code-metrics.yml
-en	uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1	.gitea/workflows/publish-wiki-pages.yml
-en	uses: TirSystem/github-action/.gitea/workflows/quality-checks-cpp.yml@v1	.gitea/workflows/quality-checks-cpp.yml
-en	uses: TirSystem/github-action/.gitea/workflows/quality-checks-csharp.yml@v1	.gitea/workflows/quality-checks-csharp.yml
-en	uses: TirSystem/github-action/.gitea/workflows/quality-checks.yml@v1	.gitea/workflows/quality-checks.yml
+en	uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2	.gitea/workflows/code-metrics.yml
+en	uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-cpp.yml@v1	.gitea/workflows/quality-checks-cpp.yml
+en	uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1	.gitea/workflows/quality-checks-csharp.yml
+en	uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v1	.gitea/workflows/quality-checks.yml
 en	validate-workflows.yml measures tools/ and fails below the .coveragerc limit.	tests/test_workflows.py
 en	validate-workflows.yml runs it on every pull request and push to main.	tools/lint-action-scripts.sh
 en	variables that must reach wg-quick through sudo, which resets the environment	actions/connect-wireguard/connect-wireguard.sh

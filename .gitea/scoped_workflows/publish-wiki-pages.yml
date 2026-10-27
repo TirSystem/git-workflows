@@ -1,0 +1,52 @@
+name: Publish wiki
+
+# Scoped workflow: it runs in every repository of an organization, so there is
+# no caller and no input. A repository opts in by having a docs/wiki folder; a
+# repository without one is skipped. It publishes the Markdown pages of
+# docs/wiki to the wiki of the repository, creating and updating pages and
+# keeping the pages that are not in the folder. The script is a file of
+# TirSystem/git-workflows (tools/publish_wiki.py), fetched at v2.
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "docs/wiki/**"
+  workflow_dispatch:
+
+jobs:
+  publish-wiki:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Look for the wiki folder
+        id: source
+        run: |
+          if [ -d docs/wiki ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No docs/wiki folder in this repository; nothing to publish."
+          fi
+
+      - name: Fetch the shared script
+        if: steps.source.outputs.found == 'true'
+        uses: actions/checkout@v4.2.2
+        with:
+          repository: TirSystem/git-workflows
+          ref: v2
+          path: shared-scripts
+
+      - name: Publish the pages to the wiki
+        if: steps.source.outputs.found == 'true'
+        env:
+          GITEA_API_URL: ${{ gitea.api_url }}
+          SOURCE_REPOSITORY: ${{ gitea.repository }}
+          WIKI_CREDENTIALS: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
+          WIKI_DIR: docs/wiki
+          WIKI_PRUNE: "false"
+        run: python3 shared-scripts/tools/publish_wiki.py

@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 2e92f2344756 -->
+<!-- translation of Credentials.md, source sha256 0e3225fcefe0 -->
 
 > Ini ialah terjemahan [`Credentials`](Credentials). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -56,17 +56,17 @@ Apabila berjaya, log menyatakan `Preflight passed: Gitea and GitHub accepted the
 
 ## Secret untuk menerbitkan wiki
 
-Aliran kerja **Publish wiki pages** menyalin `docs/wiki/` ke wiki Gitea bagi repositori yang memanggilnya (lihat [onboarding.md](Onboarding.ms)). Ia menggunakan secret sendiri, supaya token penyegerakan metadata kekal baca sahaja. Pemanggil menghantar secret dalam `secrets:`; ia tidak diwarisi.
+Aliran kerja **Publish wiki pages** menyalin `docs/wiki/` ke wiki Gitea bagi repositori yang mempunyai folder `docs/wiki/` (lihat [onboarding.md](Onboarding.ms)). Ia menggunakan secret sendiri, supaya token penyegerakan metadata kekal baca sahaja.
 
 | Secret | Kandungan | Digunakan untuk |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA_WIKI` | Token Gitea, tiada yang lain | Menulis halaman wiki bagi repositori dalam organisasi yang memilih menyertainya |
+| `TOKEN_FOR_GITEA_WIKI` | Token Gitea, tiada yang lain | Menulis halaman wiki bagi repositori dalam organisasi yang mempunyai folder `docs/wiki/` |
 
-- Simpan sebagai secret organisasi bagi setiap repositori yang menerbitkan. Tiada sandaran kepada `TOKEN_FOR_GITEA`: repositori yang memanggil aliran kerja dan tidak mempunyai secret itu gagal dengan ralat konfigurasi, dan repositori yang tidak memanggilnya tidak memerlukannya.
+- Simpan sebagai secret organisasi bagi setiap repositori yang menerbitkan. Tiada sandaran kepada `TOKEN_FOR_GITEA`: repositori yang mempunyai folder `docs/wiki/` tanpa secret itu gagal dengan ralat konfigurasi, dan repositori tanpa folder itu tidak memerlukannya.
 - Token mesti mempunyai skop `write:repository`, dan penggunanya mesti mempunyai akses tulis kepada repositori. Gitea tidak mempunyai skop untuk wiki sahaja, jadi cipta token untuk pengguna khusus. S05 meluluskan skop dan S03 menyimpan secret.
-- Panggilan yang dibuat: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`, `GET`, `POST` dan `PATCH /repos/{owner}/{repo}/wiki/...` dan, bagi halaman yang tidak lagi wujud dalam `docs/wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}`.
+- Panggilan yang dibuat: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`, `GET`, `POST` dan `PATCH /repos/{owner}/{repo}/wiki/...` dan, bagi halaman yang tidak lagi wujud dalam `docs/wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}` (hanya apabila pemadaman dihidupkan, yang tidak dilakukan oleh aliran kerja scoped).
 - Wiki mesti diaktifkan dalam tetapan repositori. Aliran kerja enggan berjalan jika ia tidak diaktifkan.
-- Halaman yang ada dalam `docs/wiki/` sentiasa ditimpa daripadanya, jadi perubahan yang dibuat dalam antara muka web Gitea hilang pada penerbitan seterusnya. Halaman yang hanya ada dalam wiki dibuang hanya apabila panggilan menetapkan `prune: "true"`.
+- Halaman yang ada dalam `docs/wiki/` sentiasa ditimpa daripadanya, jadi perubahan yang dibuat dalam antara muka web Gitea hilang pada penerbitan seterusnya. Halaman yang hanya ada dalam wiki dikekalkan.
 
 ## Menukar token
 

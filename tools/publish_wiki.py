@@ -1,8 +1,9 @@
 """Publish the pages of a folder to the Gitea wiki of the repository.
 
-Run by the reusable workflow publish-wiki-pages.yml, which a repository calls
-(ADR-0009). The caller is the opt-in: the workflow sets WIKI_PRUNE and the
-folder must exist. It reads its settings from the environment:
+Run by the scoped workflow publish-wiki-pages.yml, which runs in every
+repository of the organization. A repository opts in by having the docs/wiki
+folder; the workflow sets WIKI_PRUNE. It reads its settings from the
+environment:
 
     GITEA_API_URL        Gitea API base, for example https://host/api/v1
     SOURCE_REPOSITORY    owner/repo of the repository whose wiki is written
@@ -244,7 +245,7 @@ def main():
         raise WorkflowError(
             "configuration",
             f"The wiki folder {wiki_dir} does not exist in {owner}/{repo}; "
-            "set the wiki_dir input to the folder with the pages.",
+            "create the folder with the pages, or set WIKI_DIR to it.",
         )
 
     pages = read_pages(wiki_dir)

@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 8d1373b72756 -->
+<!-- translation of Troubleshooting.md, source sha256 e4128e7f821c -->
 
 > Ini ialah terjemahan [`Troubleshooting`](Troubleshooting). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -30,9 +30,7 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 | `TOKEN_FOR_GITEA is missing or empty.` | configuration | Tambah secret |
 | `Could not determine the Gitea source repository.` | configuration | Larian tiada nama repositori; laporkan sebagai kecacatan |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Kekalkan satu push mirror GitHub |
-| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Penerbitan wiki sahaja: repositori memanggil aliran kerja tetapi organisasinya tiada secret itu, atau panggilan tidak menghantarnya; simpannya dan hantar dalam `secrets:` (lihat [credentials.md](Credentials.ms)) |
-| `The prune input must be 'true' or 'false'` | configuration | Penerbitan wiki sahaja: tetapkan `prune` dalam panggilan kepada `"true"` atau `"false"` |
-| `The wiki folder ... does not exist` | configuration | Penerbitan wiki sahaja: tetapkan `wiki_dir` dalam panggilan kepada folder yang mengandungi halaman (lalai `docs/wiki`) |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Penerbitan wiki sahaja: repositori mempunyai folder `docs/wiki/` tetapi organisasinya tiada secret itu; simpannya sebagai secret organisasi (lihat [credentials.md](Credentials.ms)) |
 | `... HTTP 403 ...` semasa menerbitkan wiki | permissions | Penerbitan wiki sahaja: token memerlukan `write:repository` dan akses tulis kepada repositori ini |
 | `The wiki is not enabled on <repo>` | configuration | Penerbitan wiki sahaja: aktifkan wiki dalam tetapan repositori |
 | `The wiki source directory ... has no Markdown pages` | configuration | Penerbitan wiki sahaja: folder itu tiada halaman Markdown; tiada apa-apa diubah |
@@ -52,7 +50,7 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 
 `WARNING: Gitea returned an invalid push mirror list; GitHub metadata was not synced.` Larian berjaya tetapi tiada apa-apa disegerakkan. Semak bahawa versi Gitea menyokong API push mirror dan jalankan semula.
 
-`<n> page(s) are in the wiki but not in <folder>/ and were kept; set the prune input to true to delete them.` Larian berjaya. Halaman yang hanya ada dalam wiki dibiarkan melainkan panggilan menetapkan `prune: "true"`.
+`<n> page(s) are in the wiki but not in <folder>/ and were kept ...` Larian berjaya. Halaman yang hanya ada dalam wiki sentiasa dibiarkan.
 
 ## Masalah runner
 

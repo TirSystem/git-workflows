@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 7416464e6e83 -->
+<!-- translation of Onboarding.md, source sha256 1073637428ce -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -32,29 +32,12 @@ Penghantaran adalah automatik, jadi repositori tidak memerlukan salinan aliran k
 
 ## Menerbitkan wiki (pilihan)
 
-Aliran kerja boleh guna semula **Publish wiki pages** menyalin halaman Markdown dalam `docs/wiki/` ke wiki repositori apabila perubahan pada `docs/wiki/` digabungkan ke `main`. Repositori memanggilnya, jadi tiada apa-apa ditulis di tempat yang tiada panggilan. Wiki ada dalam bahasa Inggeris dan bahasa pemilik produk sekurang-kurangnya.
+Aliran kerja scoped **Publish wiki pages** menyalin halaman Markdown dalam `docs/wiki/` ke wiki repositori apabila perubahan pada `docs/wiki/` digabungkan ke `main`. Instans menghantarnya ke semua repositori, jadi tiada apa-apa untuk dipanggil atau disalin; repositori tanpa folder `docs/wiki/` dilangkau. Halaman yang ada dalam wiki tetapi tiada dalam folder dikekalkan. Wiki ada dalam bahasa Inggeris dan bahasa pemilik produk sekurang-kurangnya.
 
 1. Aktifkan wiki dalam tetapan repositori.
 2. Tambah halaman Markdown ke `docs/wiki/`. Nama fail ialah nama halaman: `Home.md` ialah halaman utama. Tanda sempang dalam nama ialah ruang dalam nama halaman: `Home-da.md` ialah halaman "Home da", dan pautan kepadanya ialah `[Dansk](Home-da)`.
-3. Tambah aliran kerja, contohnya `.gitea/workflows/publish-wiki.yml`, yang memanggil aliran kerja boleh guna semula:
-
-   ```yaml
-   on:
-     push:
-       branches: [ main ]
-       paths: [ "docs/wiki/**" ]
-   jobs:
-     wiki:
-       uses: TirSystem/git-workflows/.gitea/workflows/publish-wiki-pages.yml@v1
-       with:
-         prune: "true"
-       secrets:
-         TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
-   ```
-
-   `wiki_dir` lalai ialah `docs/wiki`. `prune: "true"` turut memadam halaman wiki yang tiada dalam folder itu, supaya wiki sentiasa sama dengan folder; lalai `false` mengekalkannya.
-4. Simpan `TOKEN_FOR_GITEA_WIKI` sebagai secret organisasi repositori, dengan skop yang tertera dalam [credentials.md](Credentials.ms).
-5. Gabungkan perubahan ke `main`. Log mesti berakhir dengan `Published <n> page(s) to the wiki of <owner>/<repo>`.
+3. Simpan `TOKEN_FOR_GITEA_WIKI` sebagai secret organisasi repositori, dengan skop yang tertera dalam [credentials.md](Credentials.ms).
+4. Gabungkan perubahan ke `main`. Log mesti berakhir dengan `Published <n> page(s) to the wiki of <owner>/<repo>`.
 
 ## Runners
 

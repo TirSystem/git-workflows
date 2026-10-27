@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 7416464e6e83 -->
+<!-- translation of Onboarding.md, source sha256 1073637428ce -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -32,29 +32,12 @@ Leveringen er automatisk, så et repository behøver ingen kopi af workflowet. S
 
 ## Publicér en wiki (valgfrit)
 
-Det genbrugelige workflow **Publish wiki pages** kopierer Markdown-siderne i `docs/wiki/` til repositoryets wiki, når en ændring af `docs/wiki/` flettes til `main`. Repositoryet kalder det, så der skrives intet, hvor der ikke findes et kald. Wikien findes som minimum på engelsk og på produktejerens sprog.
+Det scoped workflow **Publish wiki pages** kopierer Markdown-siderne i `docs/wiki/` til repositoryets wiki, når en ændring af `docs/wiki/` flettes til `main`. Instansen leverer det til alle repositories, så der er intet at kalde eller kopiere; et repository uden en `docs/wiki/`-mappe springes over. Sider, der er i wikien men ikke i mappen, beholdes. Wikien findes som minimum på engelsk og på produktejerens sprog.
 
 1. Aktivér wikien i repositoryets indstillinger.
 2. Tilføj Markdown-sider til `docs/wiki/`. Filnavnet er sidens navn: `Home.md` er forsiden. En bindestreg i navnet er et mellemrum i sidens navn: `Home-da.md` er siden "Home da", og et link til den er `[Dansk](Home-da)`.
-3. Tilføj et workflow, for eksempel `.gitea/workflows/publish-wiki.yml`, der kalder det genbrugelige workflow:
-
-   ```yaml
-   on:
-     push:
-       branches: [ main ]
-       paths: [ "docs/wiki/**" ]
-   jobs:
-     wiki:
-       uses: TirSystem/git-workflows/.gitea/workflows/publish-wiki-pages.yml@v1
-       with:
-         prune: "true"
-       secrets:
-         TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
-   ```
-
-   `wiki_dir` er som standard `docs/wiki`. `prune: "true"` sletter også wiki-sider, der ikke findes i mappen, så wikien altid er lig med mappen; standarden `false` beholder dem.
-4. Gem `TOKEN_FOR_GITEA_WIKI` som en secret i repositoryets organisation med det scope, der står i [credentials.md](Credentials.da).
-5. Flet ændringen til `main`. Loggen skal slutte med `Published <n> page(s) to the wiki of <owner>/<repo>`.
+3. Gem `TOKEN_FOR_GITEA_WIKI` som en secret i repositoryets organisation med det scope, der står i [credentials.md](Credentials.da).
+4. Flet ændringen til `main`. Loggen skal slutte med `Published <n> page(s) to the wiki of <owner>/<repo>`.
 
 ## Runners
 
