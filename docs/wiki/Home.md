@@ -13,23 +13,22 @@ A collection of reusable Gitea Actions workflows for DevOps professionals and so
 
 This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It contains eleven workflows: metadata sync to the GitHub mirror, wiki publishing (called by each repository), shared quality checks for Python and shell, for C and C++ and for C#, code metrics and coverage badges, a check that comments are in English, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
+It contains ten workflows: metadata sync to the GitHub mirror, wiki publishing (scoped, for every repository with a `docs/wiki/` folder), shared quality checks for Python and shell, for C and C++ and for C#, code metrics and coverage badges, a check that comments are in English, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Eleven workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
+Ten workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push to `main`, manual, daily 03:17 UTC | Copies the description and topics of a Gitea repository to its GitHub push mirror |
-| Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-wiki-pages.yml) | Reusable (`workflow_call`) | a call from another repository | Publishes the pages in `docs/wiki/` (or the folder named by `wiki_dir`) to the wiki of the calling repository |
+| Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki-pages.yml) | Scoped | push to `main` that changes `docs/wiki/**`, manual | Publishes the pages in `docs/wiki/` to the wiki of the repository; skipped where the folder does not exist |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Reusable (`workflow_call`) | a call from another repository | Runs ruff, mypy, shellcheck and shfmt on the tracked files and changes nothing |
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs clang-format and clang-tidy at exact versions on the tracked C and C++ files and changes nothing |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs `dotnet format` and `dotnet build` on an exact .NET SDK 10 or later and changes nothing |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/code-metrics.yml) | Reusable (`workflow_call`) | a call from another repository | Counts the code files and the lines of code (without comment and blank lines), reads a Cobertura coverage report and commits three SVG badges to a `badges` branch |
 | English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/english-comments.yml) | Reusable (`workflow_call`) | a call from another repository, on a pull request | Judges the language of the comments and docstrings a pull request adds, fails the run when one is not English and writes one comment on the pull request that mentions the author |
-| Publish own wiki | [`publish-own-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-own-wiki.yml) | This repository only | push to `main` that changes `docs/wiki/**`, manual | Calls the reusable Publish wiki pages workflow for the wiki of this repository |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | This repository only | manual | Creates the version tag, the release page and the major tag after the checks |
 | Publish accepted milestones | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | This repository only | push to `main` that changes `docs/milestones/**` or `docs/sqa/reviews/**`, manual (dry run by default) | Creates or updates the Gitea milestone and issues of every milestone that is Accepted with a Go review |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | This repository only | pull request, push to `main`, manual | Parses every workflow and runs the offline tests |
@@ -371,85 +370,49 @@ deactivate Workflow
 
 ### Publish wiki pages
 
-A reusable workflow (ADR-0009). A repository calls it from its own workflow, so the call is the opt-in and no marker file is needed. It publishes the Markdown pages of `wiki_dir` (default `docs/wiki`) to the wiki of the calling repository, and deletes pages that are not in the folder only when `prune` is `true`.
-
-```yaml
-on:
-  push:
-    branches: [ main ]
-    paths: [ "docs/wiki/**" ]
-jobs:
-  wiki:
-    uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1
-    secrets:
-      TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
-```
+A scoped workflow: the instance runs it in every repository of the organization, so no call and no marker file is needed. A repository opts in by having a `docs/wiki` folder; where there is none, the run ends without doing anything. It publishes the Markdown pages of `docs/wiki` to the wiki of the repository and keeps the wiki pages that are not in the folder. It needs the organization secret `TOKEN_FOR_GITEA_WIKI`.
 
 #### Workflow
 
 ```plantuml
 @startuml
-title Publish docs/wiki to the wiki of the calling repository
+title Publish docs/wiki to the wiki of the repository
 
 autonumber
 
-actor "Calling repository\nuses: ...publish-wiki-pages.yml@v1" as Caller
-participant "Gitea Actions\npublish-wiki-pages" as Workflow
-participant "shared-scripts\n(tools/publish_wiki.py at tools-ref)" as Script
+actor "Push to main that changes docs/wiki/**,
+or manual trigger" as Trigger
+participant "Gitea Actions
+publish-wiki-pages" as Workflow
+participant "shared-scripts
+(tools/publish_wiki.py at v2)" as Script
 participant "Gitea wiki API" as Wiki
 
-Caller -> Workflow: Call with wiki_dir, prune and the secret
+Trigger -> Workflow: Start workflow
 activate Workflow
-Workflow -> Script: Check out the repository and the script, run it
-activate Script
+Workflow -> Workflow: Check out the repository
 
-alt wiki_dir does not exist, or has no Markdown pages
-  Script --> Workflow: Fail with [configuration]\n(an empty folder never deletes pages)
+alt docs/wiki does not exist
+  Workflow --> Trigger: Nothing to publish
 else
-  Script -> Script: Read prune and TOKEN_FOR_GITEA_WIKI
-  Script -> Wiki: GET repository (preflight)
-  Wiki --> Script: Wiki is enabled, token accepted
-  Script -> Wiki: GET pages
-  Wiki --> Script: Existing pages
-  Script -> Wiki: Create new pages, update changed pages
-  opt prune is true
-    Script -> Wiki: Delete pages that are not in wiki_dir
+  Workflow -> Script: Fetch the script, run it
+  activate Script
+  alt docs/wiki has no Markdown pages
+    Script --> Workflow: Fail with [configuration]
+(an empty folder never deletes pages)
+  else
+    Script -> Script: Read TOKEN_FOR_GITEA_WIKI
+    Script -> Wiki: GET repository (preflight)
+    Wiki --> Script: Wiki is enabled, token accepted
+    Script -> Wiki: GET pages
+    Wiki --> Script: Existing pages
+    Script -> Wiki: Create new pages, update changed pages
+    Script --> Workflow: Log created and updated counts
   end
-  Script --> Workflow: Log created, updated and deleted counts
+  deactivate Script
+  Workflow --> Trigger: Workflow result
 end
-deactivate Script
-Workflow --> Caller: Workflow result
 deactivate Workflow
-@enduml
-```
-
-### Publish own wiki
-
-The wiki of this repository is `docs/wiki/`. This workflow calls the reusable workflow above by its local path, with `prune` set to `true` so the wiki always equals the folder and `tools-ref` set to `main` so that the script of the same commit runs. It is the caller that a project copies from the framework's `templates/ci/publish-wiki.yml`.
-
-#### Workflow
-
-```plantuml
-@startuml
-title Publish the wiki of this repository (docs/wiki)
-
-autonumber
-
-actor "Push to main that changes docs/wiki/**,\nor manual trigger" as Trigger
-participant "Gitea Actions\npublish-own-wiki" as Caller
-participant "Gitea Actions\npublish-wiki-pages\n(called by its local path)" as Workflow
-participant "Gitea wiki API" as Wiki
-
-Trigger -> Caller: Start workflow
-activate Caller
-Caller -> Workflow: Call with wiki_dir docs/wiki, prune true,\ntools-ref main and TOKEN_FOR_GITEA_WIKI
-activate Workflow
-Workflow -> Wiki: Create, update and delete pages\nso the wiki equals docs/wiki
-Wiki --> Workflow: Done
-Workflow --> Caller: Workflow result
-deactivate Workflow
-Caller --> Trigger: Workflow result
-deactivate Caller
 @enduml
 ```
 

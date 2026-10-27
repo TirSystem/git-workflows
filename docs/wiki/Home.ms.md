@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 9b84b5cf7534 -->
+<!-- translation of Home.md, source sha256 05ab44419575 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -13,23 +13,22 @@ Koleksi aliran kerja (workflow) Gitea Actions yang boleh digunakan semula untuk 
 
 Repositori ini ialah koleksi pusat bagi automasi yang boleh digunakan semula untuk repositori TirSystem. Repositori utama berada di `git.tirsystem.com` (Gitea) dan dicerminkan dengan push ke GitHub.
 
-Ia mengandungi sebelas aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki (dipanggil oleh setiap repositori), semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, metrik kod dan lencana liputan, semakan bahawa komen ditulis dalam bahasa Inggeris, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
+Ia mengandungi sepuluh aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki (scoped, untuk setiap repositori yang mempunyai folder `docs/wiki/`), semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, metrik kod dan lencana liputan, semakan bahawa komen ditulis dalam bahasa Inggeris, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
 
 
 ## Aliran kerja
 
-Terdapat sebelas aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
+Terdapat sepuluh aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
 
 | Aliran kerja | Fail | Jenis | Bermula apabila | Tujuan |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push ke `main`, manual, setiap hari 03:17 UTC | Menyalin penerangan dan topik repositori Gitea ke push mirror GitHub-nya |
-| Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-wiki-pages.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menerbitkan halaman dalam `docs/wiki/` (atau folder yang dinamakan oleh `wiki_dir`) ke wiki repositori pemanggil |
+| Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/scoped_workflows/publish-wiki-pages.yml) | Scoped | push ke `main` yang mengubah `docs/wiki/**`, manual | Menerbitkan halaman dalam `docs/wiki/` ke wiki repositori; dilangkau jika folder itu tiada |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan ruff, mypy, shellcheck dan shfmt pada fail yang dijejaki dan tidak mengubah apa-apa |
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan clang-format dan clang-tidy pada versi tepat pada fail C dan C++ yang dijejaki dan tidak mengubah apa-apa |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan `dotnet format` dan `dotnet build` pada .NET SDK 10 atau lebih baharu yang tepat dan tidak mengubah apa-apa |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/code-metrics.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Mengira fail kod dan baris kod (tanpa baris komen dan baris kosong), membaca laporan liputan Cobertura dan melakukan commit tiga lencana SVG ke cabang `badges` |
 | English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/english-comments.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain, pada pull request | Menilai bahasa komen dan docstring yang ditambah oleh pull request, menggagalkan larian apabila ada yang bukan bahasa Inggeris dan menulis satu komen pada pull request yang menyebut penulisnya |
-| Publish own wiki | [`publish-own-wiki.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/publish-own-wiki.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/wiki/**`, manual | Memanggil aliran kerja boleh guna semula Publish wiki pages untuk wiki repositori ini |
 | Release | [`release.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/release.yml) | Repositori ini sahaja | manual | Mencipta tag versi, halaman keluaran dan tag major selepas semakan |
 | Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/sync-milestones.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/github-action/src/branch/main/.gitea/workflows/validate-workflows.yml) | Repositori ini sahaja | pull request, push ke `main`, manual | Menghurai setiap aliran kerja sebagai YAML dan menjalankan ujian luar talian |
@@ -371,85 +370,45 @@ deactivate Workflow
 
 ### Menerbitkan halaman wiki
 
-Aliran kerja boleh guna semula (ADR-0009). Sesebuah repositori memanggilnya daripada aliran kerjanya sendiri, jadi panggilan itu ialah pilihan menyertai dan tiada fail penanda diperlukan. Ia menerbitkan halaman Markdown dalam `wiki_dir` (lalai `docs/wiki`) ke wiki repositori pemanggil, dan memadam halaman yang tiada dalam folder hanya apabila `prune` ialah `true`.
-
-```yaml
-on:
-  push:
-    branches: [ main ]
-    paths: [ "docs/wiki/**" ]
-jobs:
-  wiki:
-    uses: TirSystem/github-action/.gitea/workflows/publish-wiki-pages.yml@v1
-    secrets:
-      TOKEN_FOR_GITEA_WIKI: ${{ secrets.TOKEN_FOR_GITEA_WIKI }}
-```
+Aliran kerja scoped: instans menjalankannya dalam setiap repositori organisasi, jadi tiada panggilan atau fail penanda diperlukan. Sebuah repositori mengikut serta dengan mempunyai folder `docs/wiki`; jika tiada, larian tamat tanpa berbuat apa-apa. Ia menerbitkan halaman Markdown dalam `docs/wiki` ke wiki repositori dan mengekalkan halaman wiki yang tiada dalam folder itu. Ia memerlukan secret organisasi `TOKEN_FOR_GITEA_WIKI`.
 
 #### Aliran kerja
 
 ```plantuml
 @startuml
-title Publish docs/wiki to the wiki of the calling repository
-
-autonumber
-
-actor "Calling repository\nuses: ...publish-wiki-pages.yml@v1" as Caller
-participant "Gitea Actions\npublish-wiki-pages" as Workflow
-participant "shared-scripts\n(tools/publish_wiki.py at tools-ref)" as Script
-participant "Gitea wiki API" as Wiki
-
-Caller -> Workflow: Call with wiki_dir, prune and the secret
-activate Workflow
-Workflow -> Script: Check out the repository and the script, run it
-activate Script
-
-alt wiki_dir does not exist, or has no Markdown pages
-  Script --> Workflow: Fail with [configuration]\n(an empty folder never deletes pages)
-else
-  Script -> Script: Read prune and TOKEN_FOR_GITEA_WIKI
-  Script -> Wiki: GET repository (preflight)
-  Wiki --> Script: Wiki is enabled, token accepted
-  Script -> Wiki: GET pages
-  Wiki --> Script: Existing pages
-  Script -> Wiki: Create new pages, update changed pages
-  opt prune is true
-    Script -> Wiki: Delete pages that are not in wiki_dir
-  end
-  Script --> Workflow: Log created, updated and deleted counts
-end
-deactivate Script
-Workflow --> Caller: Workflow result
-deactivate Workflow
-@enduml
-```
-
-### Menerbitkan wiki sendiri
-
-Wiki repositori ini ialah `docs/wiki/`. Aliran kerja ini memanggil aliran kerja boleh guna semula di atas melalui laluan tempatannya, dengan `prune` ditetapkan kepada `true` supaya wiki sentiasa sama dengan folder dan `tools-ref` ditetapkan kepada `main` supaya skrip daripada commit yang sama dijalankan. Ia ialah pemanggil yang disalin oleh projek daripada `templates/ci/publish-wiki.yml` framework.
-
-#### Aliran kerja
-
-```plantuml
-@startuml
-title Publish the wiki of this repository (docs/wiki)
+title Publish docs/wiki to the wiki of the repository
 
 autonumber
 
 actor "Push to main that changes docs/wiki/**,\nor manual trigger" as Trigger
-participant "Gitea Actions\npublish-own-wiki" as Caller
-participant "Gitea Actions\npublish-wiki-pages\n(called by its local path)" as Workflow
+participant "Gitea Actions\npublish-wiki-pages" as Workflow
+participant "shared-scripts\n(tools/publish_wiki.py at v2)" as Script
 participant "Gitea wiki API" as Wiki
 
-Trigger -> Caller: Start workflow
-activate Caller
-Caller -> Workflow: Call with wiki_dir docs/wiki, prune true,\ntools-ref main and TOKEN_FOR_GITEA_WIKI
+Trigger -> Workflow: Start workflow
 activate Workflow
-Workflow -> Wiki: Create, update and delete pages\nso the wiki equals docs/wiki
-Wiki --> Workflow: Done
-Workflow --> Caller: Workflow result
+Workflow -> Workflow: Check out the repository
+
+alt docs/wiki does not exist
+  Workflow --> Trigger: Nothing to publish
+else
+  Workflow -> Script: Fetch the script, run it
+  activate Script
+  alt docs/wiki has no Markdown pages
+    Script --> Workflow: Fail with [configuration]\n(an empty folder never deletes pages)
+  else
+    Script -> Script: Read TOKEN_FOR_GITEA_WIKI
+    Script -> Wiki: GET repository (preflight)
+    Wiki --> Script: Wiki is enabled, token accepted
+    Script -> Wiki: GET pages
+    Wiki --> Script: Existing pages
+    Script -> Wiki: Create new pages, update changed pages
+    Script --> Workflow: Log created and updated counts
+  end
+  deactivate Script
+  Workflow --> Trigger: Workflow result
+end
 deactivate Workflow
-Caller --> Trigger: Workflow result
-deactivate Caller
 @enduml
 ```
 

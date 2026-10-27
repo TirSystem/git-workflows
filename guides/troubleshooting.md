@@ -26,9 +26,7 @@ never starts, or stops before the step) is a **runner** problem.
 | `TOKEN_FOR_GITEA is missing or empty.` | configuration | Add the secret |
 | `Could not determine the Gitea source repository.` | configuration | The run has no repository name; report as a defect |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Keep one GitHub push mirror |
-| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Wiki publishing only: the repository calls the workflow but its organization has no such secret, or the call does not pass it; store it and pass it in `secrets:` (see [credentials.md](credentials.md)) |
-| `The prune input must be 'true' or 'false'` | configuration | Wiki publishing only: set `prune` in the call to `"true"` or `"false"` |
-| `The wiki folder ... does not exist` | configuration | Wiki publishing only: set `wiki_dir` in the call to the folder with the pages (default `docs/wiki`) |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Wiki publishing only: the repository has a `docs/wiki/` folder but its organization has no such secret; store it as an organization secret (see [credentials.md](credentials.md)) |
 | `... HTTP 403 ...` while publishing the wiki | permissions | Wiki publishing only: the token needs `write:repository` and write access to this repository |
 | `The wiki is not enabled on <repo>` | configuration | Wiki publishing only: enable the wiki in the repository settings |
 | `The wiki source directory ... has no Markdown pages` | configuration | Wiki publishing only: the folder has no Markdown pages; nothing was changed |
@@ -53,9 +51,8 @@ settings.
 synced.` The run succeeds but nothing was synced. Check that the Gitea
 version supports the push mirror API and re-run.
 
-`<n> page(s) are in the wiki but not in <folder>/ and were kept; set the prune
-input to true to delete them.` The run succeeds. Pages that exist only in the
-wiki are left alone unless the call sets `prune: "true"`.
+`<n> page(s) are in the wiki but not in <folder>/ and were kept ...` The run
+succeeds. Pages that exist only in the wiki are always left alone.
 
 ## Runner problems
 
