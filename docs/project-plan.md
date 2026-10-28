@@ -4,19 +4,19 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015], [MIL-016], [MIL-017], [MIL-018] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-015 (rename the repository references to git-workflows; the repository was called github-action); reviewed (RC-087), accepted by the author in chat as stand-in for S01 | [851b24c] |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Updated MIL-015 to pull request 218 and the removed required check; reviewed (RC-088), accepted by the author in chat as stand-in for S01 | [081a17d] |
+| 2026-10-28 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-016 (static security scan with Semgrep as a scoped workflow); reviewed (RC-090), accepted by the author in chat as stand-in for S01 | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-017 (scoped validation workflow) and MIL-018 (scoped release workflow and `TOKEN_FOR_GITEA_RELEASE`); reviewed (RC-091, RC-092), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
 
 ---
 
 ## Purpose
 
-This plan schedules fifteen milestones that move the repository from one
+This plan schedules sixteen milestones that move the repository from one
 workflow with known defects to a documented, versioned collection of shared
 workflows. The Business Case sets no deadline, so the dates are the plan's own; they were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -27,6 +27,9 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 - MIL-013 (source code comments are in English) runs from 2026-11-09 to its Target Date, 2026-11-20, proposed by the author and accepted by S01 in chat on 2026-10-19; it overlaps MIL-009, whose work is on wiki callers and does not touch the runners or the reviewer of the check.
 - MIL-014 (publish wiki pages as a scoped workflow) runs from 2026-11-23 to its Target Date, 2026-11-27, proposed by the author; it follows MIL-013 so that release 3.0.0 carries one breaking change, and it reverses part of ADR-0009. S01 confirms the dates when accepting it.
 - MIL-015 (rename the repository references to git-workflows) runs from 2026-10-28 to its Target Date, 2026-11-06, proposed by the author because the branch protection of `main` required a check named after the old repository name; it overlaps MIL-012. Pull request 218 renamed the live files and the check was removed on 2026-10-27, so the milestone keeps the callers, the check of the old name on the instance, the 16 project documents for S01 and the release. Its documentation task follows the merge of MIL-014. The repository was called `github-action` until its rename; the milestones, ADRs and review records written under that name are not rewritten.
+- MIL-016 (static security scan with Semgrep as a scoped workflow) runs from 2026-11-30 to its Target Date, 2026-12-11, proposed by the author; it follows MIL-014, whose delivery of scoped workflows it uses, and MIL-013 (release 2.3.0). It traces to objective O8 of the Business Case, added with it (RC-089).
+- MIL-017 (validate every repository with a scoped workflow) runs from 2026-12-14 to its Target Date, 2026-12-18, proposed by the author; it follows MIL-016 and uses the delivery of scoped workflows that MIL-014 verified. It traces to objective O4.
+- MIL-018 (release any repository with a scoped workflow) runs from 2026-12-21 to its Target Date, 2026-12-30, proposed by the author; it follows MIL-017, whose status it requires, and ends before MIL-007 starts on 2027-01-04. It traces to objective O4 and describes the secret `TOKEN_FOR_GITEA_RELEASE`. S01 confirmed the dates in chat on 2026-10-29, including that MIL-018 ends four days after the last decision date 2026-12-26, as for MIL-007 (RC-092).
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -49,6 +52,9 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Source code comments are in English | [MIL-013] | 2026-11-09 to 2026-11-20 | 2026-11-20 | S05 | None (technical tasks) | Release 2.3.0: reusable workflow `english-comments.yml` that fails a pull request with a non-English comment and tells the author, with its ADR, tests, guides and wiki, and the rule proposed in the framework | Not created yet (the sync creates it when MIL-013 is Accepted) |
 | Publish wiki pages as a scoped workflow | [MIL-014] | 2026-11-23 to 2026-11-27 | 2026-11-27 | S05 | None (technical tasks) | Release 3.0.0: scoped publish-wiki-pages workflow opted into by the docs/wiki folder, reusable workflow and the seven callers removed, ADR-0009 superseded | Not created yet (the sync runs after acceptance) |
 | Rename the repository references to git-workflows | [MIL-015] | 2026-10-28 to 2026-11-06 | 2026-11-06 | S05 | None (technical tasks) | Code, configuration and user documentation name TirSystem/git-workflows, callers updated, required checks of main producible, released | Not created yet (the sync runs after acceptance) |
+| Static security scan with Semgrep as a scoped workflow | [MIL-016] | 2026-11-30 to 2026-12-11 | 2026-12-11 | S05 | None (technical tasks) | Scoped Semgrep workflow with community rules, ADR-0014, guide, adoption row, wiki in three languages, trial on four repositories, released as the next minor | Not created yet (the sync runs after acceptance) |
+| Validate every repository with a scoped workflow | [MIL-017] | 2026-12-14 to 2026-12-18 | 2026-12-18 | S05 | None (technical tasks) | Scoped validate workflow (workflow files and shell scripts), ADR, guide, adoption row, wiki in three languages, trial on four repositories, released as the next minor | Not created yet (the sync runs after acceptance) |
+| Release any repository with a scoped workflow | [MIL-018] | 2026-12-21 to 2026-12-30 | 2026-12-30 | S05 | None (technical tasks) | Scoped release workflow, general `release.py`, `TOKEN_FOR_GITEA_RELEASE` described, old `release.yml` removed, dry runs in three repositories, released as the next major | Not created yet (the sync runs after acceptance) |
 
 ```plantuml
 @startgantt
@@ -83,6 +89,12 @@ Project starts 2026-10-05
 [MIL-014 Go/No-Go] happens 2026-11-27
 [MIL-015 Rename] starts 2026-10-28 and ends 2026-11-06
 [MIL-015 Go/No-Go] happens 2026-11-06
+[MIL-016 Semgrep] starts 2026-11-30 and ends 2026-12-11
+[MIL-016 Go/No-Go] happens 2026-12-11
+[MIL-017 Validate] starts 2026-12-14 and ends 2026-12-18
+[MIL-017 Go/No-Go] happens 2026-12-18
+[MIL-018 Release] starts 2026-12-21 and ends 2026-12-30
+[MIL-018 Go/No-Go] happens 2026-12-30
 @endgantt
 ```
 
@@ -104,6 +116,9 @@ Project starts 2026-10-05
 | A shared workflow that checks that comments in source code are in English and tells the author | [MIL-013] |
 | The wiki publisher as a scoped workflow again, opt-in by the docs/wiki folder, without callers | [MIL-014] |
 | The references to the repository name (workflows, documentation, callers) follow its rename to git-workflows | [MIL-015] |
+| A free static security scan (Semgrep) as a scoped workflow | [MIL-016] |
+| Every repository is validated by the same scoped workflow, with one status name | [MIL-017] |
+| Any repository is released by one scoped workflow with a described token | [MIL-018] |
 
 ## Dependencies
 
@@ -116,6 +131,8 @@ MIL-001 → MIL-002 → MIL-003 → MIL-004
    MIL-004 + MIL-011 → MIL-012
    MIL-004 + MIL-010 + MIL-011 → MIL-013
                  MIL-009 + MIL-013 → MIL-014
+                 MIL-013 + MIL-014 → MIL-016
+                 MIL-016 + MIL-014 → MIL-017 → MIL-018
 ```
 
 A No-Go moves every later window by the rework time of the failed milestone.
@@ -132,6 +149,9 @@ A No-Go moves every later window by the rework time of the failed milestone.
 | The runner cannot give a job `NET_ADMIN` and `/dev/net/tun`, or `tailscaled` does not survive to the next step (MIL-012) | The actions need another shape (a different start of the daemon, or userspace mode only) | MIL-012 tasks 2 to 4 verify it first on a runner of the instance; the release waits for criteria 2 and 3. |
 | The check calls a correct comment non-English, or misses a Danish or Malay one (MIL-013) | Authors lose trust in the check, or it is turned off | MIL-013 tasks 1 and 2 measure the method on a corpus before anything is built, and the exception marker and the allowed-words file (criterion 4) take care of the rest. |
 | A repository with a `docs/wiki/` folder starts publishing a wiki its owner did not want, or its first scoped run fails (MIL-014) | An unwanted wiki is written with the organization token, or a wiki stops updating | MIL-014 tasks 2 and 6 list every repository with the folder before the release and read each wiki back after its first run; the reusable workflow stays at `v2` for a repository that needs it. |
+| Semgrep finds too many false positives, or its rules cannot be used under their licence (MIL-016) | Authors learn to ignore the scan, or the scan has to be removed | MIL-016 task 3 reads the licences from the sources before anything is built, and task 7 counts the false positives on four repositories before the blocking severity is set. |
+| The validation blocks repositories it should not (MIL-017), or the status name differs between repositories | Release is refused in a repository that is fine, or reads a status that is not there | MIL-017 task 1 records the name the instance gives before anything is built, and task 6 counts false positives on four repositories before the release |
+| The token `TOKEN_FOR_GITEA_RELEASE` can write more than tags and release pages, or its absence stops every release (MIL-018) | A leaked token changes code, or releases stop | MIL-018 tasks 1 and 5 measure what the token needs, describe the scope for a dedicated user and the rotation, and the dry runs of task 6 fail early with a message that names the secret |
 | Security review by S05 is a bottleneck | Milestone decisions slip | Keep milestones small and plan review time before each decision date. |
 
 ## Open Issues
@@ -311,6 +331,9 @@ no tests, no release process.
 [MIL-013]: ./milestones/mil-013-english-comments-check.md
 [MIL-014]: ./milestones/mil-014-wiki-publishing-scoped-again.md
 [MIL-015]: ./milestones/mil-015-rename-to-git-workflows.md
+[MIL-016]: ./milestones/mil-016-semgrep-scoped-workflow.md
+[MIL-017]: ./milestones/mil-017-scoped-validation-workflow.md
+[MIL-018]: ./milestones/mil-018-scoped-release-workflow.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
 [Milestone MIL-003]: https://git.tirsystem.com/TirSystem/github-action/milestone/20
@@ -322,4 +345,3 @@ no tests, no release process.
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
-[081a17d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/081a17d07f4c7d7145cdc50984c669dfb798b48d
