@@ -6,7 +6,7 @@ leaves.
 
 | Secret | Content | Used for |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA` | The Gitea token, nothing else | Reading the repository (description, topics) and its push mirrors |
+| `TOKEN_FOR_GITEA_REPO` | The Gitea token, nothing else | Reading the repository (description, topics) and its push mirrors |
 | `PAT_FOR_GITHUB` | The GitHub token, nothing else | Changing the description and topics of the GitHub mirror |
 
 ## Minimum permissions
@@ -50,7 +50,7 @@ pages needs only the read scope.
 
 **Testing the permissions on the instance (optional)**
 
-1. In the Gitea settings of the user, the token stored as `TOKEN_FOR_GITEA`
+1. In the Gitea settings of the user, the token stored as `TOKEN_FOR_GITEA_REPO`
    lists only `read:repository`, the user is an administrator of the
    repository, and a run still ends with `Preflight passed`.
 2. The GitHub token lists only the mirror repository and
@@ -91,7 +91,7 @@ It uses its own secret, so the metadata sync token stays read-only.
 | `TOKEN_FOR_GITEA_WIKI` | The Gitea token, nothing else | Writing the wiki pages of the repositories of an organization that have a `docs/wiki/` folder |
 
 - Store it as a secret of the organization of each repository that publishes.
-  There is no fallback to `TOKEN_FOR_GITEA`: a repository with a
+  There is no fallback to `TOKEN_FOR_GITEA_REPO`: a repository with a
   `docs/wiki/` folder and no such secret fails with a configuration error, and a
   repository without the folder does not need it.
 - The token needs scope `write:repository`, and its user needs write access to

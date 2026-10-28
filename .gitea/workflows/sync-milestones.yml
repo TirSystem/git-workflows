@@ -11,7 +11,7 @@
 # INSTALLING THIS FILE IS THE STANDING AUTHORIZATION TO PUBLISH. This project
 # installed it on 2026-10-11 at the request of S01.
 #
-# Secret: TOKEN_FOR_GITEA, the bare Gitea token of the organization (no JSON).
+# Secret: TOKEN_FOR_GITEA_ISSUES, the bare Gitea token of the organization (no JSON).
 # It needs read and write on issues and milestones, and read on the framework
 # repository, which is checked out as a submodule. Gitea does not accept secret
 # names that start with GITEA_ or GITHUB_.
@@ -50,7 +50,7 @@ jobs:
       - name: Check out the project
         uses: actions/checkout@v4.2.2
         with:
-          token: ${{ secrets.TOKEN_FOR_GITEA }}
+          token: ${{ secrets.TOKEN_FOR_GITEA_ISSUES }}
 
       # .gitmodules uses ssh:// URLs and the runner has no SSH key, so the
       # submodules (framework, and framework/qc inside it) are fetched over HTTPS
@@ -62,7 +62,7 @@ jobs:
           GIT_CONFIG_KEY_0: "url.https://git.tirsystem.com/.insteadOf"
           GIT_CONFIG_VALUE_0: "ssh://git@git.tirsystem.com:10022/"
           GIT_CONFIG_KEY_1: "http.extraheader"
-          GIT_CONFIG_VALUE_1: "Authorization: token ${{ secrets.TOKEN_FOR_GITEA }}"
+          GIT_CONFIG_VALUE_1: "Authorization: token ${{ secrets.TOKEN_FOR_GITEA_ISSUES }}"
         run: |
           set -euo pipefail
           git submodule update --init --recursive --depth=1
@@ -72,7 +72,7 @@ jobs:
 
       - name: Publish accepted milestones
         env:
-          GITEA_TOKEN: ${{ secrets.TOKEN_FOR_GITEA }}
+          TOKEN_FOR_GITEA_ISSUES: ${{ secrets.TOKEN_FOR_GITEA_ISSUES }}
           # Empty on a push (a real run); "true" or "false" on a manual run.
           DRY_RUN: ${{ inputs.dry_run }}
         run: bash framework/scripts/ci-publish-milestones.sh publish

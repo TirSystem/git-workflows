@@ -131,7 +131,7 @@ en	SHELLCHECK_PY_VERSION, SHFMT_PY_VERSION, QC_VENV (and QC_BIN for tests).	tool
 en	Scan one line; return (has_code, has_comment) and update the state.	tools/count_loc.py
 en	Scoped workflow: it runs in every repository of an organization, so there is	.gitea/scoped_workflows/publish-wiki-pages.yml
 en	Scoped workflow: it runs in every repository of an organization. The script	.gitea/scoped_workflows/sync-github-metadata.yml
-en	Secret: TOKEN_FOR_GITEA, the bare Gitea token of the organization (no JSON).	.gitea/workflows/sync-milestones.yml
+en	Secret: TOKEN_FOR_GITEA_ISSUES, the bare Gitea token of the organization (no JSON).	.gitea/workflows/sync-milestones.yml
 en	Settings come from the environment, never from interpolated expressions:	tools/code-metrics.sh
 en	Static validation of every workflow file in this repository.	tests/test_workflows.py
 en	Steps of the composite action actions/connect-tailscale/action.yml.	actions/connect-tailscale/connect-tailscale.sh

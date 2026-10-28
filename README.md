@@ -64,7 +64,7 @@ activate Workflow
 
 Workflow -> Workflow: Read and validate secrets
 note right
-TOKEN_FOR_GITEA
+TOKEN_FOR_GITEA_REPO
 PAT_FOR_GITHUB
 end note
 
@@ -423,7 +423,7 @@ deactivate Workflow
 
 ### 📌 Publish accepted milestones
 
-Standing authorization to publish: on a push to `main` that changes the milestones or their reviews, every milestone whose latest Version History row is Accepted and whose latest review is a Go is created or updated on Gitea with its tasks as issues. Nothing is closed or deleted. A manual run is a dry run unless `dry_run` is switched off. It uses the secret `TOKEN_FOR_GITEA` and the `--accepted-only` rule of the mounted framework (v0.5.0 or later).
+Standing authorization to publish: on a push to `main` that changes the milestones or their reviews, every milestone whose latest Version History row is Accepted and whose latest review is a Go is created or updated on Gitea with its tasks as issues. Nothing is closed or deleted. A manual run is a dry run unless `dry_run` is switched off. It uses the secret `TOKEN_FOR_GITEA_ISSUES` and the `--accepted-only` rule of the mounted framework (v0.5.0 or later).
 
 #### 🔀 Workflow
 
@@ -440,7 +440,7 @@ participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start workflow
 activate Workflow
-Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA
+Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA_ISSUES
 Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
 activate Script
 
@@ -504,9 +504,9 @@ deactivate Workflow
 - A Gitea instance with Actions enabled and a runner providing `ubuntu-latest` with `python3`
 - A configured GitHub push mirror on the Gitea repository (at most one; repositories without a mirror are skipped successfully)
 - Repository secrets:
-  - `TOKEN_FOR_GITEA`: Gitea API token (the token only, no JSON)
+  - `TOKEN_FOR_GITEA_REPO`: Gitea API token (the token only, no JSON)
   - `PAT_FOR_GITHUB`: a GitHub personal access token allowed to edit the mirror repository (the token only, no JSON)
-  - `TOKEN_FOR_GITEA_WIKI` (only for repositories that publish a wiki, see the [onboarding guide](guides/onboarding.md)): a Gitea token that can write the wiki, stored as a secret of the repository's organization; there is no fallback to `TOKEN_FOR_GITEA`
+  - `TOKEN_FOR_GITEA_WIKI` (only for repositories that publish a wiki, see the [onboarding guide](guides/onboarding.md)): a Gitea token that can write the wiki, stored as a secret of the repository's organization; there is no fallback to `TOKEN_FOR_GITEA_REPO`
 
 ## 🛠️ Setup
 

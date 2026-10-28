@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 3bb705987743 -->
+<!-- translation of Home.md, source sha256 7c57b63f1188 -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -59,7 +59,7 @@ activate Workflow
 
 Workflow -> Workflow: Read and validate secrets
 note right
-TOKEN_FOR_GITEA
+TOKEN_FOR_GITEA_REPO
 PAT_FOR_GITHUB
 end note
 
@@ -414,7 +414,7 @@ deactivate Workflow
 
 ### Publicering af accepterede milepæle
 
-Permanent tilladelse til at publicere: ved et push til `main`, der ændrer milepælene eller deres gennemgange, oprettes eller opdateres hver milepæl, hvis seneste række i Version History er Accepted, og hvis seneste gennemgang er en Go, på Gitea med sine opgaver som issues. Intet lukkes eller slettes. En manuel kørsel er en tørkørsel, medmindre `dry_run` slås fra. Det bruger secret'en `TOKEN_FOR_GITEA` og `--accepted-only`-reglen i det monterede framework (v0.5.0 eller nyere).
+Permanent tilladelse til at publicere: ved et push til `main`, der ændrer milepælene eller deres gennemgange, oprettes eller opdateres hver milepæl, hvis seneste række i Version History er Accepted, og hvis seneste gennemgang er en Go, på Gitea med sine opgaver som issues. Intet lukkes eller slettes. En manuel kørsel er en tørkørsel, medmindre `dry_run` slås fra. Det bruger secret'en `TOKEN_FOR_GITEA_ISSUES` og `--accepted-only`-reglen i det monterede framework (v0.5.0 eller nyere).
 
 #### Workflow
 
@@ -431,7 +431,7 @@ participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start workflow
 activate Workflow
-Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA
+Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA_ISSUES
 Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
 activate Script
 
@@ -496,9 +496,9 @@ deactivate Workflow
 - En Gitea-instans med Actions aktiveret og en runner med labelen `ubuntu-latest` og `python3`
 - Et konfigureret GitHub push-spejl på Gitea-repositoryet (højst ét; repositories uden spejl springes over uden fejl)
 - Repository-secrets:
-  - `TOKEN_FOR_GITEA`: Gitea API-token (kun tokenet, ingen JSON)
+  - `TOKEN_FOR_GITEA_REPO`: Gitea API-token (kun tokenet, ingen JSON)
   - `PAT_FOR_GITHUB`: et GitHub personal access token, der må redigere spejl-repositoryet (kun tokenet, ingen JSON)
-  - `TOKEN_FOR_GITEA_WIKI` (kun for repositories, der publicerer en wiki, se [tilslutningsvejledningen](Onboarding.da)): et Gitea-token, der kan skrive til wikien, gemt som en secret i repositoryets organisation; der er ingen reserve til `TOKEN_FOR_GITEA`
+  - `TOKEN_FOR_GITEA_WIKI` (kun for repositories, der publicerer en wiki, se [tilslutningsvejledningen](Onboarding.da)): et Gitea-token, der kan skrive til wikien, gemt som en secret i repositoryets organisation; der er ingen reserve til `TOKEN_FOR_GITEA_REPO`
 
 
 ## Opsætning

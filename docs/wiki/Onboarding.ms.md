@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 1073637428ce -->
+<!-- translation of Onboarding.md, source sha256 27aa210a18df -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -23,7 +23,7 @@ Penghantaran adalah automatik, jadi repositori tidak memerlukan salinan aliran k
 1. **Semak prasyarat** dalam repositori: Actions diaktifkan, dan runner dengan label `ubuntu-latest` dan `python3` berada dalam talian (lihat [Runners](#runners)).
 2. **Konfigurasikan satu push mirror GitHub** dalam tetapan repositori (Settings, Repository, Mirror settings, Push mirror). Aliran kerja gagal jika terdapat beberapa cermin GitHub. Jika tiada, ia berjaya tanpa menyegerakkan apa-apa.
 3. **Tambah dua rahsia (secret)** dalam tetapan repositori (atau organisasi), dengan skop yang tertera dalam [credentials.md](Credentials.ms). Aliran kerja berjalan dalam setiap repositori sesebuah organisasi, jadi simpan rahsia sekali bagi setiap organisasi; repositori dalam organisasi lain tidak melihatnya:
-   - `TOKEN_FOR_GITEA`
+   - `TOKEN_FOR_GITEA_REPO`
    - `PAT_FOR_GITHUB` (token GitHub sahaja)
 4. **Hantar aliran kerja:** scoped workflow terpakai pada setiap repositori dalam instans ini, jadi tiada apa yang perlu disalin. Hanya jika penghantaran scoped tidak disediakan, salin `.gitea/scoped_workflows/sync-github-metadata.yml` dari repositori ini ke `.gitea/workflows/` dalam repositori sasaran, sematkan salinan itu pada versi yang telah disemak dan salin semula apabila ia berubah.
 5. **Tetapkan penerangan dan topik** pada repositori Gitea, supaya ada sesuatu untuk disegerakkan.
@@ -51,7 +51,7 @@ Aliran kerja scoped **Publish wiki pages** menyalin halaman Markdown dalam `docs
 **Semak bahawa runner yang sesuai berada dalam talian** (memerlukan kebenaran untuk melihat runner):
 
 ```bash
-curl -s -H "Authorization: token $GITEA_TOKEN" \
+curl -s -H "Authorization: token $TOKEN_FOR_GITEA_REPO" \
   https://git.tirsystem.com/api/v1/repos/<owner>/<repo>/actions/runners
 ```
 

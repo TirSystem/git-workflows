@@ -1,4 +1,4 @@
-<!-- translation of Troubleshooting.md, source sha256 e4128e7f821c -->
+<!-- translation of Troubleshooting.md, source sha256 52eeb64b9623 -->
 
 > Dette er en oversættelse af [`Troubleshooting`](Troubleshooting). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -27,7 +27,7 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 | Meddelelse (begyndelsen) | Kategori | Årsag og løsning |
 | --- | --- | --- |
 | `PAT_FOR_GITHUB is missing or empty.` | configuration | Tilføj secreten |
-| `TOKEN_FOR_GITEA is missing or empty.` | configuration | Tilføj secreten |
+| `TOKEN_FOR_GITEA_REPO is missing or empty.` | configuration | Tilføj secreten |
 | `Could not determine the Gitea source repository.` | configuration | Kørslen har intet repositorynavn; meld det som en defekt |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Behold ét GitHub push-spejl |
 | `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Kun wiki-publicering: repositoryet har en `docs/wiki/`-mappe, men dets organisation har ingen sådan secret; gem den som en organisations-secret (se [credentials.md](Credentials.da)) |
@@ -35,7 +35,7 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 | `The wiki is not enabled on <repo>` | configuration | Kun wiki-publicering: aktivér wikien i repositoryets indstillinger |
 | `The wiki source directory ... has no Markdown pages` | configuration | Kun wiki-publicering: mappen har ingen Markdown-sider; intet blev ændret |
 | `Could not determine the GitHub owner and repository ...` | configuration | Spejlets adresse skal se ud som `https://github.com/<owner>/<repo>.git` |
-| `Gitea API request failed with HTTP 401` | credentials | Opret et nyt Gitea-token, og opdatér `TOKEN_FOR_GITEA` |
+| `Gitea API request failed with HTTP 401` | credentials | Opret et nyt Gitea-token, og opdatér `TOKEN_FOR_GITEA_REPO` |
 | `GitHub API request failed with HTTP 401` | credentials | Opret et nyt GitHub-token, og opdatér `PAT_FOR_GITHUB`; værdien skal kun være tokenet (intet navn, ingen anførselstegn eller JSON) |
 | `... HTTP 403 ...` (Gitea) | permissions | Tokenet skal have `read:repository`, og dets bruger skal være administrator af repositoryet |
 | `... HTTP 403 ...` (GitHub) | permissions | Tokenet skal have Administration read and write på spejl-repositoryet |

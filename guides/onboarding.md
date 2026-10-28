@@ -28,7 +28,7 @@ Delivery is automatic, so a repository needs no copy of the workflow. Secrets ar
    using the scopes in [credentials.md](credentials.md). The workflow runs in
    every repository of an organization, so store the secrets once per
    organization; a repository in another organization does not see them:
-   - `TOKEN_FOR_GITEA`
+   - `TOKEN_FOR_GITEA_REPO`
    - `PAT_FOR_GITHUB` (the GitHub token only)
 4. **Deliver the workflow:** scoped workflows apply to every repository on
    this instance, so there is nothing to copy. Only where scoped delivery is
@@ -73,7 +73,7 @@ The wiki has English and the product owner's language as a minimum.
 **Check that a suitable runner is online** (needs permission to view runners):
 
 ```bash
-curl -s -H "Authorization: token $GITEA_TOKEN" \
+curl -s -H "Authorization: token $TOKEN_FOR_GITEA_REPO" \
   https://git.tirsystem.com/api/v1/repos/<owner>/<repo>/actions/runners
 ```
 
