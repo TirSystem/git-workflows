@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-091), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-091), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [1690cf7] |
 
 ---
 
@@ -96,3 +96,4 @@ with the findings counted; and a minor release.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [ADR-0013]: ../adr/adr-0013-wiki-publishing-scoped-workflow.md
 [RC-091]: ../sqa/reviews/rc-091-mil-017.md
+[1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c

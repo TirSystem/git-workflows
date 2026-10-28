@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-092), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-092), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [1690cf7] |
 
 ---
 
@@ -105,3 +105,4 @@ workflow.
 [ADR-0007]: ../adr/adr-0007-release-publish-destination.md
 [ADR-0013]: ../adr/adr-0013-wiki-publishing-scoped-workflow.md
 [RC-092]: ../sqa/reviews/rc-092-mil-018-pp-001.md
+[1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c

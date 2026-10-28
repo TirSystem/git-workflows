@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-28 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-016 (static security scan with Semgrep as a scoped workflow); reviewed (RC-090), accepted by the author in chat as stand-in for S01 | pending |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-017 (scoped validation workflow) and MIL-018 (scoped release workflow and `TOKEN_FOR_GITEA_RELEASE`); reviewed (RC-091, RC-092), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
+| 2026-10-28 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-016 (static security scan with Semgrep as a scoped workflow); reviewed (RC-090), accepted by the author in chat as stand-in for S01 | [1690cf7] |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-017 (scoped validation workflow) and MIL-018 (scoped release workflow and `TOKEN_FOR_GITEA_RELEASE`); reviewed (RC-091, RC-092), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [1690cf7] |
 
 ---
 
@@ -345,3 +345,4 @@ no tests, no release process.
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
+[1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c

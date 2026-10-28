@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-27 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [1690cf7] |
 
 ---
 
@@ -93,3 +93,4 @@ with the findings and the false positives counted; and a minor release.
 [MIL-013]: ./mil-013-english-comments-check.md
 [MIL-014]: ./mil-014-wiki-publishing-scoped-again.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
+[1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
