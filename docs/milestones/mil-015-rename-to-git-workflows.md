@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Updated to pull request 218 (live files renamed) and the removed required check: purpose, deliverable, criterion 5 and tasks 1, 3 and 4; reviewed (RC-088), accepted by the author in chat as stand-in for S01, not independent | [081a17d] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 9 and task 8: the Gitea secrets follow `TOKEN_FOR_<host>_<purpose>`; reviewed (RC-093), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 9 and task 8: the Gitea secrets follow `TOKEN_FOR_<host>_<purpose>`; reviewed (RC-093), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [97f0b26] |
 
 ---
 
@@ -100,3 +100,4 @@ change.
 [RC-088]: ../sqa/reviews/rc-088-mil-015-update.md
 [RC-093]: ../sqa/reviews/rc-093-mil-015-task-8.md
 [081a17d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/081a17d07f4c7d7145cdc50984c669dfb798b48d
+[97f0b26]: https://git.tirsystem.com/TirSystem/git-workflows/commit/97f0b26c58cb7950336ea140536cb6817538af26

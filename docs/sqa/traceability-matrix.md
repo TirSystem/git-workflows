@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-017 and MIL-018 (scoped validation and release workflows) and RC-091 and RC-092 (their reviews) | [1690cf7] |
-| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-091 to RC-093 and their rows; MIL-015 gains task 8 (RC-093) | pending |
+| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-091 to RC-093 and their rows; MIL-015 gains task 8 (RC-093) | [97f0b26] |
 
 ---
 
@@ -304,3 +304,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
+[97f0b26]: https://git.tirsystem.com/TirSystem/git-workflows/commit/97f0b26c58cb7950336ea140536cb6817538af26

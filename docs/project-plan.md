@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Added MIL-017 (scoped validation workflow) and MIL-018 (scoped release workflow and `TOKEN_FOR_GITEA_RELEASE`); reviewed (RC-091, RC-092), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [1690cf7] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-015: the Gitea secrets follow `TOKEN_FOR_<host>_<purpose>` (deliverable and schedule note); reviewed (RC-093), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-015: the Gitea secrets follow `TOKEN_FOR_<host>_<purpose>` (deliverable and schedule note); reviewed (RC-093), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [97f0b26] |
 
 ---
 
@@ -346,3 +346,4 @@ no tests, no release process.
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
 [1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
+[97f0b26]: https://git.tirsystem.com/TirSystem/git-workflows/commit/97f0b26c58cb7950336ea140536cb6817538af26
