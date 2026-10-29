@@ -331,11 +331,11 @@ def test_workflow_job_has_read_permission_and_a_fixed_name():
     assert job["timeout-minutes"] == 15
 
 
-def test_workflow_fetches_the_script_at_v2_and_runs_it():
+def test_workflow_fetches_the_script_at_v3_and_runs_it():
     steps = load_workflow()["jobs"]["release"]["steps"]
     fetch = [step for step in steps if "with" in step]
     assert [(s["with"]["repository"], s["with"]["ref"], s["with"]["path"]) for s in fetch] == [
-        ("TirSystem/git-workflows", "v2", "shared-scripts")
+        ("TirSystem/git-workflows", "v3", "shared-scripts")
     ]
     assert steps[-1]["run"] == "python3 shared-scripts/tools/release.py"
 

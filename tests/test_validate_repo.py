@@ -695,7 +695,7 @@ def test_own_validate_workflow_has_the_documented_shape() -> None:
     steps = job["steps"]
     fetch = [step for step in steps if step.get("with", {}).get("repository")]
     assert [step["with"]["repository"] for step in fetch] == ["TirSystem/git-workflows"]
-    assert fetch[0]["with"]["ref"] == "v2"
+    assert fetch[0]["with"]["ref"] == "v3"
     commands = [step["run"] for step in steps if "run" in step]
     assert commands == [
         "python3 shared-scripts/tools/validate_repo.py install",

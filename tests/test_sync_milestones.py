@@ -363,7 +363,7 @@ def test_workflow_fetches_the_shared_script_at_the_major_tag(document: dict[Any,
     steps = steps_of(document)
     assert steps[0]["with"] == {"token": "${{ secrets.TOKEN_FOR_GITEA_REPO }}"}
     fetch = [step["with"] for step in steps if step.get("with", {}).get("repository")]
-    assert fetch == [{"repository": "TirSystem/git-workflows", "ref": "v2", "path": "shared-scripts"}]
+    assert fetch == [{"repository": "TirSystem/git-workflows", "ref": "v3", "path": "shared-scripts"}]
 
 
 def test_workflow_checks_the_folder_before_it_uses_the_secrets(document: dict[Any, Any]) -> None:

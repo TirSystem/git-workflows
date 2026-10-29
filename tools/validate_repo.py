@@ -80,7 +80,8 @@ def install() -> None:
             f"shfmt-py=={SHFMT_VERSION}",
         ],
     ):
-        if subprocess.run(command, check=False).returncode != 0:
+        # The command is a list of constants and values of this script; no shell runs it.
+        if subprocess.run(command, check=False).returncode != 0:  # nosemgrep
             fail("tool", f"'{' '.join(command[:3])}' failed; the validation tools are not installed.")
 
 
@@ -240,7 +241,8 @@ def check_shell(scripts: list[str]) -> bool:
     clean = True
     for tool, arguments in (("shellcheck", []), ("shfmt", ["-d"])):
         try:
-            completed = subprocess.run([tool_command(tool), *arguments, *scripts], check=False)
+            # The command is a list of constants and values of this script; no shell runs it.
+            completed = subprocess.run([tool_command(tool), *arguments, *scripts], check=False)  # nosemgrep
         except OSError as error:
             fail("tool", f"{tool} cannot be started: {error}")
         if completed.returncode != 0:
