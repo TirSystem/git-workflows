@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-019 (scoped milestone sync); not reviewed yet | pending |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-096; MIL-019 is reviewed | pending |
+| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-019 (scoped milestone sync); not reviewed yet | [0693426] |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-096; MIL-019 is reviewed | [0693426] |
 
 ---
 
@@ -313,3 +313,4 @@ updated whenever an artifact instance is created or reviewed.
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
+[0693426]: https://git.tirsystem.com/TirSystem/git-workflows/commit/06934262e96d8874c8ebfcc55682ebf99e7cbac8

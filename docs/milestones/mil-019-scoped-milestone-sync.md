@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; not reviewed yet | pending |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-096); accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
+| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; not reviewed yet | [0693426] |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-096); accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [0693426] |
 
 ---
 
@@ -95,3 +95,4 @@ and the copies in the other repositories found and removed; and a minor release.
 [MIL-015]: ./mil-015-rename-to-git-workflows.md
 [ADR-0013]: ../adr/adr-0013-wiki-publishing-scoped-workflow.md
 [RC-096]: ../sqa/reviews/rc-096-mil-019-pp-001.md
+[0693426]: https://git.tirsystem.com/TirSystem/git-workflows/commit/06934262e96d8874c8ebfcc55682ebf99e7cbac8

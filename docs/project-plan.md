@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-019 (scoped milestone sync workflow), proposed for 2027-02-01 to 2027-02-12; not reviewed yet | pending |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-019 reviewed (RC-096), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
+| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-019 (scoped milestone sync workflow), proposed for 2027-02-01 to 2027-02-12; not reviewed yet | [0693426] |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-019 reviewed (RC-096), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [0693426] |
 
 ---
 
@@ -351,3 +351,4 @@ no tests, no release process.
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
+[0693426]: https://git.tirsystem.com/TirSystem/git-workflows/commit/06934262e96d8874c8ebfcc55682ebf99e7cbac8
