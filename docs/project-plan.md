@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015], [MIL-016], [MIL-017], [MIL-018], [MIL-019], [RC-096] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015], [MIL-016], [MIL-017], [MIL-018], [MIL-019], [RC-096], [RC-090] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-019 (scoped milestone sync workflow), proposed for 2027-02-01 to 2027-02-12; not reviewed yet | [0693426] |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-019 reviewed (RC-096), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [0693426] |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-016 reviewed (RC-090) and accepted; its ADR is ADR-0015; accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
 
 ---
 
@@ -53,7 +53,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Source code comments are in English | [MIL-013] | 2026-11-09 to 2026-11-20 | 2026-11-20 | S05 | None (technical tasks) | Release 2.3.0: reusable workflow `english-comments.yml` that fails a pull request with a non-English comment and tells the author, with its ADR, tests, guides and wiki, and the rule proposed in the framework | Not created yet (the sync creates it when MIL-013 is Accepted) |
 | Publish wiki pages as a scoped workflow | [MIL-014] | 2026-11-23 to 2026-11-27 | 2026-11-27 | S05 | None (technical tasks) | Release 3.0.0: scoped publish-wiki-pages workflow opted into by the docs/wiki folder, reusable workflow and the seven callers removed, ADR-0009 superseded | Not created yet (the sync runs after acceptance) |
 | Rename the repository references to git-workflows | [MIL-015] | 2026-10-28 to 2026-11-06 | 2026-11-06 | S05 | None (technical tasks) | Code, configuration and user documentation name TirSystem/git-workflows, callers updated, required checks of main producible, Gitea secrets named TOKEN_FOR_<host>_<purpose>, released | Not created yet (the sync runs after acceptance) |
-| Static security scan with Semgrep as a scoped workflow | [MIL-016] | 2026-11-30 to 2026-12-11 | 2026-12-11 | S05 | None (technical tasks) | Scoped Semgrep workflow with community rules, ADR-0014, guide, adoption row, wiki in three languages, trial on four repositories, released as the next minor | Not created yet (the sync runs after acceptance) |
+| Static security scan with Semgrep as a scoped workflow | [MIL-016] | 2026-11-30 to 2026-12-11 | 2026-12-11 | S05 | None (technical tasks) | Scoped Semgrep workflow with community rules, ADR-0015, guide, adoption row, wiki in three languages, trial on four repositories, released as the next minor | Not created yet (the sync runs after acceptance) |
 | Validate every repository with a scoped workflow | [MIL-017] | 2026-12-14 to 2026-12-18 | 2026-12-18 | S05 | None (technical tasks) | Scoped validate workflow (workflow files and shell scripts), ADR, guide, adoption row, wiki in three languages, trial on four repositories, released as the next minor | Not created yet (the sync runs after acceptance) |
 | Release any repository with a scoped workflow | [MIL-018] | 2026-12-21 to 2026-12-30 | 2026-12-30 | S05 | None (technical tasks) | Scoped release workflow, general `release.py`, `TOKEN_FOR_GITEA_RELEASE` described, old `release.yml` removed, dry runs in three repositories, released as the next major | Not created yet (the sync runs after acceptance) |
 | Publish accepted milestones with a scoped workflow | [MIL-019] | 2027-02-01 to 2027-02-12 | 2027-02-12 | S05 | None (technical tasks) | Scoped sync-milestones workflow, ADR, guide, copies in the repositories removed, released | [Milestone MIL-019] |
@@ -336,6 +336,7 @@ no tests, no release process.
 [MIL-014]: ./milestones/mil-014-wiki-publishing-scoped-again.md
 [MIL-015]: ./milestones/mil-015-rename-to-git-workflows.md
 [MIL-016]: ./milestones/mil-016-semgrep-scoped-workflow.md
+[RC-090]: ./sqa/reviews/rc-090-mil-016.md
 [MIL-017]: ./milestones/mil-017-scoped-validation-workflow.md
 [MIL-018]: ./milestones/mil-018-scoped-release-workflow.md
 [MIL-019]: ./milestones/mil-019-scoped-milestone-sync.md
@@ -352,3 +353,4 @@ no tests, no release process.
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
 [0693426]: https://git.tirsystem.com/TirSystem/git-workflows/commit/06934262e96d8874c8ebfcc55682ebf99e7cbac8
+[99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44
