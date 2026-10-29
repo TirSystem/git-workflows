@@ -14,7 +14,7 @@
 
 validate_inputs() {
   set -u
-  IFS=',' read -ra langs <<< "${LANGUAGES// /}"
+  IFS=',' read -ra langs <<<"${LANGUAGES// /}"
   if [ "${#langs[@]}" -eq 0 ]; then
     echo "::error::[configuration] languages is empty; use python, shell or both, comma separated."
     exit 1
@@ -39,7 +39,7 @@ validate_inputs() {
 
 install_tools() {
   set -eu
-  IFS=',' read -ra langs <<< "${LANGUAGES// /}"
+  IFS=',' read -ra langs <<<"${LANGUAGES// /}"
   packages=()
   for lang in "${langs[@]}"; do
     case "$lang" in
@@ -76,7 +76,7 @@ run_checks() {
   }
   wanted() {
     local lang
-    IFS=',' read -ra langs <<< "${LANGUAGES// /}"
+    IFS=',' read -ra langs <<<"${LANGUAGES// /}"
     for lang in "${langs[@]}"; do
       [ "$lang" = "$1" ] && return 0
     done

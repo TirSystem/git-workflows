@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCSharp.md, source sha256 4d611cda04d8 -->
+<!-- translation of QualityChecksCSharp.md, source sha256 de704068ad63 -->
 
 > Dette er en oversættelse af [`QualityChecksCSharp`](QualityChecksCSharp). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -32,7 +32,7 @@ jobs:
 | `working-directory` | `.` | Mappe, relativt til repositoryets rod, hvis filer kontrolleres |
 | `project` | tom | Solution- eller projektfil, relativt til `working-directory`; tom bruger den eneste sporede `*.sln` eller `*.slnx`, ellers den eneste `*.csproj`, der er sporet dér |
 | `dotnet-sdk-version` | `10.0.401` | Præcis version af .NET SDK, 10 eller nyere; en kanal som `10.0`, et interval og en version under 10 afvises |
-| `tools-ref` | `v2` | Tag eller gren i `TirSystem/git-workflows`, hvorfra scriptet `tools/quality-checks-csharp.sh` hentes |
+| `tools-ref` | `v3` | Tag eller gren i `TirSystem/git-workflows`, hvorfra scriptet `tools/quality-checks-csharp.sh` hentes |
 
 Henvis til workflowet ved major-tagget (`@v1`) eller et præcist tag, aldrig ved `main`. Et kald ved et præcist tag er kun fuldt fastlåst, når `tools-ref` angiver samme tag. Se opgraderingsvejledningen. SDK-versionen er præcis: at hæve standardværdien er en ny udgivelse af dette repository, ikke en stille ændring.
 
