@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 10 and task 10: the wiki of this repository follows the shared sidebar and page names (ADR-0014); reviewed (RC-095), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [9a3bfb0] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 11 and task 11: a reusable script that deletes the old wiki pages after a rename, and old release pages; reviewed (RC-097), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 11 and task 11: a reusable script that deletes the old wiki pages after a rename, and old release pages; reviewed (RC-097), accepted by the author in chat as stand-in for S01, not independent | [07c2261] |
 
 ---
 
@@ -101,3 +101,4 @@ repository; and the major release 3.0.0 with the tag `v3`.
 [RC-095]: ../sqa/reviews/rc-095-adr-0014-mil-014.md
 [RC-097]: ../sqa/reviews/rc-097-mil-014-task-11.md
 [9a3bfb0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/9a3bfb02a1540806399a60bfab898a76a146d4c0
+[07c2261]: https://git.tirsystem.com/TirSystem/git-workflows/commit/07c22617736d0e125134ee1286fe04652c98a93c

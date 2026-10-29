@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-10-29 as stand-in for S01 | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-10-29 as stand-in for S01 | [07c2261] |
 
 ---
 
@@ -51,3 +51,4 @@ Go. The task and its criterion are objective, the destructive part is behind a f
 [RC-095]: ./rc-095-adr-0014-mil-014.md
 [BC-001]: ../../business-case.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[07c2261]: https://git.tirsystem.com/TirSystem/git-workflows/commit/07c22617736d0e125134ee1286fe04652c98a93c
