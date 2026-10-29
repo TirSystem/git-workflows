@@ -1,0 +1,37 @@
+name: OpenGrep
+
+# Scoped workflow: it runs in every repository of an organization, so there is
+# no caller and no input. It scans the repository with OpenGrep (a pinned,
+# checksum-verified binary) and the rules of a pinned checkout of
+# opengrep/opengrep-rules, without a login and without a registry (ADR-0015).
+# A finding of severity ERROR fails the run; the others are listed. A
+# repository where OpenGrep scans no file is skipped. The script is a file of
+# TirSystem/git-workflows (tools/opengrep_scan.py), fetched at v2.
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  opengrep:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Fetch the shared script
+        uses: actions/checkout@v4.2.2
+        with:
+          repository: TirSystem/git-workflows
+          ref: v2
+          path: shared-scripts
+
+      - name: Install OpenGrep and its rules
+        run: python3 shared-scripts/tools/opengrep_scan.py install
+
+      - name: Scan the repository
+        run: python3 shared-scripts/tools/opengrep_scan.py run
