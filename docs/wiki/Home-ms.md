@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 9451839077be -->
+<!-- translation of Home.md, source sha256 dbe68d8738cb -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 

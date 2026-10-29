@@ -382,12 +382,9 @@ title Publish docs/wiki to the wiki of the repository
 
 autonumber
 
-actor "Push to main that changes docs/wiki/**,
-or manual trigger" as Trigger
-participant "Gitea Actions
-publish-wiki-pages" as Workflow
-participant "shared-scripts
-(tools/publish_wiki.py at v2)" as Script
+actor "Push to main that changes docs/wiki/**,\nor manual trigger" as Trigger
+participant "Gitea Actions\npublish-wiki-pages" as Workflow
+participant "shared-scripts\n(tools/publish_wiki.py at v2)" as Script
 participant "Gitea wiki API" as Wiki
 
 Trigger -> Workflow: Start workflow
@@ -400,8 +397,7 @@ else
   Workflow -> Script: Fetch the script, run it
   activate Script
   alt docs/wiki has no Markdown pages
-    Script --> Workflow: Fail with [configuration]
-(an empty folder never deletes pages)
+    Script --> Workflow: Fail with [configuration]\n(an empty folder never deletes pages)
   else
     Script -> Script: Read TOKEN_FOR_GITEA_WIKI
     Script -> Wiki: GET repository (preflight)
