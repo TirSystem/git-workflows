@@ -91,8 +91,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.wiki_renamed:
         token = read_token(args.env_file, args.wiki_token_name)
-        titles = [p["title"] for p in call("GET", f"{base}/wiki/pages?limit=200", token)]
-        found = renamed_wiki_pages(titles)
+        pages = call("GET", f"{base}/wiki/pages?limit=200", token)
+        found = renamed_wiki_pages([p.get("sub_url") or p["title"] for p in pages])
         print(f"\nWiki pages to delete ({len(found)}):")
         for title in found:
             print("  ", title)

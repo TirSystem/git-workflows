@@ -28,7 +28,8 @@ class FakeApi:
 
     def __init__(self, pages=(), releases=()):
         self.calls = []
-        self.pages = [{"title": title} for title in pages]
+        # Gitea shows the title of Home-da as "Home da"; the page name is the sub_url.
+        self.pages = [{"title": title.replace("-", " "), "sub_url": title} for title in pages]
         self.releases = [{"tag_name": tag, "id": index} for index, tag in enumerate(releases, start=1)]
 
     def __call__(self, method, url, token):
