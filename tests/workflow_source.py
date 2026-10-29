@@ -47,8 +47,15 @@ class ModuleView:
     see the replacement.
     """
 
+    # The view shares the module's namespace, so a static lookup finds the
+    # attribute too: newer pytest versions record the old value of
+    # `monkeypatch.setattr` that way, and undo it with `delattr` when they
+    # find none, which left the patched value in place for later tests.
+    __slots__ = ("_module", "__dict__")
+
     def __init__(self, module: Any) -> None:
         object.__setattr__(self, "_module", module)
+        object.__setattr__(self, "__dict__", module.__dict__)
 
     def __getitem__(self, name: str) -> Any:
         return getattr(self._module, name)

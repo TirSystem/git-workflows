@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added MIL-017 and MIL-018 (scoped validation and release workflows) and RC-091 and RC-092 (their reviews) | [1690cf7] |
 | 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-091 to RC-093 and their rows; MIL-015 gains task 8 (RC-093) | [97f0b26] |
+| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-094; MIL-015 gains task 9 (RC-094) | pending |
 
 ---
 
@@ -51,7 +51,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-012] | MIL | [BC-001], [PP-001], [MIL-004], [MIL-011], [ADR-0006], [ADR-0011] | - | [RC-080], [RC-082] |
 | [MIL-013] | MIL | [BC-001], [PP-001], [MIL-004], [MIL-010], [MIL-011], [ADR-0005], [ADR-0006], [ADR-0010] | - | [RC-083], [RC-085] |
 | [MIL-014] | MIL | [BC-001], [PP-001], [MIL-009], [MIL-013], [ADR-0004], [ADR-0009], [ADR-0013] | - | [RC-086] |
-| [MIL-015] | MIL | [BC-001], [PP-001], [MIL-014], [ADR-0006] | - | [RC-087], [RC-088], [RC-093] |
+| [MIL-015] | MIL | [BC-001], [PP-001], [MIL-014], [ADR-0006] | - | [RC-087], [RC-088], [RC-093], [RC-094] |
 | [MIL-017] | MIL | [BC-001], [PP-001], [MIL-014], [MIL-016], [ADR-0005] | [MIL-018] | [RC-091] |
 | [MIL-018] | MIL | [BC-001], [PP-001], [MIL-014], [MIL-017], [ADR-0006], [ADR-0007] | - | [RC-092] |
 | [RC-007] | RC | [MIL-004] | - | - |
@@ -158,6 +158,7 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-091] | RC | [MIL-017] | - | - |
 | [RC-092] | RC | [MIL-018], [PP-001] | - | - |
 | [RC-093] | RC | [MIL-015], [PP-001] | - | - |
+| [RC-094] | RC | [MIL-015] | - | - |
 
 ## Coverage Notes
 
@@ -198,6 +199,7 @@ updated whenever an artifact instance is created or reviewed.
 [RC-091]: ./reviews/rc-091-mil-017.md
 [RC-092]: ./reviews/rc-092-mil-018-pp-001.md
 [RC-093]: ./reviews/rc-093-mil-015-task-8.md
+[RC-094]: ./reviews/rc-094-mil-015-task-9.md
 [RC-001]: ./reviews/rc-001-business-case.md
 [RC-002]: ./reviews/rc-002-project-plan.md
 [RC-003]: ./reviews/rc-003-mil-001.md
@@ -303,5 +305,4 @@ updated whenever an artifact instance is created or reviewed.
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
-[1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
 [97f0b26]: https://git.tirsystem.com/TirSystem/git-workflows/commit/97f0b26c58cb7950336ea140536cb6817538af26
