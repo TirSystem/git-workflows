@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-096; MIL-019 is reviewed | [0693426] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-016, RC-089 and RC-090 (the review records of O8 and MIL-016) | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-016, RC-089 and RC-090 (the review records of O8 and MIL-016) | [99f72c8] |
 
 ---
 
@@ -320,3 +320,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [0693426]: https://git.tirsystem.com/TirSystem/git-workflows/commit/06934262e96d8874c8ebfcc55682ebf99e7cbac8
+[99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44

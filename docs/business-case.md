@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-28 | Accepted | Jens Tirsvad Nielsen | S01 | Objective O8, scope item, assumption, constraint and success criterion 8: a free static security scan with Semgrep as a scoped workflow (MIL-016); reviewed (RC-089), accepted by the author in chat as stand-in for S01 | [1690cf7] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Risk for objective O8 (false positives, data leaving the instance); O8 reviewed against QC-BC-001 (RC-089), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Risk for objective O8 (false positives, data leaving the instance); O8 reviewed against QC-BC-001 (RC-089), accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
 
 ---
 
@@ -177,3 +177,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 
 [SA-001]: ./stakeholder-analysis.md
 [1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
+[99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44

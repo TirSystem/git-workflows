@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-27 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [1690cf7] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-090): O8 is in the Business Case, so the text no longer calls it proposed; the ADR it writes is numbered ADR-0015 because ADR-0014 is the wiki sidebar ADR; accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-090): O8 is in the Business Case, so the text no longer calls it proposed; the ADR it writes is numbered ADR-0015 because ADR-0014 is the wiki sidebar ADR; accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
 
 ---
 
@@ -96,3 +96,4 @@ with the findings and the false positives counted; and a minor release.
 [RC-089]: ../sqa/reviews/rc-089-bc-001-o8.md
 [RC-090]: ../sqa/reviews/rc-090-mil-016.md
 [1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
+[99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44
