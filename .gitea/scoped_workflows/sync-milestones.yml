@@ -1,0 +1,73 @@
+name: Publish accepted milestones
+
+# Scoped workflow: it runs in every repository of an organization, and the
+# folder docs/milestones/ is the opt-in; without it the run ends green and
+# makes no API call (ADR-0018). A push to main that changes docs/milestones/ or
+# docs/sqa/reviews/ publishes every accepted milestone as a Milestone with its
+# tasks as Issues. A manual run is a dry run unless dry_run is turned off.
+# Nothing is closed or deleted.
+#
+# Secrets, organization secrets with no fallback and each the bare Gitea token:
+# TOKEN_FOR_GITEA_REPO reads the project and the private framework, and
+# TOKEN_FOR_GITEA_ISSUES publishes (issues and milestones only).
+#
+# The script is a file of TirSystem/git-workflows (tools/sync_milestones.py),
+# fetched at v2.
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "docs/milestones/**"
+      - "docs/sqa/reviews/**"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only: print the plan and create nothing"
+        type: boolean
+        default: true
+
+# Two merges in a row queue instead of racing.
+concurrency:
+  group: publish-accepted-milestones
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: publish
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the project
+        uses: actions/checkout@v4.2.2
+        with:
+          token: ${{ secrets.TOKEN_FOR_GITEA_REPO }}
+
+      - name: Fetch the shared script
+        uses: actions/checkout@v4.2.2
+        with:
+          repository: TirSystem/git-workflows
+          ref: v2
+          path: shared-scripts
+
+      - name: Check for milestones and secrets
+        id: source
+        env:
+          TOKEN_FOR_GITEA_REPO: ${{ secrets.TOKEN_FOR_GITEA_REPO }}
+          TOKEN_FOR_GITEA_ISSUES: ${{ secrets.TOKEN_FOR_GITEA_ISSUES }}
+        run: python3 shared-scripts/tools/sync_milestones.py check
+
+      - name: Make the framework available
+        if: steps.source.outputs.found == 'true'
+        env:
+          TOKEN_FOR_GITEA_REPO: ${{ secrets.TOKEN_FOR_GITEA_REPO }}
+        run: python3 shared-scripts/tools/sync_milestones.py framework
+
+      - name: Publish accepted milestones
+        if: steps.source.outputs.found == 'true'
+        env:
+          TOKEN_FOR_GITEA_ISSUES: ${{ secrets.TOKEN_FOR_GITEA_ISSUES }}
+          # Empty on a push (a real run); "true" or "false" on a manual run.
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: python3 shared-scripts/tools/sync_milestones.py publish
