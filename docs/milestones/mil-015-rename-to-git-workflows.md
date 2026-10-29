@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-015 |
-| CrossReference | [BC-001], [MIL-014], [ADR-0006], [RC-087], [RC-088], [RC-093] |
+| CrossReference | [BC-001], [MIL-014], [ADR-0006], [RC-087], [RC-088], [RC-093], [RC-094] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Updated to pull request 218 (live files renamed) and the removed required check: purpose, deliverable, criterion 5 and tasks 1, 3 and 4; reviewed (RC-088), accepted by the author in chat as stand-in for S01, not independent | [081a17d] |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 9 and task 8: the Gitea secrets follow `TOKEN_FOR_<host>_<purpose>`; reviewed (RC-093), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [97f0b26] |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 10 and task 9: the offline tests do not depend on the pytest version; reviewed (RC-094), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [400fd30] |
 
 ---
 
@@ -53,6 +53,7 @@ change.
 | 7 | The GitHub push mirror and the description and topics sync still work | The next run of **Sync GitHub mirror metadata** succeeds and the GitHub repository shows the same description and topics | A run fails |
 | 8 | The release is published with a changelog entry that names the rename | Tag and release page read back through the API | No entry, or `v1` or `v2` moved |
 | 9 | The Gitea secrets follow `TOKEN_FOR_<host>_<purpose>` in the workflows, the scripts, the guides and the wiki pages | A search of `.gitea/`, `tools/`, `tests/`, `guides/`, `docs/wiki/` and `README.md` finds the bare name `TOKEN_FOR_GITEA` only in the changelog; `sync-github-metadata.yml` reads `TOKEN_FOR_GITEA_REPO` and `sync-milestones.yml` reads `TOKEN_FOR_GITEA_ISSUES`; the offline tests pass and `python tools/build_wiki.py --check` is clean | A workflow or guide still names `TOKEN_FOR_GITEA`, or a test fails |
+| 10 | The offline tests give the same result on the runner and on a developer machine | `python -m coverage run -m pytest -q tests` passes locally, and the run of `Validate workflows` on `main` after the merge is green | A test fails on the runner, or a test changes the module of a script for the tests after it |
 
 ## Dependencies
 
@@ -90,6 +91,7 @@ change.
 | 6 | Verify | After the changes read back: the searches of criteria 1 and 2, the first run of every changed caller, the next metadata sync. Record the results in this milestone. | No | |
 | 7 | Release | Changelog entry that names the rename; version as decided in task 2; release through the release workflow; the moving major tags are unchanged. | No | |
 | 8 | Name the Gitea secrets | Rename `TOKEN_FOR_GITEA` to `TOKEN_FOR_GITEA_REPO` (metadata sync) and `TOKEN_FOR_GITEA_ISSUES` (milestone sync) in the two workflows, `tools/sync_github_metadata.py`, its tests and fixtures, the guides, the wiki pages in three languages, `.env.example`, `AGENTS.md` and the README; add a Breaking entry to the changelog (store the new secrets in each organization before the release); move the framework pin to v0.18.0, which names the same secrets. Do this before the release of task 7. | No | [BC-001] |
+| 9 | Make the test helper independent of the pytest version | `ModuleView` of `tests/workflow_source.py` shares the namespace of the script module, so that newer pytest versions find the attribute that `monkeypatch.setattr` patches and can set it back; two tests in `tests/test_workflow_source.py` cover it. Run 487 of `Validate workflows` failed on the runner because the patched `MAX_FILE_BYTES` stayed 10. | No | [BC-001] |
 
 ---
 
@@ -99,5 +101,6 @@ change.
 [RC-087]: ../sqa/reviews/rc-087-mil-015.md
 [RC-088]: ../sqa/reviews/rc-088-mil-015-update.md
 [RC-093]: ../sqa/reviews/rc-093-mil-015-task-8.md
-[081a17d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/081a17d07f4c7d7145cdc50984c669dfb798b48d
+[RC-094]: ../sqa/reviews/rc-094-mil-015-task-9.md
 [97f0b26]: https://git.tirsystem.com/TirSystem/git-workflows/commit/97f0b26c58cb7950336ea140536cb6817538af26
+[400fd30]: https://git.tirsystem.com/TirSystem/git-workflows/commit/400fd308b3eb9b286017ba72637c5b7ee39f3175
