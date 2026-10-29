@@ -327,7 +327,7 @@ class TestRunAsAProcess:
     def test_sync_without_a_token_exits_1(self):
         result = run_tool("sync_github_metadata.py", GITEA_API_URL="https://x", SOURCE_REPOSITORY="o/r")
         assert result.returncode == 1
-        assert "ERROR:" in result.stderr and "TOKEN_FOR_GITEA" in result.stderr
+        assert "ERROR:" in result.stderr and "TOKEN_FOR_GITEA_REPO" in result.stderr
 
     def test_changelog_checks_the_committed_file(self):
         result = run_tool("changelog.py", **{})

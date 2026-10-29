@@ -5,7 +5,7 @@ repository and runs this file (MIL-004 task 6). It reads its settings from the
 environment:
 
     GITEA_API_URL        Gitea API base, for example https://host/api/v1
-    GITEA_CREDENTIALS    the Gitea token, as clear text (TOKEN_FOR_GITEA)
+    GITEA_CREDENTIALS    the Gitea token, as clear text (TOKEN_FOR_GITEA_REPO)
     SOURCE_REPOSITORY    owner/repo of the repository whose metadata is synced
     PAT_FOR_GITHUB       the GitHub token, as clear text
 
@@ -92,7 +92,7 @@ def parse_gitea_token(raw_token):
     token = (raw_token or "").strip()
     if not token:
         raise WorkflowError(
-            "configuration", "TOKEN_FOR_GITEA is missing or empty."
+            "configuration", "TOKEN_FOR_GITEA_REPO is missing or empty."
         )
     return token
 

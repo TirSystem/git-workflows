@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-015 |
-| CrossReference | [BC-001], [MIL-014], [ADR-0006], [RC-087], [RC-088] |
+| CrossReference | [BC-001], [MIL-014], [ADR-0006], [RC-087], [RC-088], [RC-093] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; accepted on a Go review (RC-087); accepted by the author in chat on 2026-10-27 as stand-in for S01, not independent | [851b24c] |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Updated to pull request 218 (live files renamed) and the removed required check: purpose, deliverable, criterion 5 and tasks 1, 3 and 4; reviewed (RC-088), accepted by the author in chat as stand-in for S01, not independent | [081a17d] |
+| 2026-10-27 | Deprecated | Jens Tirsvad Nielsen | S01 | Updated to pull request 218 (live files renamed) and the removed required check: purpose, deliverable, criterion 5 and tasks 1, 3 and 4; reviewed (RC-088), accepted by the author in chat as stand-in for S01, not independent | [081a17d] |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 9 and task 8: the Gitea secrets follow `TOKEN_FOR_<host>_<purpose>`; reviewed (RC-093), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [97f0b26] |
 
 ---
 
@@ -52,6 +52,7 @@ change.
 | 6 | Every repository of the four organizations that calls a workflow of this repository, or checks it out, names the new repository | A scan lists none with the old name | Any remains, or a run fails after its change |
 | 7 | The GitHub push mirror and the description and topics sync still work | The next run of **Sync GitHub mirror metadata** succeeds and the GitHub repository shows the same description and topics | A run fails |
 | 8 | The release is published with a changelog entry that names the rename | Tag and release page read back through the API | No entry, or `v1` or `v2` moved |
+| 9 | The Gitea secrets follow `TOKEN_FOR_<host>_<purpose>` in the workflows, the scripts, the guides and the wiki pages | A search of `.gitea/`, `tools/`, `tests/`, `guides/`, `docs/wiki/` and `README.md` finds the bare name `TOKEN_FOR_GITEA` only in the changelog; `sync-github-metadata.yml` reads `TOKEN_FOR_GITEA_REPO` and `sync-milestones.yml` reads `TOKEN_FOR_GITEA_ISSUES`; the offline tests pass and `python tools/build_wiki.py --check` is clean | A workflow or guide still names `TOKEN_FOR_GITEA`, or a test fails |
 
 ## Dependencies
 
@@ -88,6 +89,7 @@ change.
 | 5 | Update the callers | Scan the four organizations for `uses: TirSystem/github-action/` and `repository: TirSystem/github-action`, and change each in a pull request per repository; include the framework (`sqa-qc-framework`, its `AGENTS.md` table and templates), which is released first. | No | |
 | 6 | Verify | After the changes read back: the searches of criteria 1 and 2, the first run of every changed caller, the next metadata sync. Record the results in this milestone. | No | |
 | 7 | Release | Changelog entry that names the rename; version as decided in task 2; release through the release workflow; the moving major tags are unchanged. | No | |
+| 8 | Name the Gitea secrets | Rename `TOKEN_FOR_GITEA` to `TOKEN_FOR_GITEA_REPO` (metadata sync) and `TOKEN_FOR_GITEA_ISSUES` (milestone sync) in the two workflows, `tools/sync_github_metadata.py`, its tests and fixtures, the guides, the wiki pages in three languages, `.env.example`, `AGENTS.md` and the README; add a Breaking entry to the changelog (store the new secrets in each organization before the release); move the framework pin to v0.18.0, which names the same secrets. Do this before the release of task 7. | No | [BC-001] |
 
 ---
 
@@ -95,6 +97,7 @@ change.
 [MIL-014]: ./mil-014-wiki-publishing-scoped-again.md
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [RC-087]: ../sqa/reviews/rc-087-mil-015.md
-[851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
 [RC-088]: ../sqa/reviews/rc-088-mil-015-update.md
+[RC-093]: ../sqa/reviews/rc-093-mil-015-task-8.md
 [081a17d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/081a17d07f4c7d7145cdc50984c669dfb798b48d
+[97f0b26]: https://git.tirsystem.com/TirSystem/git-workflows/commit/97f0b26c58cb7950336ea140536cb6817538af26

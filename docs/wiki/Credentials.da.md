@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 0e3225fcefe0 -->
+<!-- translation of Credentials.md, source sha256 3dfc3d066247 -->
 
 > Dette er en oversættelse af [`Credentials`](Credentials). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -10,7 +10,7 @@ Synkroniseringsworkflowet bruger to secrets. Giv hver af dem de mindste rettighe
 
 | Secret | Indhold | Bruges til |
 | --- | --- | --- |
-| `TOKEN_FOR_GITEA` | Gitea-tokenet, intet andet | At læse repositoryet (beskrivelse, emner) og dets push-spejle |
+| `TOKEN_FOR_GITEA_REPO` | Gitea-tokenet, intet andet | At læse repositoryet (beskrivelse, emner) og dets push-spejle |
 | `PAT_FOR_GITHUB` | GitHub-tokenet, intet andet | At ændre beskrivelse og emner på GitHub-spejlet |
 
 ## Mindste rettigheder
@@ -37,7 +37,7 @@ Kald, der foretages: `GET /repos/{owner}/{repo}`, `PATCH /repos/{owner}/{repo}` 
 
 **Afprøvning af rettighederne på instansen (valgfrit)**
 
-1. I brugerens Gitea-indstillinger viser det token, der er gemt som `TOKEN_FOR_GITEA`, kun `read:repository`, brugeren er administrator af repositoryet, og en kørsel slutter stadig med `Preflight passed`.
+1. I brugerens Gitea-indstillinger viser det token, der er gemt som `TOKEN_FOR_GITEA_REPO`, kun `read:repository`, brugeren er administrator af repositoryet, og en kørsel slutter stadig med `Preflight passed`.
 2. GitHub-tokenet viser kun spejl-repositoryet og `Administration: Read and write` (plus den automatiske `Metadata: Read`), og en kørsel slutter med `Preflight passed` og `Synced description and topics`.
 3. Et midlertidigt token, der mangler én af disse rettigheder, får kørslen til at fejle med `[permissions]` (eller HTTP 403 for Gitea) og navngive kategorien uden at udskrive tokenet.
 
@@ -62,7 +62,7 @@ Workflowet **Publish wiki pages** kopierer `docs/wiki/` til Gitea-wikien i et re
 | --- | --- | --- |
 | `TOKEN_FOR_GITEA_WIKI` | Gitea-tokenet, intet andet | At skrive wikisiderne for de repositories i en organisation, der har en `docs/wiki/`-mappe |
 
-- Gem den som en secret i organisationen for hvert repository, der publicerer. Der er ingen reserve til `TOKEN_FOR_GITEA`: et repository med en `docs/wiki/`-mappe og uden secreten fejler med en konfigurationsfejl, og et repository uden mappen behøver den ikke.
+- Gem den som en secret i organisationen for hvert repository, der publicerer. Der er ingen reserve til `TOKEN_FOR_GITEA_REPO`: et repository med en `docs/wiki/`-mappe og uden secreten fejler med en konfigurationsfejl, og et repository uden mappen behøver den ikke.
 - Tokenet skal have scope `write:repository`, og dets bruger skal have skriveadgang til repositories. Gitea har intet scope kun til wikien, så opret tokenet til en dedikeret bruger. S05 godkender scopet, og S03 gemmer secreten.
 - Kald, der foretages: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`, `GET`, `POST` og `PATCH /repos/{owner}/{repo}/wiki/...` og, for en side, der ikke længere findes i `docs/wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}` (kun når sletning er slået til, hvilket det scoped workflow ikke gør).
 - Wikien skal være aktiveret i repositoryets indstillinger. Workflowet nægter at køre, hvis den ikke er det.

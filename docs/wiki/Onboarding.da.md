@@ -1,4 +1,4 @@
-<!-- translation of Onboarding.md, source sha256 1073637428ce -->
+<!-- translation of Onboarding.md, source sha256 27aa210a18df -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -23,7 +23,7 @@ Leveringen er automatisk, så et repository behøver ingen kopi af workflowet. S
 1. **Kontroller forudsætningerne** i repositoryet: Actions er aktiveret, og en runner med labelen `ubuntu-latest` og `python3` er online (se [Runners](#runners)).
 2. **Konfigurer ét GitHub push-spejl** i repositoryets indstillinger (Settings, Repository, Mirror settings, Push mirror). Workflowet fejler, hvis der er flere GitHub-spejle. Hvis der ingen er, lykkes det uden at synkronisere noget.
 3. **Tilføj de to secrets** i repositoryets (eller organisationens) indstillinger med de scopes, der står i [credentials.md](Credentials.da). Workflowet kører i alle organisationens repositories, så gem secrets én gang pr. organisation; et repository i en anden organisation kan ikke se dem:
-   - `TOKEN_FOR_GITEA`
+   - `TOKEN_FOR_GITEA_REPO`
    - `PAT_FOR_GITHUB` (kun GitHub-tokenet)
 4. **Lever workflowet:** scoped workflows gælder for alle repositories på denne instans, så der er intet at kopiere. Kun hvor scoped levering ikke er sat op, kopieres `.gitea/scoped_workflows/sync-github-metadata.yml` fra dette repository til `.gitea/workflows/` i mål-repositoryet; fastlås kopien til en gennemgået version, og kopier igen, når den ændres.
 5. **Angiv en beskrivelse og emner** på Gitea-repositoryet, så der er noget at synkronisere.
@@ -51,7 +51,7 @@ Det scoped workflow **Publish wiki pages** kopierer Markdown-siderne i `docs/wik
 **Kontroller, at en passende runner er online** (kræver tilladelse til at se runners):
 
 ```bash
-curl -s -H "Authorization: token $GITEA_TOKEN" \
+curl -s -H "Authorization: token $TOKEN_FOR_GITEA_REPO" \
   https://git.tirsystem.com/api/v1/repos/<owner>/<repo>/actions/runners
 ```
 

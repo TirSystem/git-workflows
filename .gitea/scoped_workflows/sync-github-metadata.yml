@@ -28,7 +28,7 @@ jobs:
       - name: Sync description and topics
         env:
           GITEA_API_URL: ${{ gitea.api_url }}
-          GITEA_CREDENTIALS: ${{ secrets.TOKEN_FOR_GITEA }}
+          GITEA_CREDENTIALS: ${{ secrets.TOKEN_FOR_GITEA_REPO }}
           SOURCE_REPOSITORY: ${{ gitea.repository }}
           PAT_FOR_GITHUB: ${{ secrets.PAT_FOR_GITHUB }}
         run: python3 shared-scripts/tools/sync_github_metadata.py

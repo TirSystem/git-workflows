@@ -20,6 +20,10 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Breaking
+
+- The Gitea secrets follow `TOKEN_FOR_<host>_<purpose>`: the scoped workflow `sync-github-metadata.yml` reads `TOKEN_FOR_GITEA_REPO` (it was `TOKEN_FOR_GITEA`), and the workflow `sync-milestones.yml` of this repository reads `TOKEN_FOR_GITEA_ISSUES`. Store the new secret in each organization before the next release; a run without it fails with `TOKEN_FOR_GITEA_REPO is missing or empty.` `TOKEN_FOR_GITEA_WIKI` and `TOKEN_FOR_GITEA_RELEASE` are unchanged.
+
 ### Added
 
 - The [adoption rules](guides/adoption-rules.md): for each workflow, when a repository uses it in SQA and QC. A new workflow adds its rule in the same pull request (`AGENTS.md`).

@@ -170,11 +170,11 @@ every pair is recorded in the dictionary (`docs/dictionary.md`, `DICT`).
 
 ## Credentials
 
-Scripts that call the git host (`sync-project.sh --apply`) need `GITEA_TOKEN`
+Scripts that call the git host (`sync-project.sh --apply`) need `TOKEN_FOR_GITEA_ISSUES`
 from the gitignored `.env`; load it with `set -a; . ./.env; set +a` and never
-print its values. Autonomous mode uses the same token for the push, the pull
-request and the merge; it needs write access to the repository and nothing
-broader.
+print its values. It is scoped to issues and milestones. Autonomous mode uses
+`TOKEN_FOR_GITEA_REPO` for the push, the pull request and the merge; it needs
+write access to the repository and nothing broader.
 
 Rules that apply to every document:
 

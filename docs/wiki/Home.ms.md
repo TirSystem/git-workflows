@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 3bb705987743 -->
+<!-- translation of Home.md, source sha256 7c57b63f1188 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -59,7 +59,7 @@ activate Workflow
 
 Workflow -> Workflow: Read and validate secrets
 note right
-TOKEN_FOR_GITEA
+TOKEN_FOR_GITEA_REPO
 PAT_FOR_GITHUB
 end note
 
@@ -414,7 +414,7 @@ deactivate Workflow
 
 ### Menerbitkan milestone yang diterima
 
-Kebenaran tetap untuk menerbitkan: pada push ke `main` yang mengubah milestone atau semakannya, setiap milestone yang baris terkini Version History-nya Accepted dan semakan terkininya Go dicipta atau dikemas kini di Gitea dengan tugasnya sebagai isu. Tiada apa-apa ditutup atau dipadam. Larian manual ialah larian percubaan kecuali `dry_run` dimatikan. Ia menggunakan secret `TOKEN_FOR_GITEA` dan peraturan `--accepted-only` framework yang dipasang (v0.5.0 atau lebih baharu).
+Kebenaran tetap untuk menerbitkan: pada push ke `main` yang mengubah milestone atau semakannya, setiap milestone yang baris terkini Version History-nya Accepted dan semakan terkininya Go dicipta atau dikemas kini di Gitea dengan tugasnya sebagai isu. Tiada apa-apa ditutup atau dipadam. Larian manual ialah larian percubaan kecuali `dry_run` dimatikan. Ia menggunakan secret `TOKEN_FOR_GITEA_ISSUES` dan peraturan `--accepted-only` framework yang dipasang (v0.5.0 atau lebih baharu).
 
 #### Aliran kerja
 
@@ -431,7 +431,7 @@ participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start workflow
 activate Workflow
-Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA
+Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA_ISSUES
 Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
 activate Script
 
@@ -496,9 +496,9 @@ deactivate Workflow
 - Satu instans Gitea dengan Actions diaktifkan dan satu runner yang menyediakan `ubuntu-latest` dengan `python3`
 - Satu push mirror GitHub yang dikonfigurasi pada repositori Gitea (paling banyak satu; repositori tanpa cermin dilangkau dengan jayanya)
 - Rahsia (secret) repositori:
-  - `TOKEN_FOR_GITEA`: token API Gitea (token sahaja, tanpa JSON)
+  - `TOKEN_FOR_GITEA_REPO`: token API Gitea (token sahaja, tanpa JSON)
   - `PAT_FOR_GITHUB`: personal access token GitHub yang dibenarkan mengubah suai repositori cermin (token sahaja, tanpa JSON)
-  - `TOKEN_FOR_GITEA_WIKI` (hanya untuk repositori yang menerbitkan wiki, lihat [panduan menyertakan repositori](Onboarding.ms)): token Gitea yang boleh menulis ke wiki, disimpan sebagai secret organisasi repositori; tiada sandaran kepada `TOKEN_FOR_GITEA`
+  - `TOKEN_FOR_GITEA_WIKI` (hanya untuk repositori yang menerbitkan wiki, lihat [panduan menyertakan repositori](Onboarding.ms)): token Gitea yang boleh menulis ke wiki, disimpan sebagai secret organisasi repositori; tiada sandaran kepada `TOKEN_FOR_GITEA_REPO`
 
 
 ## Persediaan

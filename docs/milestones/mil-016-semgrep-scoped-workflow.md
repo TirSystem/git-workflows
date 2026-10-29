@@ -1,0 +1,96 @@
+# MIL-016: Static security scan with Semgrep as a scoped workflow
+
+## Metadata
+| Key | Value |
+| --- | --- |
+| ID | MIL-016 |
+| CrossReference | [BC-001], [MIL-013], [MIL-014], [ADR-0005] |
+
+## Version History
+| Date | Status | Author | Reviewer | Change | Commit |
+| --- | --- | --- | --- | --- | --- |
+| 2026-10-27 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [1690cf7] |
+
+---
+
+## Purpose
+
+Decide whether the repositories of the TirSystem organizations get a free static
+security scan, in the place where GitHub offers CodeQL and GitHub Code Quality.
+The scan is Semgrep Community Edition, installed with `pip` on the runner and
+run with community rules and no login, as a **scoped** workflow: the instance
+runs it in every repository, so nothing is added to a repository. The decision
+supports a Business Case objective that does not exist yet (security findings
+are shown to the author of a pull request), which S01 must accept before the
+milestone starts.
+
+## Deliverable
+
+The scoped workflow `.gitea/scoped_workflows/semgrep.yml` and its script under
+`tools/`, with offline tests; ADR-0014 (rule set, what blocks, version pin,
+telemetry, licence of the rules); the guide `guides/semgrep.md`, the row in
+`guides/adoption-rules.md`, the README section, the wiki pages in three
+languages and the changelog entry; a trial on this repository and three others
+with the findings and the false positives counted; and a minor release.
+
+## Go / No-Go Criteria
+
+| # | Criterion (objectively checkable) | Go | No-Go |
+| --- | --- | --- | --- |
+| 1 | Semgrep CE installs and runs on a runner of the instance without a login, with metrics off, and finishes in time | A run on this repository prints `semgrep --version` of the pinned version, sends no metrics (`--metrics=off`) and ends in at most 5 minutes | It needs a token, an account or outbound access that is not allowed, or it takes longer |
+| 2 | The rules are community rules, and their licence permits the use | ADR-0014 names the rule set (for example `p/default`) and quotes the licence of the rules and of the engine, read from the sources | The licence forbids the use, or it was not read |
+| 3 | A finding of the blocking severity fails the run, others are shown and do not | A test repository with one planted `ERROR` finding fails; one with only `WARNING` findings passes and lists them | Either result is wrong |
+| 4 | A repository with no files Semgrep scans is skipped, not failed | A run in a repository of text files only ends green and says so | It fails |
+| 5 | The scan reads files only and changes nothing; the token of the run is not needed | The workflow has `permissions: contents: read` and no secret | A write permission or a secret appears |
+| 6 | A false positive can be silenced in the repository, and the way is documented | `.semgrepignore` and `# nosemgrep` work in a test and are in the guide | There is no way, or it is undocumented |
+| 7 | The trial on this repository and three others (one Python, one C#, one C++) is recorded | Findings and false positives counted per repository, with the decision on the blocking severity | A repository is missing from the record |
+| 8 | The offline tests pass and `python tools/build_wiki.py --check` is clean | Both succeed | A test fails or a page is stale |
+| 9 | The adoption row exists and names a condition that is checkable from the repository | The row is in `guides/adoption-rules.md`, linked from the guide and the README | It is missing |
+| 10 | The release is published with a changelog entry that names the new workflow and its rule | Tag and release page read back through the API | No entry, or a moved major tag |
+
+## Dependencies
+
+| Depends on | Reason |
+| --- | --- |
+| MIL-014 | Its task 2 verifies that a scoped workflow fires on a pull request and push, and that it reaches repositories of the organizations; this milestone uses the same delivery |
+| MIL-013 | Release 2.3.0 comes first, so this release is the next minor |
+| ADR-0005 | The contract of the shared workflows: a script is a file, tools are pinned, failures are categorised |
+| Business Case objective O8 (to be added) | The milestone needs an objective to trace to; S01 accepts it with this plan |
+
+## Traceability
+
+| Business Case objective / KPI / user story | Reference |
+| --- | --- |
+| O8 (proposed: security findings are shown to the author of a pull request) | [BC-001] |
+
+## Ownership
+
+| Role | Stakeholder ID (SA) |
+| --- | --- |
+| Owner | S05 |
+| Approving reviewer | S01 |
+
+## Target Date
+
+2026-12-11 — proposed by the author; the Business Case sets no deadline. The window (2026-11-30 to 2026-12-11) follows MIL-014 (2026-11-27). S01 confirms the date when accepting the plan.
+
+## Tasks
+
+| # | Task | Summary | Needs its own Use Case/User Story? | Reference |
+| --- | --- | --- | --- | --- |
+| 1 | Add objective O8 to the Business Case | Write the objective (security findings from a free static scan are shown to the author of a pull request) and the matching scope item, review it against the Business Case checklist and write the record, as MIL-013 did for O7. The AI does not change the Business Case without S01's acceptance. | No | [BC-001] |
+| 2 | Verify Semgrep CE on a runner | On a runner of the instance run `pip install semgrep==<version>`, `semgrep --version` and a scan of this repository with `--config p/default --metrics=off`; record the time, whether the rules are fetched without a login, the outbound hosts it needs and whether the runner has `python3` and `pip`. | No | |
+| 3 | Decide the contract (ADR-0014) | Write the ADR: the rule set, the blocking severity, the pinned version and how it is moved, that metrics are off, the licence of the engine and of the rules (read from the sources, not recalled), how findings are shown (log and job summary; Gitea has no SARIF upload), and what a repository does to silence a finding. | No | |
+| 4 | Write the script and tests | `tools/semgrep_scan.sh` (or a Python file) that checks the tracked files, runs Semgrep with the settings of the ADR, prints the findings and returns the exit code; offline tests with a stub of the `semgrep` command for the pass, the fail and the skip cases. | No | |
+| 5 | Write the scoped workflow | `.gitea/scoped_workflows/semgrep.yml`: on a pull request, a push to `main` and manually; read-only permissions; installs the pinned version; runs the script fetched from this repository at the major tag; skips a repository with nothing to scan. | No | |
+| 6 | Document it | `guides/semgrep.md`, the row in `guides/adoption-rules.md`, the README section and table (the count of workflows), the wiki pages in three languages, the changelog entry. | No | |
+| 7 | Run the trial | Scan this repository and three others (one Python, one C#, one C++); count the findings and the false positives for each, silence the false positives the way the guide says, and record the decision on the blocking severity in this milestone. | No | |
+| 8 | Release | Release through the release workflow as the next minor (Added); the moving major tag moves with it. | No | |
+
+---
+
+[BC-001]: ../business-case.md
+[MIL-013]: ./mil-013-english-comments-check.md
+[MIL-014]: ./mil-014-wiki-publishing-scoped-again.md
+[ADR-0005]: ../adr/adr-0005-quality-check-contract.md
+[1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
