@@ -23,6 +23,7 @@ Each release lists its changes in these groups, in this order:
 ### Breaking
 
 - The Gitea secrets follow `TOKEN_FOR_<host>_<purpose>`: the scoped workflow `sync-github-metadata.yml` reads `TOKEN_FOR_GITEA_REPO` (it was `TOKEN_FOR_GITEA`), and the workflow `sync-milestones.yml` of this repository reads `TOKEN_FOR_GITEA_ISSUES`. Store the new secret in each organization before the next release; a run without it fails with `TOKEN_FOR_GITEA_REPO is missing or empty.` `TOKEN_FOR_GITEA_WIKI` and `TOKEN_FOR_GITEA_RELEASE` are unchanged.
+- `sync-milestones.yml` checks out the project and the private framework submodule with `TOKEN_FOR_GITEA_REPO` (read on repositories) and publishes with `TOKEN_FOR_GITEA_ISSUES` (issues and milestones only). The first version of this rename used the narrow token for the checkout too, and the run ended with `403 Forbidden` on the submodule.
 
 ### Added
 

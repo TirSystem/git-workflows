@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 7c57b63f1188 -->
+<!-- translation of Home.md, source sha256 877dbe1a7fdd -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -431,7 +431,7 @@ participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start workflow
 activate Workflow
-Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA_ISSUES
+Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA_REPO
 Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
 activate Script
 
