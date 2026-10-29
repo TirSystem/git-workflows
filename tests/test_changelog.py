@@ -138,3 +138,70 @@ def test_wrapped_item_is_one_item_in_the_notes():
     text = "## [Unreleased]\n\n## [1.0.0] - 2026-10-10\n\n### Added\n\n- A long item that\n  continues here.\n- Next.\n"
     assert changelog.parse(text)[1].groups["Added"] == ["A long item that continues here.", "Next."]
     assert "- A long item that continues here.\n" in changelog.notes(text, "1.0.0")
+
+
+FRAMEWORK = (REPO_ROOT / "tests" / "fixtures" / "framework-changelog.md").read_text(encoding="utf-8")
+
+
+class TestFrameworkFormat:
+    """The heading `## 0.18.0 (2026-10-28)` of the framework repository."""
+
+    def test_reads_plain_headings_and_both_unreleased_spellings(self):
+        releases = changelog.parse(FRAMEWORK)
+        assert [r.name for r in releases] == ["Unreleased", "0.18.0", "0.17.1"]
+        assert releases[1].date == "2026-10-28" and releases[1].version == (0, 18, 0)
+        assert releases[1].plain and releases[0].is_unreleased
+        assert changelog.parse("## [Unreleased]\n")[0].is_unreleased
+
+    def test_a_framework_changelog_is_correct(self):
+        assert changelog.validate(FRAMEWORK) == []
+
+    def test_notes_are_the_section_text(self):
+        text = changelog.notes(FRAMEWORK, "0.18.0")
+        assert text.startswith("## 0.18.0 (2026-10-28)\n")
+        assert "A minor release" in text and "### Changed" in text
+        assert "0.17.1" not in text and text.endswith("\n")
+
+    def test_a_group_name_is_free(self):
+        assert changelog.validate(FRAMEWORK.replace("### Changed", "### Misc")) == []
+
+    def test_a_heading_without_a_date_is_a_problem(self):
+        problems = changelog.validate(FRAMEWORK.replace("## 0.17.1 (2026-10-27)", "## 0.17.1"))
+        assert any("needs a date, `## 0.17.1 (YYYY-MM-DD)`" in p for p in problems)
+
+    def test_a_heading_that_is_not_a_version_is_a_problem(self):
+        problems = changelog.validate(FRAMEWORK.replace("## 0.17.1 (2026-10-27)", "## v0.17 (2026-10-27)"))
+        assert any("not a version" in p for p in problems)
+
+    def test_versions_must_descend(self):
+        problems = changelog.validate(FRAMEWORK.replace("## 0.17.1", "## 0.19.0"))
+        assert any("must be lower than the version above" in p for p in problems)
+
+    def test_a_duplicate_version_is_a_problem(self):
+        problems = changelog.validate(FRAMEWORK.replace("## 0.17.1", "## 0.18.0"))
+        assert any("duplicate version" in p for p in problems)
+
+    def test_an_empty_body_is_a_problem_and_has_no_notes(self):
+        text = FRAMEWORK.rstrip() + "\n\n## 0.17.0 (2026-10-01)\n"
+        assert any("[0.17.0] has no text" in p for p in changelog.validate(text))
+        with pytest.raises(LookupError):
+            changelog.notes(text, "0.17.0")
+
+    def test_a_major_without_breaking_group_is_allowed(self):
+        text = "## Unreleased\n\n## 1.0.0 (2026-10-02)\n\nText.\n\n## 0.9.0 (2026-10-01)\n\nText.\n"
+        assert changelog.validate(text) == []
+
+    def test_the_file_may_start_without_unreleased(self):
+        assert changelog.validate("## 0.1.0 (2026-10-01)\n\nText.\n") == []
+
+    def test_check_version_reads_the_framework_format(self, tmp_path):
+        path = tmp_path / "CHANGELOG.md"
+        path.write_text(FRAMEWORK, encoding="utf-8")
+        assert changelog.main(["check", "--file", str(path), "--version", "0.18.0"]) == 0
+        assert changelog.main(["check", "--file", str(path), "--version", "0.19.0"]) == 1
+
+    def test_notes_command_prints_the_section(self, tmp_path, capsys):
+        path = tmp_path / "CHANGELOG.md"
+        path.write_text(FRAMEWORK, encoding="utf-8")
+        assert changelog.main(["notes", "0.17.1", "--file", str(path)]) == 0
+        assert "A broken link in the wiki." in capsys.readouterr().out
