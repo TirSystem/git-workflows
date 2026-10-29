@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; Accepted on a Go review (RC-095); accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; Accepted on a Go review (RC-095); accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [9a3bfb0] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -78,3 +78,4 @@ Negative:
 [MIL-014]: ../milestones/mil-014-wiki-publishing-scoped-again.md
 [BC-001]: ../business-case.md
 [RC-095]: ../sqa/reviews/rc-095-adr-0014-mil-014.md
+[9a3bfb0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/9a3bfb02a1540806399a60bfab898a76a146d4c0

@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-094; MIL-015 gains task 9 (RC-094) | [400fd30] |
-| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0014 and RC-095; MIL-014 gains task 10 | pending |
+| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0014 and RC-095; MIL-014 gains task 10 | [9a3bfb0] |
 
 ---
 
@@ -310,3 +310,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [400fd30]: https://git.tirsystem.com/TirSystem/git-workflows/commit/400fd308b3eb9b286017ba72637c5b7ee39f3175
+[9a3bfb0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/9a3bfb02a1540806399a60bfab898a76a146d4c0

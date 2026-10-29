@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Accepted | Jens Tirsvad Nielsen | S01 | Reviewed (RC-012): decision stated in two sentences, rules moved below it | [d0618d9] |
-| 2026-10-29 | Superseded by ADR-0014 | Jens Tirsvad Nielsen | S01 | The page naming and the sidebar are replaced by ADR-0014 (`<Page>-<code>`, one page list); reviewed (RC-095) | pending |
+| 2026-10-29 | Superseded by ADR-0014 | Jens Tirsvad Nielsen | S01 | The page naming and the sidebar are replaced by ADR-0014 (`<Page>-<code>`, one page list); reviewed (RC-095) | [9a3bfb0] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -104,3 +104,4 @@ The rules that follow from it:
 [BC-001]: ../business-case.md
 [ADR-0014]: ./adr-0014-wiki-sidebar-and-language-page-names.md
 [d0618d9]: https://git.tirsystem.com/TirSystem/github-action/commit/d0618d929f2ec274d30b10bb1be306e1f04c31ee
+[9a3bfb0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/9a3bfb02a1540806399a60bfab898a76a146d4c0
