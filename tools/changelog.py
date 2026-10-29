@@ -1,10 +1,17 @@
 """Read, check and cut release notes from CHANGELOG.md (ADR-0006).
 
-The changelog follows the convention of the release process:
+The changelog follows the convention of the release process in one of two
+heading formats (ADR-0017); a file may use either:
 
-    ## [Unreleased]
+    ## [Unreleased]                  keep-a-changelog format
     ### Breaking | Added | Changed | Fixed
     ## [1.2.0] - 2026-10-10
+
+    ## Unreleased                    framework format (also `## [Unreleased]`)
+    ## 0.18.0 (2026-10-28)           free text and any ### groups below it
+
+The framework format is checked for the heading (semantic version and date),
+descending order, a non-empty body and no duplicate version only.
 
 Usage:
     python tools/changelog.py check [--file CHANGELOG.md]
@@ -24,6 +31,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 GROUPS = ("Breaking", "Added", "Changed", "Fixed")
 
 _RELEASE = re.compile(r"^## \[(?P<name>[^\]]+)\](?: - (?P<date>\d{4}-\d{2}-\d{2}))?\s*$")
+_PLAIN_RELEASE = re.compile(r"^## (?P<name>[^\s(\[]+)(?: \((?P<date>\d{4}-\d{2}-\d{2})\))?\s*$")
 _GROUP = re.compile(r"^### (?P<name>.+?)\s*$")
 _SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
 
@@ -36,6 +44,16 @@ class Release:
     date: str | None
     line: int
     groups: dict[str, list[str]] = field(default_factory=dict)
+    plain: bool = False  # True for the framework format `## 0.18.0 (date)`
+    heading: str = ""
+    body: list[str] = field(default_factory=list)
+
+    @property
+    def has_changes(self) -> bool:
+        """The entry says something: change groups (bracket format) or any text (plain format)."""
+        if self.plain:
+            return any(line.strip() for line in self.body)
+        return bool(self.groups)
 
     @property
     def version(self) -> tuple[int, int, int] | None:
@@ -53,12 +71,16 @@ def parse(text: str) -> list[Release]:
     group: str | None = None
     for number, line in enumerate(text.splitlines(), 1):
         release = _RELEASE.match(line)
-        if release:
-            releases.append(Release(release["name"], release["date"], number))
+        plain = None if release else _PLAIN_RELEASE.match(line)
+        if release or plain:
+            found = release or plain
+            assert found is not None
+            releases.append(Release(found["name"], found["date"], number, plain=plain is not None, heading=line.rstrip()))
             group = None
             continue
         if not releases:
             continue
+        releases[-1].body.append(line)
         heading = _GROUP.match(line)
         if heading:
             group = heading["name"]
@@ -72,23 +94,37 @@ def parse(text: str) -> list[Release]:
     return releases
 
 
+def _group_problems(release: Release, where: str) -> list[str]:
+    problems: list[str] = []
+    for group, items in release.groups.items():
+        if group not in GROUPS:
+            problems.append(f"{where}: group '{group}' is not one of {', '.join(GROUPS)}")
+        if not items:
+            problems.append(f"{where}: group '{group}' of [{release.name}] has no item")
+    return problems
+
+
+def _heading_example(release: Release) -> str:
+    if release.plain:
+        return f"`## {release.name} (YYYY-MM-DD)`"
+    return f"`## [{release.name}] - YYYY-MM-DD`"
+
+
 def validate(text: str) -> list[str]:
     """Return one message per breach of the convention."""
     problems: list[str] = []
     releases = parse(text)
     if not releases:
         return ["no release section: the file needs `## [Unreleased]` and one `## [x.y.z] - date` per release"]
-    if not releases[0].is_unreleased:
+    if not releases[0].plain and not releases[0].is_unreleased:
         problems.append(f"line {releases[0].line}: the first section must be `## [Unreleased]`")
 
     previous: tuple[int, int, int] | None = None
+    seen: set[tuple[int, int, int]] = set()
     for release in releases:
         where = f"line {release.line}"
-        for group, items in release.groups.items():
-            if group not in GROUPS:
-                problems.append(f"{where}: group '{group}' is not one of {', '.join(GROUPS)}")
-            if not items:
-                problems.append(f"{where}: group '{group}' of [{release.name}] has no item")
+        if not release.plain:
+            problems += _group_problems(release, where)
         if release.is_unreleased:
             if release.date:
                 problems.append(f"{where}: [Unreleased] has no date")
@@ -98,15 +134,20 @@ def validate(text: str) -> list[str]:
             problems.append(f"{where}: '{release.name}' is not a version MAJOR.MINOR.PATCH")
             continue
         if not release.date:
-            problems.append(f"{where}: [{release.name}] needs a date, `## [{release.name}] - YYYY-MM-DD`")
-        if not release.groups:
-            problems.append(f"{where}: [{release.name}] has no change group")
+            problems.append(f"{where}: [{release.name}] needs a date, {_heading_example(release)}")
+        if not release.has_changes:
+            problems.append(
+                f"{where}: [{release.name}] has no text" if release.plain else f"{where}: [{release.name}] has no change group"
+            )
         if previous is not None and version >= previous:
-            problems.append(f"{where}: [{release.name}] must be lower than the version above it")
+            duplicate = " (duplicate version)" if version in seen else ""
+            problems.append(f"{where}: [{release.name}] must be lower than the version above it{duplicate}")
+        seen.add(version)
         previous = version
 
     # a breaking entry needs a new major compared with the release before it
-    released = [r for r in releases if not r.is_unreleased and r.version is not None]
+    # (keep-a-changelog format only; the framework format has free groups)
+    released = [r for r in releases if not r.is_unreleased and r.version is not None and not r.plain]
     for newer, older in zip(released, released[1:]):
         if newer.groups.get("Breaking") and newer.version[0] <= older.version[0]:  # type: ignore[index]
             problems.append(
@@ -127,8 +168,10 @@ def notes(text: str, version: str) -> str:
     """Return the Markdown of the release page for ``version``."""
     for release in parse(text):
         if release.name == version:
-            if not release.groups:
+            if not release.has_changes:
                 break
+            if release.plain:
+                return "\n".join([release.heading, *release.body]).strip() + "\n"
             parts = [f"## {version}" + (f" - {release.date}" if release.date else "")]
             for group in GROUPS:
                 items = release.groups.get(group)
@@ -159,7 +202,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     problems = validate(text)
-    if args.must_have and not any(r.name == args.must_have and r.groups for r in parse(text)):
+    if args.must_have and not any(r.name == args.must_have and r.has_changes for r in parse(text)):
         problems.append(f"no changelog entry with changes for version {args.must_have}")
     for problem in problems:
         print(f"ERROR: {args.file}: {problem}", file=sys.stderr)

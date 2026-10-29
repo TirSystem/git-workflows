@@ -107,6 +107,9 @@ def _write_sources(root: Path) -> None:
         "quality-checks-csharp",
         "code-metrics",
         "english-comments",
+        "opengrep",
+        "validate",
+        "sync-milestones",
         "upgrading",
     )
     for name in guide_names:

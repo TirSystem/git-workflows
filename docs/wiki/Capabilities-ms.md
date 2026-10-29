@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 83aa2bd633f2 -->
+<!-- translation of Capabilities.md, source sha256 da8f69e41c49 -->
 
 > Ini ialah terjemahan [`Capabilities`](Capabilities). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -17,5 +17,8 @@ Baris yang menyatakan Dilaksanakan atau Panduan telah ditulis wujud hari ini. Se
 | Semakan kualiti bersama (Python dan shell) | Dilaksanakan sebagai aliran kerja boleh guna semula `.gitea/workflows/quality-checks.yml`, dengan ujian luar talian dan percubaan dalam organisasi kedua; digunakan dalam RepoFoundry ([panduan](QualityChecksPythonShell-ms)) |
 | Semakan kualiti bersama (C dan C++, C#) | Dilaksanakan sebagai aliran kerja boleh guna semula `.gitea/workflows/quality-checks-cpp.yml` dan `.gitea/workflows/quality-checks-csharp.yml` dengan versi alat yang tepat dan ujian luar talian; belum digunakan dalam repositori lain (MIL-007) ([panduan C dan C++](QualityChecksCpp-ms), [panduan C#](QualityChecksCSharp-ms)) |
 | Metrik kod dan lencana liputan | Dilaksanakan dan diterbitkan dalam 2.1.0 sebagai aliran kerja boleh guna semula `.gitea/workflows/code-metrics.yml` dengan pengira, pembaca Cobertura, pemaparan SVG dan ujian luar talian; dicuba dalam repositori sekali pakai, belum digunakan dalam repositori projek (MIL-010) ([panduan](CodeMetrics-ms)) |
+| Imbasan keselamatan statik | Dilaksanakan sebagai aliran kerja scoped `.gitea/scoped_workflows/opengrep.yml` dengan OpenGrep, skrip dan ujian luar talian; belum dijalankan pada instans (MIL-016) ([panduan](OpenGrep-ms)) |
+| Pengesahan setiap repositori | Dilaksanakan sebagai aliran kerja scoped `.gitea/scoped_workflows/validate.yml` dengan skrip dan ujian luar talian; belum dijalankan pada instans (MIL-017) ([panduan](Validate-ms)) |
+| Penerbitan milestone yang diterima | Dilaksanakan sebagai aliran kerja scoped `.gitea/scoped_workflows/sync-milestones.yml` dengan skrip dan ujian luar talian, menggantikan salinan dalam `.gitea/workflows/`; secret dan framework persendirian dalam larian scoped belum disahkan pada instans (MIL-019) ([panduan](SyncMilestones-ms)) |
 | Komen dalam bahasa Inggeris | Dilaksanakan sebagai aliran kerja boleh guna semula `.gitea/workflows/english-comments.yml` dengan pengekstrak komen, pengesan bahasa yang diukur pada korpus (ADR-0012), komen pada pull request dan ujian luar talian; belum dijalankan pada instans atau diwajibkan oleh mana-mana repositori (MIL-013) ([panduan](EnglishComments-ms)) |
 | Keluaran berversi dan penerbitan | Proses keluaran, changelog dan panduan naik taraf telah ditakrifkan; aliran kerja keluaran sudah ada dan `v1.0.0` telah dikeluarkan (MIL-004) ([panduan](Upgrading-ms)) |

@@ -1,0 +1,38 @@
+name: Validate
+
+# Scoped workflow: it runs in every repository of an organization, so there is
+# no caller and no input. It checks the workflow files (the criteria of
+# QC-WF-001 that a script can decide) and the tracked shell scripts
+# (shellcheck and shfmt) of the repository, and ends green when there is
+# nothing to check (ADR-0016). The status is "Validate / validate (<event>)",
+# which the release workflow reads. The script is a file of
+# TirSystem/git-workflows (tools/validate_repo.py), fetched at v2.
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: validate
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Fetch the shared script
+        uses: actions/checkout@v4.2.2
+        with:
+          repository: TirSystem/git-workflows
+          ref: v2
+          path: shared-scripts
+
+      - name: Install the validation tools
+        run: python3 shared-scripts/tools/validate_repo.py install
+
+      - name: Check the workflow files and the shell scripts
+        run: .validate-venv/bin/python shared-scripts/tools/validate_repo.py run

@@ -1,4 +1,4 @@
-<!-- translation of Capabilities.md, source sha256 83aa2bd633f2 -->
+<!-- translation of Capabilities.md, source sha256 da8f69e41c49 -->
 
 > Dette er en oversættelse af [`Capabilities`](Capabilities). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -17,5 +17,8 @@ Rækker, der siger Implementeret eller Vejledninger er skrevet, findes i dag. Re
 | Fælles kvalitetskontrol (Python og shell) | Implementeret som det genbrugelige workflow `.gitea/workflows/quality-checks.yml`, med offline-tests og et forsøg i en anden organisation; taget i brug i RepoFoundry ([vejledning](QualityChecksPythonShell-da)) |
 | Fælles kvalitetskontrol (C og C++, C#) | Implementeret som de genbrugelige workflows `.gitea/workflows/quality-checks-cpp.yml` og `.gitea/workflows/quality-checks-csharp.yml` med præcise værktøjsversioner og offline-tests; endnu ikke brugt i et andet repository (MIL-007) ([vejledning til C og C++](QualityChecksCpp-da), [vejledning til C#](QualityChecksCSharp-da)) |
 | Kodemålinger og dækningsbadges | Implementeret og udgivet i 2.1.0 som det genbrugelige workflow `.gitea/workflows/code-metrics.yml` med en tæller, en Cobertura-læser, en SVG-renderer og offline-tests; afprøvet i et kasserepository, endnu ikke brugt i et projektrepository (MIL-010) ([vejledning](CodeMetrics-da)) |
+| Statisk sikkerhedsskanning | Implementeret som det scopede workflow `.gitea/scoped_workflows/opengrep.yml` med OpenGrep, et script og offline-tests; endnu ikke kørt på instansen (MIL-016) ([vejledning](OpenGrep-da)) |
+| Validering af alle repositories | Implementeret som det scopede workflow `.gitea/scoped_workflows/validate.yml` med et script og offline-tests; endnu ikke kørt på instansen (MIL-017) ([vejledning](Validate-da)) |
+| Publicering af accepterede milepæle | Implementeret som det scopede workflow `.gitea/scoped_workflows/sync-milestones.yml` med et script og offline-tests og erstatter kopien i `.gitea/workflows/`; secrets'ene og det private framework i en scoped kørsel er endnu ikke verificeret på instansen (MIL-019) ([vejledning](SyncMilestones-da)) |
 | Engelske kommentarer | Implementeret som det genbrugelige workflow `.gitea/workflows/english-comments.yml` med en kommentarudtrækker, en sprogdetektor målt på et korpus (ADR-0012), en kommentar på pull requesten og offline-tests; endnu ikke kørt på instansen eller krævet af noget repository (MIL-013) ([vejledning](EnglishComments-da)) |
 | Versioneret udgivelse og publicering | Udgivelsesproces, changelog og opgraderingsvejledning er defineret; udgivelsesworkflowet findes, og `v1.0.0` er udgivet (MIL-004) ([vejledning](Upgrading-da)) |

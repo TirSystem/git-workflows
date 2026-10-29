@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 6560fca6685f -->
+<!-- translation of Credentials.md, source sha256 cd3477f88ddc -->
 
 > Ini ialah terjemahan [`Credentials`](Credentials). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -67,6 +67,54 @@ Aliran kerja **Publish wiki pages** menyalin `docs/wiki/` ke wiki Gitea bagi rep
 - Panggilan yang dibuat: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`, `GET`, `POST` dan `PATCH /repos/{owner}/{repo}/wiki/...` dan, bagi halaman yang tidak lagi wujud dalam `docs/wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}` (hanya apabila pemadaman dihidupkan, yang tidak dilakukan oleh aliran kerja scoped).
 - Wiki mesti diaktifkan dalam tetapan repositori. Aliran kerja enggan berjalan jika ia tidak diaktifkan.
 - Halaman yang ada dalam `docs/wiki/` sentiasa ditimpa daripadanya, jadi perubahan yang dibuat dalam antara muka web Gitea hilang pada penerbitan seterusnya. Halaman yang hanya ada dalam wiki dikekalkan.
+
+## Secret keluaran
+
+Aliran kerja scoped **Release** (ADR-0017) mencipta tag versi, halaman keluaran dan, dari versi 1.0.0, tag major bagi mana-mana repositori dalam organisasi. Ia dimulakan secara manual (lihat [release-process.md](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)). Ia menulis dengan secret sendiri, jadi tiada token lain perlu menulis tag.
+
+| Secret | Kandungan | Digunakan untuk |
+| --- | --- | --- |
+| `TOKEN_FOR_GITEA_RELEASE` | Token Gitea, tiada yang lain | Mencipta tag dan halaman keluaran, dan mengalihkan tag major, dalam repositori tempat aliran kerja dimulakan |
+
+- Simpan sebagai secret organisasi bagi setiap repositori yang dikeluarkan. Tiada sandaran kepada token larian, `TOKEN_FOR_GITEA_REPO` atau mana-mana secret lain: larian tanpanya tamat sebagai `[configuration]` dan menamakan secret itu, termasuk larian cuba.
+- Token mesti mempunyai skop `write:repository`, dan penggunanya mesti mempunyai akses tulis kepada repositori. Gitea tidak mempunyai skop untuk tag sahaja, jadi cipta token untuk pengguna khusus. S05 meluluskan skop dan S03 menyimpan secret.
+- Aliran kerja membacanya dalam persekitaran satu langkah yang menjalankan skrip; ia tidak pernah muncul pada baris arahan atau dalam log. Aliran kerja itu sendiri mempunyai `permissions: contents: read`.
+- Panggilan yang dibuat (satu ujian membandingkan senarai ini dengan skrip):
+  - `GET /repos/{owner}/{repo}` (cabang lalai)
+  - `GET /repos/{owner}/{repo}/branches/{branch}` (hujung cabang lalai)
+  - `GET /repos/{owner}/{repo}/commits/{sha}/status` (status `Validate / validate (push)`)
+  - `GET /repos/{owner}/{repo}/tags`
+  - `POST /repos/{owner}/{repo}/releases` (halaman keluaran; Gitea mencipta tag versi bersamanya)
+  - `POST /repos/{owner}/{repo}/tags` (tag major `vN`)
+  - `DELETE /repos/{owner}/{repo}/tags/{tag}` (tag major `vN`, sebelum dicipta semula pada commit baharu)
+
+  Larian cuba hanya membuat panggilan `GET`.
+- Secret yang boleh menulis tag dan halaman keluaran dalam setiap repositori sesebuah organisasi ialah sasaran bernilai tinggi (ADR-0017). Ia dihadkan oleh pengguna khusus dan oleh penyimpanan bagi setiap organisasi.
+- **Belum disahkan pada instans:** sama ada token berfungsi seperti yang diandaikan oleh keputusan dalam larian scoped (ia boleh mencipta tag dan halaman serta mengalihkan tag) ialah tugas pertama MIL-018. Selagi itu belum direkodkan, skop dan senarai panggilan di atas ialah keputusan, bukan hasil yang telah diuji.
+
+## Secret penerbitan milestone
+
+Aliran kerja scoped **Menerbitkan milestone yang diterima** (ADR-0018, [panduan](SyncMilestones-ms))
+menerbitkan milestone yang diterima bagi repositori yang mempunyai folder `docs/milestones/` sebagai milestone dan
+isu Gitea. Ia menggunakan dua secret organisasi dan tidak membaca nama lain.
+
+| Secret | Kandungan | Digunakan untuk |
+| --- | --- | --- |
+| `TOKEN_FOR_GITEA_REPO` | Token Gitea sahaja | Membaca repositori: projek dan framework persendirian, dikeluarkan melalui HTTPS |
+| `TOKEN_FOR_GITEA_ISSUES` | Token Gitea sahaja | Menerbitkan: mencipta dan mengemas kini isu dan milestone, skop isu sahaja |
+
+- Simpan kedua-duanya sebagai secret organisasi bagi setiap repositori yang menerbitkan. Tiada fallback kepada nama
+  lama (`GITEA_TOKEN`, `SYNC_TOKEN`): larian tanpa salah satu tamat sebagai `[configuration]` dan menamakannya, dan
+  repositori tanpa `docs/milestones/` tidak memerlukan kedua-duanya.
+- Aliran kerja membacanya dalam persekitaran langkah yang memerlukannya; ia tidak pernah muncul pada baris arahan atau
+  dalam log. Aliran kerja itu sendiri mempunyai `permissions: contents: read`.
+- Salinan `sync-milestones.yml` dalam `.gitea/workflows/` sesebuah repositori dibuang: ia berjalan di sebelah aliran
+  kerja scoped dan menerbitkan dua kali.
+- Token yang menerbitkan isu dalam setiap repositori sesebuah organisasi boleh dicapai oleh aliran kerja setiap
+  repositori dalam organisasi itu (ADR-0018).
+- **Belum disahkan pada instans:** sama ada larian scoped boleh membaca kedua-dua secret dan mengeluarkan framework
+  persendirian, dan sama ada `framework/qc` diperlukan, ialah tugas pertama MIL-019. Selagi itu belum direkodkan, ini
+  ialah keputusan, bukan hasil yang telah diuji.
 
 ## Menukar token
 
