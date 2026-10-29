@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-014 |
-| CrossReference | [BC-001], [MIL-009], [ADR-0004], [ADR-0009], [ADR-0013], [ADR-0014], [RC-086], [RC-095] |
+| CrossReference | [BC-001], [MIL-009], [ADR-0004], [ADR-0009], [ADR-0013], [ADR-0014], [RC-086], [RC-095], [RC-097] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-27 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; Accepted on a Go review (RC-086); accepted by the author in chat on 2026-10-27 as stand-in for S01, not independent | [1fd6ae4] |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 10 and task 10: the wiki of this repository follows the shared sidebar and page names (ADR-0014); reviewed (RC-095), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [9a3bfb0] |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 11 and task 11: a reusable script that deletes the old wiki pages after a rename, and old release pages; reviewed (RC-097), accepted by the author in chat as stand-in for S01, not independent | pending |
 
 ---
 
@@ -48,6 +48,7 @@ repository; and the major release 3.0.0 with the tag `v3`.
 | 8 | The framework has retired `templates/ci/publish-wiki.yml` and `process/wiki.md` describes the scoped workflow, released as a tag that this project pins | The tag exists and this project pins it | The pin is an unmerged commit |
 | 9 | Release 3.0.0 is published with a Breaking entry, `v3` points to it, and `v2` still points to the last 2.x release | Tags read back through the API | `v2` moved, or no Breaking entry |
 | 10 | The wiki of this repository has the sidebar and the page names of `QC-WIKI-001` | `python tools/build_wiki.py --check` is clean; `_Sidebar` has one English page list, `Related` and `Languages` last; the pages are `<Page>-da` and `<Page>-ms`; the offline tests pass; after the first run the published sidebar and every link in it are read back | The sidebar repeats the page list per language, a link is dead, or a test fails |
+| 11 | The old wiki pages that a rename leaves behind can be removed by a script that a person runs | `tools/gitea_cleanup.py` is a dry run unless `--apply` is given, lists only pages whose renamed page exists, never deletes a tag, and prints no token; its offline tests pass and the coverage of `tools/` stays at 95% | The script deletes without `--apply`, deletes a page without its replacement, or prints a token |
 
 ## Dependencies
 
@@ -86,6 +87,7 @@ repository; and the major release 3.0.0 with the tag `v3`.
 | 6 | Verify the migration | After each first scoped run read the wiki back and compare it with `docs/wiki/`; scan the four organizations for callers of `publish-wiki-pages.yml` and for repositories whose wiki would be written without their owner's agreement. Record the results in this milestone. | No | |
 | 7 | Release 3.0.0 | Breaking entry (a removed reusable workflow and its inputs); upgrade guide for callers: remove the call and rely on the scoped workflow; release through the release workflow; `v3` is created and `v2` stays at the last 2.x release, so a caller still pinned at `@v2` keeps working. Move the examples in the guides to `@v3` where they describe the new major. | No | |
 | 10 | Follow the shared sidebar and page names | Write [ADR-0014]; generate the sidebar in `tools/build_wiki.py` as `QC-WIKI-001` and `process/wiki.md` require (English page list once, `Related`, `Languages` last); rename `<Page>.da` and `<Page>.ms` to `<Page>-da` and `<Page>-ms`, with the language line and the links; update the tests. The old pages stay on the wiki until a person deletes them. | No | [BC-001] |
+| 11 | Clean up after a rename | `tools/gitea_cleanup.py` with offline tests: a dry run by default, `--wiki-renamed` (pages `<Page>.<code>` whose `<Page>-<code>` exists), `--releases` (release pages except the newest N and named tags; the tags stay) and `--branch` (a local branch). The AI never runs it with `--apply`; a person does. | No | [BC-001] |
 
 ---
 
@@ -97,5 +99,5 @@ repository; and the major release 3.0.0 with the tag `v3`.
 [ADR-0014]: ../adr/adr-0014-wiki-sidebar-and-language-page-names.md
 [RC-086]: ../sqa/reviews/rc-086-adr-0013-mil-014-pp-001.md
 [RC-095]: ../sqa/reviews/rc-095-adr-0014-mil-014.md
-[1fd6ae4]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1fd6ae4ee07202dcd57caffdd267758ea20af005
+[RC-097]: ../sqa/reviews/rc-097-mil-014-task-11.md
 [9a3bfb0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/9a3bfb02a1540806399a60bfab898a76a146d4c0
