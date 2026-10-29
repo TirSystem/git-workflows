@@ -31,6 +31,8 @@ Each release lists its changes in these groups, in this order:
 
 ### Added
 
+- `tools/gitea_cleanup.py`: a script that a person runs to delete the wiki pages a rename leaves behind (`<Page>.<code>` once `<Page>-<code>` exists), old release pages (the tags stay) and a local branch. It is a dry run unless `--apply` is given.
+
 - The [adoption rules](guides/adoption-rules.md): for each workflow, when a repository uses it in SQA and QC. A new workflow adds its rule in the same pull request (`AGENTS.md`).
 
 ## [2.2.0] - 2026-10-21
