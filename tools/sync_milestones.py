@@ -90,7 +90,8 @@ def git_environment(token: str) -> dict[str, str]:
 def run_git(command: list[str], environment: dict[str, str], what: str) -> None:
     """Run a git command; a failure is a tool error that names ``what`` and never the environment."""
     try:
-        completed = subprocess.run(command, env=environment, check=False)
+        # The command is a list of constants and values of this script; no shell runs it.
+        completed = subprocess.run(command, env=environment, check=False)  # nosemgrep
     except OSError as error:
         fail("tool", f"git cannot be started: {error}")
     if completed.returncode != 0:

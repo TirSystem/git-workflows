@@ -324,7 +324,7 @@ class TestWorkflow:
         steps = workflow["jobs"]["opengrep"]["steps"]
         fetch = next(step for step in steps if step.get("with", {}).get("repository"))
         assert fetch["with"]["repository"] == "TirSystem/git-workflows"
-        assert fetch["with"]["ref"] == "v2"
+        assert fetch["with"]["ref"] == "v3"
         runs = [step.get("run", "") for step in steps]
         assert "python3 shared-scripts/tools/opengrep_scan.py install" in runs
         assert "python3 shared-scripts/tools/opengrep_scan.py run" in runs

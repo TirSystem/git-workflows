@@ -121,7 +121,8 @@ def fetch_rules() -> None:
         ["git", "-C", target, "fetch", "--quiet", "--depth", "1", RULES_REPOSITORY, RULES_COMMIT],
         ["git", "-C", target, "checkout", "--quiet", "FETCH_HEAD"],
     ):
-        if subprocess.run(command, check=False).returncode != 0:
+        # The command is a list of constants and values of this script; no shell runs it.
+        if subprocess.run(command, check=False).returncode != 0:  # nosemgrep
             fail("tool", f"'{' '.join(command[:4])}' failed; the OpenGrep rules {RULES_COMMIT} are not fetched.")
 
 
@@ -189,7 +190,8 @@ def run() -> None:
     """Scan, print every finding and fail when one has the blocking severity."""
     command = scan_command()
     try:
-        completed = subprocess.run(command, check=False)
+        # The command is a list of constants and values of this script; no shell runs it.
+        completed = subprocess.run(command, check=False)  # nosemgrep
     except OSError as error:
         fail("tool", f"OpenGrep cannot be started: {error}")
     if completed.returncode != 0:

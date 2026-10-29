@@ -14,7 +14,8 @@ Exit codes: 0 written, 1 a configuration problem (printed as
 import argparse
 import json
 import sys
-import xml.etree.ElementTree as ElementTree
+# The coverage report is written by the project's own test run, not by a third party.
+import xml.etree.ElementTree as ElementTree  # nosemgrep
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from pathlib import Path
 

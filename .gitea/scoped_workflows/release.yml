@@ -9,7 +9,7 @@ name: Release
 # nothing, so a release is a deliberate second run with dry_run false.
 # It requires the organization secret TOKEN_FOR_GITEA_RELEASE and has no
 # fallback to the token of the run or to any other secret. The script is a file
-# of TirSystem/git-workflows (tools/release.py), fetched at v2.
+# of TirSystem/git-workflows (tools/release.py), fetched at v3.
 on:
   workflow_dispatch:
     inputs:
@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@v4.2.2
         with:
           repository: TirSystem/git-workflows
-          ref: v2
+          ref: v3
           path: shared-scripts
 
       - name: Check and publish the release

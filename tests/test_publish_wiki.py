@@ -495,10 +495,10 @@ class TestScopedWorkflow:
         assert step["run"] == "python3 shared-scripts/tools/publish_wiki.py"
         assert "inputs." not in step["run"]
 
-    def test_the_script_is_fetched_at_v2(self, steps):
+    def test_the_script_is_fetched_at_v3(self, steps):
         fetch = steps["Fetch the shared script"]["with"]
         assert fetch["repository"] == "TirSystem/git-workflows"
-        assert fetch["ref"] == "v2"
+        assert fetch["ref"] == "v3"
 
     def test_the_folder_check_decides_whether_the_fetch_and_publish_steps_run(self, steps):
         assert steps["source"]["name"] == "Look for the wiki folder"
