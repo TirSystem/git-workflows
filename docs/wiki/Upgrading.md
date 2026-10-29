@@ -2,7 +2,7 @@
 
 > This page is generated from [`guides/upgrading.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/upgrading.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](Upgrading.da) | [Bahasa Melayu](Upgrading.ms)
+**English** · [Dansk](Upgrading-da) · [Bahasa Melayu](Upgrading-ms)
 
 # Upgrading to a new version of the shared workflows
 

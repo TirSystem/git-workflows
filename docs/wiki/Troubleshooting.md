@@ -2,7 +2,7 @@
 
 > This page is generated from [`guides/troubleshooting.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/troubleshooting.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](Troubleshooting.da) | [Bahasa Melayu](Troubleshooting.ms)
+**English** · [Dansk](Troubleshooting-da) · [Bahasa Melayu](Troubleshooting-ms)
 
 # Diagnosing a failed run
 

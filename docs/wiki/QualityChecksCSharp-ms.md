@@ -1,8 +1,8 @@
-<!-- translation of QualityChecksCSharp.md, source sha256 07753383432e -->
+<!-- translation of QualityChecksCSharp.md, source sha256 4d611cda04d8 -->
 
 > Ini ialah terjemahan [`QualityChecksCSharp`](QualityChecksCSharp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](QualityChecksCSharp) | [Dansk](QualityChecksCSharp.da) | Bahasa Melayu
+[English](QualityChecksCSharp) · [Dansk](QualityChecksCSharp-da) · **Bahasa Melayu**
 
 # Membaca keputusan semakan kualiti C#
 

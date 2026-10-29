@@ -1,8 +1,8 @@
-<!-- translation of EnglishComments.md, source sha256 a9533f14d5f5 -->
+<!-- translation of EnglishComments.md, source sha256 729ac76dcb58 -->
 
 > Dette er en oversættelse af [`EnglishComments`](EnglishComments). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](EnglishComments) | Dansk | [Bahasa Melayu](EnglishComments.ms)
+[English](EnglishComments) · **Dansk** · [Bahasa Melayu](EnglishComments-ms)
 
 # Kommentarer i kildekoden på engelsk
 

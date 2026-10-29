@@ -2,7 +2,7 @@
 
 > This page is generated from [`guides/onboarding.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/onboarding.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](Onboarding.da) | [Bahasa Melayu](Onboarding.ms)
+**English** · [Dansk](Onboarding-da) · [Bahasa Melayu](Onboarding-ms)
 
 # Onboarding a repository
 

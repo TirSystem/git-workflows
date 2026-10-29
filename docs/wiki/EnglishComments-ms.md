@@ -1,8 +1,8 @@
-<!-- translation of EnglishComments.md, source sha256 a9533f14d5f5 -->
+<!-- translation of EnglishComments.md, source sha256 729ac76dcb58 -->
 
 > Ini ialah terjemahan [`EnglishComments`](EnglishComments). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](EnglishComments) | [Dansk](EnglishComments.da) | Bahasa Melayu
+[English](EnglishComments) · [Dansk](EnglishComments-da) · **Bahasa Melayu**
 
 # Memastikan komen kod sumber dalam bahasa Inggeris
 

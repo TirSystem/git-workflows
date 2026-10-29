@@ -1,8 +1,8 @@
-<!-- translation of QualityChecksPythonShell.md, source sha256 c9adab61657e -->
+<!-- translation of QualityChecksPythonShell.md, source sha256 6a780c7329b9 -->
 
 > Ini ialah terjemahan [`QualityChecksPythonShell`](QualityChecksPythonShell). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](QualityChecksPythonShell) | [Dansk](QualityChecksPythonShell.da) | Bahasa Melayu
+[English](QualityChecksPythonShell) · [Dansk](QualityChecksPythonShell-da) · **Bahasa Melayu**
 
 # Membaca keputusan semakan kualiti
 
@@ -95,4 +95,4 @@ shfmt mengikut gaya sesebuah projek hanya melalui `.editorconfig`. Projek shell 
 | `[configuration] Unknown language '<x>'` | `languages` mempunyai nilai selain `python` atau `shell` | Betulkan input |
 | `[configuration] working-directory must be a relative path inside the repository.` | Laluan mutlak atau `..` | Gunakan laluan di dalam repositori |
 | `[configuration] working-directory '<x>' does not exist.` | Direktori itu tiada dalam repositori | Betulkan input |
-| Langkah pemasangan gagal | PyPI atau rangkaian runner tidak dapat dicapai | Jalankan semula kerja itu; lihat [troubleshooting.md](Troubleshooting.ms) |
+| Langkah pemasangan gagal | PyPI atau rangkaian runner tidak dapat dicapai | Jalankan semula kerja itu; lihat [troubleshooting.md](Troubleshooting-ms) |

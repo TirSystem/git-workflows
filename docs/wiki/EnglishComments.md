@@ -2,7 +2,7 @@
 
 > This page is generated from [`guides/english-comments.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/english-comments.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](EnglishComments.da) | [Bahasa Melayu](EnglishComments.ms)
+**English** · [Dansk](EnglishComments-da) · [Bahasa Melayu](EnglishComments-ms)
 
 # Keeping source code comments in English
 

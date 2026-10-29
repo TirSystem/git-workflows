@@ -2,7 +2,7 @@
 
 > This page is generated from [`guides/code-metrics.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/code-metrics.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](CodeMetrics.da) | [Bahasa Melayu](CodeMetrics.ms)
+**English** · [Dansk](CodeMetrics-da) · [Bahasa Melayu](CodeMetrics-ms)
 
 # Showing code metrics and coverage badges
 

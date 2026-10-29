@@ -1,8 +1,8 @@
-<!-- translation of CodeMetrics.md, source sha256 8cdd72522593 -->
+<!-- translation of CodeMetrics.md, source sha256 5e3ab423474a -->
 
 > Dette er en oversættelse af [`CodeMetrics`](CodeMetrics). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](CodeMetrics) | Dansk | [Bahasa Melayu](CodeMetrics.ms)
+[English](CodeMetrics) · **Dansk** · [Bahasa Melayu](CodeMetrics-ms)
 
 # Visning af kodemålinger og dækningsbadges
 

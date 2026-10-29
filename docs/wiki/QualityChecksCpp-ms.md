@@ -1,8 +1,8 @@
-<!-- translation of QualityChecksCpp.md, source sha256 7de98132031b -->
+<!-- translation of QualityChecksCpp.md, source sha256 10762f4ef66f -->
 
 > Ini ialah terjemahan [`QualityChecksCpp`](QualityChecksCpp). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](QualityChecksCpp) | [Dansk](QualityChecksCpp.da) | Bahasa Melayu
+[English](QualityChecksCpp) · [Dansk](QualityChecksCpp-da) · **Bahasa Melayu**
 
 # Membaca keputusan semakan kualiti C dan C++
 

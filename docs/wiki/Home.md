@@ -2,7 +2,7 @@
 
 > This page is generated from [`README.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/README.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](Home.da) | [Bahasa Melayu](Home.ms)
+**English** · [Dansk](Home-da) · [Bahasa Melayu](Home-ms)
 
 # TirSystem GitHub Actions
 

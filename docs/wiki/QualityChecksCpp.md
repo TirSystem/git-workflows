@@ -2,7 +2,7 @@
 
 > This page is generated from [`guides/quality-checks-cpp.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/quality-checks-cpp.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](QualityChecksCpp.da) | [Bahasa Melayu](QualityChecksCpp.ms)
+**English** · [Dansk](QualityChecksCpp-da) · [Bahasa Melayu](QualityChecksCpp-ms)
 
 # Reading C and C++ quality-check results
 

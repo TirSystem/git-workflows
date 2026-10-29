@@ -1,8 +1,8 @@
-<!-- translation of QualityChecksCpp.md, source sha256 7de98132031b -->
+<!-- translation of QualityChecksCpp.md, source sha256 10762f4ef66f -->
 
 > Dette er en oversættelse af [`QualityChecksCpp`](QualityChecksCpp). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](QualityChecksCpp) | Dansk | [Bahasa Melayu](QualityChecksCpp.ms)
+[English](QualityChecksCpp) · **Dansk** · [Bahasa Melayu](QualityChecksCpp-ms)
 
 # Aflæsning af resultater fra kvalitetskontrol af C og C++
 

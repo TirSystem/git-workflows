@@ -1,8 +1,8 @@
-<!-- translation of Home.md, source sha256 877dbe1a7fdd -->
+<!-- translation of Home.md, source sha256 9451839077be -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](Home) | Dansk | [Bahasa Melayu](Home.ms)
+[English](Home) · **Dansk** · [Bahasa Melayu](Home-ms)
 
 # TirSystem GitHub Actions
 
@@ -237,7 +237,7 @@ deactivate Workflow
 
 ### Kodemålinger og dækningsbadges
 
-Et genbrugeligt workflow, der tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer) i et repository og udgiver dem sammen med testdækningen som tre SVG-badges på en `badges`-gren, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Det kræver `contents: write` og kører ingen test: et tidligere job hos kalderen frembringer en dækningsrapport i Cobertura XML-format og uploader den som artefakt ([vejledning](CodeMetrics.da)).
+Et genbrugeligt workflow, der tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer) i et repository og udgiver dem sammen med testdækningen som tre SVG-badges på en `badges`-gren, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Det kræver `contents: write` og kører ingen test: et tidligere job hos kalderen frembringer en dækningsrapport i Cobertura XML-format og uploader den som artefakt ([vejledning](CodeMetrics-da)).
 
 #### Workflow
 
@@ -281,7 +281,7 @@ deactivate Workflow
 
 ### Engelske kommentarer
 
-Et genbrugeligt workflow, der kontrollerer, at de kommentarer og docstrings, en pull request tilføjer, er skrevet på engelsk, lader kørslen fejle, når én ikke er det, og skriver én kommentar på pull requesten, der nævner forfatteren. Det ændrer ingen fil og sender ingen kildetekst ud af instansen; at markere kontrollen som påkrævet i grenbeskyttelsen er det, der blokerer sammenfletningen ([vejledning](EnglishComments.da), ADR-0012).
+Et genbrugeligt workflow, der kontrollerer, at de kommentarer og docstrings, en pull request tilføjer, er skrevet på engelsk, lader kørslen fejle, når én ikke er det, og skriver én kommentar på pull requesten, der nævner forfatteren. Det ændrer ingen fil og sender ingen kildetekst ud af instansen; at markere kontrollen som påkrævet i grenbeskyttelsen er det, der blokerer sammenfletningen ([vejledning](EnglishComments-da), ADR-0012).
 
 #### Workflow
 
@@ -498,7 +498,7 @@ deactivate Workflow
 - Repository-secrets:
   - `TOKEN_FOR_GITEA_REPO`: Gitea API-token (kun tokenet, ingen JSON)
   - `PAT_FOR_GITHUB`: et GitHub personal access token, der må redigere spejl-repositoryet (kun tokenet, ingen JSON)
-  - `TOKEN_FOR_GITEA_WIKI` (kun for repositories, der publicerer en wiki, se [tilslutningsvejledningen](Onboarding.da)): et Gitea-token, der kan skrive til wikien, gemt som en secret i repositoryets organisation; der er ingen reserve til `TOKEN_FOR_GITEA_REPO`
+  - `TOKEN_FOR_GITEA_WIKI` (kun for repositories, der publicerer en wiki, se [tilslutningsvejledningen](Onboarding-da)): et Gitea-token, der kan skrive til wikien, gemt som en secret i repositoryets organisation; der er ingen reserve til `TOKEN_FOR_GITEA_REPO`
 
 
 ## Opsætning

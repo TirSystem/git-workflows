@@ -1,8 +1,8 @@
-<!-- translation of Upgrading.md, source sha256 bc88ef4f6d7c -->
+<!-- translation of Upgrading.md, source sha256 5a0be6532384 -->
 
 > Dette er en oversættelse af [`Upgrading`](Upgrading). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](Upgrading) | Dansk | [Bahasa Melayu](Upgrading.ms)
+[English](Upgrading) · **Dansk** · [Bahasa Melayu](Upgrading-ms)
 
 # Opgradering til en ny version af de fælles workflows
 

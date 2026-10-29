@@ -1,8 +1,8 @@
-<!-- translation of QualityChecksCSharp.md, source sha256 07753383432e -->
+<!-- translation of QualityChecksCSharp.md, source sha256 4d611cda04d8 -->
 
 > Dette er en oversættelse af [`QualityChecksCSharp`](QualityChecksCSharp). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](QualityChecksCSharp) | Dansk | [Bahasa Melayu](QualityChecksCSharp.ms)
+[English](QualityChecksCSharp) · **Dansk** · [Bahasa Melayu](QualityChecksCSharp-ms)
 
 # Aflæsning af resultater fra kvalitetskontrol af C#
 

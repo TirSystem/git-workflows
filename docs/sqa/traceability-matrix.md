@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-091 to RC-093 and their rows; MIL-015 gains task 8 (RC-093) | [97f0b26] |
 | 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-094; MIL-015 gains task 9 (RC-094) | [400fd30] |
+| 2026-10-29 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0014 and RC-095; MIL-014 gains task 10 | pending |
 
 ---
 
@@ -35,6 +35,7 @@ updated whenever an artifact instance is created or reviewed.
 | [ADR-0011] | ADR | [MIL-012], [ADR-0005], [ADR-0006] | - | - |
 | [ADR-0012] | ADR | [MIL-013], [ADR-0005], [ADR-0010] | - | - |
 | [ADR-0013] | ADR | [MIL-014], [ADR-0009], [ADR-0004] | - | [RC-086] |
+| [ADR-0014] | ADR | [MIL-014], [ADR-0001] | - | [RC-095] |
 | [RC-001] | RC | [BC-001] | - | - |
 | [RC-002] | RC | [PP-001] | - | - |
 | [RC-003] | RC | [MIL-001] | - | - |
@@ -50,7 +51,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-011] | MIL | [BC-001], [PP-001], [MIL-010], [ADR-0006], [ADR-0010] | [MIL-012] | [RC-076], [RC-077], [RC-078], [RC-079] |
 | [MIL-012] | MIL | [BC-001], [PP-001], [MIL-004], [MIL-011], [ADR-0006], [ADR-0011] | - | [RC-080], [RC-082] |
 | [MIL-013] | MIL | [BC-001], [PP-001], [MIL-004], [MIL-010], [MIL-011], [ADR-0005], [ADR-0006], [ADR-0010] | - | [RC-083], [RC-085] |
-| [MIL-014] | MIL | [BC-001], [PP-001], [MIL-009], [MIL-013], [ADR-0004], [ADR-0009], [ADR-0013] | - | [RC-086] |
+| [MIL-014] | MIL | [BC-001], [PP-001], [MIL-009], [MIL-013], [ADR-0004], [ADR-0009], [ADR-0013], [ADR-0014] | - | [RC-086], [RC-095] |
 | [MIL-015] | MIL | [BC-001], [PP-001], [MIL-014], [ADR-0006] | - | [RC-087], [RC-088], [RC-093], [RC-094] |
 | [MIL-017] | MIL | [BC-001], [PP-001], [MIL-014], [MIL-016], [ADR-0005] | [MIL-018] | [RC-091] |
 | [MIL-018] | MIL | [BC-001], [PP-001], [MIL-014], [MIL-017], [ADR-0006], [ADR-0007] | - | [RC-092] |
@@ -159,6 +160,7 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-092] | RC | [MIL-018], [PP-001] | - | - |
 | [RC-093] | RC | [MIL-015], [PP-001] | - | - |
 | [RC-094] | RC | [MIL-015] | - | - |
+| [RC-095] | RC | [ADR-0014], [MIL-014] | - | - |
 
 ## Coverage Notes
 
@@ -189,6 +191,7 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0011]: ../adr/adr-0011-vpn-composite-actions.md
 [ADR-0012]: ../adr/adr-0012-english-comment-detection.md
 [ADR-0013]: ../adr/adr-0013-wiki-publishing-scoped-workflow.md
+[ADR-0014]: ../adr/adr-0014-wiki-sidebar-and-language-page-names.md
 [MIL-014]: ../milestones/mil-014-wiki-publishing-scoped-again.md
 [RC-086]: ./reviews/rc-086-adr-0013-mil-014-pp-001.md
 [MIL-015]: ../milestones/mil-015-rename-to-git-workflows.md
@@ -200,6 +203,7 @@ updated whenever an artifact instance is created or reviewed.
 [RC-092]: ./reviews/rc-092-mil-018-pp-001.md
 [RC-093]: ./reviews/rc-093-mil-015-task-8.md
 [RC-094]: ./reviews/rc-094-mil-015-task-9.md
+[RC-095]: ./reviews/rc-095-adr-0014-mil-014.md
 [RC-001]: ./reviews/rc-001-business-case.md
 [RC-002]: ./reviews/rc-002-project-plan.md
 [RC-003]: ./reviews/rc-003-mil-001.md
@@ -305,5 +309,4 @@ updated whenever an artifact instance is created or reviewed.
 [UC-005]: ../uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
-[97f0b26]: https://git.tirsystem.com/TirSystem/git-workflows/commit/97f0b26c58cb7950336ea140536cb6817538af26
 [400fd30]: https://git.tirsystem.com/TirSystem/git-workflows/commit/400fd308b3eb9b286017ba72637c5b7ee39f3175

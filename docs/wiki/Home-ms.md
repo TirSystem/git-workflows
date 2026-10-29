@@ -1,8 +1,8 @@
-<!-- translation of Home.md, source sha256 877dbe1a7fdd -->
+<!-- translation of Home.md, source sha256 9451839077be -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](Home) | [Dansk](Home.da) | Bahasa Melayu
+[English](Home) · [Dansk](Home-da) · **Bahasa Melayu**
 
 # TirSystem GitHub Actions
 
@@ -237,7 +237,7 @@ deactivate Workflow
 
 ### Metrik kod dan lencana liputan
 
-Aliran kerja boleh guna semula yang mengira fail kod dan baris kod (tanpa baris komen dan baris kosong) sesebuah repositori dan menerbitkannya, bersama liputan ujian, sebagai tiga lencana SVG pada cabang `badges`, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Ia memerlukan `contents: write` dan tidak menjalankan sebarang ujian: kerja yang lebih awal oleh pemanggil menghasilkan laporan liputan format Cobertura XML dan memuat naiknya sebagai artifak ([panduan](CodeMetrics.ms)).
+Aliran kerja boleh guna semula yang mengira fail kod dan baris kod (tanpa baris komen dan baris kosong) sesebuah repositori dan menerbitkannya, bersama liputan ujian, sebagai tiga lencana SVG pada cabang `badges`, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Ia memerlukan `contents: write` dan tidak menjalankan sebarang ujian: kerja yang lebih awal oleh pemanggil menghasilkan laporan liputan format Cobertura XML dan memuat naiknya sebagai artifak ([panduan](CodeMetrics-ms)).
 
 #### Aliran kerja
 
@@ -281,7 +281,7 @@ deactivate Workflow
 
 ### Komen dalam bahasa Inggeris
 
-Aliran kerja boleh guna semula yang menyemak bahawa komen dan docstring yang ditambah oleh pull request ditulis dalam bahasa Inggeris, menggagalkan larian apabila ada yang tidak, dan menulis satu komen pada pull request yang menyebut penulisnya. Ia tidak mengubah sebarang fail dan tidak menghantar teks sumber keluar daripada instans; menandakan semakan sebagai wajib dalam perlindungan cabang ialah yang menyekat penggabungan ([panduan](EnglishComments.ms), ADR-0012).
+Aliran kerja boleh guna semula yang menyemak bahawa komen dan docstring yang ditambah oleh pull request ditulis dalam bahasa Inggeris, menggagalkan larian apabila ada yang tidak, dan menulis satu komen pada pull request yang menyebut penulisnya. Ia tidak mengubah sebarang fail dan tidak menghantar teks sumber keluar daripada instans; menandakan semakan sebagai wajib dalam perlindungan cabang ialah yang menyekat penggabungan ([panduan](EnglishComments-ms), ADR-0012).
 
 #### Aliran kerja
 
@@ -498,7 +498,7 @@ deactivate Workflow
 - Rahsia (secret) repositori:
   - `TOKEN_FOR_GITEA_REPO`: token API Gitea (token sahaja, tanpa JSON)
   - `PAT_FOR_GITHUB`: personal access token GitHub yang dibenarkan mengubah suai repositori cermin (token sahaja, tanpa JSON)
-  - `TOKEN_FOR_GITEA_WIKI` (hanya untuk repositori yang menerbitkan wiki, lihat [panduan menyertakan repositori](Onboarding.ms)): token Gitea yang boleh menulis ke wiki, disimpan sebagai secret organisasi repositori; tiada sandaran kepada `TOKEN_FOR_GITEA_REPO`
+  - `TOKEN_FOR_GITEA_WIKI` (hanya untuk repositori yang menerbitkan wiki, lihat [panduan menyertakan repositori](Onboarding-ms)): token Gitea yang boleh menulis ke wiki, disimpan sebagai secret organisasi repositori; tiada sandaran kepada `TOKEN_FOR_GITEA_REPO`
 
 
 ## Persediaan

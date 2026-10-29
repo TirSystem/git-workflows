@@ -1,8 +1,8 @@
-<!-- translation of QualityChecksPythonShell.md, source sha256 c9adab61657e -->
+<!-- translation of QualityChecksPythonShell.md, source sha256 6a780c7329b9 -->
 
 > Dette er en oversættelse af [`QualityChecksPythonShell`](QualityChecksPythonShell). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](QualityChecksPythonShell) | Dansk | [Bahasa Melayu](QualityChecksPythonShell.ms)
+[English](QualityChecksPythonShell) · **Dansk** · [Bahasa Melayu](QualityChecksPythonShell-ms)
 
 # Aflæsning af resultater fra kvalitetskontrol
 
@@ -95,4 +95,4 @@ shfmt følger et projekts stil kun gennem `.editorconfig`. Et shell-projekt, der
 | `[configuration] Unknown language '<x>'` | `languages` har en anden værdi end `python` eller `shell` | Ret inputtet |
 | `[configuration] working-directory must be a relative path inside the repository.` | En absolut sti eller `..` | Brug en sti inde i repositoryet |
 | `[configuration] working-directory '<x>' does not exist.` | Mappen findes ikke i repositoryet | Ret inputtet |
-| Installationstrinnet fejler | PyPI eller runnerens netværk kan ikke nås | Kør jobbet igen; se [troubleshooting.md](Troubleshooting.da) |
+| Installationstrinnet fejler | PyPI eller runnerens netværk kan ikke nås | Kør jobbet igen; se [troubleshooting.md](Troubleshooting-da) |

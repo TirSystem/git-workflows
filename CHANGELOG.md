@@ -25,6 +25,10 @@ Each release lists its changes in these groups, in this order:
 - The Gitea secrets follow `TOKEN_FOR_<host>_<purpose>`: the scoped workflow `sync-github-metadata.yml` reads `TOKEN_FOR_GITEA_REPO` (it was `TOKEN_FOR_GITEA`), and the workflow `sync-milestones.yml` of this repository reads `TOKEN_FOR_GITEA_ISSUES`. Store the new secret in each organization before the next release; a run without it fails with `TOKEN_FOR_GITEA_REPO is missing or empty.` `TOKEN_FOR_GITEA_WIKI` and `TOKEN_FOR_GITEA_RELEASE` are unchanged.
 - `sync-milestones.yml` checks out the project and the private framework submodule with `TOKEN_FOR_GITEA_REPO` (read on repositories) and publishes with `TOKEN_FOR_GITEA_ISSUES` (issues and milestones only). The first version of this rename used the narrow token for the checkout too, and the run ended with `403 Forbidden` on the submodule.
 
+### Changed
+
+- The wiki of this repository follows the shared sidebar and page names (ADR-0014): translated pages are `<Page>-da` and `<Page>-ms` instead of `<Page>.da` and `<Page>.ms`, and `_Sidebar` has one English page list, `Related` and `Languages` last. The old pages stay on the wiki until they are deleted by hand.
+
 ### Added
 
 - The [adoption rules](guides/adoption-rules.md): for each workflow, when a repository uses it in SQA and QC. A new workflow adds its rule in the same pull request (`AGENTS.md`).

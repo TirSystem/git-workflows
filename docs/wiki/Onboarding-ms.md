@@ -1,8 +1,8 @@
-<!-- translation of Onboarding.md, source sha256 27aa210a18df -->
+<!-- translation of Onboarding.md, source sha256 cf6a0272b748 -->
 
 > Ini ialah terjemahan [`Onboarding`](Onboarding). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](Onboarding) | [Dansk](Onboarding.da) | Bahasa Melayu
+[English](Onboarding) · [Dansk](Onboarding-da) · **Bahasa Melayu**
 
 # Menyertakan sebuah repositori
 
@@ -22,13 +22,13 @@ Penghantaran adalah automatik, jadi repositori tidak memerlukan salinan aliran k
 
 1. **Semak prasyarat** dalam repositori: Actions diaktifkan, dan runner dengan label `ubuntu-latest` dan `python3` berada dalam talian (lihat [Runners](#runners)).
 2. **Konfigurasikan satu push mirror GitHub** dalam tetapan repositori (Settings, Repository, Mirror settings, Push mirror). Aliran kerja gagal jika terdapat beberapa cermin GitHub. Jika tiada, ia berjaya tanpa menyegerakkan apa-apa.
-3. **Tambah dua rahsia (secret)** dalam tetapan repositori (atau organisasi), dengan skop yang tertera dalam [credentials.md](Credentials.ms). Aliran kerja berjalan dalam setiap repositori sesebuah organisasi, jadi simpan rahsia sekali bagi setiap organisasi; repositori dalam organisasi lain tidak melihatnya:
+3. **Tambah dua rahsia (secret)** dalam tetapan repositori (atau organisasi), dengan skop yang tertera dalam [credentials.md](Credentials-ms). Aliran kerja berjalan dalam setiap repositori sesebuah organisasi, jadi simpan rahsia sekali bagi setiap organisasi; repositori dalam organisasi lain tidak melihatnya:
    - `TOKEN_FOR_GITEA_REPO`
    - `PAT_FOR_GITHUB` (token GitHub sahaja)
 4. **Hantar aliran kerja:** scoped workflow terpakai pada setiap repositori dalam instans ini, jadi tiada apa yang perlu disalin. Hanya jika penghantaran scoped tidak disediakan, salin `.gitea/scoped_workflows/sync-github-metadata.yml` dari repositori ini ke `.gitea/workflows/` dalam repositori sasaran, sematkan salinan itu pada versi yang telah disemak dan salin semula apabila ia berubah.
 5. **Tetapkan penerangan dan topik** pada repositori Gitea, supaya ada sesuatu untuk disegerakkan.
 6. **Jalankan sekali secara manual:** Actions, **Sync GitHub mirror metadata**, Run workflow. Log mesti berakhir dengan `Synced description and topics to <owner>/<repo>.` dan repositori GitHub mesti menunjukkan penerangan dan topik yang sama.
-7. Jika gagal, gunakan [troubleshooting.md](Troubleshooting.ms).
+7. Jika gagal, gunakan [troubleshooting.md](Troubleshooting-ms).
 
 ## Menerbitkan wiki (pilihan)
 
@@ -36,7 +36,7 @@ Aliran kerja scoped **Publish wiki pages** menyalin halaman Markdown dalam `docs
 
 1. Aktifkan wiki dalam tetapan repositori.
 2. Tambah halaman Markdown ke `docs/wiki/`. Nama fail ialah nama halaman: `Home.md` ialah halaman utama. Tanda sempang dalam nama ialah ruang dalam nama halaman: `Home-da.md` ialah halaman "Home da", dan pautan kepadanya ialah `[Dansk](Home-da)`.
-3. Simpan `TOKEN_FOR_GITEA_WIKI` sebagai secret organisasi repositori, dengan skop yang tertera dalam [credentials.md](Credentials.ms).
+3. Simpan `TOKEN_FOR_GITEA_WIKI` sebagai secret organisasi repositori, dengan skop yang tertera dalam [credentials.md](Credentials-ms).
 4. Gabungkan perubahan ke `main`. Log mesti berakhir dengan `Published <n> page(s) to the wiki of <owner>/<repo>`.
 
 ## Runners
