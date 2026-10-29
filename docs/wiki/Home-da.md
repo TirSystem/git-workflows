@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 dbe68d8738cb -->
+<!-- translation of Home.md, source sha256 d1a878a27068 -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -291,14 +291,11 @@ title English comments check (reusable workflow)
 
 autonumber
 
-actor "Pull request
-uses: ...english-comments.yml@v2" as Caller
-participant "Gitea Actions
-english-comments" as Workflow
+actor "Pull request\nuses: ...english-comments.yml@v2" as Caller
+participant "Gitea Actions\nenglish-comments" as Workflow
 participant "Gitea REST API" as Gitea
 
-Caller -> Workflow: workflow_call with scope, exclude,
-allowed-words-file, threshold and min-words
+Caller -> Workflow: workflow_call with scope, exclude,\nallowed-words-file, threshold and min-words
 activate Workflow
 
 Workflow -> Workflow: Check out the full history and the shared scripts
