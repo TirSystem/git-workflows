@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-097; MIL-014 gains task 11 | [07c2261] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0015 to ADR-0018 and RC-098 to RC-102 (MIL-016 to MIL-019) | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0015 to ADR-0018 and RC-098 to RC-102 (MIL-016 to MIL-019) | [a1c9cbd] |
 
 ---
 
@@ -340,3 +340,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [07c2261]: https://git.tirsystem.com/TirSystem/git-workflows/commit/07c22617736d0e125134ee1286fe04652c98a93c
+[a1c9cbd]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a1c9cbd914fa1583f51a8267dd63578e76557eb5

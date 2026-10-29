@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-100), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-100), accepted by the author in chat as stand-in for S01, not independent | [a1c9cbd] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -131,3 +131,4 @@ The rules that follow from it:
 [MIL-018]: ../milestones/mil-018-scoped-release-workflow.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0015]: ./adr-0015-semgrep-scoped-workflow.md
+[a1c9cbd]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a1c9cbd914fa1583f51a8267dd63578e76557eb5

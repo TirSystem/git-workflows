@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version: OpenGrep instead of Semgrep, on the owner's instruction in chat; reviewed (RC-098), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version: OpenGrep instead of Semgrep, on the owner's instruction in chat; reviewed (RC-098), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -128,3 +128,4 @@ The rules that follow from it:
 [MIL-016]: ../milestones/mil-016-semgrep-scoped-workflow.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0013]: ./adr-0013-wiki-publishing-scoped-workflow.md
+[d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b

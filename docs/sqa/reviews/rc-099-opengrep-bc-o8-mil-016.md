@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go; accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go; accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
 
 ---
 
@@ -75,3 +75,4 @@ Go. The change is a replacement of the tool in text; the dates, owners, dependen
 [QC-BC-001]: ../../../framework/qc/artifacts/qc-business-case.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
 [QC-PP-001]: ../../../framework/qc/artifacts/qc-project-plan.md
+[d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b

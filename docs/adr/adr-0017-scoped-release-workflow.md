@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-101, Go-with-conditions), accepted by the author in chat as stand-in for S01 with the conditions of RC-101 still open, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-101, Go-with-conditions), accepted by the author in chat as stand-in for S01 with the conditions of RC-101 still open, not independent | [a1c9cbd] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -129,3 +129,4 @@ The rules that follow from it:
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [ADR-0007]: ./adr-0007-release-publish-destination.md
 [ADR-0016]: ./adr-0016-scoped-validation-workflow.md
+[a1c9cbd]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a1c9cbd914fa1583f51a8267dd63578e76557eb5

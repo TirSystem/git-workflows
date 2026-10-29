@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | MIL-016 reviewed (RC-090) and accepted; its ADR is ADR-0015; accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-016 names OpenGrep instead of Semgrep (ADR-0015); reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-016 names OpenGrep instead of Semgrep (ADR-0015); reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
 
 ---
 
@@ -353,3 +353,4 @@ no tests, no release process.
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
 [99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44
+[d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b

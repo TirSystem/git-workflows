@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Risk for objective O8 (false positives, data leaving the instance); O8 reviewed against QC-BC-001 (RC-089), accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | O8 and its scope item, assumption, constraint and risk name OpenGrep instead of Semgrep (ADR-0015); reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | O8 and its scope item, assumption, constraint and risk name OpenGrep instead of Semgrep (ADR-0015); reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
 
 ---
 
@@ -177,3 +177,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 
 [SA-001]: ./stakeholder-analysis.md
 [99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44
+[d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b

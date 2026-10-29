@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Reviewed (RC-090): O8 is in the Business Case, so the text no longer calls it proposed; the ADR it writes is numbered ADR-0015 because ADR-0014 is the wiki sidebar ADR; accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Names OpenGrep instead of Semgrep (ADR-0015, RC-098): criteria 1, 4 and 6, tasks 2, 4, 5 and 6; task 2 is done on a developer machine and still open on a runner; reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Names OpenGrep instead of Semgrep (ADR-0015, RC-098): criteria 1, 4 and 6, tasks 2, 4, 5 and 6; task 2 is done on a developer machine and still open on a runner; reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
 
 ---
 
@@ -98,3 +98,4 @@ with the findings and the false positives counted; and a minor release.
 [RC-090]: ../sqa/reviews/rc-090-mil-016.md
 [RC-099]: ../sqa/reviews/rc-099-opengrep-bc-o8-mil-016.md
 [99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44
+[d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b

@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-102, Go-with-conditions), accepted by the author in chat as stand-in for S01 with the conditions of RC-102 still open, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-102, Go-with-conditions), accepted by the author in chat as stand-in for S01 with the conditions of RC-102 still open, not independent | [a1c9cbd] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -121,3 +121,4 @@ The rules that follow from it:
 [ADR-0013]: ./adr-0013-wiki-publishing-scoped-workflow.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [MIL-015]: ../milestones/mil-015-rename-to-git-workflows.md
+[a1c9cbd]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a1c9cbd914fa1583f51a8267dd63578e76557eb5
