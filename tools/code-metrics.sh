@@ -47,7 +47,7 @@ validate_inputs() {
   case "$BADGES_BRANCH" in
     main | master | HEAD | "") fail "badges-branch '$BADGES_BRANCH' must not be a default branch." ;;
   esac
-  git check-ref-format --branch "$BADGES_BRANCH" > /dev/null 2>&1 ||
+  git check-ref-format --branch "$BADGES_BRANCH" >/dev/null 2>&1 ||
     fail "badges-branch '$BADGES_BRANCH' is not a valid branch name."
   echo "Counting ${WORKING_DIRECTORY}; badges go to the branch ${BADGES_BRANCH}"
 }
@@ -90,7 +90,7 @@ publish() {
   [ -d "$OUT_DIR" ] || fail "no badge files in '$OUT_DIR'; run measure first."
   local worktree exists=0 committed=0 attempt
   worktree="$(mktemp -d)"
-  if git fetch --quiet origin "+refs/heads/$BADGES_BRANCH:refs/remotes/origin/$BADGES_BRANCH" 2> /dev/null; then
+  if git fetch --quiet origin "+refs/heads/$BADGES_BRANCH:refs/remotes/origin/$BADGES_BRANCH" 2>/dev/null; then
     exists=1
     if git ls-tree -r --name-only "origin/$BADGES_BRANCH" | grep -qvE "$ALLOWED_FILES"; then
       fail "branch '$BADGES_BRANCH' holds files that are not badge files; it is not a badges branch."
@@ -117,7 +117,7 @@ publish() {
       break
     fi
     [ "$attempt" -lt 2 ] || fail "the push to '$BADGES_BRANCH' failed twice."
-    if git fetch --quiet origin "+refs/heads/$BADGES_BRANCH:refs/remotes/origin/$BADGES_BRANCH" 2> /dev/null; then
+    if git fetch --quiet origin "+refs/heads/$BADGES_BRANCH:refs/remotes/origin/$BADGES_BRANCH" 2>/dev/null; then
       git -C "$worktree" reset --quiet --hard "origin/$BADGES_BRANCH"
       exists=1
       committed=0

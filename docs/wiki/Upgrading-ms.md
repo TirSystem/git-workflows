@@ -1,4 +1,4 @@
-<!-- translation of Upgrading.md, source sha256 5a0be6532384 -->
+<!-- translation of Upgrading.md, source sha256 79b0f50bdd7e -->
 
 > Ini ialah terjemahan [`Upgrading`](Upgrading). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -18,7 +18,7 @@ Cara seorang jurutera perisian menerima keluaran baharu aliran kerja bersama den
 
 Keluaran yang memecahkan keserasian mendapat versi major baharu (`v2`), jadi saluran paip pada `@v1` tidak menerimanya sehingga anda sendiri menukar baris itu.
 
-Aliran kerja semakan kualiti (`quality-checks.yml`, `quality-checks-cpp.yml` dan `quality-checks-csharp.yml`) dan aliran kerja metrik kod (`code-metrics.yml`) mengambil skripnya pada inputnya `tools-ref`, yang lalai ialah tag major semasa (`v2`). Untuk menyematkan satu sepenuhnya, panggil pada tag tepat dan tetapkan `tools-ref` kepada tag yang sama; jika tidak, skrip mengikuti tag major.
+Aliran kerja semakan kualiti (`quality-checks.yml`, `quality-checks-cpp.yml` dan `quality-checks-csharp.yml`) dan aliran kerja metrik kod (`code-metrics.yml`) mengambil skripnya pada inputnya `tools-ref`, yang lalai ialah tag major semasa (`v3`). Untuk menyematkan satu sepenuhnya, panggil pada tag tepat dan tetapkan `tools-ref` kepada tag yang sama; jika tidak, skrip mengikuti tag major.
 
 Aliran kerja scoped **Sync GitHub mirror metadata** dan **Publish wiki pages** dihantar oleh instans dan tidak terdapat dalam baris `uses:` anda; anda tidak boleh menyematkannya, tetapi ia mengambil skripnya pada tag major. Repositori yang memanggil `publish-wiki-pages.yml` dengan `uses:` tidak lagi memerlukan panggilan itu: buang aliran kerja pemanggil, kerana aliran kerja scoped menerbitkan `docs/wiki/` sendiri (ia tidak memadam halaman yang tiada dalam folder).
 

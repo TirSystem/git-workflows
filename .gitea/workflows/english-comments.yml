@@ -48,7 +48,7 @@ on:
       tools-ref:
         description: "Tag or branch of TirSystem/git-workflows whose tools/english_comments.py is run; pin it to the exact tag together with the workflow"
         type: string
-        default: "v2"
+        default: "v3"
     secrets:
       REPORT_TOKEN:
         description: "Optional Gitea token that may comment on pull requests; without it the token of the run is used"

@@ -1,4 +1,4 @@
-<!-- translation of CodeMetrics.md, source sha256 5e3ab423474a -->
+<!-- translation of CodeMetrics.md, source sha256 2363690e9a6c -->
 
 > Ini ialah terjemahan [`CodeMetrics`](CodeMetrics). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -49,7 +49,7 @@ jobs:
 | `coverage-warn` | `60` | Liputan dalam peratus di bawahnya lencana berwarna merah |
 | `coverage-good` | `80` | Liputan dalam peratus yang bermulanya lencana berwarna hijau; di antaranya kuning |
 | `badges-branch` | `badges` | Cabang yang memegang fail lencana; ia dicipta jika tidak wujud |
-| `tools-ref` | `v2` | Tag atau cabang `TirSystem/git-workflows` tempat skrip dalam `tools/` diambil |
+| `tools-ref` | `v3` | Tag atau cabang `TirSystem/git-workflows` tempat skrip dalam `tools/` diambil |
 
 Rujuk aliran kerja pada tag major (`@v1`) atau pada tag tepat, jangan sekali-kali pada `main`. Panggilan pada tag tepat hanya tersemat sepenuhnya apabila `tools-ref` menamakan tag yang sama. Lihat panduan menaik taraf. Mulakan aliran kerja pada push ke cabang lalai anda sahaja: commit lencana membawa `[skip ci]` dan dibuat dengan token larian, yang tidak memulakan larian lain, tetapi pencetus pada setiap cabang akan menulis satu commit bagi setiap cabang.
 

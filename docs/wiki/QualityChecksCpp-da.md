@@ -1,4 +1,4 @@
-<!-- translation of QualityChecksCpp.md, source sha256 10762f4ef66f -->
+<!-- translation of QualityChecksCpp.md, source sha256 41459e9e993e -->
 
 > Dette er en oversættelse af [`QualityChecksCpp`](QualityChecksCpp). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -34,7 +34,7 @@ jobs:
 | `compile-commands-dir` | tom | Mappe, relativt til repositoryets rod, med en `compile_commands.json`, som din pipeline har bygget før kaldet; når den er sat, bruger clang-tidy den og ignorerer `std` |
 | `clang-format-version` | `23.1.3` | Præcis version af pakken clang-format |
 | `clang-tidy-version` | `22.1.8` | Præcis version af pakken clang-tidy |
-| `tools-ref` | `v2` | Tag eller gren i `TirSystem/git-workflows`, hvorfra scriptet `tools/quality-checks-cpp.sh` hentes |
+| `tools-ref` | `v3` | Tag eller gren i `TirSystem/git-workflows`, hvorfra scriptet `tools/quality-checks-cpp.sh` hentes |
 
 Henvis til workflowet ved major-tagget (`@v1`) eller et præcist tag, aldrig ved `main`. Et kald ved et præcist tag er kun fuldt fastlåst, når `tools-ref` angiver samme tag. Se opgraderingsvejledningen. Værktøjsversionerne er præcise: en nyere version af et værktøj er en ny udgivelse af dette repository, ikke en stille ændring.
 

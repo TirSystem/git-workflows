@@ -36,7 +36,7 @@ on:
       tools-ref:
         description: "Tag or branch of TirSystem/git-workflows whose tools/quality-checks-cpp.sh is run; pin it to the exact tag together with the workflow"
         type: string
-        default: "v2"
+        default: "v3"
 
 jobs:
   quality-checks-cpp:
