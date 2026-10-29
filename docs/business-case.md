@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-28 | Accepted | Jens Tirsvad Nielsen | S01 | Objective O8, scope item, assumption, constraint and success criterion 8: a free static security scan with Semgrep as a scoped workflow (MIL-016); reviewed (RC-089), accepted by the author in chat as stand-in for S01 | [1690cf7] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Risk for objective O8 (false positives, data leaving the instance); O8 reviewed against QC-BC-001 (RC-089), accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
+| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Risk for objective O8 (false positives, data leaving the instance); O8 reviewed against QC-BC-001 (RC-089), accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | O8 and its scope item, assumption, constraint and risk name OpenGrep instead of Semgrep (ADR-0015); reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | pending |
 
 ---
 
@@ -83,7 +83,7 @@ made once.
 - A shared workflow for code metrics and coverage badges (MIL-010).
 - Shared composite actions that connect a deployment job to a private network through WireGuard or Tailscale (MIL-012).
 - A shared workflow that checks that comments in source code are in English and tells the author (MIL-013).
-- A free static security scan with Semgrep Community Edition as a scoped workflow (MIL-016).
+- A free static security scan with OpenGrep as a scoped workflow (MIL-016).
 
 ### Out of Scope
 
@@ -133,7 +133,7 @@ accepted plans.
 | Token with excess scope is stored in secrets | Compromise of repositories | Document minimum scope; validate token permissions before use. |
 | A breaking change reaches consumers unannounced | Consumer pipelines fail | Version and changelog every release (MIL-004). |
 | Security-relevant change accepted without security review | Credential or permission defect reaches production | S05 reviews every change to credentials, tokens, permissions and workflow code. |
-| The static security scan blocks a pull request on a false positive, or the scan sends source code or usage data out of the instance (O8) | Work is blocked for no reason, or code leaves the organization | Metrics off and no login (MIL-016 task 2); the licences read before building (task 3); a documented way to silence a finding and a count of false positives in the trial (tasks 6 and 7). |
+| The static security scan blocks a pull request on a false positive, or the scan sends source code or usage data out of the instance (O8) | Work is blocked for no reason, or code leaves the organization | No login and no vendor registry (MIL-016 task 2); the licences read before building (task 3); a documented way to silence a finding and a count of false positives in the trial (tasks 6 and 7). |
 
 ## Assumptions
 
@@ -142,7 +142,7 @@ accepted plans.
 - S01 (Product Owner) and S05 (DevOps owner and security authority) are both maintainers.
 - For the VPN actions (MIL-012), S03 provides a runner whose container has the capability `NET_ADMIN` and the device `/dev/net/tun`, and the test peers; the actions do not configure the runner.
 - For the English-comments check (MIL-013), S03 provides a Gitea token that may comment on pull requests, as an organization secret, and S01 or S03 decide which repositories mark the check as required; the workflow does not change branch protection.
-- For the security scan (MIL-016), the runner has `python3` and `pip` and can reach the Python package index and the rule registry of Semgrep; MIL-016 task 2 verifies it before anything is built.
+- For the security scan (MIL-016), the runner is Linux x86_64 and can reach `github.com` (the OpenGrep release and its rules); MIL-016 task 2 verifies it before anything is built.
 
 ## Constraints
 
@@ -150,7 +150,7 @@ accepted plans.
 - Secrets are supplied as repository or organization secrets, never committed.
 - A VPN key or token never appears in a log, an artifact or a command line (MIL-012).
 - The English-comments check (MIL-013) runs without sending source text to a service outside the instance, and its token never appears in a log.
-- The security scan (MIL-016) runs without a login, with metrics off, and does not send source code to a service outside the instance; MIL-016 task 2 verifies it, and the licences of the engine and the rules are read from their sources before the scan is built (MIL-016 task 3).
+- The security scan (MIL-016) runs without a login and does not send source code to a service outside the instance; MIL-016 task 2 verifies it, and the licences of the engine and the rules are read from their sources before the scan is built (MIL-016 task 3).
 - Nothing is written under `src/` or `tests/` before the matching milestone is accepted.
 
 ## Cost–Benefit Assessment
@@ -176,5 +176,4 @@ Proceed — the first milestone fixes a known defect in the only existing workfl
 ---
 
 [SA-001]: ./stakeholder-analysis.md
-[1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
 [99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44
