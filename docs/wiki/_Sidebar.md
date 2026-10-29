@@ -11,6 +11,9 @@
 - [Quality checks (C#)](QualityChecksCSharp)
 - [Code metrics](CodeMetrics)
 - [English comments](EnglishComments)
+- [OpenGrep](OpenGrep)
+- [Validate](Validate)
+- [Sync milestones](SyncMilestones)
 - [Upgrading](Upgrading)
 - [Capabilities](Capabilities)
 

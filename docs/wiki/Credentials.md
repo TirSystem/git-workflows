@@ -112,6 +112,73 @@ It uses its own secret, so the metadata sync token stays read-only.
   made in the Gitea web UI is lost on the next publish. Pages that are only in
   the wiki are kept.
 
+## Release secret
+
+The scoped workflow **Release** (ADR-0017) creates the version tag, the release
+page and, from version 1.0.0, the major tag of any repository of an
+organization. It is started by hand (see [release-process.md](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)).
+It writes with its own secret, so no other token needs to write tags.
+
+| Secret | Content | Used for |
+| --- | --- | --- |
+| `TOKEN_FOR_GITEA_RELEASE` | The Gitea token, nothing else | Creating the tag and the release page, and moving the major tag, in the repository the workflow is started in |
+
+- Store it as a secret of the organization of each repository that is released.
+  There is no fallback to the token of the run, to `TOKEN_FOR_GITEA_REPO` or to
+  any other secret: a run without it ends as `[configuration]` and names the
+  secret, even as a dry run.
+- The token needs scope `write:repository`, and its user needs write access to
+  the repositories. Gitea has no tag-only scope, so create the token for a
+  dedicated user. S05 approves the scope and S03 stores the secret.
+- The workflow reads it in the environment of the one step that runs the script;
+  it never appears on a command line or in the log. The workflow itself has
+  `permissions: contents: read`.
+- Calls made (a test compares this list with the script):
+  - `GET /repos/{owner}/{repo}` (the default branch)
+  - `GET /repos/{owner}/{repo}/branches/{branch}` (the tip of the default branch)
+  - `GET /repos/{owner}/{repo}/commits/{sha}/status` (the status `Validate / validate (push)`)
+  - `GET /repos/{owner}/{repo}/tags`
+  - `POST /repos/{owner}/{repo}/releases` (the release page; Gitea creates the version tag with it)
+  - `POST /repos/{owner}/{repo}/tags` (the major tag `vN`)
+  - `DELETE /repos/{owner}/{repo}/tags/{tag}` (the major tag `vN`, before it is created again at the new commit)
+
+  A dry run makes only the `GET` calls.
+- A secret that can write tags and release pages in every repository of an
+  organization is a high-value target (ADR-0017). It is limited by the dedicated
+  user and by being stored per organization.
+- **Not yet verified on the instance:** whether the token behaves as the
+  decision assumes in a scoped run (it can create a tag and a page and move a
+  tag) is the first task of MIL-018. Until that is recorded, treat the scope and
+  the list of calls above as the decision, not as a tested result.
+
+## Milestone publishing secrets
+
+The scoped workflow **Publish accepted milestones** (ADR-0018, [guide](SyncMilestones))
+publishes the accepted milestones of a repository that has a `docs/milestones/`
+folder as Gitea Milestones and Issues. It uses two organization secrets and
+reads no other name.
+
+| Secret | Content | Used for |
+| --- | --- | --- |
+| `TOKEN_FOR_GITEA_REPO` | The Gitea token, nothing else | Reading the repositories: the project and the private framework, checked out over HTTPS |
+| `TOKEN_FOR_GITEA_ISSUES` | The Gitea token, nothing else | Publishing: creating and updating issues and milestones, scope issues only |
+
+- Store both as secrets of the organization of each repository that publishes.
+  There is no fallback to an older name (`GITEA_TOKEN`, `SYNC_TOKEN`): a run
+  without either ends as `[configuration]` and names it, and a repository without
+  `docs/milestones/` needs neither.
+- The workflow reads them in the environment of the steps that need them; they
+  never appear on a command line or in the log. The workflow itself has
+  `permissions: contents: read`.
+- A copy of `sync-milestones.yml` in a repository's `.gitea/workflows/` is
+  removed: it runs next to the scoped workflow and publishes twice.
+- A token that publishes issues in every repository of an organization is
+  reachable by every repository's workflows in that organization (ADR-0018).
+- **Not yet verified on the instance:** that a scoped run can read both secrets
+  and check out the private framework, and whether `framework/qc` is needed, is
+  the first task of MIL-019. Until that is recorded, treat this as the decision,
+  not as a tested result.
+
 ## Rotating a token
 
 1. Create the new token with the permissions above.

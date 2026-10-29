@@ -5,8 +5,11 @@ is validated, versioned and announced, and how consumers pin a version. The
 decisions are in ADR-0006; this guide is the checklist. It is not published
 on the wiki.
 
-Steps 5 and 6 are done by the **Release** workflow (`.gitea/workflows/release.yml`,
-`tools/release.py`); the manual commands below are the fallback.
+Steps 5 and 6 are done by the **Release** workflow, a scoped workflow
+(`.gitea/scoped_workflows/release.yml`, `tools/release.py`, ADR-0017) that any
+repository of the organization can start by hand; the manual commands below are
+the fallback. It replaces the workflow `.gitea/workflows/release.yml`, which
+released this repository only and is removed.
 
 ## What a version is
 
@@ -24,9 +27,10 @@ Steps 5 and 6 are done by the **Release** workflow (`.gitea/workflows/release.ym
 
 1. **Decide the version** from the table above, looking at every merged change
    since the last tag.
-2. **Check the commit.** The validation run (`validate-workflows`) on the exact
-   commit of `main` to be released is green; do not release from a red or
-   unchecked commit.
+2. **Check the commit.** The validation run (`Validate / validate (push)`,
+   ADR-0016) on the exact commit of the default branch to be released is green;
+   do not release from a red or unchecked commit. A repository without that
+   status cannot be released until the Validate workflow has run there.
 3. **Write the changelog entry** in `CHANGELOG.md`: move the items of
    `[Unreleased]` under `## [x.y.z] - date` in the groups Breaking, Added,
    Changed and Fixed. A change that touches credentials, tokens or permissions
@@ -35,18 +39,26 @@ Steps 5 and 6 are done by the **Release** workflow (`.gitea/workflows/release.ym
    new major version, and a new major version needs a Breaking entry.
 4. **Get the approval** of S01 for the release, in the pull request that adds
    the changelog entry.
-5. **Run the Release workflow in dry-run mode.** In the Actions tab of this
-   repository start **Release** on `main` with the version and `dry_run`
-   `true`. It checks that the commit is the tip of `main`, that its validation
-   run is green, that the changelog has an entry for the version and that the
-   tag does not exist, and writes nothing.
+5. **Run the Release workflow in dry-run mode.** In the Actions tab of the
+   repository start **Release** by hand on the default branch with the
+   `version` (`MAJOR.MINOR.PATCH`, no leading `v`) and `dry_run` `true`, which
+   is the default. It checks and prints, and writes nothing. It refuses
+   (`[validation]`) a commit that is not the tip of the default branch (read
+   from the API, not assumed to be `main`), a missing or red status
+   `Validate / validate (push)`, a changelog without an entry for the version
+   and a tag that exists. It ends as `[configuration]` and names the secret
+   when `TOKEN_FOR_GITEA_RELEASE` is missing; this holds for a dry run too.
 6. **Release.** Start **Release** again with `dry_run` `false`. It creates the
-   tag `vMAJOR.MINOR.PATCH`, the release page with the text of
-   `python tools/changelog.py notes x.y.z`, and moves `vMAJOR` to the commit
-   when this is the highest version of its major. The page on Gitea is the
-   only destination (ADR-0007); nothing is attached to it. The workflow uses
-   the token of its own run; if Gitea refuses it, store `TOKEN_FOR_GITEA_RELEASE`
-   as a secret with write access to this repository only.
+   tag `vMAJOR.MINOR.PATCH` with the release page, whose text is the changelog
+   entry (`python tools/changelog.py notes x.y.z`), and, from version 1.0.0,
+   moves `vMAJOR` to the commit when this is the highest version of its major.
+   The page on Gitea is the only destination (ADR-0007); nothing is attached to
+   it. The workflow writes with the organization secret
+   `TOKEN_FOR_GITEA_RELEASE` (scope `write:repository`, a dedicated user) and
+   has no fallback to the token of the run; see
+   [credentials.md](credentials.md). Runs queue in the group `release` and none
+   is cancelled. Whether a scoped run can write with this token is verified on
+   the instance in MIL-018 task 1.
 
    By hand, the same steps are:
    ```bash
@@ -58,6 +70,16 @@ Steps 5 and 6 are done by the **Release** workflow (`.gitea/workflows/release.ym
 7. **Verify.** One repository pinned to the previous exact tag still runs the
    same code; one repository on the major tag receives the release.
 
+## Changelog formats and the major tag
+
+The workflow reads both heading formats of a changelog:
+`## [1.2.0] - 2026-10-21` and `## 0.18.0 (2026-10-28)`; the unreleased heading
+is `## Unreleased` or `## [Unreleased]`.
+
+The major tag `vN` exists from version 1.0.0 only: a `0.x` release makes none.
+It moves only for the highest version of its major, so a patch of an older
+major never moves it. Exact tags are never moved.
+
 ## How consumers pin
 
 | Pin | Receives | Use when |
@@ -67,7 +89,7 @@ Steps 5 and 6 are done by the **Release** workflow (`.gitea/workflows/release.ym
 | `@main` | everything, unreleased | never; only this repository's own tests |
 
 Reusable workflows are pinned in the `uses:` line of the caller. The scoped
-workflows (sync and publish wiki) are delivered from `main` by the instance
+workflows (sync, publish wiki, OpenGrep, Validate and Release) are delivered from `main` by the instance
 and cannot be pinned by a consumer; they fetch their scripts at the major tag
 once `v1` exists.
 

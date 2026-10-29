@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 6560fca6685f -->
+<!-- translation of Credentials.md, source sha256 cd3477f88ddc -->
 
 > Dette er en oversættelse af [`Credentials`](Credentials). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -67,6 +67,54 @@ Workflowet **Publish wiki pages** kopierer `docs/wiki/` til Gitea-wikien i et re
 - Kald, der foretages: `GET /repos/{owner}/{repo}`, `GET /repos/{owner}/{repo}/wiki/pages`, `GET`, `POST` og `PATCH /repos/{owner}/{repo}/wiki/...` og, for en side, der ikke længere findes i `docs/wiki/`, `DELETE /repos/{owner}/{repo}/wiki/page/{name}` (kun når sletning er slået til, hvilket det scoped workflow ikke gør).
 - Wikien skal være aktiveret i repositoryets indstillinger. Workflowet nægter at køre, hvis den ikke er det.
 - Sider, der findes i `docs/wiki/`, overskrives altid fra den, så en ændring i Gitea's weboverflade går tabt ved næste publicering. Sider, der kun findes i wikien, beholdes.
+
+## Secret til udgivelse
+
+Det scoped workflow **Release** (ADR-0017) opretter versionstagget, udgivelsessiden og, fra version 1.0.0, major-tagget i ethvert repository i en organisation. Det startes manuelt (se [release-process.md](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)). Det skriver med sin egen secret, så intet andet token behøver at skrive tags.
+
+| Secret | Indhold | Bruges til |
+| --- | --- | --- |
+| `TOKEN_FOR_GITEA_RELEASE` | Gitea-tokenet, intet andet | At oprette tagget og udgivelsessiden og flytte major-tagget i det repository, workflowet startes i |
+
+- Gem den som en secret i organisationen for hvert repository, der udgives. Der er ingen reserve til kørslens token, til `TOKEN_FOR_GITEA_REPO` eller til nogen anden secret: en kørsel uden den slutter som `[configuration]` og nævner secreten, også som tørkørsel.
+- Tokenet skal have scope `write:repository`, og dets bruger skal have skriveadgang til repositories. Gitea har intet scope kun til tags, så opret tokenet til en dedikeret bruger. S05 godkender scopet, og S03 gemmer secreten.
+- Workflowet læser den i miljøet i det ene trin, der kører scriptet; den står aldrig på en kommandolinje eller i loggen. Selve workflowet har `permissions: contents: read`.
+- Kald, der foretages (en test sammenligner listen med scriptet):
+  - `GET /repos/{owner}/{repo}` (standardbranchen)
+  - `GET /repos/{owner}/{repo}/branches/{branch}` (spidsen af standardbranchen)
+  - `GET /repos/{owner}/{repo}/commits/{sha}/status` (statussen `Validate / validate (push)`)
+  - `GET /repos/{owner}/{repo}/tags`
+  - `POST /repos/{owner}/{repo}/releases` (udgivelsessiden; Gitea opretter versionstagget med den)
+  - `POST /repos/{owner}/{repo}/tags` (major-tagget `vN`)
+  - `DELETE /repos/{owner}/{repo}/tags/{tag}` (major-tagget `vN`, før det oprettes igen ved den nye commit)
+
+  En tørkørsel foretager kun `GET`-kaldene.
+- En secret, der kan skrive tags og udgivelsessider i alle repositories i en organisation, er et værdifuldt mål (ADR-0017). Det begrænses af den dedikerede bruger og af, at secreten gemmes pr. organisation.
+- **Endnu ikke verificeret på instansen:** om tokenet opfører sig, som beslutningen antager, i en scoped kørsel (det kan oprette et tag og en side og flytte et tag), er første opgave i MIL-018. Indtil det er registreret, er scopet og listen over kald ovenfor beslutningen, ikke et testet resultat.
+
+## Secrets til publicering af milepæle
+
+Det scopede workflow **Publicering af accepterede milepæle** (ADR-0018, [vejledning](SyncMilestones-da))
+publicerer de accepterede milepæle i et repository, der har en `docs/milestones/`-mappe, som Gitea-milepæle og
+-issues. Det bruger to organisations-secrets og læser intet andet navn.
+
+| Secret | Indhold | Bruges til |
+| --- | --- | --- |
+| `TOKEN_FOR_GITEA_REPO` | Gitea-tokenet og intet andet | At læse repositories: projektet og det private framework, hentet over HTTPS |
+| `TOKEN_FOR_GITEA_ISSUES` | Gitea-tokenet og intet andet | At publicere: oprette og opdatere issues og milepæle, kun scope issues |
+
+- Gem begge som secrets i den organisation, hvor hvert publicerende repository ligger. Der er ingen fallback til et
+  ældre navn (`GITEA_TOKEN`, `SYNC_TOKEN`): en kørsel uden en af dem slutter som `[configuration]` og nævner den, og et
+  repository uden `docs/milestones/` har brug for ingen af dem.
+- Workflowet læser dem i miljøet i de trin, der har brug for dem; de står aldrig på en kommandolinje eller i loggen.
+  Selve workflowet har `permissions: contents: read`.
+- En kopi af `sync-milestones.yml` i et repositorys `.gitea/workflows/` fjernes: den kører ved siden af det scopede
+  workflow og publicerer to gange.
+- Et token, der publicerer issues i alle repositories i en organisation, kan nås af alle repositorys workflows i den
+  organisation (ADR-0018).
+- **Endnu ikke verificeret på instansen:** om en scoped kørsel kan læse begge secrets og hente det private framework,
+  og om `framework/qc` er nødvendigt, er første opgave i MIL-019. Indtil det er registreret, er dette beslutningen,
+  ikke et testet resultat.
 
 ## Udskiftning af et token
 

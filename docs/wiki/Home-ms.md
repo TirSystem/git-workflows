@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 d1a878a27068 -->
+<!-- translation of Home.md, source sha256 e912ad7140a9 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -13,24 +13,26 @@ Koleksi aliran kerja (workflow) Gitea Actions yang boleh digunakan semula untuk 
 
 Repositori ini ialah koleksi pusat bagi automasi yang boleh digunakan semula untuk repositori TirSystem. Repositori utama berada di `git.tirsystem.com` (Gitea) dan dicerminkan dengan push ke GitHub.
 
-Ia mengandungi sepuluh aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki (scoped, untuk setiap repositori yang mempunyai folder `docs/wiki/`), semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, metrik kod dan lencana liputan, semakan bahawa komen ditulis dalam bahasa Inggeris, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
+Ia mengandungi dua belas aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki (scoped, untuk setiap repositori yang mempunyai folder `docs/wiki/`), semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, metrik kod dan lencana liputan, semakan bahawa komen ditulis dalam bahasa Inggeris, imbasan keselamatan statik dengan OpenGrep (scoped), pengesahan fail aliran kerja dan skrip shell bagi setiap repositori (scoped), aliran kerja keluaran (scoped, dimulakan secara manual), penerbitan pencapaian (milestone) yang diterima (scoped, untuk setiap repositori yang mempunyai folder `docs/milestones/`) dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
 
 
 ## Aliran kerja
 
-Terdapat sepuluh aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
+Terdapat dua belas aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
 
 | Aliran kerja | Fail | Jenis | Bermula apabila | Tujuan |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push ke `main`, manual, setiap hari 03:17 UTC | Menyalin penerangan dan topik repositori Gitea ke push mirror GitHub-nya |
 | Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/publish-wiki-pages.yml) | Scoped | push ke `main` yang mengubah `docs/wiki/**`, manual | Menerbitkan halaman dalam `docs/wiki/` ke wiki repositori; dilangkau jika folder itu tiada |
+| OpenGrep | [`opengrep.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/opengrep.yml) | Scoped | pull request, push ke `main`, manual | Mengimbas repositori dengan OpenGrep (LGPL-2.1) dan set peraturan komunitinya yang dikunci tanpa log masuk; dapatan bertahap `ERROR` menggagalkan larian, yang lain disenaraikan; dilangkau jika tiada fail yang dijejaki diimbas |
+| Validate | [`validate.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/validate.yml) | Scoped | pull request, push ke `main`, manual | Menyemak fail aliran kerja (kriteria `WF` yang boleh diputuskan oleh skrip) dan menjalankan shellcheck dan shfmt pada skrip shell yang dijejaki; ralat menggagalkan larian, `WF-5` ialah amaran; hijau jika tiada apa-apa untuk disahkan |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan ruff, mypy, shellcheck dan shfmt pada fail yang dijejaki dan tidak mengubah apa-apa |
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan clang-format dan clang-tidy pada versi tepat pada fail C dan C++ yang dijejaki dan tidak mengubah apa-apa |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan `dotnet format` dan `dotnet build` pada .NET SDK 10 atau lebih baharu yang tepat dan tidak mengubah apa-apa |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/code-metrics.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Mengira fail kod dan baris kod (tanpa baris komen dan baris kosong), membaca laporan liputan Cobertura dan melakukan commit tiga lencana SVG ke cabang `badges` |
 | English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/english-comments.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain, pada pull request | Menilai bahasa komen dan docstring yang ditambah oleh pull request, menggagalkan larian apabila ada yang bukan bahasa Inggeris dan menulis satu komen pada pull request yang menyebut penulisnya |
-| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/release.yml) | Repositori ini sahaja | manual | Mencipta tag versi, halaman keluaran dan tag major selepas semakan |
-| Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/sync-milestones.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go |
+| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/release.yml) | Scoped, dimulakan secara manual | manual (`version`, `dry_run`) | Mencipta tag versi, halaman keluaran dan, dari 1.0.0, tag major bagi mana-mana repositori selepas semakan; memerlukan secret `TOKEN_FOR_GITEA_RELEASE` tanpa sandaran |
+| Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-milestones.yml) | Scoped | push ke cabang utama yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go; dilangkau jika `docs/milestones/` tiada; memerlukan secret `TOKEN_FOR_GITEA_REPO` dan `TOKEN_FOR_GITEA_ISSUES` tanpa fallback |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml) | Repositori ini sahaja | pull request, push ke `main`, manual | Menghurai setiap aliran kerja sebagai YAML dan menjalankan ujian luar talian |
 
 ### Menyegerakkan metadata GitHub
@@ -316,48 +318,131 @@ deactivate Workflow
 @enduml
 ```
 
-### Keluaran
+### OpenGrep
 
-Dimulakan secara manual oleh penyelenggara; dengan `dry_run` `true` (lalai) ia hanya menyemak (lihat [proses keluaran](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)).
+Aliran kerja scoped yang mengimbas repositori dengan OpenGrep v1.33.0 (fork LGPL-2.1 bagi Semgrep CE) dan peraturan daripada `opengrep/opengrep-rules` yang dikunci pada satu commit dan diambil dengan git semasa larian. OpenGrep ialah satu fail boleh laku yang dimuat turun daripada keluaran GitHub dan disemak terhadap sha256 yang dikunci, tanpa `pip` dan tanpa akaun; hanya runner Linux x86_64 disokong. Dapatan bertahap `ERROR` menggagalkan larian; `WARNING` dan `INFO` disenaraikan sebagai anotasi dan dalam ringkasan kerja. Ia hanya membaca fail, tidak mempunyai rahsia dan tidak menghantar kod sumber keluar daripada runner ([panduan](OpenGrep-ms), ADR-0015).
 
 #### Aliran kerja
 
 ```plantuml
 @startuml
-title Release this repository
+title OpenGrep scan (scoped workflow)
 
 autonumber
 
-actor "Maintainer\n(workflow_dispatch: version, dry_run)" as Trigger
-participant "Gitea Actions\nrelease" as Workflow
+actor "Pull request or push
+to main" as Event
+participant "Gitea Actions
+opengrep" as Workflow
+participant "github.com" as Registry
+
+Event -> Workflow: Start in every repository
+activate Workflow
+
+Workflow -> Workflow: Check out the repository and the shared script
+Workflow -> Registry: Download the pinned OpenGrep and check its sha256
+Workflow -> Registry: Fetch the pinned rules with git
+Workflow -> Workflow: Scan the files and read the JSON report
+
+alt no file is scanned
+  Workflow --> Event: run passed, nothing to scan
+else a finding of severity ERROR
+  Workflow --> Event: run failed (a required check blocks the merge)
+else only WARNING and INFO findings
+  Workflow --> Event: run passed, findings listed
+end
+
+deactivate Workflow
+@enduml
+```
+
+### Validate
+
+Aliran kerja scoped yang menyemak fail aliran kerja (`*.yml` dan `*.yaml` terus dalam `.gitea/workflows`, `.gitea/scoped_workflows` dan `.github/workflows`) terhadap kriteria `QC-WF-001` yang boleh diputuskan oleh skrip (`WF-1`, `WF-2`, `WF-3`, `WF-5`, `WF-7`, `WF-8`, `WF-9`, `WF-10`, `WF-14`, `WF-20`), dan menjalankan `shellcheck` 0.10.0.1 dan `shfmt` 3.11.0.2 pada fail `*.sh` yang dijejaki. Setiap dapatan ialah ralat kecuali `WF-5`, iaitu amaran. Statusnya ialah `Validate / validate (<event>)`, yang diperlukan oleh aliran kerja keluaran. Ia hanya membaca fail, mempunyai `permissions: contents: read` dan tiada rahsia ([panduan](Validate-ms), ADR-0016).
+
+#### Aliran kerja
+
+```plantuml
+@startuml
+title Validate (scoped workflow)
+
+autonumber
+
+actor "Pull request or push
+to main" as Event
+participant "Gitea Actions
+validate" as Workflow
+participant "PyPI" as Registry
+
+Event -> Workflow: Start in every repository
+activate Workflow
+
+Workflow -> Workflow: Check out the repository and the shared script
+Workflow -> Registry: Install the pinned PyYAML, shellcheck and shfmt
+Workflow -> Workflow: Check the workflow files and the shell scripts
+
+alt no workflow file and no shell script
+  Workflow --> Event: run passed, nothing to validate
+else an error or a tool finds problems
+  Workflow --> Event: run failed (a required check blocks the merge)
+else only WF-5 warnings
+  Workflow --> Event: run passed, warnings listed
+end
+
+deactivate Workflow
+@enduml
+```
+
+### Keluaran
+
+Aliran kerja scoped yang dimulakan secara manual oleh penyelenggara dalam repositori yang hendak dikeluarkan, dengan `version` (`MAJOR.MINOR.PATCH`) dan `dry_run`; dengan `dry_run` `true` (lalai) ia hanya menyemak dan tidak menulis apa-apa (lihat [proses keluaran](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md), ADR-0017). Ia menulis dengan secret organisasi `TOKEN_FOR_GITEA_RELEASE` (skop `write:repository`, pengguna khusus; lihat [panduan credentials](Credentials-ms)), yang diperlukan tanpa sandaran kepada token larian. Cabang lalai dibaca daripada API. Kedua-dua format changelog dibaca (`## [1.2.0] - 2026-10-21` dan `## 0.18.0 (2026-10-28)`), dan tag major `vN` wujud dari versi 1.0.0 sahaja. Ia menggantikan aliran kerja `.gitea/workflows/release.yml`, yang dibuang. Sama ada token boleh menulis dalam larian scoped masih perlu disahkan pada instans (MIL-018, tugas 1).
+
+#### Aliran kerja
+
+```plantuml
+@startuml
+title Release a repository
+
+autonumber
+
+actor "Maintainer
+(workflow_dispatch: version, dry_run)" as Trigger
+participant "Gitea Actions
+release (scoped)" as Workflow
 participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start with version and dry_run
 activate Workflow
 
-Workflow -> Workflow: Check the version and read CHANGELOG.md
-alt version malformed or no changelog entry
-  Workflow --> Trigger: Fail with [validation] or [configuration]
+Workflow -> Workflow: Check the secret TOKEN_FOR_GITEA_RELEASE,
+the version and read CHANGELOG.md
+alt secret missing, version malformed or no changelog entry
+  Workflow --> Trigger: Fail with [configuration] or [validation]
 end
 
-Workflow -> Gitea: GET branch main and status of the commit
-Gitea --> Workflow: Tip of main and the validation run
-alt commit is not the tip of main,\nor the validation run is not green
-  Workflow --> Trigger: Fail with [validation]\n(no tag is created)
+Workflow -> Gitea: GET repository (default branch), GET branch
+and GET status of the commit
+Gitea --> Workflow: Tip of the default branch and the validation run
+alt commit is not the tip of the default branch,
+or Validate / validate (push) is missing or not green
+  Workflow --> Trigger: Fail with [validation]
+(no tag is created)
 end
 
 Workflow -> Gitea: GET tags
 Gitea --> Workflow: Existing tags
 alt tag vMAJOR.MINOR.PATCH exists
-  Workflow --> Trigger: Fail with [validation]\n(tags are never moved)
+  Workflow --> Trigger: Fail with [validation]
+(tags are never moved)
 end
 
 alt dry_run is true (default)
   Workflow --> Trigger: Log what would be created and stop
 else
-  Workflow -> Gitea: POST release (creates the version tag,\nbody is the changelog entry)
-  opt this is the highest version of its major
-    Workflow -> Gitea: Delete and recreate the major tag vMAJOR
+  Workflow -> Gitea: POST release (creates the version tag,
+body is the changelog entry)
+  opt version 1.0.0 or later and the highest version of its major
+    Workflow -> Gitea: DELETE and POST the major tag vMAJOR
   end
   Workflow --> Trigger: Released
 end
@@ -411,48 +496,61 @@ deactivate Workflow
 
 ### Menerbitkan milestone yang diterima
 
-Kebenaran tetap untuk menerbitkan: pada push ke `main` yang mengubah milestone atau semakannya, setiap milestone yang baris terkini Version History-nya Accepted dan semakan terkininya Go dicipta atau dikemas kini di Gitea dengan tugasnya sebagai isu. Tiada apa-apa ditutup atau dipadam. Larian manual ialah larian percubaan kecuali `dry_run` dimatikan. Ia menggunakan secret `TOKEN_FOR_GITEA_ISSUES` dan peraturan `--accepted-only` framework yang dipasang (v0.5.0 atau lebih baharu).
+Aliran kerja scoped: instans menjalankannya dalam setiap repositori organisasi, dan sesebuah repositori memilihnya dengan mempunyai folder `docs/milestones/`; jika tiada, larian tamat tanpa berbuat apa-apa. Pada push ke cabang utama yang mengubah milestone atau semakannya, setiap milestone yang baris terkini Version History-nya Accepted dan semakan terkininya Go dicipta atau dikemas kini di Gitea dengan tugasnya sebagai isu. Tiada apa-apa ditutup atau dipadam. Larian manual ialah larian percubaan kecuali `dry_run` dimatikan. Skrip framework datang daripada submodul `framework/` projek itu sendiri atau, jika tiada, daripada keluaran framework yang dikunci dalam skrip aliran kerja; log mencetak yang mana. Ia memerlukan secret organisasi `TOKEN_FOR_GITEA_REPO` (membaca repositori) dan `TOKEN_FOR_GITEA_ISSUES` (isu dan milestone) tanpa fallback ([panduan](SyncMilestones-ms), ADR-0018). Secret dan framework persendirian dalam larian scoped belum disahkan pada instans (MIL-019).
 
 #### Aliran kerja
 
 ```plantuml
 @startuml
-title Publish accepted milestones (this repository)
+title Publish accepted milestones (scoped workflow)
 
 autonumber
 
-actor "Push to main that changes\ndocs/milestones/** or docs/sqa/reviews/**,\nor manual trigger" as Trigger
+actor "Push to the default branch that changes\ndocs/milestones/** or docs/sqa/reviews/**,\nor manual trigger" as Trigger
 participant "Gitea Actions\nsync-milestones" as Workflow
-participant "framework/scripts/\nsync-project.sh" as Script
+participant "framework/scripts/\nci-publish-milestones.sh" as Script
 participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start workflow
 activate Workflow
-Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA_REPO
-Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
-activate Script
+Workflow -> Workflow: Check out the repository\nwith TOKEN_FOR_GITEA_REPO
 
-loop for each docs/milestones/mil-*.md
-  alt latest Version History row is not Accepted,\nor the latest review record is not a Go
-    Script -> Script: Skip with the reason on stderr
+alt docs/milestones does not exist
+  Workflow --> Trigger: Nothing to publish
+else TOKEN_FOR_GITEA_REPO or TOKEN_FOR_GITEA_ISSUES is missing
+  Workflow --> Trigger: Fail with [configuration]
+else
+  alt the project has framework/scripts/ci-publish-milestones.sh
+    Workflow -> Workflow: Use the project's framework submodule
   else
-    alt dry run
-      Script -> Script: Print the plan, no network call
+    Workflow -> Workflow: Check out the framework\nat the pinned FRAMEWORK_TAG
+  end
+  Workflow -> Workflow: Log the source and the tag or commit
+  Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
+  activate Script
+
+  loop for each docs/milestones/mil-*.md
+    alt latest Version History row is not Accepted,\nor the latest review record is not a Go
+      Script -> Script: Skip with the reason on stderr
     else
-      Script -> Gitea: Create or update the Milestone\nand one Issue per task row
-      Gitea --> Script: Milestone and issue numbers
+      alt dry run
+        Script -> Script: Print the plan, no network call
+      else
+        Script -> Gitea: Create or update the Milestone\nand one Issue per task row
+        Gitea --> Script: Milestone and issue numbers
+      end
     end
   end
-end
 
-note right of Script
-Nothing is closed or deleted.
-Each real run edits the issues
-of every accepted milestone.
-end note
-Script --> Workflow: Done, or "nothing to publish"
-deactivate Script
-Workflow --> Trigger: Workflow result
+  note right of Script
+  Nothing is closed or deleted.
+  Each real run edits the issues
+  of every accepted milestone.
+  end note
+  Script --> Workflow: Done
+  deactivate Script
+  Workflow --> Trigger: Workflow result
+end
 deactivate Workflow
 @enduml
 ```

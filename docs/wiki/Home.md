@@ -13,26 +13,28 @@ A collection of reusable Gitea Actions workflows for DevOps professionals and so
 
 This repository is the central collection of reusable automation for TirSystem repositories. The primary repository lives at `git.tirsystem.com` (Gitea) and is push-mirrored to GitHub.
 
-It contains ten workflows: metadata sync to the GitHub mirror, wiki publishing (scoped, for every repository with a `docs/wiki/` folder), shared quality checks for Python and shell, for C and C++ and for C#, code metrics and coverage badges, a check that comments are in English, a release workflow, the publishing of accepted milestones and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
+It contains twelve workflows: metadata sync to the GitHub mirror, wiki publishing (scoped, for every repository with a `docs/wiki/` folder), shared quality checks for Python and shell, for C and C++ and for C#, code metrics and coverage badges, a check that comments are in English, a static security scan with OpenGrep (scoped), a validation of the workflow files and shell scripts of every repository (scoped), a release workflow (scoped, started by hand), the publishing of accepted milestones (scoped, for every repository with a `docs/milestones/` folder) and the repository's own validation. They are listed with their purpose and a diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
 When a repository should use each workflow in its SQA and QC is set out in the [adoption rules](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/adoption-rules.md).
 
-Ten workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
+Twelve workflows live in this repository. A **scoped** workflow is delivered by the instance to every repository of the TirSystem organizations and needs nothing in the repository; a **reusable** workflow is called by a repository with `uses:`; the others run only here. The diagrams are PlantUML source.
 
 | Workflow | File | Kind | Starts on | Purpose |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push to `main`, manual, daily 03:17 UTC | Copies the description and topics of a Gitea repository to its GitHub push mirror |
 | Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/publish-wiki-pages.yml) | Scoped | push to `main` that changes `docs/wiki/**`, manual | Publishes the pages in `docs/wiki/` to the wiki of the repository; skipped where the folder does not exist |
+| OpenGrep | [`opengrep.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/opengrep.yml) | Scoped | pull request, push to `main`, manual | Scans the repository with OpenGrep (LGPL-2.1) and a pinned set of its community rules, without a login; a finding of severity `ERROR` fails the run, the others are listed; skipped where no tracked file is scanned |
+| Validate | [`validate.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/validate.yml) | Scoped | pull request, push to `main`, manual | Checks the workflow files (`WF-1` to `WF-20` criteria a script can decide) and runs shellcheck and shfmt on the tracked shell scripts; an error fails the run, `WF-5` is a warning; green where there is nothing to validate |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks.yml) | Reusable (`workflow_call`) | a call from another repository | Runs ruff, mypy, shellcheck and shfmt on the tracked files and changes nothing |
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs clang-format and clang-tidy at exact versions on the tracked C and C++ files and changes nothing |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs `dotnet format` and `dotnet build` on an exact .NET SDK 10 or later and changes nothing |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/code-metrics.yml) | Reusable (`workflow_call`) | a call from another repository | Counts the code files and the lines of code (without comment and blank lines), reads a Cobertura coverage report and commits three SVG badges to a `badges` branch |
 | English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/english-comments.yml) | Reusable (`workflow_call`) | a call from another repository, on a pull request | Judges the language of the comments and docstrings a pull request adds, fails the run when one is not English and writes one comment on the pull request that mentions the author |
-| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/release.yml) | This repository only | manual | Creates the version tag, the release page and the major tag after the checks |
-| Publish accepted milestones | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/sync-milestones.yml) | This repository only | push to `main` that changes `docs/milestones/**` or `docs/sqa/reviews/**`, manual (dry run by default) | Creates or updates the Gitea milestone and issues of every milestone that is Accepted with a Go review |
+| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/release.yml) | Scoped, started by hand | manual (`version`, `dry_run`) | Creates the version tag, the release page and, from 1.0.0, the major tag of any repository after the checks; needs the secret `TOKEN_FOR_GITEA_RELEASE`, with no fallback |
+| Publish accepted milestones | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-milestones.yml) | Scoped | push to the default branch that changes `docs/milestones/**` or `docs/sqa/reviews/**`, manual (dry run by default) | Creates or updates the Gitea milestone and issues of every milestone that is Accepted with a Go review; skipped where `docs/milestones/` does not exist; needs the secrets `TOKEN_FOR_GITEA_REPO` and `TOKEN_FOR_GITEA_ISSUES`, with no fallback |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml) | This repository only | pull request, push to `main`, manual | Parses every workflow and runs the offline tests |
 
 ### Sync GitHub metadata
@@ -318,48 +320,131 @@ deactivate Workflow
 @enduml
 ```
 
-### Release
+### OpenGrep
 
-Started by hand by a maintainer; with `dry_run` `true` (the default) it only checks (see the [release process](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)).
+A scoped workflow that scans the repository with OpenGrep v1.33.0 (an LGPL-2.1 fork of Semgrep CE) and the rules of `opengrep/opengrep-rules` pinned to one commit, fetched with git at run time. OpenGrep is one executable downloaded from the GitHub release and checked against a pinned sha256, with no `pip` and no account; only Linux x86_64 runners are supported. A finding of severity `ERROR` fails the run; `WARNING` and `INFO` are listed as annotations and in the job summary. It reads files only, has no secret and sends no source code outside the runner ([guide](OpenGrep), ADR-0015).
 
 #### Workflow
 
 ```plantuml
 @startuml
-title Release this repository
+title OpenGrep scan (scoped workflow)
 
 autonumber
 
-actor "Maintainer\n(workflow_dispatch: version, dry_run)" as Trigger
-participant "Gitea Actions\nrelease" as Workflow
+actor "Pull request or push
+to main" as Event
+participant "Gitea Actions
+opengrep" as Workflow
+participant "github.com" as Registry
+
+Event -> Workflow: Start in every repository
+activate Workflow
+
+Workflow -> Workflow: Check out the repository and the shared script
+Workflow -> Registry: Download the pinned OpenGrep and check its sha256
+Workflow -> Registry: Fetch the pinned rules with git
+Workflow -> Workflow: Scan the files and read the JSON report
+
+alt no file is scanned
+  Workflow --> Event: run passed, nothing to scan
+else a finding of severity ERROR
+  Workflow --> Event: run failed (a required check blocks the merge)
+else only WARNING and INFO findings
+  Workflow --> Event: run passed, findings listed
+end
+
+deactivate Workflow
+@enduml
+```
+
+### Validate
+
+A scoped workflow that checks the workflow files (`*.yml` and `*.yaml` directly in `.gitea/workflows`, `.gitea/scoped_workflows` and `.github/workflows`) against the criteria of `QC-WF-001` that a script can decide (`WF-1`, `WF-2`, `WF-3`, `WF-5`, `WF-7`, `WF-8`, `WF-9`, `WF-10`, `WF-14`, `WF-20`) and runs `shellcheck` 0.10.0.1 and `shfmt` 3.11.0.2 on the tracked `*.sh` files. Every finding is an error except `WF-5`, a warning. The status is `Validate / validate (<event>)`, which the release workflow requires. It reads files only, has `permissions: contents: read` and no secret ([guide](Validate), ADR-0016).
+
+#### Workflow
+
+```plantuml
+@startuml
+title Validate (scoped workflow)
+
+autonumber
+
+actor "Pull request or push
+to main" as Event
+participant "Gitea Actions
+validate" as Workflow
+participant "PyPI" as Registry
+
+Event -> Workflow: Start in every repository
+activate Workflow
+
+Workflow -> Workflow: Check out the repository and the shared script
+Workflow -> Registry: Install the pinned PyYAML, shellcheck and shfmt
+Workflow -> Workflow: Check the workflow files and the shell scripts
+
+alt no workflow file and no shell script
+  Workflow --> Event: run passed, nothing to validate
+else an error or a tool finds problems
+  Workflow --> Event: run failed (a required check blocks the merge)
+else only WF-5 warnings
+  Workflow --> Event: run passed, warnings listed
+end
+
+deactivate Workflow
+@enduml
+```
+
+### Release
+
+A scoped workflow, started by hand by a maintainer in the repository to release, with `version` (`MAJOR.MINOR.PATCH`) and `dry_run`; `dry_run` `true` (the default) only checks and writes nothing (see the [release process](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md), ADR-0017). It writes with the organization secret `TOKEN_FOR_GITEA_RELEASE` (scope `write:repository`, a dedicated user; see the [credentials guide](Credentials)), which is required, with no fallback to the token of the run. The default branch is read from the API. Both changelog formats are read (`## [1.2.0] - 2026-10-21` and `## 0.18.0 (2026-10-28)`), and the major tag `vN` exists from version 1.0.0 only. It replaces the workflow `.gitea/workflows/release.yml`, which is removed. Whether the token can write in a scoped run is still to be verified on the instance (MIL-018 task 1).
+
+#### Workflow
+
+```plantuml
+@startuml
+title Release a repository
+
+autonumber
+
+actor "Maintainer
+(workflow_dispatch: version, dry_run)" as Trigger
+participant "Gitea Actions
+release (scoped)" as Workflow
 participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start with version and dry_run
 activate Workflow
 
-Workflow -> Workflow: Check the version and read CHANGELOG.md
-alt version malformed or no changelog entry
-  Workflow --> Trigger: Fail with [validation] or [configuration]
+Workflow -> Workflow: Check the secret TOKEN_FOR_GITEA_RELEASE,
+the version and read CHANGELOG.md
+alt secret missing, version malformed or no changelog entry
+  Workflow --> Trigger: Fail with [configuration] or [validation]
 end
 
-Workflow -> Gitea: GET branch main and status of the commit
-Gitea --> Workflow: Tip of main and the validation run
-alt commit is not the tip of main,\nor the validation run is not green
-  Workflow --> Trigger: Fail with [validation]\n(no tag is created)
+Workflow -> Gitea: GET repository (default branch), GET branch
+and GET status of the commit
+Gitea --> Workflow: Tip of the default branch and the validation run
+alt commit is not the tip of the default branch,
+or Validate / validate (push) is missing or not green
+  Workflow --> Trigger: Fail with [validation]
+(no tag is created)
 end
 
 Workflow -> Gitea: GET tags
 Gitea --> Workflow: Existing tags
 alt tag vMAJOR.MINOR.PATCH exists
-  Workflow --> Trigger: Fail with [validation]\n(tags are never moved)
+  Workflow --> Trigger: Fail with [validation]
+(tags are never moved)
 end
 
 alt dry_run is true (default)
   Workflow --> Trigger: Log what would be created and stop
 else
-  Workflow -> Gitea: POST release (creates the version tag,\nbody is the changelog entry)
-  opt this is the highest version of its major
-    Workflow -> Gitea: Delete and recreate the major tag vMAJOR
+  Workflow -> Gitea: POST release (creates the version tag,
+body is the changelog entry)
+  opt version 1.0.0 or later and the highest version of its major
+    Workflow -> Gitea: DELETE and POST the major tag vMAJOR
   end
   Workflow --> Trigger: Released
 end
@@ -413,48 +498,61 @@ deactivate Workflow
 
 ### Publish accepted milestones
 
-Standing authorization to publish: on a push to `main` that changes the milestones or their reviews, every milestone whose latest Version History row is Accepted and whose latest review is a Go is created or updated on Gitea with its tasks as issues. Nothing is closed or deleted. A manual run is a dry run unless `dry_run` is switched off. It uses the secret `TOKEN_FOR_GITEA_ISSUES` and the `--accepted-only` rule of the mounted framework (v0.5.0 or later).
+A scoped workflow: the instance runs it in every repository of the organization, and a repository opts in by having a `docs/milestones/` folder; where there is none, the run ends without doing anything. On a push to the default branch that changes the milestones or their reviews, every milestone whose latest Version History row is Accepted and whose latest review is a Go is created or updated on Gitea with its tasks as issues. Nothing is closed or deleted. A manual run is a dry run unless `dry_run` is switched off. The framework scripts come from the project's own `framework/` submodule or, where there is none, from a framework release pinned in the workflow's script; the log prints which. It needs the organization secrets `TOKEN_FOR_GITEA_REPO` (read the repositories) and `TOKEN_FOR_GITEA_ISSUES` (issues and milestones), with no fallback ([guide](SyncMilestones), ADR-0018). The secrets and the private framework in a scoped run are not yet verified on the instance (MIL-019).
 
 #### Workflow
 
 ```plantuml
 @startuml
-title Publish accepted milestones (this repository)
+title Publish accepted milestones (scoped workflow)
 
 autonumber
 
-actor "Push to main that changes\ndocs/milestones/** or docs/sqa/reviews/**,\nor manual trigger" as Trigger
+actor "Push to the default branch that changes\ndocs/milestones/** or docs/sqa/reviews/**,\nor manual trigger" as Trigger
 participant "Gitea Actions\nsync-milestones" as Workflow
-participant "framework/scripts/\nsync-project.sh" as Script
+participant "framework/scripts/\nci-publish-milestones.sh" as Script
 participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start workflow
 activate Workflow
-Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA_REPO
-Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
-activate Script
+Workflow -> Workflow: Check out the repository\nwith TOKEN_FOR_GITEA_REPO
 
-loop for each docs/milestones/mil-*.md
-  alt latest Version History row is not Accepted,\nor the latest review record is not a Go
-    Script -> Script: Skip with the reason on stderr
+alt docs/milestones does not exist
+  Workflow --> Trigger: Nothing to publish
+else TOKEN_FOR_GITEA_REPO or TOKEN_FOR_GITEA_ISSUES is missing
+  Workflow --> Trigger: Fail with [configuration]
+else
+  alt the project has framework/scripts/ci-publish-milestones.sh
+    Workflow -> Workflow: Use the project's framework submodule
   else
-    alt dry run
-      Script -> Script: Print the plan, no network call
+    Workflow -> Workflow: Check out the framework\nat the pinned FRAMEWORK_TAG
+  end
+  Workflow -> Workflow: Log the source and the tag or commit
+  Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
+  activate Script
+
+  loop for each docs/milestones/mil-*.md
+    alt latest Version History row is not Accepted,\nor the latest review record is not a Go
+      Script -> Script: Skip with the reason on stderr
     else
-      Script -> Gitea: Create or update the Milestone\nand one Issue per task row
-      Gitea --> Script: Milestone and issue numbers
+      alt dry run
+        Script -> Script: Print the plan, no network call
+      else
+        Script -> Gitea: Create or update the Milestone\nand one Issue per task row
+        Gitea --> Script: Milestone and issue numbers
+      end
     end
   end
-end
 
-note right of Script
-Nothing is closed or deleted.
-Each real run edits the issues
-of every accepted milestone.
-end note
-Script --> Workflow: Done, or "nothing to publish"
-deactivate Script
-Workflow --> Trigger: Workflow result
+  note right of Script
+  Nothing is closed or deleted.
+  Each real run edits the issues
+  of every accepted milestone.
+  end note
+  Script --> Workflow: Done
+  deactivate Script
+  Workflow --> Trigger: Workflow result
+end
 deactivate Workflow
 @enduml
 ```

@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 d1a878a27068 -->
+<!-- translation of Home.md, source sha256 e912ad7140a9 -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -13,24 +13,26 @@ En samling af genbrugelige Gitea Actions-workflows til DevOps-professionelle og 
 
 Dette repository er den centrale samling af genbrugelig automatisering til TirSystems repositories. Det primære repository ligger på `git.tirsystem.com` (Gitea) og spejles med push til GitHub.
 
-Det indeholder ti workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki (scoped, for hvert repository med en `docs/wiki/`-mappe), fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, kodemålinger og dækningsbadges, en kontrol af, at kommentarer er på engelsk, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
+Det indeholder tolv workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki (scoped, for hvert repository med en `docs/wiki/`-mappe), fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, kodemålinger og dækningsbadges, en kontrol af, at kommentarer er på engelsk, en statisk sikkerhedsskanning med OpenGrep (scoped), en validering af workflowfilerne og shell-scripts i hvert repository (scoped), et udgivelsesworkflow (scoped, startes manuelt), publicering af accepterede milepæle (scoped, for hvert repository med en `docs/milestones/`-mappe) og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
 
 
 ## Workflows
 
-Der er ti workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
+Der er tolv workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
 
 | Workflow | Fil | Type | Starter ved | Formål |
 | --- | --- | --- | --- | --- |
 | Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push til `main`, manuelt, dagligt kl. 03:17 UTC | Kopierer beskrivelsen og emnerne for et Gitea-repository til dets GitHub push-spejl |
 | Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/publish-wiki-pages.yml) | Scoped | push til `main`, der ændrer `docs/wiki/**`, manuelt | Publicerer siderne i `docs/wiki/` til repositoryets wiki; springes over, hvor mappen ikke findes |
+| OpenGrep | [`opengrep.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/opengrep.yml) | Scoped | pull request, push til `main`, manual | Skanner repositoryet med OpenGrep (LGPL-2.1) og et fastlåst sæt af dets fællesskabsregler uden login; et fund af alvorlighed `ERROR` får kørslen til at fejle, de øvrige listes; springes over, hvor ingen sporet fil skannes |
+| Validate | [`validate.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/validate.yml) | Scoped | pull request, push til `main`, manual | Kontrollerer workflowfilerne (de `WF`-kriterier, et script kan afgøre) og kører shellcheck og shfmt på de sporede shell-scripts; en fejl får kørslen til at fejle, `WF-5` er en advarsel; grøn, hvor der intet er at validere |
 | Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører ruff, mypy, shellcheck og shfmt på de sporede filer og ændrer intet |
 | Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører clang-format og clang-tidy i præcise versioner på de sporede C- og C++-filer og ændrer intet |
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører `dotnet format` og `dotnet build` på et præcist .NET SDK 10 eller nyere og ændrer intet |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/code-metrics.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer), læser en Cobertura-dækningsrapport og committer tre SVG-badges til en `badges`-gren |
 | English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/english-comments.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository, på en pull request | Bedømmer sproget i de kommentarer og docstrings, en pull request tilføjer, lader kørslen fejle, når én ikke er engelsk, og skriver én kommentar på pull requesten, der nævner forfatteren |
-| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/release.yml) | Kun dette repository | manuelt | Opretter versionstagget, udgivelsessiden og major-tagget efter kontrollerne |
-| Publicering af accepterede milepæle | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/sync-milestones.yml) | Kun dette repository | push til `main`, der ændrer `docs/milestones/**` eller `docs/sqa/reviews/**`, manuelt (tørkørsel som standard) | Opretter eller opdaterer Gitea-milepælen og issues for hver milepæl, der er Accepted med en Go-gennemgang |
+| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/release.yml) | Scoped, startes manuelt | manuelt (`version`, `dry_run`) | Opretter versionstagget, udgivelsessiden og, fra 1.0.0, major-tagget i ethvert repository efter kontrollerne; kræver secreten `TOKEN_FOR_GITEA_RELEASE` uden reserve |
+| Publicering af accepterede milepæle | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-milestones.yml) | Scoped | push til hovedgrenen, der ændrer `docs/milestones/**` eller `docs/sqa/reviews/**`, manuelt (tørkørsel som standard) | Opretter eller opdaterer Gitea-milepælen og issues for hver milepæl, der er Accepted med en Go-gennemgang; springes over, hvor `docs/milestones/` ikke findes; kræver secrets'ene `TOKEN_FOR_GITEA_REPO` og `TOKEN_FOR_GITEA_ISSUES` uden fallback |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml) | Kun dette repository | pull request, push til `main`, manuelt | Læser hvert workflow som YAML og kører offline-testene |
 
 ### Synkronisering af GitHub-metadata
@@ -316,48 +318,131 @@ deactivate Workflow
 @enduml
 ```
 
-### Udgivelse
+### OpenGrep
 
-Startes manuelt af en vedligeholder; med `dry_run` `true` (standard) kontrollerer det kun (se [udgivelsesprocessen](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)).
+Et scoped workflow, der skanner repositoryet med OpenGrep v1.33.0 (en LGPL-2.1-fork af Semgrep CE) og reglerne fra `opengrep/opengrep-rules` fastlåst til ét commit og hentet med git under kørslen. OpenGrep er én kørbar fil, hentet fra GitHub-udgivelsen og kontrolleret mod en fastlåst sha256, uden `pip` og uden en konto; kun Linux x86_64-runnere understøttes. Et fund af alvorlighed `ERROR` får kørslen til at fejle; `WARNING` og `INFO` listes som annotationer og i jobbets resumé. Det læser kun filer, har ingen hemmelighed og sender ingen kildetekst ud af runneren ([vejledning](OpenGrep-da), ADR-0015).
 
 #### Workflow
 
 ```plantuml
 @startuml
-title Release this repository
+title OpenGrep scan (scoped workflow)
 
 autonumber
 
-actor "Maintainer\n(workflow_dispatch: version, dry_run)" as Trigger
-participant "Gitea Actions\nrelease" as Workflow
+actor "Pull request or push
+to main" as Event
+participant "Gitea Actions
+opengrep" as Workflow
+participant "github.com" as Registry
+
+Event -> Workflow: Start in every repository
+activate Workflow
+
+Workflow -> Workflow: Check out the repository and the shared script
+Workflow -> Registry: Download the pinned OpenGrep and check its sha256
+Workflow -> Registry: Fetch the pinned rules with git
+Workflow -> Workflow: Scan the files and read the JSON report
+
+alt no file is scanned
+  Workflow --> Event: run passed, nothing to scan
+else a finding of severity ERROR
+  Workflow --> Event: run failed (a required check blocks the merge)
+else only WARNING and INFO findings
+  Workflow --> Event: run passed, findings listed
+end
+
+deactivate Workflow
+@enduml
+```
+
+### Validate
+
+Et scoped workflow, der kontrollerer workflowfilerne (`*.yml` og `*.yaml` direkte i `.gitea/workflows`, `.gitea/scoped_workflows` og `.github/workflows`) mod de kriterier i `QC-WF-001`, et script kan afgøre (`WF-1`, `WF-2`, `WF-3`, `WF-5`, `WF-7`, `WF-8`, `WF-9`, `WF-10`, `WF-14`, `WF-20`), og kører `shellcheck` 0.10.0.1 og `shfmt` 3.11.0.2 på de sporede `*.sh`-filer. Hvert fund er en fejl undtagen `WF-5`, som er en advarsel. Statussen er `Validate / validate (<event>)`, som udgivelsesworkflowet kræver. Det læser kun filer, har `permissions: contents: read` og ingen hemmelighed ([vejledning](Validate-da), ADR-0016).
+
+#### Workflow
+
+```plantuml
+@startuml
+title Validate (scoped workflow)
+
+autonumber
+
+actor "Pull request or push
+to main" as Event
+participant "Gitea Actions
+validate" as Workflow
+participant "PyPI" as Registry
+
+Event -> Workflow: Start in every repository
+activate Workflow
+
+Workflow -> Workflow: Check out the repository and the shared script
+Workflow -> Registry: Install the pinned PyYAML, shellcheck and shfmt
+Workflow -> Workflow: Check the workflow files and the shell scripts
+
+alt no workflow file and no shell script
+  Workflow --> Event: run passed, nothing to validate
+else an error or a tool finds problems
+  Workflow --> Event: run failed (a required check blocks the merge)
+else only WF-5 warnings
+  Workflow --> Event: run passed, warnings listed
+end
+
+deactivate Workflow
+@enduml
+```
+
+### Udgivelse
+
+Et scoped workflow, der startes manuelt af en vedligeholder i det repository, der skal udgives, med `version` (`MAJOR.MINOR.PATCH`) og `dry_run`; med `dry_run` `true` (standard) kontrollerer det kun og skriver intet (se [udgivelsesprocessen](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md), ADR-0017). Det skriver med organisationens secret `TOKEN_FOR_GITEA_RELEASE` (scope `write:repository`, en dedikeret bruger; se [vejledningen om credentials](Credentials-da)), som er påkrævet uden reserve til kørslens token. Standardbranchen læses fra API'et. Begge changelog-formater læses (`## [1.2.0] - 2026-10-21` og `## 0.18.0 (2026-10-28)`), og major-tagget `vN` findes kun fra version 1.0.0. Det erstatter workflowet `.gitea/workflows/release.yml`, som er fjernet. Om tokenet kan skrive i en scoped kørsel mangler stadig at blive verificeret på instansen (MIL-018, opgave 1).
+
+#### Workflow
+
+```plantuml
+@startuml
+title Release a repository
+
+autonumber
+
+actor "Maintainer
+(workflow_dispatch: version, dry_run)" as Trigger
+participant "Gitea Actions
+release (scoped)" as Workflow
 participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start with version and dry_run
 activate Workflow
 
-Workflow -> Workflow: Check the version and read CHANGELOG.md
-alt version malformed or no changelog entry
-  Workflow --> Trigger: Fail with [validation] or [configuration]
+Workflow -> Workflow: Check the secret TOKEN_FOR_GITEA_RELEASE,
+the version and read CHANGELOG.md
+alt secret missing, version malformed or no changelog entry
+  Workflow --> Trigger: Fail with [configuration] or [validation]
 end
 
-Workflow -> Gitea: GET branch main and status of the commit
-Gitea --> Workflow: Tip of main and the validation run
-alt commit is not the tip of main,\nor the validation run is not green
-  Workflow --> Trigger: Fail with [validation]\n(no tag is created)
+Workflow -> Gitea: GET repository (default branch), GET branch
+and GET status of the commit
+Gitea --> Workflow: Tip of the default branch and the validation run
+alt commit is not the tip of the default branch,
+or Validate / validate (push) is missing or not green
+  Workflow --> Trigger: Fail with [validation]
+(no tag is created)
 end
 
 Workflow -> Gitea: GET tags
 Gitea --> Workflow: Existing tags
 alt tag vMAJOR.MINOR.PATCH exists
-  Workflow --> Trigger: Fail with [validation]\n(tags are never moved)
+  Workflow --> Trigger: Fail with [validation]
+(tags are never moved)
 end
 
 alt dry_run is true (default)
   Workflow --> Trigger: Log what would be created and stop
 else
-  Workflow -> Gitea: POST release (creates the version tag,\nbody is the changelog entry)
-  opt this is the highest version of its major
-    Workflow -> Gitea: Delete and recreate the major tag vMAJOR
+  Workflow -> Gitea: POST release (creates the version tag,
+body is the changelog entry)
+  opt version 1.0.0 or later and the highest version of its major
+    Workflow -> Gitea: DELETE and POST the major tag vMAJOR
   end
   Workflow --> Trigger: Released
 end
@@ -411,48 +496,61 @@ deactivate Workflow
 
 ### Publicering af accepterede milepæle
 
-Permanent tilladelse til at publicere: ved et push til `main`, der ændrer milepælene eller deres gennemgange, oprettes eller opdateres hver milepæl, hvis seneste række i Version History er Accepted, og hvis seneste gennemgang er en Go, på Gitea med sine opgaver som issues. Intet lukkes eller slettes. En manuel kørsel er en tørkørsel, medmindre `dry_run` slås fra. Det bruger secret'en `TOKEN_FOR_GITEA_ISSUES` og `--accepted-only`-reglen i det monterede framework (v0.5.0 eller nyere).
+Et scoped workflow: instansen kører det i hvert repository i organisationen, og et repository tilvælger det ved at have en `docs/milestones/`-mappe; hvor der ingen er, slutter kørslen uden at gøre noget. Ved et push til hovedgrenen, der ændrer milepælene eller deres gennemgange, oprettes eller opdateres hver milepæl, hvis seneste række i Version History er Accepted, og hvis seneste gennemgang er en Go, på Gitea med sine opgaver som issues. Intet lukkes eller slettes. En manuel kørsel er en tørkørsel, medmindre `dry_run` slås fra. Frameworkets scripts kommer fra projektets egen `framework/`-submodul eller, hvor der ingen er, fra en framework-udgivelse, der er fastlåst i workflowets script; loggen skriver hvilken. Det kræver organisationens secrets `TOKEN_FOR_GITEA_REPO` (læse repositories) og `TOKEN_FOR_GITEA_ISSUES` (issues og milepæle) uden fallback ([vejledning](SyncMilestones-da), ADR-0018). Secrets'ene og det private framework i en scoped kørsel er endnu ikke verificeret på instansen (MIL-019).
 
 #### Workflow
 
 ```plantuml
 @startuml
-title Publish accepted milestones (this repository)
+title Publish accepted milestones (scoped workflow)
 
 autonumber
 
-actor "Push to main that changes\ndocs/milestones/** or docs/sqa/reviews/**,\nor manual trigger" as Trigger
+actor "Push to the default branch that changes\ndocs/milestones/** or docs/sqa/reviews/**,\nor manual trigger" as Trigger
 participant "Gitea Actions\nsync-milestones" as Workflow
-participant "framework/scripts/\nsync-project.sh" as Script
+participant "framework/scripts/\nci-publish-milestones.sh" as Script
 participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Start workflow
 activate Workflow
-Workflow -> Workflow: Check out the project and the framework\nsubmodules over HTTPS with TOKEN_FOR_GITEA_REPO
-Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
-activate Script
+Workflow -> Workflow: Check out the repository\nwith TOKEN_FOR_GITEA_REPO
 
-loop for each docs/milestones/mil-*.md
-  alt latest Version History row is not Accepted,\nor the latest review record is not a Go
-    Script -> Script: Skip with the reason on stderr
+alt docs/milestones does not exist
+  Workflow --> Trigger: Nothing to publish
+else TOKEN_FOR_GITEA_REPO or TOKEN_FOR_GITEA_ISSUES is missing
+  Workflow --> Trigger: Fail with [configuration]
+else
+  alt the project has framework/scripts/ci-publish-milestones.sh
+    Workflow -> Workflow: Use the project's framework submodule
   else
-    alt dry run
-      Script -> Script: Print the plan, no network call
+    Workflow -> Workflow: Check out the framework\nat the pinned FRAMEWORK_TAG
+  end
+  Workflow -> Workflow: Log the source and the tag or commit
+  Workflow -> Script: --accepted-only (dry run)\nor --accepted-only --apply
+  activate Script
+
+  loop for each docs/milestones/mil-*.md
+    alt latest Version History row is not Accepted,\nor the latest review record is not a Go
+      Script -> Script: Skip with the reason on stderr
     else
-      Script -> Gitea: Create or update the Milestone\nand one Issue per task row
-      Gitea --> Script: Milestone and issue numbers
+      alt dry run
+        Script -> Script: Print the plan, no network call
+      else
+        Script -> Gitea: Create or update the Milestone\nand one Issue per task row
+        Gitea --> Script: Milestone and issue numbers
+      end
     end
   end
-end
 
-note right of Script
-Nothing is closed or deleted.
-Each real run edits the issues
-of every accepted milestone.
-end note
-Script --> Workflow: Done, or "nothing to publish"
-deactivate Script
-Workflow --> Trigger: Workflow result
+  note right of Script
+  Nothing is closed or deleted.
+  Each real run edits the issues
+  of every accepted milestone.
+  end note
+  Script --> Workflow: Done
+  deactivate Script
+  Workflow --> Trigger: Workflow result
+end
 deactivate Workflow
 @enduml
 ```

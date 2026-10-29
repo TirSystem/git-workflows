@@ -48,6 +48,9 @@ PAGES: tuple[Page, ...] = (
     Page("QualityChecksCSharp", "guides/quality-checks-csharp.md"),
     Page("CodeMetrics", "guides/code-metrics.md"),
     Page("EnglishComments", "guides/english-comments.md"),
+    Page("OpenGrep", "guides/opengrep.md"),
+    Page("Validate", "guides/validate.md"),
+    Page("SyncMilestones", "guides/sync-milestones.md"),
     Page("Upgrading", "guides/upgrading.md"),
     Page("Capabilities", "README.md", ("Capabilities",)),
 )
@@ -70,6 +73,9 @@ _PAGE_FOR_SOURCE = {
     "guides/quality-checks-csharp.md": "QualityChecksCSharp",
     "guides/code-metrics.md": "CodeMetrics",
     "guides/english-comments.md": "EnglishComments",
+    "guides/opengrep.md": "OpenGrep",
+    "guides/validate.md": "Validate",
+    "guides/sync-milestones.md": "SyncMilestones",
     "guides/upgrading.md": "Upgrading",
 }
 
@@ -206,6 +212,9 @@ SIDEBAR_LABELS: tuple[str, ...] = (
     "Quality checks (C#)",
     "Code metrics",
     "English comments",
+    "OpenGrep",
+    "Validate",
+    "Sync milestones",
     "Upgrading",
     "Capabilities",
 )
