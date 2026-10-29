@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 877dbe1a7fdd -->
+<!-- translation of Home.md, source sha256 a09c020c94f4 -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
