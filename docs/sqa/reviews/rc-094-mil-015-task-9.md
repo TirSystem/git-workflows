@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-10-29 as stand-in for S01 | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-10-29 as stand-in for S01 | [400fd30] |
 
 ---
 
@@ -51,3 +51,4 @@ Go. The task and its criterion are objective and trace to the same objectives as
 [RC-093]: ./rc-093-mil-015-task-8.md
 [BC-001]: ../../business-case.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[400fd30]: https://git.tirsystem.com/TirSystem/git-workflows/commit/400fd308b3eb9b286017ba72637c5b7ee39f3175

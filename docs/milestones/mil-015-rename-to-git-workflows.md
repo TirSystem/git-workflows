@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 9 and task 8: the Gitea secrets follow `TOKEN_FOR_<host>_<purpose>`; reviewed (RC-093), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [97f0b26] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 10 and task 9: the offline tests do not depend on the pytest version; reviewed (RC-094), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | pending |
+| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added criterion 10 and task 9: the offline tests do not depend on the pytest version; reviewed (RC-094), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [400fd30] |
 
 ---
 
@@ -103,3 +103,4 @@ change.
 [RC-093]: ../sqa/reviews/rc-093-mil-015-task-8.md
 [RC-094]: ../sqa/reviews/rc-094-mil-015-task-9.md
 [97f0b26]: https://git.tirsystem.com/TirSystem/git-workflows/commit/97f0b26c58cb7950336ea140536cb6817538af26
+[400fd30]: https://git.tirsystem.com/TirSystem/git-workflows/commit/400fd308b3eb9b286017ba72637c5b7ee39f3175
