@@ -20,8 +20,13 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-10-29
+
 ### Breaking
 
+- The reusable workflow `.gitea/workflows/publish-wiki-pages.yml` and this repository's own caller `publish-own-wiki.yml` are removed and replaced by the scoped workflow `.gitea/scoped_workflows/publish-wiki-pages.yml` (ADR-0013): it runs in every repository of an organization and a repository opts in by having `docs/wiki/`. A caller must delete its call to `publish-wiki-pages.yml@v2`, or the wiki is published twice. `v2` stays at the last 2.x release, so a caller still pinned at `@v2` keeps working.
+- The repository is `TirSystem/git-workflows`; callers and scripts that name the old repository `TirSystem/github-action` must use the new name.
+- The scoped workflows fetch their scripts from this repository at the major tag `v3`.
 - The workflow `.gitea/workflows/release.yml` is removed and replaced by the scoped workflow `.gitea/scoped_workflows/release.yml` (ADR-0017). The secret `TOKEN_FOR_GITEA_RELEASE` (a Gitea token, scope `write:repository`, a dedicated user) is required, stored as an organization secret, with no fallback to the token of the run; a run without it ends as `[configuration]`. Callers start the workflow by hand with `version` and `dry_run` (default `true`). The guide is `guides/credentials.md` (new section) and `guides/release-process.md`.
 - The Gitea secrets follow `TOKEN_FOR_<host>_<purpose>`: the scoped workflow `sync-github-metadata.yml` reads `TOKEN_FOR_GITEA_REPO` (it was `TOKEN_FOR_GITEA`), and the workflow `sync-milestones.yml` of this repository reads `TOKEN_FOR_GITEA_ISSUES`. Store the new secret in each organization before the next release; a run without it fails with `TOKEN_FOR_GITEA_REPO is missing or empty.` `TOKEN_FOR_GITEA_WIKI` and `TOKEN_FOR_GITEA_RELEASE` are unchanged.
 - `sync-milestones.yml` checks out the project and the private framework submodule with `TOKEN_FOR_GITEA_REPO` (read on repositories) and publishes with `TOKEN_FOR_GITEA_ISSUES` (issues and milestones only). The first version of this rename used the narrow token for the checkout too, and the run ended with `403 Forbidden` on the submodule.
