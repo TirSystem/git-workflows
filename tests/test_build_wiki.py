@@ -199,12 +199,12 @@ def test_committed_wiki_pages_are_current():
 class TestLanguageSwitcher:
     def test_english_page_links_to_the_translations(self):
         assert build_wiki.language_switcher("Home") == (
-            "English | [Dansk](Home.da) | [Bahasa Melayu](Home.ms)"
+            "**English** · [Dansk](Home-da) · [Bahasa Melayu](Home-ms)"
         )
 
     def test_translation_does_not_link_to_itself(self):
         assert build_wiki.language_switcher("Home", "da") == (
-            "[English](Home) | Dansk | [Bahasa Melayu](Home.ms)"
+            "[English](Home) · **Dansk** · [Bahasa Melayu](Home-ms)"
         )
 
 
@@ -225,7 +225,7 @@ class TestCheckTranslations:
                 english[f"{page.name}.md"].encode("utf-8")
             )
             for code, _label in build_wiki.LANGUAGES:
-                (wiki / f"{page.name}.{code}.md").write_text(
+                (wiki / f"{page.name}-{code}.md").write_text(
                     f"<!-- translation of {page.name}.md, source sha256 {digest} -->\n\nText\n",
                     encoding="utf-8",
                 )
@@ -238,23 +238,23 @@ class TestCheckTranslations:
     def test_reports_missing_translations(self, repo, tmp_path):
         wiki = tmp_path / "wiki"
         self.write_translations(wiki, repo)
-        (wiki / "Home.ms.md").unlink()
-        assert build_wiki.check_translations(wiki, repo) == ["Home.ms.md: missing"]
+        (wiki / "Home-ms.md").unlink()
+        assert build_wiki.check_translations(wiki, repo) == ["Home-ms.md: missing"]
 
     def test_reports_a_stale_translation(self, repo, tmp_path):
         wiki = tmp_path / "wiki"
         self.write_translations(wiki, repo)
         (repo / "guides" / "onboarding.md").write_text("# Changed\n", encoding="utf-8")
         problems = build_wiki.check_translations(wiki, repo)
-        assert [p.split(":")[0] for p in problems] == ["Onboarding.da.md", "Onboarding.ms.md"]
+        assert [p.split(":")[0] for p in problems] == ["Onboarding-da.md", "Onboarding-ms.md"]
         assert all("stale" in problem for problem in problems)
 
     def test_reports_a_missing_or_wrong_header(self, repo, tmp_path):
         wiki = tmp_path / "wiki"
         self.write_translations(wiki, repo)
-        (wiki / "Home.da.md").write_text("no header\n", encoding="utf-8")
+        (wiki / "Home-da.md").write_text("no header\n", encoding="utf-8")
         assert build_wiki.check_translations(wiki, repo) == [
-            "Home.da.md: first line is not the translation header"
+            "Home-da.md: first line is not the translation header"
         ]
 
 
@@ -275,7 +275,7 @@ def test_committed_translations_follow_the_english_structure(page, code):
     """A translation has the same code blocks, table rows and heading levels."""
     wiki = REPO_ROOT / "docs" / "wiki"
     english = _shape((wiki / f"{page}.md").read_text(encoding="utf-8"))
-    translated = _shape((wiki / f"{page}.{code}.md").read_text(encoding="utf-8"))
+    translated = _shape((wiki / f"{page}-{code}.md").read_text(encoding="utf-8"))
     assert translated == english
 
 
@@ -285,25 +285,39 @@ def test_committed_translations_are_current():
 
 
 class TestSidebar:
-    """Gitea shows subpages only through _Sidebar, so it must reach every page."""
+    """Gitea shows subpages only through _Sidebar, so it must reach every page (QC-WIKI-001)."""
 
-    def test_links_every_page_in_every_language(self):
+    def test_lists_every_english_page_once_and_no_translated_page(self):
         sidebar = build_wiki.render_sidebar()
         for page in build_wiki.PAGES:
-            assert f"]({page.name})" in sidebar
-            for code, _label in build_wiki.LANGUAGES:
-                assert f"]({page.name}.{code})" in sidebar
+            assert sidebar.count(f"]({page.name})") == (2 if page.name == "Home" else 1)
+        for code, _label in build_wiki.LANGUAGES:
+            assert re.findall(rf"\]\(([A-Za-z]+)-{code}\)", sidebar) == ["Home"]
 
-    def test_every_link_names_a_committed_page(self):
+    def test_has_the_blocks_in_order_and_languages_last(self):
+        lines = build_wiki.render_sidebar().splitlines()
+        bold = [line for line in lines if line.startswith("**")]
+        assert bold == [f"**{build_wiki.SIDEBAR_TITLE}**", "**Related**", "**Languages**"]
+
+    def test_languages_has_one_home_link_per_language(self):
         sidebar = build_wiki.render_sidebar()
-        targets = re.findall(r"\]\(([^)]+)\)", sidebar)
+        assert "- English: [Home](Home)" in sidebar
+        assert "- Dansk: [Hjem](Home-da)" in sidebar
+        assert "- Bahasa Melayu: [Utama](Home-ms)" in sidebar
+
+    def test_every_local_link_names_a_committed_page(self):
+        sidebar = build_wiki.render_sidebar()
+        targets = [t for t in re.findall(r"\]\(([^)]+)\)", sidebar) if not t.startswith("https://")]
         assert targets
         for target in targets:
             assert (build_wiki.WIKI_DIR / f"{target}.md").is_file(), target
 
-    def test_has_one_label_per_page_and_language(self):
-        for code in ("en", *(c for c, _ in build_wiki.LANGUAGES)):
-            assert len(build_wiki.SIDEBAR_LABELS[code]) == len(build_wiki.PAGES)
+    def test_related_links_are_full_urls(self):
+        for _text, url in build_wiki.SIDEBAR_RELATED:
+            assert url.startswith("https://") and url.endswith("/wiki")
+
+    def test_has_one_label_per_page(self):
+        assert len(build_wiki.SIDEBAR_LABELS) == len(build_wiki.PAGES)
 
 
 def test_home_lists_every_workflow_file_with_a_diagram():

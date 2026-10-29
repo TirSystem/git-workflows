@@ -1,8 +1,8 @@
-<!-- translation of Troubleshooting.md, source sha256 52eeb64b9623 -->
+<!-- translation of Troubleshooting.md, source sha256 28e74c0b9512 -->
 
 > Dette er en oversættelse af [`Troubleshooting`](Troubleshooting). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](Troubleshooting) | Dansk | [Bahasa Melayu](Troubleshooting.ms)
+[English](Troubleshooting) · **Dansk** · [Bahasa Melayu](Troubleshooting-ms)
 
 # Fejlfinding af en mislykket kørsel
 
@@ -30,7 +30,7 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 | `TOKEN_FOR_GITEA_REPO is missing or empty.` | configuration | Tilføj secreten |
 | `Could not determine the Gitea source repository.` | configuration | Kørslen har intet repositorynavn; meld det som en defekt |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Behold ét GitHub push-spejl |
-| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Kun wiki-publicering: repositoryet har en `docs/wiki/`-mappe, men dets organisation har ingen sådan secret; gem den som en organisations-secret (se [credentials.md](Credentials.da)) |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Kun wiki-publicering: repositoryet har en `docs/wiki/`-mappe, men dets organisation har ingen sådan secret; gem den som en organisations-secret (se [credentials.md](Credentials-da)) |
 | `... HTTP 403 ...` ved publicering af wikien | permissions | Kun wiki-publicering: tokenet skal have `write:repository` og skriveadgang til dette repository |
 | `The wiki is not enabled on <repo>` | configuration | Kun wiki-publicering: aktivér wikien i repositoryets indstillinger |
 | `The wiki source directory ... has no Markdown pages` | configuration | Kun wiki-publicering: mappen har ingen Markdown-sider; intet blev ændret |
@@ -54,7 +54,7 @@ Kategorien fortæller, hvor du skal kigge. En fejl uden for scriptet (jobbet sta
 
 ## Runner-problemer
 
-Se afsnittet [Runners](Onboarding.da#runners). Kort sagt: hvis kørslen bliver stående som `waiting`, har ingen online runner labelen; hvis jobbet fejler før scriptet, mangler runner-imaget et værktøj.
+Se afsnittet [Runners](Onboarding-da#runners). Kort sagt: hvis kørslen bliver stående som `waiting`, har ingen online runner labelen; hvis jobbet fejler før scriptet, mangler runner-imaget et værktøj.
 
 ## Ny kørsel
 

@@ -1,8 +1,8 @@
-<!-- translation of Credentials.md, source sha256 3dfc3d066247 -->
+<!-- translation of Credentials.md, source sha256 6560fca6685f -->
 
 > Dette er en oversættelse af [`Credentials`](Credentials). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](Credentials) | Dansk | [Bahasa Melayu](Credentials.ms)
+[English](Credentials) · **Dansk** · [Bahasa Melayu](Credentials-ms)
 
 # Workflow-credentials
 
@@ -52,11 +52,11 @@ Workflowet kører en forhåndskontrol (preflight) og skriver intet til GitHub, m
 3. Højst ét GitHub push-spejl er konfigureret. Hvis der ingen er, slutter kørslen med succes uden at synkronisere, og GitHub-secreten bliver ikke læst.
 4. GitHub accepterer tokenet for spejl-repositoryet **og** tokenet melder, at det har administrationsadgang.
 
-Ved succes står der i loggen `Preflight passed: Gitea and GitHub accepted the credentials.` Fejl begynder med en kategori som `[credentials]` eller `[permissions]`; se [troubleshooting.md](Troubleshooting.da). Ingen secret-værdi bliver nogensinde udskrevet.
+Ved succes står der i loggen `Preflight passed: Gitea and GitHub accepted the credentials.` Fejl begynder med en kategori som `[credentials]` eller `[permissions]`; se [troubleshooting.md](Troubleshooting-da). Ingen secret-værdi bliver nogensinde udskrevet.
 
 ## Secret til publicering af wiki
 
-Workflowet **Publish wiki pages** kopierer `docs/wiki/` til Gitea-wikien i et repository, der har en `docs/wiki/`-mappe (se [onboarding.md](Onboarding.da)). Det bruger sin egen secret, så synkroniseringstokenet forbliver skrivebeskyttet.
+Workflowet **Publish wiki pages** kopierer `docs/wiki/` til Gitea-wikien i et repository, der har en `docs/wiki/`-mappe (se [onboarding.md](Onboarding-da)). Det bruger sin egen secret, så synkroniseringstokenet forbliver skrivebeskyttet.
 
 | Secret | Indhold | Bruges til |
 | --- | --- | --- |

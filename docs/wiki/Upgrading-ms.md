@@ -1,8 +1,8 @@
-<!-- translation of Upgrading.md, source sha256 bc88ef4f6d7c -->
+<!-- translation of Upgrading.md, source sha256 5a0be6532384 -->
 
 > Ini ialah terjemahan [`Upgrading`](Upgrading). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](Upgrading) | [Dansk](Upgrading.da) | Bahasa Melayu
+[English](Upgrading) · [Dansk](Upgrading-da) · **Bahasa Melayu**
 
 # Menaik taraf kepada versi baharu aliran kerja bersama
 

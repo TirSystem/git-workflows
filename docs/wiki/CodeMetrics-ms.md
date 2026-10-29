@@ -1,8 +1,8 @@
-<!-- translation of CodeMetrics.md, source sha256 8cdd72522593 -->
+<!-- translation of CodeMetrics.md, source sha256 5e3ab423474a -->
 
 > Ini ialah terjemahan [`CodeMetrics`](CodeMetrics). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](CodeMetrics) | [Dansk](CodeMetrics.da) | Bahasa Melayu
+[English](CodeMetrics) · [Dansk](CodeMetrics-da) · **Bahasa Melayu**
 
 # Menunjukkan metrik kod dan lencana liputan
 

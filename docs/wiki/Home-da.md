@@ -1,47 +1,47 @@
-<!-- translation of Home.md, source sha256 a09c020c94f4 -->
+<!-- translation of Home.md, source sha256 dbe68d8738cb -->
 
-> Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
+> Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](Home) | [Dansk](Home.da) | Bahasa Melayu
+[English](Home) · **Dansk** · [Bahasa Melayu](Home-ms)
 
 # TirSystem GitHub Actions
 
-Koleksi aliran kerja (workflow) Gitea Actions yang boleh digunakan semula untuk profesional DevOps dan jurutera perisian yang mengusahakan projek TirSystem.
+En samling af genbrugelige Gitea Actions-workflows til DevOps-professionelle og softwareudviklere, der arbejder på TirSystem-projekter.
 
 
-## Gambaran keseluruhan
+## Oversigt
 
-Repositori ini ialah koleksi pusat bagi automasi yang boleh digunakan semula untuk repositori TirSystem. Repositori utama berada di `git.tirsystem.com` (Gitea) dan dicerminkan dengan push ke GitHub.
+Dette repository er den centrale samling af genbrugelig automatisering til TirSystems repositories. Det primære repository ligger på `git.tirsystem.com` (Gitea) og spejles med push til GitHub.
 
-Ia mengandungi sepuluh aliran kerja: penyegerakan metadata ke cermin GitHub, penerbitan wiki (scoped, untuk setiap repositori yang mempunyai folder `docs/wiki/`), semakan kualiti bersama untuk Python dan shell, untuk C dan C++ serta untuk C#, metrik kod dan lencana liputan, semakan bahawa komen ditulis dalam bahasa Inggeris, aliran kerja keluaran, penerbitan pencapaian (milestone) yang diterima dan pengesahan repositori sendiri. Ia disenaraikan dengan tujuan dan rajah di bawah [Aliran kerja](#aliran-kerja).
+Det indeholder ti workflows: synkronisering af metadata til GitHub-spejlet, publicering af wiki (scoped, for hvert repository med en `docs/wiki/`-mappe), fælles kvalitetskontrol for Python og shell, for C og C++ og for C#, kodemålinger og dækningsbadges, en kontrol af, at kommentarer er på engelsk, et udgivelsesworkflow, publicering af accepterede milepæle og repositoryets egen validering. De er listet med formål og diagram under [Workflows](#workflows).
 
 
-## Aliran kerja
+## Workflows
 
-Terdapat sepuluh aliran kerja dalam repositori ini. Aliran kerja **scoped** dihantar oleh instans ke setiap repositori organisasi TirSystem dan tidak memerlukan apa-apa dalam repositori; aliran kerja **boleh guna semula** dipanggil oleh sebuah repositori dengan `uses:`; yang lain hanya berjalan di sini. Rajah ialah kod sumber PlantUML dan dalam bahasa Inggeris.
+Der er ti workflows i dette repository. Et **scoped** workflow leveres af instansen til alle repositories i TirSystem-organisationerne og kræver intet i repositoryet; et **genbrugeligt** workflow kaldes fra et repository med `uses:`; de øvrige kører kun her. Diagrammerne er PlantUML-kildekode og er på engelsk.
 
-| Aliran kerja | Fail | Jenis | Bermula apabila | Tujuan |
+| Workflow | Fil | Type | Starter ved | Formål |
 | --- | --- | --- | --- | --- |
-| Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push ke `main`, manual, setiap hari 03:17 UTC | Menyalin penerangan dan topik repositori Gitea ke push mirror GitHub-nya |
-| Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/publish-wiki-pages.yml) | Scoped | push ke `main` yang mengubah `docs/wiki/**`, manual | Menerbitkan halaman dalam `docs/wiki/` ke wiki repositori; dilangkau jika folder itu tiada |
-| Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan ruff, mypy, shellcheck dan shfmt pada fail yang dijejaki dan tidak mengubah apa-apa |
-| Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan clang-format dan clang-tidy pada versi tepat pada fail C dan C++ yang dijejaki dan tidak mengubah apa-apa |
-| Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan `dotnet format` dan `dotnet build` pada .NET SDK 10 atau lebih baharu yang tepat dan tidak mengubah apa-apa |
-| Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/code-metrics.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Mengira fail kod dan baris kod (tanpa baris komen dan baris kosong), membaca laporan liputan Cobertura dan melakukan commit tiga lencana SVG ke cabang `badges` |
-| English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/english-comments.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain, pada pull request | Menilai bahasa komen dan docstring yang ditambah oleh pull request, menggagalkan larian apabila ada yang bukan bahasa Inggeris dan menulis satu komen pada pull request yang menyebut penulisnya |
-| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/release.yml) | Repositori ini sahaja | manual | Mencipta tag versi, halaman keluaran dan tag major selepas semakan |
-| Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/sync-milestones.yml) | Repositori ini sahaja | push ke `main` yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go |
-| Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml) | Repositori ini sahaja | pull request, push ke `main`, manual | Menghurai setiap aliran kerja sebagai YAML dan menjalankan ujian luar talian |
+| Sync GitHub mirror metadata | [`sync-github-metadata.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-github-metadata.yml) | Scoped | push til `main`, manuelt, dagligt kl. 03:17 UTC | Kopierer beskrivelsen og emnerne for et Gitea-repository til dets GitHub push-spejl |
+| Publish wiki pages | [`publish-wiki-pages.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/publish-wiki-pages.yml) | Scoped | push til `main`, der ændrer `docs/wiki/**`, manuelt | Publicerer siderne i `docs/wiki/` til repositoryets wiki; springes over, hvor mappen ikke findes |
+| Quality checks | [`quality-checks.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører ruff, mypy, shellcheck og shfmt på de sporede filer og ændrer intet |
+| Quality checks C++ | [`quality-checks-cpp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-cpp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører clang-format og clang-tidy i præcise versioner på de sporede C- og C++-filer og ændrer intet |
+| Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører `dotnet format` og `dotnet build` på et præcist .NET SDK 10 eller nyere og ændrer intet |
+| Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/code-metrics.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer), læser en Cobertura-dækningsrapport og committer tre SVG-badges til en `badges`-gren |
+| English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/english-comments.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository, på en pull request | Bedømmer sproget i de kommentarer og docstrings, en pull request tilføjer, lader kørslen fejle, når én ikke er engelsk, og skriver én kommentar på pull requesten, der nævner forfatteren |
+| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/release.yml) | Kun dette repository | manuelt | Opretter versionstagget, udgivelsessiden og major-tagget efter kontrollerne |
+| Publicering af accepterede milepæle | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/sync-milestones.yml) | Kun dette repository | push til `main`, der ændrer `docs/milestones/**` eller `docs/sqa/reviews/**`, manuelt (tørkørsel som standard) | Opretter eller opdaterer Gitea-milepælen og issues for hver milepæl, der er Accepted med en Go-gennemgang |
+| Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml) | Kun dette repository | pull request, push til `main`, manuelt | Læser hvert workflow som YAML og kører offline-testene |
 
-### Menyegerakkan metadata GitHub
+### Synkronisering af GitHub-metadata
 
-Menyegerakkan penerangan dan topik repositori Gitea ke push mirror GitHub.
+Synkroniserer Gitea-repositoryets beskrivelse og emner til GitHub push-spejlet.
 
-#### Jadual (cron)
+#### Tidsplan (cron)
 
-Setiap hari pada 03:17 UTC (`17 3 * * *`), serta pada setiap push ke `main` dan `workflow_dispatch` manual.
+Dagligt kl. 03:17 UTC (`17 3 * * *`) samt ved hvert push til `main` og manuel `workflow_dispatch`.
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -99,11 +99,11 @@ deactivate Workflow
 @enduml
 ```
 
-### Semakan kualiti
+### Kvalitetskontrol
 
-Aliran kerja boleh guna semula untuk Python dan shell, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v1` (lihat [panduan](QualityChecksPythonShell)).
+Et genbrugeligt workflow til Python og shell, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks.yml@v1` (se [vejledningen](QualityChecksPythonShell)).
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -145,11 +145,11 @@ deactivate Workflow
 @enduml
 ```
 
-### Semakan kualiti C++
+### Kvalitetskontrol C++
 
-Aliran kerja boleh guna semula untuk C dan C++, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositori mesti mempunyai `.clang-format`; `.clang-tidy` dan pangkalan data kompilasi adalah pilihan.
+Et genbrugeligt workflow til C og C++, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-cpp.yml@v1` (ADR-0008). Repositoryet skal have en `.clang-format`; en `.clang-tidy` og en compile-database er valgfrie.
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -190,11 +190,11 @@ deactivate Workflow
 @enduml
 ```
 
-### Semakan kualiti C#
+### Kvalitetskontrol C#
 
-Aliran kerja boleh guna semula untuk C#, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Ia memasang .NET SDK tepat yang diberikan oleh `dotnet-sdk-version` (10 atau lebih baharu) dan memerlukan rangkaian untuk pemulihan pakej.
+Et genbrugeligt workflow til C#, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/quality-checks-csharp.yml@v1` (ADR-0008). Det installerer det præcise .NET SDK, som `dotnet-sdk-version` angiver (10 eller nyere), og skal bruge netværket til pakkegendannelsen.
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -235,11 +235,11 @@ deactivate Workflow
 @enduml
 ```
 
-### Metrik kod dan lencana liputan
+### Kodemålinger og dækningsbadges
 
-Aliran kerja boleh guna semula yang mengira fail kod dan baris kod (tanpa baris komen dan baris kosong) sesebuah repositori dan menerbitkannya, bersama liputan ujian, sebagai tiga lencana SVG pada cabang `badges`, dipanggil dengan `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Ia memerlukan `contents: write` dan tidak menjalankan sebarang ujian: kerja yang lebih awal oleh pemanggil menghasilkan laporan liputan format Cobertura XML dan memuat naiknya sebagai artifak ([panduan](CodeMetrics.ms)).
+Et genbrugeligt workflow, der tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer) i et repository og udgiver dem sammen med testdækningen som tre SVG-badges på en `badges`-gren, kaldt med `uses: TirSystem/git-workflows/.gitea/workflows/code-metrics.yml@v2` (ADR-0010). Det kræver `contents: write` og kører ingen test: et tidligere job hos kalderen frembringer en dækningsrapport i Cobertura XML-format og uploader den som artefakt ([vejledning](CodeMetrics-da)).
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -279,11 +279,11 @@ deactivate Workflow
 @enduml
 ```
 
-### Komen dalam bahasa Inggeris
+### Engelske kommentarer
 
-Aliran kerja boleh guna semula yang menyemak bahawa komen dan docstring yang ditambah oleh pull request ditulis dalam bahasa Inggeris, menggagalkan larian apabila ada yang tidak, dan menulis satu komen pada pull request yang menyebut penulisnya. Ia tidak mengubah sebarang fail dan tidak menghantar teks sumber keluar daripada instans; menandakan semakan sebagai wajib dalam perlindungan cabang ialah yang menyekat penggabungan ([panduan](EnglishComments.ms), ADR-0012).
+Et genbrugeligt workflow, der kontrollerer, at de kommentarer og docstrings, en pull request tilføjer, er skrevet på engelsk, lader kørslen fejle, når én ikke er det, og skriver én kommentar på pull requesten, der nævner forfatteren. Det ændrer ingen fil og sender ingen kildetekst ud af instansen; at markere kontrollen som påkrævet i grenbeskyttelsen er det, der blokerer sammenfletningen ([vejledning](EnglishComments-da), ADR-0012).
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -319,11 +319,11 @@ deactivate Workflow
 @enduml
 ```
 
-### Keluaran
+### Udgivelse
 
-Dimulakan secara manual oleh penyelenggara; dengan `dry_run` `true` (lalai) ia hanya menyemak (lihat [proses keluaran](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)).
+Startes manuelt af en vedligeholder; med `dry_run` `true` (standard) kontrollerer det kun (se [udgivelsesprocessen](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)).
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -368,11 +368,11 @@ deactivate Workflow
 @enduml
 ```
 
-### Menerbitkan halaman wiki
+### Publicering af wiki-sider
 
-Aliran kerja scoped: instans menjalankannya dalam setiap repositori organisasi, jadi tiada panggilan atau fail penanda diperlukan. Sebuah repositori mengikut serta dengan mempunyai folder `docs/wiki`; jika tiada, larian tamat tanpa berbuat apa-apa. Ia menerbitkan halaman Markdown dalam `docs/wiki` ke wiki repositori dan mengekalkan halaman wiki yang tiada dalam folder itu. Ia memerlukan secret organisasi `TOKEN_FOR_GITEA_WIKI`.
+Et scoped workflow: instansen kører det i hvert repository i organisationen, så der behøves hverken et kald eller en markørfil. Et repository tilmelder sig ved at have en `docs/wiki`-mappe; hvor der ingen er, slutter kørslen uden at gøre noget. Det publicerer Markdown-siderne i `docs/wiki` til repositoryets wiki og beholder de wiki-sider, der ikke findes i mappen. Det kræver organisationens secret `TOKEN_FOR_GITEA_WIKI`.
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -412,11 +412,11 @@ deactivate Workflow
 @enduml
 ```
 
-### Menerbitkan milestone yang diterima
+### Publicering af accepterede milepæle
 
-Kebenaran tetap untuk menerbitkan: pada push ke `main` yang mengubah milestone atau semakannya, setiap milestone yang baris terkini Version History-nya Accepted dan semakan terkininya Go dicipta atau dikemas kini di Gitea dengan tugasnya sebagai isu. Tiada apa-apa ditutup atau dipadam. Larian manual ialah larian percubaan kecuali `dry_run` dimatikan. Ia menggunakan secret `TOKEN_FOR_GITEA_ISSUES` dan peraturan `--accepted-only` framework yang dipasang (v0.5.0 atau lebih baharu).
+Permanent tilladelse til at publicere: ved et push til `main`, der ændrer milepælene eller deres gennemgange, oprettes eller opdateres hver milepæl, hvis seneste række i Version History er Accepted, og hvis seneste gennemgang er en Go, på Gitea med sine opgaver som issues. Intet lukkes eller slettes. En manuel kørsel er en tørkørsel, medmindre `dry_run` slås fra. Det bruger secret'en `TOKEN_FOR_GITEA_ISSUES` og `--accepted-only`-reglen i det monterede framework (v0.5.0 eller nyere).
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -460,11 +460,11 @@ deactivate Workflow
 @enduml
 ```
 
-### Mengesahkan aliran kerja
+### Validering af workflows
 
-Pengesahan repositori sendiri: ujian luar talian yang menjadi syarat bagi setiap pull request.
+Repositoryets egen validering: de offline-tests, der er en betingelse for hver pull request.
 
-#### Aliran kerja
+#### Workflow
 
 ```plantuml
 @startuml
@@ -491,36 +491,36 @@ deactivate Workflow
 ```
 
 
-## Keperluan
+## Krav
 
-- Satu instans Gitea dengan Actions diaktifkan dan satu runner yang menyediakan `ubuntu-latest` dengan `python3`
-- Satu push mirror GitHub yang dikonfigurasi pada repositori Gitea (paling banyak satu; repositori tanpa cermin dilangkau dengan jayanya)
-- Rahsia (secret) repositori:
-  - `TOKEN_FOR_GITEA_REPO`: token API Gitea (token sahaja, tanpa JSON)
-  - `PAT_FOR_GITHUB`: personal access token GitHub yang dibenarkan mengubah suai repositori cermin (token sahaja, tanpa JSON)
-  - `TOKEN_FOR_GITEA_WIKI` (hanya untuk repositori yang menerbitkan wiki, lihat [panduan menyertakan repositori](Onboarding.ms)): token Gitea yang boleh menulis ke wiki, disimpan sebagai secret organisasi repositori; tiada sandaran kepada `TOKEN_FOR_GITEA_REPO`
+- En Gitea-instans med Actions aktiveret og en runner med labelen `ubuntu-latest` og `python3`
+- Et konfigureret GitHub push-spejl på Gitea-repositoryet (højst ét; repositories uden spejl springes over uden fejl)
+- Repository-secrets:
+  - `TOKEN_FOR_GITEA_REPO`: Gitea API-token (kun tokenet, ingen JSON)
+  - `PAT_FOR_GITHUB`: et GitHub personal access token, der må redigere spejl-repositoryet (kun tokenet, ingen JSON)
+  - `TOKEN_FOR_GITEA_WIKI` (kun for repositories, der publicerer en wiki, se [tilslutningsvejledningen](Onboarding-da)): et Gitea-token, der kan skrive til wikien, gemt som en secret i repositoryets organisation; der er ingen reserve til `TOKEN_FOR_GITEA_REPO`
 
 
-## Persediaan
+## Opsætning
 
-Tiada kebergantungan perlu dipasang; aliran kerja hanya menggunakan pustaka standard Python.
+Der skal ikke installeres afhængigheder; workflowet bruger kun Pythons standardbibliotek.
 
-1. Klon repositori:
+1. Klon repositoryet:
    ```bash
    git clone ssh://git@git.tirsystem.com:10022/TirSystem/git-workflows.git
    ```
-2. Tambah rahsia yang disenaraikan di bawah [Keperluan](#keperluan) ke tetapan repositori dalam Gitea.
-3. Konfigurasikan push mirror GitHub dalam tetapan repositori.
+2. Tilføj de secrets, der er nævnt under [Krav](#krav), til repositoryets indstillinger i Gitea.
+3. Konfigurer GitHub push-spejlet i repositoryets indstillinger.
 
 
-## Jalankan
+## Kørsel
 
-Aliran kerja berjalan secara automatik pada push ke `main` dan mengikut jadual harian. Untuk menjalankannya secara manual, cetuskan **Sync GitHub mirror metadata** melalui `workflow_dispatch` dari tab Actions dalam Gitea.
+Workflows kører automatisk ved push til `main` og efter den daglige tidsplan. For at køre manuelt skal du starte **Sync GitHub mirror metadata** via `workflow_dispatch` fra fanen Actions i Gitea.
 
 
-## Ujian
+## Tests
 
-Fail aliran kerja dan skrip dalam `tools/` disahkan oleh ujian luar talian yang tidak memerlukan akses rangkaian dan tidak memerlukan rahsia:
+Workflow-filerne og scripts i `tools/` valideres af offline-tests, som hverken kræver netværksadgang eller secrets:
 
 ```bash
 python3 -m venv .venv
@@ -530,6 +530,6 @@ python -m coverage run -m pytest -q tests
 python -m coverage report
 ```
 
-Semakan yang sama dijalankan pada setiap pull request dan setiap push ke `main` melalui [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml). Semakan itu menghurai setiap aliran kerja sebagai YAML, memastikan tiada yang menanam Python, mengkompil skrip dalam `tools/`, memerlukan kebenaran kerja yang jelas, dan menguji penghuraian kelayakan (credentials), penghuraian alamat push mirror serta aliran penyegerakan dan penerbitan terhadap API palsu. Larian gagal apabila liputan baris dan cabang `tools/` di bawah 95% (`.coveragerc`).
+De samme kontroller kører ved hver pull request og hvert push til `main` gennem [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml). De parser alle workflows som YAML, kontrollerer at ingen indlejrer Python, kompilerer scripts i `tools/`, kræver eksplicitte jobtilladelser og tester parsing af credentials, parsing af push-spejlets adresse og synkroniserings- og publiceringsforløbene mod et falsk API. Kørslen fejler, når linje- og forgreningsdækningen af `tools/` er under 95 % (`.coveragerc`).
 
-Selepas perubahan pada aliran kerja penyegerakan, cetuskan juga **Sync GitHub mirror metadata** secara manual dalam Gitea dan bandingkan penerangan dan topik pada cermin GitHub.
+Efter en ændring af synkroniseringsworkflowet skal du også starte **Sync GitHub mirror metadata** manuelt i Gitea og sammenligne beskrivelsen og emnerne på GitHub-spejlet.

@@ -2,7 +2,7 @@
 
 > This page is generated from [`guides/quality-checks-csharp.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/quality-checks-csharp.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](QualityChecksCSharp.da) | [Bahasa Melayu](QualityChecksCSharp.ms)
+**English** · [Dansk](QualityChecksCSharp-da) · [Bahasa Melayu](QualityChecksCSharp-ms)
 
 # Reading C# quality-check results
 

@@ -1,8 +1,8 @@
-<!-- translation of Onboarding.md, source sha256 27aa210a18df -->
+<!-- translation of Onboarding.md, source sha256 cf6a0272b748 -->
 
 > Dette er en oversættelse af [`Onboarding`](Onboarding). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
-[English](Onboarding) | Dansk | [Bahasa Melayu](Onboarding.ms)
+[English](Onboarding) · **Dansk** · [Bahasa Melayu](Onboarding-ms)
 
 # Tilslutning af et repository
 
@@ -22,13 +22,13 @@ Leveringen er automatisk, så et repository behøver ingen kopi af workflowet. S
 
 1. **Kontroller forudsætningerne** i repositoryet: Actions er aktiveret, og en runner med labelen `ubuntu-latest` og `python3` er online (se [Runners](#runners)).
 2. **Konfigurer ét GitHub push-spejl** i repositoryets indstillinger (Settings, Repository, Mirror settings, Push mirror). Workflowet fejler, hvis der er flere GitHub-spejle. Hvis der ingen er, lykkes det uden at synkronisere noget.
-3. **Tilføj de to secrets** i repositoryets (eller organisationens) indstillinger med de scopes, der står i [credentials.md](Credentials.da). Workflowet kører i alle organisationens repositories, så gem secrets én gang pr. organisation; et repository i en anden organisation kan ikke se dem:
+3. **Tilføj de to secrets** i repositoryets (eller organisationens) indstillinger med de scopes, der står i [credentials.md](Credentials-da). Workflowet kører i alle organisationens repositories, så gem secrets én gang pr. organisation; et repository i en anden organisation kan ikke se dem:
    - `TOKEN_FOR_GITEA_REPO`
    - `PAT_FOR_GITHUB` (kun GitHub-tokenet)
 4. **Lever workflowet:** scoped workflows gælder for alle repositories på denne instans, så der er intet at kopiere. Kun hvor scoped levering ikke er sat op, kopieres `.gitea/scoped_workflows/sync-github-metadata.yml` fra dette repository til `.gitea/workflows/` i mål-repositoryet; fastlås kopien til en gennemgået version, og kopier igen, når den ændres.
 5. **Angiv en beskrivelse og emner** på Gitea-repositoryet, så der er noget at synkronisere.
 6. **Kør det én gang manuelt:** Actions, **Sync GitHub mirror metadata**, Run workflow. Loggen skal slutte med `Synced description and topics to <owner>/<repo>.`, og GitHub-repositoryet skal vise samme beskrivelse og emner.
-7. Hvis det fejler, brug [troubleshooting.md](Troubleshooting.da).
+7. Hvis det fejler, brug [troubleshooting.md](Troubleshooting-da).
 
 ## Publicér en wiki (valgfrit)
 
@@ -36,7 +36,7 @@ Det scoped workflow **Publish wiki pages** kopierer Markdown-siderne i `docs/wik
 
 1. Aktivér wikien i repositoryets indstillinger.
 2. Tilføj Markdown-sider til `docs/wiki/`. Filnavnet er sidens navn: `Home.md` er forsiden. En bindestreg i navnet er et mellemrum i sidens navn: `Home-da.md` er siden "Home da", og et link til den er `[Dansk](Home-da)`.
-3. Gem `TOKEN_FOR_GITEA_WIKI` som en secret i repositoryets organisation med det scope, der står i [credentials.md](Credentials.da).
+3. Gem `TOKEN_FOR_GITEA_WIKI` som en secret i repositoryets organisation med det scope, der står i [credentials.md](Credentials-da).
 4. Flet ændringen til `main`. Loggen skal slutte med `Published <n> page(s) to the wiki of <owner>/<repo>`.
 
 ## Runners

@@ -1,8 +1,8 @@
-<!-- translation of Troubleshooting.md, source sha256 52eeb64b9623 -->
+<!-- translation of Troubleshooting.md, source sha256 28e74c0b9512 -->
 
 > Ini ialah terjemahan [`Troubleshooting`](Troubleshooting). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](Troubleshooting) | [Dansk](Troubleshooting.da) | Bahasa Melayu
+[English](Troubleshooting) · [Dansk](Troubleshooting-da) · **Bahasa Melayu**
 
 # Mendiagnosis larian yang gagal
 
@@ -30,7 +30,7 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 | `TOKEN_FOR_GITEA_REPO is missing or empty.` | configuration | Tambah secret |
 | `Could not determine the Gitea source repository.` | configuration | Larian tiada nama repositori; laporkan sebagai kecacatan |
 | `Expected at most one GitHub push mirror ... found N` | configuration | Kekalkan satu push mirror GitHub |
-| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Penerbitan wiki sahaja: repositori mempunyai folder `docs/wiki/` tetapi organisasinya tiada secret itu; simpannya sebagai secret organisasi (lihat [credentials.md](Credentials.ms)) |
+| `TOKEN_FOR_GITEA_WIKI is missing or empty.` | configuration | Penerbitan wiki sahaja: repositori mempunyai folder `docs/wiki/` tetapi organisasinya tiada secret itu; simpannya sebagai secret organisasi (lihat [credentials.md](Credentials-ms)) |
 | `... HTTP 403 ...` semasa menerbitkan wiki | permissions | Penerbitan wiki sahaja: token memerlukan `write:repository` dan akses tulis kepada repositori ini |
 | `The wiki is not enabled on <repo>` | configuration | Penerbitan wiki sahaja: aktifkan wiki dalam tetapan repositori |
 | `The wiki source directory ... has no Markdown pages` | configuration | Penerbitan wiki sahaja: folder itu tiada halaman Markdown; tiada apa-apa diubah |
@@ -54,7 +54,7 @@ Kategori menunjukkan di mana perlu dilihat. Kegagalan di luar skrip (kerja tidak
 
 ## Masalah runner
 
-Lihat bahagian [Runners](Onboarding.ms#runners). Ringkasnya: jika larian kekal `waiting`, tiada runner dalam talian yang mempunyai label itu; jika kerja gagal sebelum skrip, imej runner tiada satu alat.
+Lihat bahagian [Runners](Onboarding-ms#runners). Ringkasnya: jika larian kekal `waiting`, tiada runner dalam talian yang mempunyai label itu; jika kerja gagal sebelum skrip, imej runner tiada satu alat.
 
 ## Menjalankan semula
 

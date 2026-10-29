@@ -2,7 +2,7 @@
 
 > This page is generated from [`guides/credentials.md`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/credentials.md). Changes made here are overwritten the next time the wiki is published.
 
-English | [Dansk](Credentials.da) | [Bahasa Melayu](Credentials.ms)
+**English** · [Dansk](Credentials-da) · [Bahasa Melayu](Credentials-ms)
 
 # Workflow credentials
 

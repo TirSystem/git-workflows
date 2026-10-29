@@ -1,8 +1,8 @@
-<!-- translation of Credentials.md, source sha256 3dfc3d066247 -->
+<!-- translation of Credentials.md, source sha256 6560fca6685f -->
 
 > Ini ialah terjemahan [`Credentials`](Credentials). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
-[English](Credentials) | [Dansk](Credentials.da) | Bahasa Melayu
+[English](Credentials) · [Dansk](Credentials-da) · **Bahasa Melayu**
 
 # Kelayakan (credentials) aliran kerja
 
@@ -52,11 +52,11 @@ Aliran kerja menjalankan semakan awal (preflight) dan tidak menulis apa-apa ke G
 3. Paling banyak satu push mirror GitHub dikonfigurasi. Jika tiada, larian berakhir dengan jayanya tanpa menyegerakkan dan secret GitHub tidak dibaca.
 4. GitHub menerima token untuk repositori cermin **dan** token melaporkan akses pentadbiran padanya.
 
-Apabila berjaya, log menyatakan `Preflight passed: Gitea and GitHub accepted the credentials.` Kegagalan bermula dengan kategori seperti `[credentials]` atau `[permissions]`; lihat [troubleshooting.md](Troubleshooting.ms). Tiada nilai secret yang pernah dicetak.
+Apabila berjaya, log menyatakan `Preflight passed: Gitea and GitHub accepted the credentials.` Kegagalan bermula dengan kategori seperti `[credentials]` atau `[permissions]`; lihat [troubleshooting.md](Troubleshooting-ms). Tiada nilai secret yang pernah dicetak.
 
 ## Secret untuk menerbitkan wiki
 
-Aliran kerja **Publish wiki pages** menyalin `docs/wiki/` ke wiki Gitea bagi repositori yang mempunyai folder `docs/wiki/` (lihat [onboarding.md](Onboarding.ms)). Ia menggunakan secret sendiri, supaya token penyegerakan metadata kekal baca sahaja.
+Aliran kerja **Publish wiki pages** menyalin `docs/wiki/` ke wiki Gitea bagi repositori yang mempunyai folder `docs/wiki/` (lihat [onboarding.md](Onboarding-ms)). Ia menggunakan secret sendiri, supaya token penyegerakan metadata kekal baca sahaja.
 
 | Secret | Kandungan | Digunakan untuk |
 | --- | --- | --- |
