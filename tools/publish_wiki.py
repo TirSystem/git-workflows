@@ -156,9 +156,15 @@ def read_pages(wiki_dir):
         pages[key] = path.read_bytes()
     if not pages:
         # Publishing an empty directory would delete the whole wiki.
-        raise WorkflowError(
-            "configuration", f"The wiki source directory {wiki_dir} has no Markdown pages."
-        )
+        message = f"The wiki source directory {wiki_dir} has no Markdown pages."
+        nested = sorted(p.parent.relative_to(wiki_dir).as_posix() for p in wiki_dir.rglob("*.md"))
+        if nested:
+            message += (
+                f" Pages were found only in subfolders ({', '.join(sorted(set(nested)))}); "
+                "the wiki must be flat: move them directly into the directory, "
+                "for example Home.md, not en/Home.md."
+            )
+        raise WorkflowError("configuration", message)
     return pages
 
 
