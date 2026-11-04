@@ -308,15 +308,56 @@ def load_workflow():
     return yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
 
 
-def test_workflow_is_scoped_and_started_by_hand():
+def release_step():
+    steps = load_workflow()["jobs"]["release"]["steps"]
+    return next(step for step in steps if step["name"] == "Check and publish the release")
+
+
+def pull_request_step():
+    steps = load_workflow()["jobs"]["release"]["steps"]
+    return next(step for step in steps if step["name"] == "Check the changelog of the pull request")
+
+
+def test_workflow_is_scoped_and_runs_on_pull_request_and_by_hand():
     data = load_workflow()
     assert data["name"] == "Release"
     triggers = data.get("on", data.get(True))
-    assert list(triggers) == ["workflow_dispatch"]
+    assert list(triggers) == ["pull_request", "workflow_dispatch"]
     inputs = triggers["workflow_dispatch"]["inputs"]
     assert inputs["version"]["required"] is True
     assert inputs["dry_run"]["default"] == "true"
-    assert data["concurrency"] == {"group": "release", "cancel-in-progress": False}
+
+
+def test_concurrency_group_is_per_ref_for_a_pull_request_and_shared_otherwise():
+    concurrency = load_workflow()["concurrency"]
+    assert concurrency["cancel-in-progress"] is False
+    group = concurrency["group"]
+    assert "gitea.event_name == 'pull_request'" in group
+    assert "format('release-check-{0}', gitea.ref)" in group
+    assert group.endswith("|| 'release' }}")
+
+
+def test_pull_request_step_runs_only_on_pull_request_and_checks_the_changelog():
+    step = pull_request_step()
+    assert step["if"] == "gitea.event_name == 'pull_request'"
+    assert "python3 shared-scripts/tools/changelog.py check" in step["run"]
+    assert "CHANGELOG.md" in step["run"] and "exit 0" in step["run"]
+
+
+def test_pull_request_step_uses_no_secret_and_no_release_env():
+    step = pull_request_step()
+    assert "env" not in step
+    assert "secrets." not in str(step)
+    assert "RELEASE_" not in str(step)
+    assert "release.py" not in step["run"]
+
+
+def test_release_step_runs_only_on_dispatch_and_keeps_the_secret():
+    step = release_step()
+    assert step["if"] == "gitea.event_name == 'workflow_dispatch'"
+    assert step["run"] == "python3 shared-scripts/tools/release.py"
+    assert step["env"]["RELEASE_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_RELEASE }}"
+    assert "changelog.py" not in step["run"]
 
 
 def test_old_per_repository_workflow_is_gone():
@@ -337,13 +378,13 @@ def test_workflow_fetches_the_script_at_v3_and_runs_it():
     assert [(s["with"]["repository"], s["with"]["ref"], s["with"]["path"]) for s in fetch] == [
         ("TirSystem/git-workflows", "v3", "shared-scripts")
     ]
-    assert steps[-1]["run"] == "python3 shared-scripts/tools/release.py"
+    assert release_step()["run"] == "python3 shared-scripts/tools/release.py"
 
 
 def test_token_is_only_in_the_env_of_the_release_step_and_never_in_a_command():
     steps = load_workflow()["jobs"]["release"]["steps"]
     holders = [step for step in steps if "secrets." in str(step)]
-    assert holders == [steps[-1]]
+    assert holders == [release_step()]
     assert holders[0]["env"]["RELEASE_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_RELEASE }}"
     assert all("secrets." not in step.get("run", "") for step in steps)
     assert all("RELEASE_CREDENTIALS" not in step.get("run", "") for step in steps)
@@ -352,12 +393,12 @@ def test_token_is_only_in_the_env_of_the_release_step_and_never_in_a_command():
 def test_workflow_has_no_fallback_token():
     text = WORKFLOW.read_text(encoding="utf-8")
     assert "github.token" not in text and "gitea.token" not in text
-    assert "||" not in text
+    assert not [line for line in text.splitlines() if "secrets." in line and "||" in line]
     assert text.count("secrets.") == 1
 
 
 def test_workflow_passes_the_settings_the_script_reads():
-    env = load_workflow()["jobs"]["release"]["steps"][-1]["env"]
+    env = release_step()["env"]
     assert env == {
         "GITEA_API_URL": "${{ gitea.api_url }}",
         "SOURCE_REPOSITORY": "${{ gitea.repository }}",

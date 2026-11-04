@@ -39,6 +39,12 @@ released this repository only and is removed.
    new major version, and a new major version needs a Breaking entry.
 4. **Get the approval** of S01 for the release, in the pull request that adds
    the changelog entry.
+   A pull request that changes the changelog runs **Release** as a check that
+   writes nothing and needs no secret: it runs `changelog.py check`, so a
+   changelog that cannot be cut into a release fails before the merge. Its
+   status is `Release / release (pull_request)`; mark it required in the
+   branch protection of the default branch. A repository without
+   `CHANGELOG.md` ends green.
 5. **Run the Release workflow in dry-run mode.** In the Actions tab of the
    repository start **Release** by hand on the default branch with the
    `version` (`MAJOR.MINOR.PATCH`, no leading `v`) and `dry_run` `true`, which

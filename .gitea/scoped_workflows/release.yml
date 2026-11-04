@@ -10,7 +10,14 @@ name: Release
 # It requires the organization secret TOKEN_FOR_GITEA_RELEASE and has no
 # fallback to the token of the run or to any other secret. The script is a file
 # of TirSystem/git-workflows (tools/release.py), fetched at v3.
+#
+# A pull request also runs it, as a check that writes nothing and needs no
+# secret: the changelog follows the convention, so the next release can be cut
+# from it. Its status is "Release / release (pull_request)" and can be a
+# required check of the default branch. A repository without CHANGELOG.md ends
+# green.
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       version:
@@ -22,7 +29,7 @@ on:
         default: "true"
 
 concurrency:
-  group: release
+  group: ${{ gitea.event_name == 'pull_request' && format('release-check-{0}', gitea.ref) || 'release' }}
   cancel-in-progress: false
 
 jobs:
@@ -43,7 +50,14 @@ jobs:
           ref: v3
           path: shared-scripts
 
+      - name: Check the changelog of the pull request
+        if: gitea.event_name == 'pull_request'
+        run: |
+          [ -f CHANGELOG.md ] || { echo "No CHANGELOG.md in this repository; nothing to check."; exit 0; }
+          python3 shared-scripts/tools/changelog.py check
+
       - name: Check and publish the release
+        if: gitea.event_name == 'workflow_dispatch'
         env:
           GITEA_API_URL: ${{ gitea.api_url }}
           SOURCE_REPOSITORY: ${{ gitea.repository }}

@@ -20,6 +20,10 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Added
+
+- `release.yml` also runs on a pull request as a check that writes nothing and needs no secret: the changelog follows the convention (`changelog.py check`). The status is `Release / release (pull_request)`, usable as a required check of the default branch; a repository without `CHANGELOG.md` ends green. The rule is in `guides/adoption-rules.md`, the steps in `guides/release-process.md`.
+
 ## [3.0.0] - 2026-10-29
 
 ### Breaking
