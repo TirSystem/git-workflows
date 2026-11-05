@@ -243,6 +243,25 @@ def test_default_context_is_the_scoped_validation_status(env):
     assert "No validation run" in str(error.value)
 
 
+def test_scoped_status_has_the_source_repository_as_prefix(env):
+    gitea = FakeGitea(context="TirSystem/git-workflows: Validate / validate (push)")
+    assert run(gitea) == 0
+
+
+def test_prefixed_status_that_is_not_green_stops_the_release(env):
+    gitea = FakeGitea(context="TirSystem/git-workflows: Validate / validate (push)", status="pending")
+    with pytest.raises(release.WorkflowError) as error:
+        run(gitea)
+    assert "pending, not success" in str(error.value)
+
+
+def test_a_context_that_only_ends_alike_is_not_the_validation_status(env):
+    gitea = FakeGitea(context="Other Validate / validate (push)")
+    with pytest.raises(release.WorkflowError) as error:
+        run(gitea)
+    assert "No validation run" in str(error.value)
+
+
 def test_validation_context_can_be_overridden(env):
     env.setenv("VALIDATION_CONTEXT", "Other / check (push)")
     gitea = FakeGitea(context="Other / check (push)")

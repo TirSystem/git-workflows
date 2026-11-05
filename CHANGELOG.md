@@ -20,6 +20,10 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Fixed
+
+- The scoped `release.yml` finds the status `Validate / validate (push)` in a repository that runs the scoped `validate.yml`: Gitea reports it as `<owner>/<repository>: Validate / validate (push)`, and the script compared the bare name, so the run ended with "No validation run ... was found" on a green commit.
+
 ### Added
 
 - `release.yml` also runs on a pull request as a check that writes nothing and needs no secret: the changelog follows the convention (`changelog.py check`). The status is `Release / release (pull_request)`, usable as a required check of the default branch; a repository without `CHANGELOG.md` ends green. The rule is in `guides/adoption-rules.md`, the steps in `guides/release-process.md`.

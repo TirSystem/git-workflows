@@ -177,11 +177,13 @@ def check_commit(api, headers, request, sha, branch, context):
         )
     status = request(f"{api}/commits/{sha}/status", headers=headers) or {}
     for item in status.get("statuses", []):
-        if item.get("context") == context:
+        # A scoped workflow reports as "<owner>/<repository>: <context>" in the repository it runs in.
+        found = item.get("context") or ""
+        if found == context or found.endswith(f": {context}"):
             if item.get("status") != "success":
                 raise WorkflowError(
                     "validation",
-                    f"The validation run '{context}' of {sha[:7]} is {item.get('status')}, not success.",
+                    f"The validation run '{found}' of {sha[:7]} is {item.get('status')}, not success.",
                 )
             return
     raise WorkflowError(
