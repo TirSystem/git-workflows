@@ -190,7 +190,7 @@ def test_dry_run_of_a_zero_version_says_there_is_no_major_tag(env, capsys):
     assert "no major tag for a 0.x release" in capsys.readouterr().out
 
 
-@pytest.mark.parametrize("version", ["v1.0.0", "1.0", "1.0.0-rc1", ""])
+@pytest.mark.parametrize("version", ["v1.0.0", "1.0", "1.0.0-rc1"])
 def test_malformed_version_is_a_configuration_error(env, version):
     env.setenv("RELEASE_VERSION", version)
     with pytest.raises(release.WorkflowError) as error:
@@ -342,9 +342,7 @@ def test_workflow_is_scoped_and_runs_on_pull_request_and_by_hand():
     assert data["name"] == "Release"
     triggers = data.get("on", data.get(True))
     assert list(triggers) == ["pull_request", "workflow_dispatch"]
-    inputs = triggers["workflow_dispatch"]["inputs"]
-    assert inputs["version"]["required"] is True
-    assert inputs["dry_run"]["default"] == "true"
+    assert not (triggers["workflow_dispatch"] or {}).get("inputs")
 
 
 def test_concurrency_group_is_per_ref_for_a_pull_request_and_shared_otherwise():
@@ -422,7 +420,25 @@ def test_workflow_passes_the_settings_the_script_reads():
         "GITEA_API_URL": "${{ gitea.api_url }}",
         "SOURCE_REPOSITORY": "${{ gitea.repository }}",
         "RELEASE_CREDENTIALS": "${{ secrets.TOKEN_FOR_GITEA_RELEASE }}",
-        "RELEASE_VERSION": "${{ inputs.version }}",
-        "RELEASE_DRY_RUN": "${{ inputs.dry_run }}",
+        "RELEASE_DRY_RUN": "false",
         "RELEASE_SHA": "${{ gitea.sha }}",
     }
+
+
+def test_version_is_read_from_the_changelog_when_none_is_given(env):
+    env.delenv("RELEASE_VERSION")
+    gitea = FakeGitea(tags=["v1.0.0", "v1"])
+    assert run(gitea) == 0
+    assert gitea.writes[0][2]["tag_name"] == "v1.1.0"
+
+
+def test_changelog_without_a_released_version_stops_before_any_write(env, tmp_path):
+    empty = tmp_path / "EMPTY.md"
+    empty.write_text("# Changelog\n\n## [Unreleased]\n", encoding="utf-8")
+    env.delenv("RELEASE_VERSION")
+    env.setenv("CHANGELOG_FILE", str(empty))
+    gitea = FakeGitea()
+    with pytest.raises(release.WorkflowError) as error:
+        run(gitea)
+    assert error.value.category == "validation"
+    assert gitea.writes == []
