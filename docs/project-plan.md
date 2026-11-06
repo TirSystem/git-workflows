@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-06 | Deprecated | Jens Tirsvad Nielsen | S01 | MIL-020 added (release when the changelog changes); reviewed (RC-105), accepted by the author in chat as stand-in for S01, not independent | [4b2740b] |
-| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-018 window and decision date corrected to the dates it was delivered; reviewed (RC-108), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-018 window and decision date corrected to the dates it was delivered; reviewed (RC-108), accepted by the author in chat as stand-in for S01, not independent | [f4268c2] |
 
 ---
 
@@ -364,3 +364,4 @@ no tests, no release process.
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
 [d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b
 [4b2740b]: https://git.tirsystem.com/TirSystem/git-workflows/commit/4b2740be3c5e85626bda44e1dd1e66d390133c01
+[f4268c2]: https://git.tirsystem.com/TirSystem/git-workflows/commit/f4268c29982e3886901f58186947f64bdb354064

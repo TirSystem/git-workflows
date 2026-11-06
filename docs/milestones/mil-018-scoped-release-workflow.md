@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-092), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [1690cf7] |
-| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | Target Date corrected to the date of delivery, 2026-11-05; reviewed (RC-108), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | Target Date corrected to the date of delivery, 2026-11-05; reviewed (RC-108), accepted by the author in chat as stand-in for S01, not independent | [f4268c2] |
 
 ---
 
@@ -108,3 +108,4 @@ workflow.
 [RC-108]: ../sqa/reviews/rc-108-mil-018-window.md
 [RC-092]: ../sqa/reviews/rc-092-mil-018-pp-001.md
 [1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
+[f4268c2]: https://git.tirsystem.com/TirSystem/git-workflows/commit/f4268c29982e3886901f58186947f64bdb354064

@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-11-07 as stand-in for S01 | pending |
+| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-11-07 as stand-in for S01 | [f4268c2] |
 
 ---
 
@@ -68,3 +68,4 @@ Go. Both criteria of MIL-018 and the four of the plan delta pass; criterion 5 pa
 [RC-105]: ./rc-105-mil-020-pp-001.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
 [QC-PP-001]: ../../../framework/qc/artifacts/qc-project-plan.md
+[f4268c2]: https://git.tirsystem.com/TirSystem/git-workflows/commit/f4268c29982e3886901f58186947f64bdb354064
