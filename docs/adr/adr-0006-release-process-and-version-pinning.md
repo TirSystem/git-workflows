@@ -130,7 +130,7 @@ The rules that follow from it:
 ---
 
 [MIL-004]: ../milestones/mil-004-versioned-release.md
-[UC-006]: ../uc-006/uc.md
+[UC-006]: ../use-cases/uc-006/uc.md
 [US-001]: ../user-stories.md
 [ADR-0004]: ./adr-0004-shared-wiki-publishing-opt-in.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md

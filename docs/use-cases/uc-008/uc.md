@@ -37,8 +37,8 @@ A Software Engineer pushes a change to a repository that calls the shared code-m
 
 ---
 
-[UCD-001]: ../use-case-diagram.md
-[US-001]: ../user-stories.md
-[SA-001]: ../stakeholder-analysis.md
-[MIL-010]: ../milestones/mil-010-code-metrics-badges.md
+[UCD-001]: ../../use-case-diagram.md
+[US-001]: ../../user-stories.md
+[SA-001]: ../../stakeholder-analysis.md
+[MIL-010]: ../../milestones/mil-010-code-metrics-badges.md
 [9ca9673]: https://git.tirsystem.com/TirSystem/github-action/commit/9ca9673b00351cf913966f347c4da09890ed3f1f

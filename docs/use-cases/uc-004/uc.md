@@ -37,7 +37,7 @@ The DevOps Professional or the Platform Operator opens the failed run, reads the
 
 ---
 
-[UCD-001]: ../use-case-diagram.md
-[US-001]: ../user-stories.md
-[SA-001]: ../stakeholder-analysis.md
+[UCD-001]: ../../use-case-diagram.md
+[US-001]: ../../user-stories.md
+[SA-001]: ../../stakeholder-analysis.md
 [a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd
