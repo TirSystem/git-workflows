@@ -145,7 +145,7 @@ not affected: the `v1` tag keeps the `v1` workflow files.
 ---
 
 [MIL-007]: ../milestones/mil-007-cpp-csharp-quality-checks.md
-[UC-005]: ../uc-005/uc.md
+[UC-005]: ../use-cases/uc-005/uc.md
 [US-001]: ../user-stories.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md

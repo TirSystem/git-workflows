@@ -140,7 +140,7 @@ the run numbers above are kept as the record.
 
 [BC-001]: ../business-case.md
 [US-001]: ../user-stories.md
-[UC-005]: ../uc-005/uc.md
+[UC-005]: ../use-cases/uc-005/uc.md
 [MIL-003]: ./mil-003-quality-checks.md
 [MIL-004]: ./mil-004-versioned-release.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md

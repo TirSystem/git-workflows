@@ -38,7 +38,7 @@ The DevOps Professional creates a Gitea token and a GitHub fine-grained token wi
 
 ---
 
-[UCD-001]: ../use-case-diagram.md
-[US-001]: ../user-stories.md
-[SA-001]: ../stakeholder-analysis.md
+[UCD-001]: ../../use-case-diagram.md
+[US-001]: ../../user-stories.md
+[SA-001]: ../../stakeholder-analysis.md
 [a2bf2d4]: https://git.tirsystem.com/TirSystem/github-action/commit/a2bf2d420416f7aff2badc6fe32a7690e2e523fd

@@ -218,7 +218,7 @@ not affected: the `v1` tag keeps the `v1` workflow files.
 ---
 
 [MIL-010]: ../milestones/mil-010-code-metrics-badges.md
-[UC-008]: ../uc-008/uc.md
+[UC-008]: ../use-cases/uc-008/uc.md
 [US-001]: ../user-stories.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md

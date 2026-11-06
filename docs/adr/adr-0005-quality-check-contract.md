@@ -129,7 +129,7 @@ not affected: the `v1` tag keeps the `v1` workflow files.
 ---
 
 [MIL-003]: ../milestones/mil-003-quality-checks.md
-[UC-005]: ../uc-005/uc.md
+[UC-005]: ../use-cases/uc-005/uc.md
 [US-001]: ../user-stories.md
 [ADR-0004]: ./adr-0004-shared-wiki-publishing-opt-in.md
 [385d2fb]: https://git.tirsystem.com/TirSystem/github-action/commit/385d2fb7cb9be1fdc8fd3503d0af624fa38eafc7
