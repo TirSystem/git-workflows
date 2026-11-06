@@ -20,6 +20,8 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-11-06
+
 ### Changed
 
 - The scoped workflow `release.yml` has no form when it is started by hand: the
