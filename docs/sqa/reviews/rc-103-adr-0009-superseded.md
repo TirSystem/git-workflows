@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode and waiting for S01 to read it | [e8a3c24] |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode and waiting for S01 to read it | [e8a3c24] |
 
 ---
 
@@ -20,7 +20,7 @@
 - Scope: delta re-review of criteria 7, 8, 9 and 11 (the Version History row, the CrossReference and the Affected Artifacts of the supersede change); the decision text is unchanged and was reviewed in [RC-063]
 - Language and domain: n/a (technical type)
 - Language reviewer: none
-- Mode: supervised, not independent (the AI prepared the evidence and the review; S01 has not read it)
+- Mode: supervised, not independent (the AI prepared the evidence and the review; S01 read it and accepted it in chat on 2026-11-06)
 
 ## Checklist Results
 
@@ -40,13 +40,13 @@
 
 ## Overall Verdict
 
-Go - the change records the supersede that [RC-086] named as an open condition: both ADRs read `Accepted` until now. It is a supersede in part (delivery and caller), so the ADR keeps its text as history. This is not independent: S01 has not read it.
+Go - the change records the supersede that [RC-086] named as an open condition: both ADRs read `Accepted` until now. It is a supersede in part (delivery and caller), so the ADR keeps its text as history. This is not independent: the AI prepared it; S01 read it and accepted it in chat on 2026-11-06.
 
 ## Action Items
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| On a Go from S01, set the 2026-11-06 row of [ADR-0009] to `Superseded by ADR-0013` and the row before it to `Deprecated`, and set this record to `Accepted` | S01 | Before the pull request merges |
+| On a Go from S01, set the 2026-11-06 row of [ADR-0009] to `Superseded by ADR-0013` and the row before it to `Deprecated`, and set this record to `Accepted` | S01 | Done on 2026-11-06 |
 
 ---
 

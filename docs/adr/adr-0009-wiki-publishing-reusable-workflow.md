@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
-| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Superseded in part by [ADR-0013]: its delivery and caller parts are replaced by the scoped workflow `publish-wiki-pages.yml` (release 3.0.0); its token rule and the `tools-ref` amendment stand as history for `@v2`. Status `Superseded by ADR-0013` once reviewed (RC-103) | [e8a3c24] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
+| 2026-11-06 | Superseded by ADR-0013 | Jens Tirsvad Nielsen | S01 | Superseded in part by [ADR-0013]: its delivery and caller parts are replaced by the scoped workflow `publish-wiki-pages.yml` (release 3.0.0); its token rule and the `tools-ref` amendment stand as history for `@v2`. Status `Superseded by ADR-0013` once reviewed (RC-103) | [e8a3c24] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 

@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0015 to ADR-0018 and RC-098 to RC-102 (MIL-016 to MIL-019) | [a1c9cbd] |
-| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-103; ADR-0009 cites ADR-0013 | [e8a3c24] |
+| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Added ADR-0015 to ADR-0018 and RC-098 to RC-102 (MIL-016 to MIL-019) | [a1c9cbd] |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-103; ADR-0009 cites ADR-0013 | [e8a3c24] |
 
 ---
 
