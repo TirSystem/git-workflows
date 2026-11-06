@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | ADR-0009 |
-| CrossReference | [MIL-008], [ADR-0003], [ADR-0004], [ADR-0005], [ADR-0006] |
+| CrossReference | [MIL-008], [ADR-0003], [ADR-0004], [ADR-0005], [ADR-0006], [ADR-0013] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Review findings fixed (RC-063): the product owner's language is spelled out, the security consequence is named, and the secret passing is recorded as verified | [8c2c52e] |
-| 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
+| 2026-11-06 | Superseded by ADR-0013 | Jens Tirsvad Nielsen | S01 | Superseded in part by [ADR-0013]: its delivery and caller parts are replaced by the scoped workflow `publish-wiki-pages.yml` (release 3.0.0); its token rule and the `tools-ref` amendment stand as history for `@v2`. Status `Superseded by ADR-0013` once reviewed (RC-103) | [e8a3c24] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -92,7 +92,9 @@ The rules that follow from it:
 - [MIL-008] — the plan this decision belongs to.
 - [ADR-0004] — its scoped delivery and marker parts are replaced once the
   scoped workflow is removed; its token and safety rules stand.
-
+- [ADR-0013] — replaces its delivery and caller parts (the reusable workflow and
+  the caller file); its token rule and the `tools-ref` amendment stand as
+  history for `@v2`.
 
 ## Amendment (MIL-011)
 
@@ -107,7 +109,8 @@ not affected: the `v1` tag keeps the `v1` workflow files.
 [ADR-0003]: ./adr-0003-wiki-publish-token.md
 [ADR-0004]: ./adr-0004-shared-wiki-publishing-opt-in.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
+[ADR-0013]: ./adr-0013-wiki-publishing-scoped-workflow.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [01b9c29]: https://git.tirsystem.com/TirSystem/github-action/commit/01b9c2972b4317bcc590540010aea0eaf7f30014
-[8c2c52e]: https://git.tirsystem.com/TirSystem/github-action/commit/8c2c52ebd2a27e4d0edb4008c31c002718d280fb
 [eaa0e30]: https://git.tirsystem.com/TirSystem/github-action/commit/eaa0e30beaa097dfeb1c07c814a71d02a6987060
+[e8a3c24]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e8a3c2423ce1c4e4ff77c4fe532f50a813bf5076
