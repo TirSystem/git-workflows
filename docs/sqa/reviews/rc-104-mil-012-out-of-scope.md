@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go-with-conditions, prepared by the AI in supervised mode | [67ffbeb] |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go-with-conditions, prepared by the AI in supervised mode | [67ffbeb] |
 
 ---
 
@@ -20,7 +20,7 @@
 - Scope: delta re-review of the Version History row of 2026-11-06 (the open tasks are out of scope for now), after [RC-082]; the tasks and gate criteria are unchanged
 - Language and domain: n/a (technical type)
 - Language reviewer: none
-- Mode: supervised, not independent (the AI prepared the evidence and the review; S01 has not read it)
+- Mode: supervised, not independent (the AI prepared the evidence and the review; S01 read it and accepted the row in chat on 2026-11-06 with criterion 6 still open)
 
 ## Checklist Results
 
@@ -35,14 +35,14 @@
 
 ## Overall Verdict
 
-Go-with-conditions - the row records the product owner's decision accurately: it names the closed issues and the delivered release and claims nothing more. Criterion 6 is Pending because the target date and the plan still show 2026-11-06. A Pending criterion allows Go-with-conditions at most, so the row stays `Proposed` until the condition is closed. This is not independent: S01 has not read it.
+Go-with-conditions - the row records the product owner's decision accurately: it names the closed issues and the delivered release and claims nothing more. Criterion 6 is Pending because the target date and the plan still show 2026-11-06. A Pending criterion allows Go-with-conditions at most, so the row would stay `Proposed` until the condition is closed. S01 accepted the row in chat on 2026-11-06 without deciding the target date, so the row is `Accepted` with the condition open: the `Target Date` section of [MIL-012] and the schedule of [PP-001] still read 2026-11-06. This is not independent: the AI prepared it.
 
 ## Action Items
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Decide the target date of [MIL-012]: a new date, or none while it is out of scope; then change its `Target Date` section and the schedule row, Gantt bar and Go/No-Go of [PP-001] to match | S01 | Before the row becomes `Accepted` |
-| When the condition is closed, set the 2026-11-06 row of [MIL-012] to `Accepted` and the row before it to `Deprecated`, and set this record to `Accepted` | S01 | After the decision |
+| Decide the target date of [MIL-012]: a new date, or none while it is out of scope; then change its `Target Date` section and the schedule row, Gantt bar and Go/No-Go of [PP-001] to match | S01 | Open: no date was decided when the row was accepted |
+| Row of [MIL-012] set to `Accepted` and the row before it to `Deprecated`, and this record to `Accepted`, on S01's acceptance in chat | S01 | Done on 2026-11-06 |
 
 ---
 
