@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment: the default `tools-ref` is the current major tag (MIL-011) | [eaa0e30] |
-| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Superseded in part by [ADR-0013]: its delivery and caller parts are replaced by the scoped workflow `publish-wiki-pages.yml` (release 3.0.0); its token rule and the `tools-ref` amendment stand as history for `@v2`. Status `Superseded by ADR-0013` once reviewed (RC-103) | pending |
+| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Superseded in part by [ADR-0013]: its delivery and caller parts are replaced by the scoped workflow `publish-wiki-pages.yml` (release 3.0.0); its token rule and the `tools-ref` amendment stand as history for `@v2`. Status `Superseded by ADR-0013` once reviewed (RC-103) | [e8a3c24] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -113,3 +113,4 @@ not affected: the `v1` tag keeps the `v1` workflow files.
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [01b9c29]: https://git.tirsystem.com/TirSystem/github-action/commit/01b9c2972b4317bcc590540010aea0eaf7f30014
 [eaa0e30]: https://git.tirsystem.com/TirSystem/github-action/commit/eaa0e30beaa097dfeb1c07c814a71d02a6987060
+[e8a3c24]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e8a3c2423ce1c4e4ff77c4fe532f50a813bf5076

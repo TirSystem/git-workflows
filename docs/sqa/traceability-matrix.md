@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Added ADR-0015 to ADR-0018 and RC-098 to RC-102 (MIL-016 to MIL-019) | [a1c9cbd] |
-| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-103; ADR-0009 cites ADR-0013 | pending |
+| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-103; ADR-0009 cites ADR-0013 | [e8a3c24] |
 
 ---
 
@@ -342,3 +342,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [a1c9cbd]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a1c9cbd914fa1583f51a8267dd63578e76557eb5
+[e8a3c24]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e8a3c2423ce1c4e4ff77c4fe532f50a813bf5076

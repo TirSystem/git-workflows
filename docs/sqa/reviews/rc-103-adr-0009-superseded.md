@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode and waiting for S01 to read it | pending |
+| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode and waiting for S01 to read it | [e8a3c24] |
 
 ---
 
@@ -55,3 +55,4 @@ Go - the change records the supersede that [RC-086] named as an open condition: 
 [RC-063]: ./rc-063-adr-0009.md
 [RC-086]: ./rc-086-adr-0013-mil-014-pp-001.md
 [QC-ADR-001]: ../../../framework/qc/artifacts/qc-adr.md
+[e8a3c24]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e8a3c2423ce1c4e4ff77c4fe532f50a813bf5076
