@@ -113,7 +113,7 @@ A change that spans repositories:
 2. A downstream repository moves a pin only to a merged commit or tag of the
    upstream, never to an unmerged branch.
 3. Nothing is released or tagged until its dependencies are merged; a release
-   is a separate, deliberate step (the release workflow defaults to a dry run).
+   is a separate, deliberate step (the release is made when the changelog entry is merged; see the release process).
 4. A related repository is added to the session as a working directory only
    when the task needs it. In autonomous mode work in a related repository is
    inside the accepted plan only if the plan names it; otherwise the run stops

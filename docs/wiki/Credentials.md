@@ -116,7 +116,7 @@ It uses its own secret, so the metadata sync token stays read-only.
 
 The scoped workflow **Release** (ADR-0017) creates the version tag, the release
 page and, from version 1.0.0, the major tag of any repository of an
-organization. It is started by hand (see [release-process.md](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)).
+organization. It starts when a change to `CHANGELOG.md` reaches the default branch, or by hand to retry (see [release-process.md](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)).
 It writes with its own secret, so no other token needs to write tags.
 
 | Secret | Content | Used for |
@@ -126,7 +126,7 @@ It writes with its own secret, so no other token needs to write tags.
 - Store it as a secret of the organization of each repository that is released.
   There is no fallback to the token of the run, to `TOKEN_FOR_GITEA_REPO` or to
   any other secret: a run without it ends as `[configuration]` and names the
-  secret, even as a dry run.
+  secret.
 - The token needs scope `write:repository`, and its user needs write access to
   the repositories. Gitea has no tag-only scope, so create the token for a
   dedicated user. S05 approves the scope and S03 stores the secret.
@@ -142,7 +142,9 @@ It writes with its own secret, so no other token needs to write tags.
   - `POST /repos/{owner}/{repo}/tags` (the major tag `vN`)
   - `DELETE /repos/{owner}/{repo}/tags/{tag}` (the major tag `vN`, before it is created again at the new commit)
 
-  A dry run makes only the `GET` calls.
+  A push and a start by hand make the same calls; the `GET` of the commit status
+  is repeated while the validation run is pending, and a version whose tag exists
+  makes only the `GET` calls.
 - A secret that can write tags and release pages in every repository of an
   organization is a high-value target (ADR-0017). It is limited by the dedicated
   user and by being stored per organization.

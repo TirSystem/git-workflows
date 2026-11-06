@@ -20,6 +20,10 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Added
+
+- The scoped `release.yml` starts on a push to the default branch that changes `CHANGELOG.md` (ADR-0017, amended by MIL-020): the version is the newest numbered entry, and if its tag does not exist the workflow creates the tag, the release page and, from 1.0.0, moves the major tag, with no run started by hand. A newest entry whose tag exists ends green with nothing written, so an edit of the changelog that adds no entry is safe. The release waits up to ten minutes (`RELEASE_VALIDATION_WAIT_SECONDS`) for the green `Validate / validate (push)` of the same commit, which starts at the same time; a red status stops it at once. A push whose commit is no longer the tip of the default branch is skipped, because the newer commit has its own run. Starting the workflow by hand stays possible, to retry a failed release.
+
 ## [3.2.0] - 2026-11-06
 
 ### Changed

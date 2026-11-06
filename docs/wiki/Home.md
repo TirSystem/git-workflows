@@ -33,7 +33,7 @@ Twelve workflows live in this repository. A **scoped** workflow is delivered by 
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Reusable (`workflow_call`) | a call from another repository | Runs `dotnet format` and `dotnet build` on an exact .NET SDK 10 or later and changes nothing |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/code-metrics.yml) | Reusable (`workflow_call`) | a call from another repository | Counts the code files and the lines of code (without comment and blank lines), reads a Cobertura coverage report and commits three SVG badges to a `badges` branch |
 | English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/english-comments.yml) | Reusable (`workflow_call`) | a call from another repository, on a pull request | Judges the language of the comments and docstrings a pull request adds, fails the run when one is not English and writes one comment on the pull request that mentions the author |
-| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/release.yml) | Scoped, started by hand | manual, no form (version from `CHANGELOG.md`) | Creates the version tag, the release page and, from 1.0.0, the major tag of any repository after the checks; needs the secret `TOKEN_FOR_GITEA_RELEASE`, with no fallback |
+| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/release.yml) | Scoped | push to the default branch that changes `CHANGELOG.md`, or by hand to retry (no form; the version is the newest numbered entry of `CHANGELOG.md`), and a pull request as a check that writes nothing | Creates the version tag, the release page and, from 1.0.0, the major tag of any repository after the checks; needs the secret `TOKEN_FOR_GITEA_RELEASE`, with no fallback |
 | Publish accepted milestones | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-milestones.yml) | Scoped | push to the default branch that changes `docs/milestones/**` or `docs/sqa/reviews/**`, manual (dry run by default) | Creates or updates the Gitea milestone and issues of every milestone that is Accepted with a Go review; skipped where `docs/milestones/` does not exist; needs the secrets `TOKEN_FOR_GITEA_REPO` and `TOKEN_FOR_GITEA_ISSUES`, with no fallback |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml) | This repository only | pull request, push to `main`, manual | Parses every workflow and runs the offline tests |
 
@@ -397,7 +397,7 @@ deactivate Workflow
 
 ### Release
 
-A scoped workflow, started by hand by a maintainer in the repository to release, with no form: the version is the newest numbered entry of `CHANGELOG.md` (see the [release process](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md), ADR-0017). It writes with the organization secret `TOKEN_FOR_GITEA_RELEASE` (scope `write:repository`, a dedicated user; see the [credentials guide](Credentials)), which is required, with no fallback to the token of the run. The default branch is read from the API. Both changelog formats are read (`## [1.2.0] - 2026-10-21` and `## 0.18.0 (2026-10-28)`), and the major tag `vN` exists from version 1.0.0 only. It replaces the workflow `.gitea/workflows/release.yml`, which is removed. Whether the token can write in a scoped run is still to be verified on the instance (MIL-018 task 1).
+A scoped workflow that starts when a change to `CHANGELOG.md` reaches the default branch of the repository, and by hand to retry a release that failed, with no form: the version is the newest numbered entry of `CHANGELOG.md`, and if its tag exists there is nothing to release and the run ends green (see the [release process](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md), ADR-0017 and its amendment from MIL-020). The release waits up to ten minutes for the green `Validate / validate (push)` of the same commit. It writes with the organization secret `TOKEN_FOR_GITEA_RELEASE` (scope `write:repository`, a dedicated user; see the [credentials guide](Credentials)), which is required, with no fallback to the token of the run. The default branch is read from the API. Both changelog formats are read (`## [1.2.0] - 2026-10-21` and `## 0.18.0 (2026-10-28)`), and the major tag `vN` exists from version 1.0.0 only. It replaces the workflow `.gitea/workflows/release.yml`, which is removed. Whether the token can write in a scoped run is still to be verified on the instance (MIL-018 task 1).
 
 #### Workflow
 
@@ -407,47 +407,52 @@ title Release a repository
 
 autonumber
 
-actor "Maintainer
-(workflow_dispatch: version, dry_run)" as Trigger
+actor "Merge of a change to CHANGELOG.md\n(push to the default branch),\nor a start by hand" as Trigger
 participant "Gitea Actions
 release (scoped)" as Workflow
 participant "Gitea REST API" as Gitea
 
-Trigger -> Workflow: Start with version and dry_run
+Trigger -> Workflow: Push or start by hand, no form
 activate Workflow
 
 Workflow -> Workflow: Check the secret TOKEN_FOR_GITEA_RELEASE,
-the version and read CHANGELOG.md
-alt secret missing, version malformed or no changelog entry
+read CHANGELOG.md and take its newest numbered entry
+as the version
+alt secret missing or no changelog entry
   Workflow --> Trigger: Fail with [configuration] or [validation]
-end
-
-Workflow -> Gitea: GET repository (default branch), GET branch
-and GET status of the commit
-Gitea --> Workflow: Tip of the default branch and the validation run
-alt commit is not the tip of the default branch,
-or Validate / validate (push) is missing or not green
-  Workflow --> Trigger: Fail with [validation]
-(no tag is created)
 end
 
 Workflow -> Gitea: GET tags
 Gitea --> Workflow: Existing tags
-alt tag vMAJOR.MINOR.PATCH exists
-  Workflow --> Trigger: Fail with [validation]
-(tags are never moved)
+alt tag of the newest entry exists
+  Workflow --> Trigger: Nothing to release, the run is green
 end
 
-alt dry_run is true (default)
-  Workflow --> Trigger: Log what would be created and stop
-else
-  Workflow -> Gitea: POST release (creates the version tag,
-body is the changelog entry)
-  opt version 1.0.0 or later and the highest version of its major
-    Workflow -> Gitea: DELETE and POST the major tag vMAJOR
-  end
-  Workflow --> Trigger: Released
+Workflow -> Gitea: GET repository (default branch)
+and GET branch
+Gitea --> Workflow: Tip of the default branch
+alt push and the commit is no longer the tip
+  Workflow --> Trigger: Skipped, green
+(the newer commit has its own run)
+else start by hand and the commit is not the tip
+  Workflow --> Trigger: Fail with [validation]
 end
+
+loop until green, red or the limit of 10 minutes
+  Workflow -> Gitea: GET status of the commit
+  Gitea --> Workflow: Validate / validate (push)
+end
+alt red, or still pending or missing after the limit
+  Workflow --> Trigger: Fail with [validation]
+(no tag is created)
+end
+
+Workflow -> Gitea: POST release (creates the version tag,
+body is the changelog entry)
+opt version 1.0.0 or later and the highest version of its major
+  Workflow -> Gitea: DELETE and POST the major tag vMAJOR
+end
+Workflow --> Trigger: Released
 deactivate Workflow
 @enduml
 ```

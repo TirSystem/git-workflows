@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 3d4ea0231c03 -->
+<!-- translation of Home.md, source sha256 5cb5db41fa33 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -31,7 +31,7 @@ Terdapat dua belas aliran kerja dalam repositori ini. Aliran kerja **scoped** di
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Menjalankan `dotnet format` dan `dotnet build` pada .NET SDK 10 atau lebih baharu yang tepat dan tidak mengubah apa-apa |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/code-metrics.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain | Mengira fail kod dan baris kod (tanpa baris komen dan baris kosong), membaca laporan liputan Cobertura dan melakukan commit tiga lencana SVG ke cabang `badges` |
 | English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/english-comments.yml) | Boleh guna semula (`workflow_call`) | panggilan daripada repositori lain, pada pull request | Menilai bahasa komen dan docstring yang ditambah oleh pull request, menggagalkan larian apabila ada yang bukan bahasa Inggeris dan menulis satu komen pada pull request yang menyebut penulisnya |
-| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/release.yml) | Scoped, dimulakan secara manual | manual, tanpa borang (versi daripada `CHANGELOG.md`) | Mencipta tag versi, halaman keluaran dan, dari 1.0.0, tag major bagi mana-mana repositori selepas semakan; memerlukan secret `TOKEN_FOR_GITEA_RELEASE` tanpa sandaran |
+| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/release.yml) | Scoped | push ke cabang lalai yang mengubah `CHANGELOG.md`, atau secara manual untuk mencuba semula (tanpa borang; versi ialah entri bernombor terbaru dalam `CHANGELOG.md`), dan pull request sebagai semakan yang tidak menulis apa-apa | Mencipta tag versi, halaman keluaran dan, dari 1.0.0, tag major bagi mana-mana repositori selepas semakan; memerlukan secret `TOKEN_FOR_GITEA_RELEASE` tanpa sandaran |
 | Menerbitkan milestone yang diterima | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-milestones.yml) | Scoped | push ke cabang utama yang mengubah `docs/milestones/**` atau `docs/sqa/reviews/**`, manual (larian percubaan secara lalai) | Mencipta atau mengemas kini milestone Gitea dan isu bagi setiap milestone yang Accepted dengan semakan Go; dilangkau jika `docs/milestones/` tiada; memerlukan secret `TOKEN_FOR_GITEA_REPO` dan `TOKEN_FOR_GITEA_ISSUES` tanpa fallback |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml) | Repositori ini sahaja | pull request, push ke `main`, manual | Menghurai setiap aliran kerja sebagai YAML dan menjalankan ujian luar talian |
 
@@ -395,7 +395,7 @@ deactivate Workflow
 
 ### Keluaran
 
-Aliran kerja scoped yang dimulakan secara manual oleh penyelenggara dalam repositori yang hendak dikeluarkan, tanpa borang: versi ialah entri bernombor terbaru dalam `CHANGELOG.md` (lihat [proses keluaran](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md), ADR-0017). Ia menulis dengan secret organisasi `TOKEN_FOR_GITEA_RELEASE` (skop `write:repository`, pengguna khusus; lihat [panduan credentials](Credentials-ms)), yang diperlukan tanpa sandaran kepada token larian. Cabang lalai dibaca daripada API. Kedua-dua format changelog dibaca (`## [1.2.0] - 2026-10-21` dan `## 0.18.0 (2026-10-28)`), dan tag major `vN` wujud dari versi 1.0.0 sahaja. Ia menggantikan aliran kerja `.gitea/workflows/release.yml`, yang dibuang. Sama ada token boleh menulis dalam larian scoped masih perlu disahkan pada instans (MIL-018, tugas 1).
+Aliran kerja scoped yang bermula apabila perubahan pada `CHANGELOG.md` sampai ke cabang lalai repositori, dan secara manual untuk mencuba semula keluaran yang gagal, tanpa borang: versi ialah entri bernombor terbaru dalam `CHANGELOG.md`, dan jika tagnya sudah wujud tiada apa-apa untuk dikeluarkan dan larian tamat hijau (lihat [proses keluaran](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md), ADR-0017 dan tambahannya daripada MIL-020). Keluaran menunggu sehingga sepuluh minit untuk `Validate / validate (push)` hijau bagi commit yang sama. Ia menulis dengan secret organisasi `TOKEN_FOR_GITEA_RELEASE` (skop `write:repository`, pengguna khusus; lihat [panduan credentials](Credentials-ms)), yang diperlukan tanpa sandaran kepada token larian. Cabang lalai dibaca daripada API. Kedua-dua format changelog dibaca (`## [1.2.0] - 2026-10-21` dan `## 0.18.0 (2026-10-28)`), dan tag major `vN` wujud dari versi 1.0.0 sahaja. Ia menggantikan aliran kerja `.gitea/workflows/release.yml`, yang dibuang. Sama ada token boleh menulis dalam larian scoped masih perlu disahkan pada instans (MIL-018, tugas 1).
 
 #### Aliran kerja
 
@@ -405,47 +405,52 @@ title Release a repository
 
 autonumber
 
-actor "Maintainer
-(workflow_dispatch: version, dry_run)" as Trigger
+actor "Merge of a change to CHANGELOG.md\n(push to the default branch),\nor a start by hand" as Trigger
 participant "Gitea Actions
 release (scoped)" as Workflow
 participant "Gitea REST API" as Gitea
 
-Trigger -> Workflow: Start with version and dry_run
+Trigger -> Workflow: Push or start by hand, no form
 activate Workflow
 
 Workflow -> Workflow: Check the secret TOKEN_FOR_GITEA_RELEASE,
-the version and read CHANGELOG.md
-alt secret missing, version malformed or no changelog entry
+read CHANGELOG.md and take its newest numbered entry
+as the version
+alt secret missing or no changelog entry
   Workflow --> Trigger: Fail with [configuration] or [validation]
-end
-
-Workflow -> Gitea: GET repository (default branch), GET branch
-and GET status of the commit
-Gitea --> Workflow: Tip of the default branch and the validation run
-alt commit is not the tip of the default branch,
-or Validate / validate (push) is missing or not green
-  Workflow --> Trigger: Fail with [validation]
-(no tag is created)
 end
 
 Workflow -> Gitea: GET tags
 Gitea --> Workflow: Existing tags
-alt tag vMAJOR.MINOR.PATCH exists
-  Workflow --> Trigger: Fail with [validation]
-(tags are never moved)
+alt tag of the newest entry exists
+  Workflow --> Trigger: Nothing to release, the run is green
 end
 
-alt dry_run is true (default)
-  Workflow --> Trigger: Log what would be created and stop
-else
-  Workflow -> Gitea: POST release (creates the version tag,
-body is the changelog entry)
-  opt version 1.0.0 or later and the highest version of its major
-    Workflow -> Gitea: DELETE and POST the major tag vMAJOR
-  end
-  Workflow --> Trigger: Released
+Workflow -> Gitea: GET repository (default branch)
+and GET branch
+Gitea --> Workflow: Tip of the default branch
+alt push and the commit is no longer the tip
+  Workflow --> Trigger: Skipped, green
+(the newer commit has its own run)
+else start by hand and the commit is not the tip
+  Workflow --> Trigger: Fail with [validation]
 end
+
+loop until green, red or the limit of 10 minutes
+  Workflow -> Gitea: GET status of the commit
+  Gitea --> Workflow: Validate / validate (push)
+end
+alt red, or still pending or missing after the limit
+  Workflow --> Trigger: Fail with [validation]
+(no tag is created)
+end
+
+Workflow -> Gitea: POST release (creates the version tag,
+body is the changelog entry)
+opt version 1.0.0 or later and the highest version of its major
+  Workflow -> Gitea: DELETE and POST the major tag vMAJOR
+end
+Workflow --> Trigger: Released
 deactivate Workflow
 @enduml
 ```
