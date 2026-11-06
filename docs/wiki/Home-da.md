@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 3d4ea0231c03 -->
+<!-- translation of Home.md, source sha256 5cb5db41fa33 -->
 
 > Dette er en oversættelse af [`Home`](Home). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -31,7 +31,7 @@ Der er tolv workflows i dette repository. Et **scoped** workflow leveres af inst
 | Quality checks C# | [`quality-checks-csharp.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/quality-checks-csharp.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Kører `dotnet format` og `dotnet build` på et præcist .NET SDK 10 eller nyere og ændrer intet |
 | Code metrics | [`code-metrics.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/code-metrics.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository | Tæller kodefilerne og kodelinjerne (uden kommentar- og tomme linjer), læser en Cobertura-dækningsrapport og committer tre SVG-badges til en `badges`-gren |
 | English comments | [`english-comments.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/english-comments.yml) | Genbrugeligt (`workflow_call`) | et kald fra et andet repository, på en pull request | Bedømmer sproget i de kommentarer og docstrings, en pull request tilføjer, lader kørslen fejle, når én ikke er engelsk, og skriver én kommentar på pull requesten, der nævner forfatteren |
-| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/release.yml) | Scoped, startes manuelt | manuelt, ingen formular (versionen fra `CHANGELOG.md`) | Opretter versionstagget, udgivelsessiden og, fra 1.0.0, major-tagget i ethvert repository efter kontrollerne; kræver secreten `TOKEN_FOR_GITEA_RELEASE` uden reserve |
+| Release | [`release.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/release.yml) | Scoped | push til standardbranchen, der ændrer `CHANGELOG.md`, eller manuelt for at prøve igen (ingen formular; versionen er den nyeste nummererede post i `CHANGELOG.md`), og en pull request som en kontrol, der ikke skriver noget | Opretter versionstagget, udgivelsessiden og, fra 1.0.0, major-tagget i ethvert repository efter kontrollerne; kræver secreten `TOKEN_FOR_GITEA_RELEASE` uden reserve |
 | Publicering af accepterede milepæle | [`sync-milestones.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/scoped_workflows/sync-milestones.yml) | Scoped | push til hovedgrenen, der ændrer `docs/milestones/**` eller `docs/sqa/reviews/**`, manuelt (tørkørsel som standard) | Opretter eller opdaterer Gitea-milepælen og issues for hver milepæl, der er Accepted med en Go-gennemgang; springes over, hvor `docs/milestones/` ikke findes; kræver secrets'ene `TOKEN_FOR_GITEA_REPO` og `TOKEN_FOR_GITEA_ISSUES` uden fallback |
 | Validate workflows | [`validate-workflows.yml`](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/.gitea/workflows/validate-workflows.yml) | Kun dette repository | pull request, push til `main`, manuelt | Læser hvert workflow som YAML og kører offline-testene |
 
@@ -395,7 +395,7 @@ deactivate Workflow
 
 ### Udgivelse
 
-Et scoped workflow, der startes manuelt af en vedligeholder i det repository, der skal udgives, uden formular: versionen er den nyeste nummererede post i `CHANGELOG.md` (se [udgivelsesprocessen](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md), ADR-0017). Det skriver med organisationens secret `TOKEN_FOR_GITEA_RELEASE` (scope `write:repository`, en dedikeret bruger; se [vejledningen om credentials](Credentials-da)), som er påkrævet uden reserve til kørslens token. Standardbranchen læses fra API'et. Begge changelog-formater læses (`## [1.2.0] - 2026-10-21` og `## 0.18.0 (2026-10-28)`), og major-tagget `vN` findes kun fra version 1.0.0. Det erstatter workflowet `.gitea/workflows/release.yml`, som er fjernet. Om tokenet kan skrive i en scoped kørsel mangler stadig at blive verificeret på instansen (MIL-018, opgave 1).
+Et scoped workflow, der starter, når en ændring af `CHANGELOG.md` når repositoryets standardbranch, og manuelt for at prøve en mislykket udgivelse igen, uden formular: versionen er den nyeste nummererede post i `CHANGELOG.md`, og hvis dens tag allerede findes, er der intet at udgive, og kørslen slutter grøn (se [udgivelsesprocessen](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md), ADR-0017 og dens tilføjelse fra MIL-020). Udgivelsen venter op til ti minutter på den grønne `Validate / validate (push)` for samme commit. Det skriver med organisationens secret `TOKEN_FOR_GITEA_RELEASE` (scope `write:repository`, en dedikeret bruger; se [vejledningen om credentials](Credentials-da)), som er påkrævet uden reserve til kørslens token. Standardbranchen læses fra API'et. Begge changelog-formater læses (`## [1.2.0] - 2026-10-21` og `## 0.18.0 (2026-10-28)`), og major-tagget `vN` findes kun fra version 1.0.0. Det erstatter workflowet `.gitea/workflows/release.yml`, som er fjernet. Om tokenet kan skrive i en scoped kørsel mangler stadig at blive verificeret på instansen (MIL-018, opgave 1).
 
 #### Workflow
 
@@ -405,47 +405,52 @@ title Release a repository
 
 autonumber
 
-actor "Maintainer
-(workflow_dispatch: version, dry_run)" as Trigger
+actor "Merge of a change to CHANGELOG.md\n(push to the default branch),\nor a start by hand" as Trigger
 participant "Gitea Actions
 release (scoped)" as Workflow
 participant "Gitea REST API" as Gitea
 
-Trigger -> Workflow: Start with version and dry_run
+Trigger -> Workflow: Push or start by hand, no form
 activate Workflow
 
 Workflow -> Workflow: Check the secret TOKEN_FOR_GITEA_RELEASE,
-the version and read CHANGELOG.md
-alt secret missing, version malformed or no changelog entry
+read CHANGELOG.md and take its newest numbered entry
+as the version
+alt secret missing or no changelog entry
   Workflow --> Trigger: Fail with [configuration] or [validation]
-end
-
-Workflow -> Gitea: GET repository (default branch), GET branch
-and GET status of the commit
-Gitea --> Workflow: Tip of the default branch and the validation run
-alt commit is not the tip of the default branch,
-or Validate / validate (push) is missing or not green
-  Workflow --> Trigger: Fail with [validation]
-(no tag is created)
 end
 
 Workflow -> Gitea: GET tags
 Gitea --> Workflow: Existing tags
-alt tag vMAJOR.MINOR.PATCH exists
-  Workflow --> Trigger: Fail with [validation]
-(tags are never moved)
+alt tag of the newest entry exists
+  Workflow --> Trigger: Nothing to release, the run is green
 end
 
-alt dry_run is true (default)
-  Workflow --> Trigger: Log what would be created and stop
-else
-  Workflow -> Gitea: POST release (creates the version tag,
-body is the changelog entry)
-  opt version 1.0.0 or later and the highest version of its major
-    Workflow -> Gitea: DELETE and POST the major tag vMAJOR
-  end
-  Workflow --> Trigger: Released
+Workflow -> Gitea: GET repository (default branch)
+and GET branch
+Gitea --> Workflow: Tip of the default branch
+alt push and the commit is no longer the tip
+  Workflow --> Trigger: Skipped, green
+(the newer commit has its own run)
+else start by hand and the commit is not the tip
+  Workflow --> Trigger: Fail with [validation]
 end
+
+loop until green, red or the limit of 10 minutes
+  Workflow -> Gitea: GET status of the commit
+  Gitea --> Workflow: Validate / validate (push)
+end
+alt red, or still pending or missing after the limit
+  Workflow --> Trigger: Fail with [validation]
+(no tag is created)
+end
+
+Workflow -> Gitea: POST release (creates the version tag,
+body is the changelog entry)
+opt version 1.0.0 or later and the highest version of its major
+  Workflow -> Gitea: DELETE and POST the major tag vMAJOR
+end
+Workflow --> Trigger: Released
 deactivate Workflow
 @enduml
 ```

@@ -4,12 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | ADR-0017 |
-| CrossReference | [MIL-018], [MIL-017], [ADR-0006], [ADR-0007], [ADR-0016] |
+| CrossReference | [MIL-018], [MIL-020], [MIL-017], [ADR-0006], [ADR-0007], [ADR-0016], [RC-107] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-101, Go-with-conditions), accepted by the author in chat as stand-in for S01 with the conditions of RC-101 still open, not independent | [a1c9cbd] |
+| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-101, Go-with-conditions), accepted by the author in chat as stand-in for S01 with the conditions of RC-101 still open, not independent | [a1c9cbd] |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Amended by MIL-020: the release starts on a push that changes the changelog, with no inputs and no dry run; reviewed (RC-107), accepted by the author in chat as stand-in for S01, not independent | [a9cf545] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -53,14 +54,17 @@ Options:
 ## Decision
 
 A repository is released by the scoped workflow
-`.gitea/scoped_workflows/release.yml`, started by hand, which writes with the
-organization secret `TOKEN_FOR_GITEA_RELEASE` and refuses to run without it.
+`.gitea/scoped_workflows/release.yml`, started when the changelog changes on
+the default branch (see the amendment below) or by hand to retry, which writes
+with the organization secret `TOKEN_FOR_GITEA_RELEASE` and refuses to run
+without it.
 
 The rules that follow from it:
 
-- **Inputs:** `version` (`MAJOR.MINOR.PATCH`, no leading `v`) and `dry_run`,
-  default `true`: a dry run checks and prints and writes nothing. The group
-  `release` queues runs and never cancels one.
+- **Start:** a push to the default branch that changes `CHANGELOG.md`, or a
+  start by hand. There are no inputs: the version is the newest numbered entry
+  of the changelog (see the amendment below). The group `release` queues runs
+  and never cancels one.
 - **The secret is required, with no fallback** to the token of the run or to any
   other secret. A run without it ends as `[configuration]` and names the secret.
   It is a Gitea token with the scope `write:repository`, owned by a dedicated
@@ -72,9 +76,11 @@ The rules that follow from it:
   status of the commit and the tags; `POST` of the release page and of the major
   tag; `DELETE` of the major tag. A test compares them with the guide.
 - **The workflow refuses** a commit that is not the tip of the default branch
-  (read from the API, not assumed to be `main`), a missing or red status
-  `Validate / validate (push)` ([ADR-0016]), a changelog without an entry for
-  the version and a tag that exists. Each refusal is `[validation]`.
+  (read from the API, not assumed to be `main`; a push skips it, see the
+  amendment), a red status `Validate / validate (push)` ([ADR-0016]) or one that
+  is still pending or missing after the wait, a changelog without an entry for
+  the version and a tag that exists for a version named by hand. Each refusal
+  is `[validation]`.
 - **Both changelog formats are read:** `## [1.2.0] - 2026-10-21` and
   `## 0.18.0 (2026-10-28)`; the unreleased heading is `## Unreleased` or `## [Unreleased]`.
 - **The major tag** `vN` exists from version 1.0.0 only: a `0.x` release makes
@@ -91,6 +97,52 @@ The rules that follow from it:
   token is the dedicated secret, not the token of the run) are amended; each
   gets a row that points here.
 
+## Amendment: the release starts when the changelog changes (MIL-020)
+
+The decision above started the release by hand, with a version and a dry run.
+The two releases made with it (this repository 3.1.0 and the framework 0.19.1)
+each needed a person to open the Actions page, fill in a form and run the
+workflow twice, and the first attempts failed on the form and on a status name.
+The changelog already says which version exists, and its pull request check
+([ADR-0006]) and the approval of S01 in that pull request keep it releasable.
+
+Options:
+
+1. **Keep starting by hand.** Nothing changes; every release stays two manual
+   runs.
+2. **Start on a push that changes `CHANGELOG.md` on the default branch.** The
+   merge of the changelog is the reviewed, deliberate step, and the run needs no
+   form.
+3. **Start on a schedule that looks for an entry without a tag.** A release
+   comes later than its merge, and the schedule runs in every repository
+   whether or not its changelog changed.
+
+Decision: option 2. The workflow has the triggers `pull_request` (the changelog
+check, as before), `push` with `paths: CHANGELOG.md`, and `workflow_dispatch`
+with no inputs, to retry a release that failed. The rules:
+
+- **The version is read, not given.** It is the newest numbered entry of the
+  changelog. If its tag exists, there is nothing to release: the run ends green
+  and writes nothing, so an edit that adds no entry, and a second run, are safe.
+  A version named by hand (the setting `RELEASE_VERSION` of the script, kept for
+  tests) whose tag exists is still refused.
+- **The release waits for the validation of the same commit.** On a push the run
+  `Validate / validate (push)` starts at the same time, so a status that is
+  missing or pending is waited for, up to 600 seconds by default
+  (`RELEASE_VALIDATION_WAIT_SECONDS`). A red status stops the release at once, and
+  a status that is still pending or missing after the wait stops it as
+  `[validation]`.
+- **A push that is no longer the tip is skipped.** A newer commit has its own
+  run; the older run ends green with a message and writes nothing. A start by
+  hand from a commit that is not the tip is refused, as before.
+- **Only the default branch releases.** The step runs on a push when the ref is
+  the default branch named in the event.
+- **The dry run is removed.** The check on the pull request, which runs
+  `changelog.py check` without a secret, takes its place: the changelog is
+  valid before the merge. The script keeps the setting `RELEASE_DRY_RUN` for its
+  tests; the workflow always writes.
+- The secret, its scope, the calls made and the permissions are unchanged.
+
 ## Consequences
 
 **Positive:**
@@ -99,6 +151,8 @@ The rules that follow from it:
   framework repository stops releasing by hand.
 - The release is refused when the repository is not green, wherever it is.
 - The token is described once, with its scope, owner and rotation.
+- A release needs one merge and no run by hand, and a retry or a second push of
+  the changelog is safe (the amendment).
 
 **Negative:**
 
@@ -112,10 +166,16 @@ The rules that follow from it:
 - A breaking change for the callers of the old workflow: a new major version.
 - The workflow fetches its script at a major tag, so the script and the
   workflow in `main` must be released together.
+- A merged changelog releases without a person starting it, so a wrong or early
+  entry is released. The safeguards are the review of the changelog in its pull
+  request (the check `Release / release (pull_request)` and the approval of S01)
+  and the wait for a green validation; a faulty release is undone as the release
+  guide says.
 
 ## Affected Artifacts
 
 - [MIL-018] — the milestone this decision belongs to.
+- [MIL-020] — the milestone of the amendment: the release starts on a changelog change.
 - [MIL-017] — supplies the status that is required.
 - [ADR-0006] — amended: the default branch and the major tag from 1.0.
 - [ADR-0007] — amended: the token is the dedicated secret.
@@ -124,9 +184,12 @@ The rules that follow from it:
 ---
 
 [MIL-018]: ../milestones/mil-018-scoped-release-workflow.md
+[MIL-020]: ../milestones/mil-020-release-on-changelog-change.md
 [MIL-017]: ../milestones/mil-017-scoped-validation-workflow.md
+[RC-107]: ../sqa/reviews/rc-107-adr-0017-amendment.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0006]: ./adr-0006-release-process-and-version-pinning.md
 [ADR-0007]: ./adr-0007-release-publish-destination.md
 [ADR-0016]: ./adr-0016-scoped-validation-workflow.md
 [a1c9cbd]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a1c9cbd914fa1583f51a8267dd63578e76557eb5
+[a9cf545]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a9cf54546529f54fe3c4f7e5b37321b8d222bef4

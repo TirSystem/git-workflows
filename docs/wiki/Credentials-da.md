@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 cd3477f88ddc -->
+<!-- translation of Credentials.md, source sha256 0329264bbb00 -->
 
 > Dette er en oversættelse af [`Credentials`](Credentials). Den engelske side er autoritativ, og ændringer her bliver overskrevet, næste gang wikien publiceres.
 
@@ -70,13 +70,13 @@ Workflowet **Publish wiki pages** kopierer `docs/wiki/` til Gitea-wikien i et re
 
 ## Secret til udgivelse
 
-Det scoped workflow **Release** (ADR-0017) opretter versionstagget, udgivelsessiden og, fra version 1.0.0, major-tagget i ethvert repository i en organisation. Det startes manuelt (se [release-process.md](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)). Det skriver med sin egen secret, så intet andet token behøver at skrive tags.
+Det scoped workflow **Release** (ADR-0017) opretter versionstagget, udgivelsessiden og, fra version 1.0.0, major-tagget i ethvert repository i en organisation. Det starter, når en ændring af `CHANGELOG.md` når standardbranchen, eller manuelt for at prøve igen (se [release-process.md](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)). Det skriver med sin egen secret, så intet andet token behøver at skrive tags.
 
 | Secret | Indhold | Bruges til |
 | --- | --- | --- |
 | `TOKEN_FOR_GITEA_RELEASE` | Gitea-tokenet, intet andet | At oprette tagget og udgivelsessiden og flytte major-tagget i det repository, workflowet startes i |
 
-- Gem den som en secret i organisationen for hvert repository, der udgives. Der er ingen reserve til kørslens token, til `TOKEN_FOR_GITEA_REPO` eller til nogen anden secret: en kørsel uden den slutter som `[configuration]` og nævner secreten, også som tørkørsel.
+- Gem den som en secret i organisationen for hvert repository, der udgives. Der er ingen reserve til kørslens token, til `TOKEN_FOR_GITEA_REPO` eller til nogen anden secret: en kørsel uden den slutter som `[configuration]` og nævner secreten.
 - Tokenet skal have scope `write:repository`, og dets bruger skal have skriveadgang til repositories. Gitea har intet scope kun til tags, så opret tokenet til en dedikeret bruger. S05 godkender scopet, og S03 gemmer secreten.
 - Workflowet læser den i miljøet i det ene trin, der kører scriptet; den står aldrig på en kommandolinje eller i loggen. Selve workflowet har `permissions: contents: read`.
 - Kald, der foretages (en test sammenligner listen med scriptet):
@@ -88,7 +88,7 @@ Det scoped workflow **Release** (ADR-0017) opretter versionstagget, udgivelsessi
   - `POST /repos/{owner}/{repo}/tags` (major-tagget `vN`)
   - `DELETE /repos/{owner}/{repo}/tags/{tag}` (major-tagget `vN`, før det oprettes igen ved den nye commit)
 
-  En tørkørsel foretager kun `GET`-kaldene.
+  Et push og en manuel start foretager de samme kald; `GET` af commitstatus gentages, mens valideringskørslen afventer, og en version, hvis tag findes, foretager kun `GET`-kaldene.
 - En secret, der kan skrive tags og udgivelsessider i alle repositories i en organisation, er et værdifuldt mål (ADR-0017). Det begrænses af den dedikerede bruger og af, at secreten gemmes pr. organisation.
 - **Endnu ikke verificeret på instansen:** om tokenet opfører sig, som beslutningen antager, i en scoped kørsel (det kan oprette et tag og en side og flytte et tag), er første opgave i MIL-018. Indtil det er registreret, er scopet og listen over kald ovenfor beslutningen, ikke et testet resultat.
 

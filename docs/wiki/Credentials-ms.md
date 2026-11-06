@@ -1,4 +1,4 @@
-<!-- translation of Credentials.md, source sha256 cd3477f88ddc -->
+<!-- translation of Credentials.md, source sha256 0329264bbb00 -->
 
 > Ini ialah terjemahan [`Credentials`](Credentials). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -70,13 +70,13 @@ Aliran kerja **Publish wiki pages** menyalin `docs/wiki/` ke wiki Gitea bagi rep
 
 ## Secret keluaran
 
-Aliran kerja scoped **Release** (ADR-0017) mencipta tag versi, halaman keluaran dan, dari versi 1.0.0, tag major bagi mana-mana repositori dalam organisasi. Ia dimulakan secara manual (lihat [release-process.md](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)). Ia menulis dengan secret sendiri, jadi tiada token lain perlu menulis tag.
+Aliran kerja scoped **Release** (ADR-0017) mencipta tag versi, halaman keluaran dan, dari versi 1.0.0, tag major bagi mana-mana repositori dalam organisasi. Ia bermula apabila perubahan pada `CHANGELOG.md` sampai ke cabang lalai, atau secara manual untuk mencuba semula (lihat [release-process.md](https://git.tirsystem.com/TirSystem/git-workflows/src/branch/main/guides/release-process.md)). Ia menulis dengan secret sendiri, jadi tiada token lain perlu menulis tag.
 
 | Secret | Kandungan | Digunakan untuk |
 | --- | --- | --- |
 | `TOKEN_FOR_GITEA_RELEASE` | Token Gitea, tiada yang lain | Mencipta tag dan halaman keluaran, dan mengalihkan tag major, dalam repositori tempat aliran kerja dimulakan |
 
-- Simpan sebagai secret organisasi bagi setiap repositori yang dikeluarkan. Tiada sandaran kepada token larian, `TOKEN_FOR_GITEA_REPO` atau mana-mana secret lain: larian tanpanya tamat sebagai `[configuration]` dan menamakan secret itu, termasuk larian cuba.
+- Simpan sebagai secret organisasi bagi setiap repositori yang dikeluarkan. Tiada sandaran kepada token larian, `TOKEN_FOR_GITEA_REPO` atau mana-mana secret lain: larian tanpanya tamat sebagai `[configuration]` dan menamakan secret itu.
 - Token mesti mempunyai skop `write:repository`, dan penggunanya mesti mempunyai akses tulis kepada repositori. Gitea tidak mempunyai skop untuk tag sahaja, jadi cipta token untuk pengguna khusus. S05 meluluskan skop dan S03 menyimpan secret.
 - Aliran kerja membacanya dalam persekitaran satu langkah yang menjalankan skrip; ia tidak pernah muncul pada baris arahan atau dalam log. Aliran kerja itu sendiri mempunyai `permissions: contents: read`.
 - Panggilan yang dibuat (satu ujian membandingkan senarai ini dengan skrip):
@@ -88,7 +88,7 @@ Aliran kerja scoped **Release** (ADR-0017) mencipta tag versi, halaman keluaran 
   - `POST /repos/{owner}/{repo}/tags` (tag major `vN`)
   - `DELETE /repos/{owner}/{repo}/tags/{tag}` (tag major `vN`, sebelum dicipta semula pada commit baharu)
 
-  Larian cuba hanya membuat panggilan `GET`.
+  Push dan permulaan manual membuat panggilan yang sama; `GET` status commit diulang semasa larian pengesahan belum selesai, dan versi yang tagnya sudah wujud hanya membuat panggilan `GET`.
 - Secret yang boleh menulis tag dan halaman keluaran dalam setiap repositori sesebuah organisasi ialah sasaran bernilai tinggi (ADR-0017). Ia dihadkan oleh pengguna khusus dan oleh penyimpanan bagi setiap organisasi.
 - **Belum disahkan pada instans:** sama ada token berfungsi seperti yang diandaikan oleh keputusan dalam larian scoped (ia boleh mencipta tag dan halaman serta mengalihkan tag) ialah tugas pertama MIL-018. Selagi itu belum direkodkan, skop dan senarai panggilan di atas ialah keputusan, bukan hasil yang telah diuji.
 
