@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-101, Go-with-conditions), accepted by the author in chat as stand-in for S01 with the conditions of RC-101 still open, not independent | [a1c9cbd] |
-| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Amended by MIL-020: the release starts on a push that changes the changelog, with no inputs and no dry run; reviewed (RC-107), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Amended by MIL-020: the release starts on a push that changes the changelog, with no inputs and no dry run; reviewed (RC-107), accepted by the author in chat as stand-in for S01, not independent | [a9cf545] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -192,3 +192,4 @@ with no inputs, to retry a release that failed. The rules:
 [ADR-0007]: ./adr-0007-release-publish-destination.md
 [ADR-0016]: ./adr-0016-scoped-validation-workflow.md
 [a1c9cbd]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a1c9cbd914fa1583f51a8267dd63578e76557eb5
+[a9cf545]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a9cf54546529f54fe3c4f7e5b37321b8d222bef4

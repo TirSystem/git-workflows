@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-11-06 as stand-in for S01 | pending |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by the author in chat on 2026-11-06 as stand-in for S01 | [a9cf545] |
 
 ---
 
@@ -65,3 +65,4 @@ Go. All applicable criteria pass; criterion 9 does not apply. One claim is not y
 [MIL-020]: ../../milestones/mil-020-release-on-changelog-change.md
 [RC-101]: ./rc-101-adr-0017.md
 [QC-ADR-001]: ../../../framework/qc/artifacts/qc-adr.md
+[a9cf545]: https://git.tirsystem.com/TirSystem/git-workflows/commit/a9cf54546529f54fe3c4f7e5b37321b8d222bef4
