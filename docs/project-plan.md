@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015], [MIL-016], [MIL-017], [MIL-018], [MIL-019], [RC-096], [RC-090] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015], [MIL-016], [MIL-017], [MIL-018], [MIL-019], [MIL-020], [RC-105], [RC-096], [RC-090] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | MIL-016 reviewed (RC-090) and accepted; its ADR is ADR-0015; accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-016 names OpenGrep instead of Semgrep (ADR-0015); reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
+| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | MIL-016 names OpenGrep instead of Semgrep (ADR-0015); reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-020 added (release when the changelog changes); reviewed (RC-105), accepted by the author in chat as stand-in for S01, not independent | pending |
 
 ---
 
@@ -31,6 +31,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 - MIL-017 (validate every repository with a scoped workflow) runs from 2026-12-14 to its Target Date, 2026-12-18, proposed by the author; it follows MIL-016 and uses the delivery of scoped workflows that MIL-014 verified. It traces to objective O4.
 - MIL-018 (release any repository with a scoped workflow) runs from 2026-12-21 to its Target Date, 2026-12-30, proposed by the author; it follows MIL-017, whose status it requires, and ends before MIL-007 starts on 2027-01-04. It traces to objective O4 and describes the secret `TOKEN_FOR_GITEA_RELEASE`. S01 confirmed the dates in chat on 2026-10-29, including that MIL-018 ends four days after the last decision date 2026-12-26, as for MIL-007 (RC-092).
 - MIL-019 (publish accepted milestones with a scoped workflow) runs from 2027-02-01 to its Target Date, 2027-02-12, proposed by the author; it follows MIL-010 (2027-01-30) because January is full, and S01 may move it ahead of MIL-016. It traces to objective O4 and depends on MIL-014 and MIL-015.
+- MIL-020 (release when the changelog changes) runs from 2026-11-06 to its Target Date, 2026-11-13, proposed by the author; it amends ADR-0017 of MIL-018, which was released as 3.0.0 on 2026-10-29, so its dependency is met ahead of the 2026-12-21 window the plan still shows for MIL-018. It traces to objective O4. The date is inside the plan window (last decision date 2026-12-26); S01 confirmed it in chat on 2026-11-06 by accepting the milestone (RC-105).
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -57,6 +58,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Validate every repository with a scoped workflow | [MIL-017] | 2026-12-14 to 2026-12-18 | 2026-12-18 | S05 | None (technical tasks) | Scoped validate workflow (workflow files and shell scripts), ADR, guide, adoption row, wiki in three languages, trial on four repositories, released as the next minor | Not created yet (the sync runs after acceptance) |
 | Release any repository with a scoped workflow | [MIL-018] | 2026-12-21 to 2026-12-30 | 2026-12-30 | S05 | None (technical tasks) | Scoped release workflow, general `release.py`, `TOKEN_FOR_GITEA_RELEASE` described, old `release.yml` removed, dry runs in three repositories, released as the next major | Not created yet (the sync runs after acceptance) |
 | Publish accepted milestones with a scoped workflow | [MIL-019] | 2027-02-01 to 2027-02-12 | 2027-02-12 | S05 | None (technical tasks) | Scoped sync-milestones workflow, ADR, guide, copies in the repositories removed, released | [Milestone MIL-019] |
+| Release when the changelog changes | [MIL-020] | 2026-11-06 to 2026-11-13 | 2026-11-13 | S05 | None (technical tasks); US-001.21 to US-001.23 | The release starts on a push that changes `CHANGELOG.md`, waits for the validation of the same commit, and is a green no-op for a version already tagged; ADR-0017 amended; released by merging | Not created yet (the sync runs after acceptance) |
 
 ```plantuml
 @startgantt
@@ -97,6 +99,8 @@ Project starts 2026-10-05
 [MIL-017 Go/No-Go] happens 2026-12-18
 [MIL-018 Release] starts 2026-12-21 and ends 2026-12-30
 [MIL-018 Go/No-Go] happens 2026-12-30
+[MIL-020 Changelog release] starts 2026-11-06 and ends 2026-11-13
+[MIL-020 Go/No-Go] happens 2026-11-13
 @endgantt
 ```
 
@@ -122,6 +126,7 @@ Project starts 2026-10-05
 | Every repository is validated by the same scoped workflow, with one status name | [MIL-017] |
 | Any repository is released by one scoped workflow with a described token | [MIL-018] |
 | Accepted milestones are published by one scoped workflow, with no copy per repository | [MIL-019] |
+| A release is made when the changelog of a repository changes, with no run started by hand | [MIL-020] |
 
 ## Dependencies
 
@@ -137,6 +142,7 @@ MIL-001 → MIL-002 → MIL-003 → MIL-004
                  MIL-013 + MIL-014 → MIL-016
                  MIL-016 + MIL-014 → MIL-017 → MIL-018
                  MIL-014 + MIL-015 + MIL-010 → MIL-019
+                                  MIL-018 → MIL-020
 ```
 
 A No-Go moves every later window by the rework time of the failed milestone.
@@ -157,6 +163,7 @@ A No-Go moves every later window by the rework time of the failed milestone.
 | The validation blocks repositories it should not (MIL-017), or the status name differs between repositories | Release is refused in a repository that is fine, or reads a status that is not there | MIL-017 task 1 records the name the instance gives before anything is built, and task 6 counts false positives on four repositories before the release |
 | The token `TOKEN_FOR_GITEA_RELEASE` can write more than tags and release pages, or its absence stops every release (MIL-018) | A leaked token changes code, or releases stop | MIL-018 tasks 1 and 5 measure what the token needs, describe the scope for a dedicated user and the rotation, and the dry runs of task 6 fail early with a message that names the secret |
 | Security review by S05 is a bottleneck | Milestone decisions slip | Keep milestones small and plan review time before each decision date. |
+| A release started by a push races with the validation of the same commit, or releases an entry nobody meant to publish (MIL-020) | A release from an unchecked commit, or a tag made by a changelog edit | The release waits for `Validate / validate (push)` of the commit and refuses on red or timeout; only a new numbered entry without a tag releases; the pull request check keeps the changelog valid. |
 
 ## Open Issues
 
@@ -340,6 +347,8 @@ no tests, no release process.
 [MIL-017]: ./milestones/mil-017-scoped-validation-workflow.md
 [MIL-018]: ./milestones/mil-018-scoped-release-workflow.md
 [MIL-019]: ./milestones/mil-019-scoped-milestone-sync.md
+[MIL-020]: ./milestones/mil-020-release-on-changelog-change.md
+[RC-105]: ./sqa/reviews/rc-105-mil-020-pp-001.md
 [RC-096]: ./sqa/reviews/rc-096-mil-019-pp-001.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
@@ -352,5 +361,4 @@ no tests, no release process.
 [c5d5941]: https://git.tirsystem.com/TirSystem/github-action/commit/c5d59418698316866807388bf61dcb6166d9fa8b
 [e35b1c5]: https://git.tirsystem.com/TirSystem/github-action/commit/e35b1c56748a50430503f5518602469f93262357
 [851b24c]: https://git.tirsystem.com/TirSystem/git-workflows/commit/851b24c63a8cd8a054cb380c1396a20de0686161
-[99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44
 [d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b

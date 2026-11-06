@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | US-001 |
-| CrossReference | [UCD-001], [BC-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007], [MIL-007], [UC-008], [MIL-010] |
+| CrossReference | [UCD-001], [BC-001], [RC-106], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [UC-001], [UC-002], [UC-003], [UC-004], [UC-005], [UC-006], [UC-007], [MIL-007], [UC-008], [MIL-010], [MIL-020] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | Deprecated | Jens Tirsvad Nielsen | S01 | US-001.16 and US-001.17 reviewed (RC-057) and accepted; the Purpose and Scope names the later stories | [1bc56f8] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.18 to US-001.20 (code metrics and coverage badges, MIL-010 task 1); reviewed (RC-070) | [9ca9673] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.18 to US-001.20 (code metrics and coverage badges, MIL-010 task 1); reviewed (RC-070) | [9ca9673] |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.21 to US-001.23 (release when the changelog changes, MIL-020 task 1); reviewed (RC-106), accepted by the author in chat as stand-in for S01, not independent | pending |
 
 ---
 
@@ -22,7 +22,8 @@ credentials, onboarding a repository and diagnosing a failed run. Roles are the
 actors of [UCD-001]. Later stories cover quality checks (US-001.09, US-001.10 and, for
 C++ and C#, US-001.16 and US-001.17), releases and updates (US-001.11 to
 US-001.15) and the code metrics and coverage badges (US-001.18 to
-US-001.20). Stories for the wiki (MIL-005, MIL-006) are not written yet.
+US-001.20) and the release when the changelog changes (US-001.21 to
+US-001.23). Stories for the wiki (MIL-005, MIL-006) are not written yet.
 
 ## Story List
 
@@ -290,11 +291,51 @@ US-001.20). Stories for the wiki (MIL-005, MIL-006) are not written yet.
 | --- | --- | --- |
 | [UC-008], [MIL-010] | fits one iteration | none |
 
+### US-001.21 — A release is made when the changelog changes
+
+**As a** DevOps Professional, **I want** the release of a version to be made when its changelog entry is merged, **so that** nobody has to open the Actions page and run a workflow twice.
+
+**Acceptance Criteria**
+
+- Given a merged change to `CHANGELOG.md` that adds a numbered entry whose tag does not exist, when the push reaches the default branch, then the version tag and the release page are made from that entry, and from 1.0.0 the major tag moves.
+- Given a merged change to `CHANGELOG.md` that only edits `Unreleased` or an older entry, when the push reaches the default branch, then the run is green and no tag or page is made.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-006], [MIL-020] | fits one iteration | none |
+
+### US-001.22 — The release waits for the validation of the same commit
+
+**As a** DevOps Professional, **I want** the release to wait until the validation of the same commit has ended, **so that** a release made at the same moment as the validation is never made from an unchecked commit and never fails on the race.
+
+**Acceptance Criteria**
+
+- Given a push whose validation run is still pending, when the release runs, then it waits and releases only after the validation is green.
+- Given a validation run that ends red, or does not appear within 10 minutes (the default, which a repository may set), when the release runs, then no tag is made and the message names which of the two happened.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-006], [MIL-020] | fits one iteration | none |
+
+### US-001.23 — A version that is already released is not released again
+
+**As a** DevOps Professional, **I want** a run for a version whose tag exists to end green without changing anything, **so that** a retry or a second push of the changelog is safe.
+
+**Acceptance Criteria**
+
+- Given a version whose tag already exists, when the release runs again, then the tag and the release page are unchanged and the run is green.
+- Given a failed release, when the workflow is started by hand, then it releases the newest entry, so a failure can be retried without a form.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [UC-006], [MIL-020] | fits one iteration | none |
+
 ## INVEST Check
 
-All twenty stories are independent of each other except that US-001.05 and
+All twenty-three stories are independent of each other except that US-001.05 and
 US-001.06 build on US-001.04 (the secrets must exist before a repository can
-run the workflow). Each states one goal and can be negotiated, delivers value
+run the workflow), and US-001.22 and US-001.23 refine US-001.21 (a release that
+starts on a changelog change). Each states one goal and can be negotiated, delivers value
 to the named role, is small enough for one iteration, and has acceptance
 criteria that are checked with a run or a read of the guide. Exception:
 US-001.01 and US-001.02 are already implemented and are written so that their
@@ -318,5 +359,7 @@ behaviour is tested rather than built.
 [UC-007]: ./uc-007/uc.md
 [UC-008]: ./uc-008/uc.md
 [MIL-010]: ./milestones/mil-010-code-metrics-badges.md
+[MIL-020]: ./milestones/mil-020-release-on-changelog-change.md
+[RC-106]: ./sqa/reviews/rc-106-us-001-21-23.md
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
 [9ca9673]: https://git.tirsystem.com/TirSystem/github-action/commit/9ca9673b00351cf913966f347c4da09890ed3f1f
