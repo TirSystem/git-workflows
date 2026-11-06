@@ -45,16 +45,15 @@ released this repository only and is removed.
    status is `Release / release (pull_request)`; mark it required in the
    branch protection of the default branch. A repository without
    `CHANGELOG.md` ends green.
-5. **Run the Release workflow in dry-run mode.** In the Actions tab of the
-   repository start **Release** by hand on the default branch with the
-   `version` (`MAJOR.MINOR.PATCH`, no leading `v`) and `dry_run` `true`, which
-   is the default. It checks and prints, and writes nothing. It refuses
-   (`[validation]`) a commit that is not the tip of the default branch (read
-   from the API, not assumed to be `main`), a missing or red status
-   `Validate / validate (push)`, a changelog without an entry for the version
-   and a tag that exists. It ends as `[configuration]` and names the secret
-   when `TOKEN_FOR_GITEA_RELEASE` is missing; this holds for a dry run too.
-6. **Release.** Start **Release** again with `dry_run` `false`. It creates the
+5. **Run the Release workflow.** In the Actions tab of the repository start
+   **Release** by hand on the default branch. It has no form: the version is
+   the newest numbered entry of `CHANGELOG.md`, so the changelog entry cut in
+   step 3 is what is released. It refuses (`[validation]`) a commit that is not
+   the tip of the default branch (read from the API, not assumed to be `main`),
+   a missing or red status `Validate / validate (push)`, a changelog without a
+   released entry and a tag that exists, and it ends as `[configuration]` and
+   names the secret when `TOKEN_FOR_GITEA_RELEASE` is missing. All of this is
+   checked before anything is written. It then creates the
    tag `vMAJOR.MINOR.PATCH` with the release page, whose text is the changelog
    entry (`python tools/changelog.py notes x.y.z`), and, from version 1.0.0,
    moves `vMAJOR` to the commit when this is the highest version of its major.
@@ -73,7 +72,7 @@ released this repository only and is removed.
    git tag -f v1 <commit> && git push -f origin v1
    ```
    and create the release page with the notes of the changelog entry.
-7. **Verify.** One repository pinned to the previous exact tag still runs the
+6. **Verify.** One repository pinned to the previous exact tag still runs the
    same code; one repository on the major tag receives the release.
 
 ## Changelog formats and the major tag

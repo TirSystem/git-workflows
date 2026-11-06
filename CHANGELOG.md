@@ -20,6 +20,13 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+### Changed
+
+- The scoped workflow `release.yml` has no form when it is started by hand: the
+  version to release is the newest numbered entry of `CHANGELOG.md`, and a
+  manual run releases it after the checks. The inputs `version` and `dry_run`
+  are removed; the changelog check of a pull request replaces the dry run.
+
 ## [3.1.0] - 2026-11-05
 
 ### Added

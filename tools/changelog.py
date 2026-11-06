@@ -164,6 +164,14 @@ def validate(text: str) -> list[str]:
     return problems
 
 
+def latest_version(text: str) -> str:
+    """Return the newest released version (the first numbered entry with changes)."""
+    for release in parse(text):
+        if release.version is not None and release.has_changes:
+            return release.name
+    raise LookupError("the changelog has no released version with changes")
+
+
 def notes(text: str, version: str) -> str:
     """Return the Markdown of the release page for ``version``."""
     for release in parse(text):

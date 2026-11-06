@@ -20,7 +20,8 @@ tag, and exact tags are never moved. It reads its settings from the environment:
     SOURCE_REPOSITORY    owner/repo that is released
     RELEASE_CREDENTIALS  the organization secret TOKEN_FOR_GITEA_RELEASE, as
                          clear text; there is no fallback to another token
-    RELEASE_VERSION      the version, for example 1.0.0 (no leading v)
+    RELEASE_VERSION      optional, the version, for example 1.0.0 (no leading v);
+                         when empty, the newest released entry of CHANGELOG.md
     RELEASE_SHA          the commit to release
     RELEASE_DRY_RUN      "true" (default) checks and prints, writes nothing
     RELEASE_BRANCH       optional override of the default branch (for tests)
@@ -251,7 +252,6 @@ def _major_outcome(major, moves, exact, version):
 
 
 def main(request=request_json):
-    version = parse_version(os.environ.get("RELEASE_VERSION"))
     owner, repo = split_repository(os.environ.get("SOURCE_REPOSITORY"))
     sha = (os.environ.get("RELEASE_SHA") or "").strip()
     if not re.fullmatch(r"[0-9a-f]{40}", sha):
@@ -264,11 +264,18 @@ def main(request=request_json):
     changelog_path = Path(os.environ.get("CHANGELOG_FILE") or "CHANGELOG.md")
 
     changelog = load_changelog_module()
-    name = "{}.{}.{}".format(*version)
     try:
         text = changelog_path.read_text(encoding="utf-8")
     except OSError as error:
         raise WorkflowError("configuration", f"Cannot read {changelog_path}: {error}") from None
+    requested = (os.environ.get("RELEASE_VERSION") or "").strip()
+    if not requested:
+        try:
+            requested = changelog.latest_version(text)
+        except LookupError as error:
+            raise WorkflowError("validation", str(error)) from None
+    version = parse_version(requested)
+    name = "{}.{}.{}".format(*version)
     notes = release_notes(text, name, changelog)
 
     api_url = os.environ["GITEA_API_URL"].rstrip("/")
