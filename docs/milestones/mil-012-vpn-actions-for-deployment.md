@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-19 | Accepted | Jens Tirsvad Nielsen | S01 | Added the results of tasks 1, 6 and 9 and the fixes from the review of the first pull request; reviewed (RC-082), accepted by the author in chat as stand-in for S01 | [3325bea] |
-| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Out of scope for now: the product owner closed the open tasks on 2026-11-06 (issues 183 to 186, 188 to 190, 192 and 193: the trials on a runner, the guides and wiki pages, the ADR review, the framework templates and the final review); the target date 2026-11-06 no longer applies. Release 2.2.0 (issue 191) is done. Review pending | pending |
+| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Out of scope for now: the product owner closed the open tasks on 2026-11-06 (issues 183 to 186, 188 to 190, 192 and 193: the trials on a runner, the guides and wiki pages, the ADR review, the framework templates and the final review); the target date 2026-11-06 no longer applies. Release 2.2.0 (issue 191) is done. Review pending | [de1d43b] |
 
 ---
 
@@ -126,3 +126,4 @@ Tasks 2, 3, 4, 5, 7, 8, 10, 11 and 12 are open: they need the trial runner (task
 [ADR-0011]: ../adr/adr-0011-vpn-composite-actions.md
 [PP-001]: ../project-plan.md
 [3325bea]: https://git.tirsystem.com/TirSystem/github-action/commit/3325bea772304b54e8dfffad592b4afadc3ec2b8
+[de1d43b]: https://git.tirsystem.com/TirSystem/git-workflows/commit/de1d43bba89cdf002589369dcb39d50f84f5c3ef
