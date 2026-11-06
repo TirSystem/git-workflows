@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-105), accepted by the author in chat on 2026-11-06 as stand-in for S01, not independent | pending |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-105), accepted by the author in chat on 2026-11-06 as stand-in for S01, not independent | [4b2740b] |
 
 ---
 
@@ -101,3 +101,4 @@ until it is done needs two manual runs; S01 confirms or moves the date.
 [MIL-018]: ./mil-018-scoped-release-workflow.md
 [ADR-0017]: ../adr/adr-0017-scoped-release-workflow.md
 [RC-105]: ../sqa/reviews/rc-105-mil-020-pp-001.md
+[4b2740b]: https://git.tirsystem.com/TirSystem/git-workflows/commit/4b2740be3c5e85626bda44e1dd1e66d390133c01

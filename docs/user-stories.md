@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.18 to US-001.20 (code metrics and coverage badges, MIL-010 task 1); reviewed (RC-070) | [9ca9673] |
-| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.21 to US-001.23 (release when the changelog changes, MIL-020 task 1); reviewed (RC-106), accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Added US-001.21 to US-001.23 (release when the changelog changes, MIL-020 task 1); reviewed (RC-106), accepted by the author in chat as stand-in for S01, not independent | [4b2740b] |
 
 ---
 
@@ -363,3 +363,4 @@ behaviour is tested rather than built.
 [RC-106]: ./sqa/reviews/rc-106-us-001-21-23.md
 [1bc56f8]: https://git.tirsystem.com/TirSystem/github-action/commit/1bc56f8b771531f221f218fc00b147ecc73c051e
 [9ca9673]: https://git.tirsystem.com/TirSystem/github-action/commit/9ca9673b00351cf913966f347c4da09890ed3f1f
+[4b2740b]: https://git.tirsystem.com/TirSystem/git-workflows/commit/4b2740be3c5e85626bda44e1dd1e66d390133c01
