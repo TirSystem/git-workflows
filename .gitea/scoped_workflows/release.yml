@@ -1,12 +1,14 @@
 name: Release
 
-# Scoped workflow (ADR-0017): it is started by hand in any repository of an
-# organization, with no form. The version is read from CHANGELOG.md: the newest
-# numbered entry. It creates the version tag, the release page from that entry
-# and, from 1.0.0, moves the major tag, and only when the commit is the tip of
-# the default branch, its run "Validate / validate (push)" is green and the tag
-# does not exist yet. What a release is checked against is the changelog, which
-# the pull request check below keeps releasable.
+# Scoped workflow (ADR-0017, amended by MIL-020): a release is made when the
+# changelog changes. On a push to the default branch that changes CHANGELOG.md
+# the version is the newest numbered entry of the file; if its tag does not
+# exist yet the workflow creates the tag, the release page from that entry and,
+# from 1.0.0, moves the major tag. It waits for the run "Validate / validate
+# (push)" of the same commit, which starts at the same time, and releases only
+# when it is green and the commit is the tip of the default branch. A push that
+# adds no numbered entry finds the tag and ends green with nothing written. It
+# can also be started by hand, with no form, to retry a release that failed.
 # It requires the organization secret TOKEN_FOR_GITEA_RELEASE and has no
 # fallback to the token of the run or to any other secret. The script is a file
 # of TirSystem/git-workflows (tools/release.py), fetched at v3.
@@ -18,6 +20,9 @@ name: Release
 # green.
 on:
   pull_request:
+  push:
+    paths:
+      - CHANGELOG.md
   workflow_dispatch:
 
 concurrency:
@@ -49,11 +54,15 @@ jobs:
           python3 shared-scripts/tools/changelog.py check
 
       - name: Check and publish the release
-        if: gitea.event_name == 'workflow_dispatch'
+        if: >-
+          gitea.event_name == 'workflow_dispatch' ||
+          (gitea.event_name == 'push' &&
+          gitea.ref == format('refs/heads/{0}', gitea.event.repository.default_branch))
         env:
           GITEA_API_URL: ${{ gitea.api_url }}
           SOURCE_REPOSITORY: ${{ gitea.repository }}
           RELEASE_CREDENTIALS: ${{ secrets.TOKEN_FOR_GITEA_RELEASE }}
           RELEASE_DRY_RUN: "false"
+          RELEASE_EVENT: ${{ gitea.event_name }}
           RELEASE_SHA: ${{ gitea.sha }}
         run: python3 shared-scripts/tools/release.py

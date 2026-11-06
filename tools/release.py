@@ -1,15 +1,23 @@
 """Create a release of a repository: version tag, release page, major tag.
 
-Run by the scoped workflow .gitea/scoped_workflows/release.yml, which an
-operator starts by hand in any repository (ADR-0017, ADR-0006, ADR-0007). It
-publishes a release only when all of these hold, and stops before any write
-when one does not:
+Run by the scoped workflow .gitea/scoped_workflows/release.yml in any
+repository, on a push to the default branch that changes CHANGELOG.md, or by
+hand to retry (ADR-0017, ADR-0006, ADR-0007, MIL-020). It publishes a release
+only when all of these hold, and stops before any write when one does not:
 
     - the version is MAJOR.MINOR.PATCH and CHANGELOG.md has an entry for it, in
       either heading format (`## [1.2.0] - date` or `## 0.18.0 (date)`);
     - the commit is the tip of the default branch, which is read from the API;
     - the validation run of that commit ("Validate / validate (push)") is green;
+      on a push it runs at the same time as the release, so the script waits
+      for it up to RELEASE_VALIDATION_WAIT_SECONDS;
     - the tag vMAJOR.MINOR.PATCH does not exist yet.
+
+When no version is given, the newest numbered entry of the changelog is the
+version. If its tag exists already there is nothing to release: the run ends
+green and writes nothing, so an edit of the changelog that adds no entry, and a
+second run, are safe. On a push, a commit that is no longer the tip is skipped
+the same way, because the newer commit has its own run.
 
 It then creates the release page (which creates the tag) from the changelog
 entry. From version 1.0.0 it also moves the major tag vMAJOR to the commit when
@@ -24,6 +32,11 @@ tag, and exact tags are never moved. It reads its settings from the environment:
                          when empty, the newest released entry of CHANGELOG.md
     RELEASE_SHA          the commit to release
     RELEASE_DRY_RUN      "true" (default) checks and prints, writes nothing
+    RELEASE_EVENT        the event that started the run (push or
+                         workflow_dispatch); only "push" skips a commit that is
+                         not the tip
+    RELEASE_VALIDATION_WAIT_SECONDS
+                         how long to wait for the validation run (default 600)
     RELEASE_BRANCH       optional override of the default branch (for tests)
     VALIDATION_CONTEXT   the status context that must be green
                          (default: Validate / validate (push))
@@ -39,6 +52,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -46,6 +60,8 @@ from pathlib import Path
 
 REQUEST_TIMEOUT_SECONDS = 30
 DEFAULT_CONTEXT = "Validate / validate (push)"
+DEFAULT_VALIDATION_WAIT_SECONDS = 600
+VALIDATION_POLL_SECONDS = 15
 FIRST_MAJOR_TAG_VERSION = (1, 0, 0)
 # Every call the script can make, relative to /repos/{owner}/{repo}. The
 # credentials guide lists the same calls and a test compares the two.
@@ -126,6 +142,18 @@ def parse_version(raw):
     return tuple(int(part) for part in match.groups())
 
 
+def parse_wait(raw):
+    """Return the seconds to wait for the validation run, or raise a configuration error."""
+    text = (raw or "").strip()
+    if not text:
+        return DEFAULT_VALIDATION_WAIT_SECONDS
+    if not text.isdigit():
+        raise WorkflowError(
+            "configuration", f"RELEASE_VALIDATION_WAIT_SECONDS must be a whole number of seconds, not '{text}'."
+        )
+    return int(text)
+
+
 def split_repository(full_name):
     owner, separator, repo = (full_name or "").partition("/")
     if not separator or not owner or not repo:
@@ -166,31 +194,51 @@ def default_branch(api, headers, request):
     return name
 
 
-def check_commit(api, headers, request, sha, branch, context):
-    """The commit is the tip of the branch and its validation run is green."""
+def tip_of(api, headers, request, branch):
+    """Return the commit id at the tip of the branch, or an empty string."""
     tip = request(f"{api}/branches/{urllib.parse.quote(branch, safe='')}", headers=headers)
-    tip_sha = (tip or {}).get("commit", {}).get("id", "")
-    if tip_sha != sha:
-        raise WorkflowError(
-            "validation",
-            f"{sha[:7]} is not the tip of {branch} ({tip_sha[:7] or 'unknown'}); "
-            "release from the latest commit of the default branch.",
-        )
+    return (tip or {}).get("commit", {}).get("id", "")
+
+
+def find_validation(api, headers, request, sha, context):
+    """Return (context as reported, state) of the validation run, or (None, None)."""
     status = request(f"{api}/commits/{sha}/status", headers=headers) or {}
     for item in status.get("statuses", []):
         # A scoped workflow reports as "<owner>/<repository>: <context>" in the repository it runs in.
         found = item.get("context") or ""
         if found == context or found.endswith(f": {context}"):
-            if item.get("status") != "success":
+            return found, item.get("status")
+    return None, None
+
+
+def wait_for_validation(api, headers, request, sha, context, limit, sleep, clock):
+    """Return when the validation run of the commit is green.
+
+    A run that has not been reported yet or is pending is waited for, up to
+    limit seconds, because on a push it starts at the same time as the release.
+    A run that ended without success stops the release at once.
+    """
+    deadline = clock() + limit
+    while True:
+        found, state = find_validation(api, headers, request, sha, context)
+        if state == "success":
+            return
+        if state not in (None, "pending"):
+            raise WorkflowError(
+                "validation", f"The validation run '{found}' of {sha[:7]} is {state}, not success."
+            )
+        if clock() >= deadline:
+            if state is None:
                 raise WorkflowError(
                     "validation",
-                    f"The validation run '{found}' of {sha[:7]} is {item.get('status')}, not success.",
+                    f"No validation run '{context}' was found for {sha[:7]} after waiting {limit} seconds; "
+                    "run it first.",
                 )
-            return
-    raise WorkflowError(
-        "validation",
-        f"No validation run '{context}' was found for {sha[:7]}; wait for it or run it first.",
-    )
+            raise WorkflowError(
+                "validation",
+                f"The validation run '{found}' of {sha[:7]} was still pending after {limit} seconds.",
+            )
+        sleep(VALIDATION_POLL_SECONDS)
 
 
 def plan_tags(tags, version):
@@ -251,7 +299,7 @@ def _major_outcome(major, moves, exact, version):
     return f"The major tag {major} was not moved: a higher {version[0]}.x release exists."
 
 
-def main(request=request_json):
+def main(request=request_json, sleep=time.sleep, clock=time.monotonic):
     owner, repo = split_repository(os.environ.get("SOURCE_REPOSITORY"))
     sha = (os.environ.get("RELEASE_SHA") or "").strip()
     if not re.fullmatch(r"[0-9a-f]{40}", sha):
@@ -262,6 +310,8 @@ def main(request=request_json):
     dry_run = (os.environ.get("RELEASE_DRY_RUN") or "true").strip().lower() != "false"
     context = os.environ.get("VALIDATION_CONTEXT") or DEFAULT_CONTEXT
     changelog_path = Path(os.environ.get("CHANGELOG_FILE") or "CHANGELOG.md")
+    event = (os.environ.get("RELEASE_EVENT") or "").strip()
+    wait = parse_wait(os.environ.get("RELEASE_VALIDATION_WAIT_SECONDS"))
 
     changelog = load_changelog_module()
     try:
@@ -269,7 +319,8 @@ def main(request=request_json):
     except OSError as error:
         raise WorkflowError("configuration", f"Cannot read {changelog_path}: {error}") from None
     requested = (os.environ.get("RELEASE_VERSION") or "").strip()
-    if not requested:
+    derived = not requested
+    if derived:
         try:
             requested = changelog.latest_version(text)
         except LookupError as error:
@@ -287,8 +338,22 @@ def main(request=request_json):
     }
 
     branch = (os.environ.get("RELEASE_BRANCH") or "").strip() or default_branch(api, headers, request)
-    check_commit(api, headers, request, sha, branch, context)
     tags = list_tag_names(api, headers, request)
+    exact = "v{}.{}.{}".format(*version)
+    if derived and exact in tags:
+        print(f"Nothing to release: the newest entry of the changelog, {exact}, has its tag already.")
+        return 0
+    tip_sha = tip_of(api, headers, request, branch)
+    if tip_sha != sha:
+        if event == "push":
+            print(f"Nothing to release from {sha[:7]}: {branch} has moved on to {tip_sha[:7]}, which has its own run.")
+            return 0
+        raise WorkflowError(
+            "validation",
+            f"{sha[:7]} is not the tip of {branch} ({tip_sha[:7] or 'unknown'}); "
+            "release from the latest commit of the default branch.",
+        )
+    wait_for_validation(api, headers, request, sha, context, wait, sleep, clock)
     exact, major, moves = plan_tags(tags, version)
     print(f"Checks passed for {exact} on {sha[:7]}: changelog entry, tip of {branch}, green run, new tag.")
 

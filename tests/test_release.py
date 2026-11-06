@@ -1,4 +1,4 @@
-"""Offline tests for tools/release.py and .gitea/scoped_workflows/release.yml (ADR-0017)."""
+"""Offline tests for tools/release.py and .gitea/scoped_workflows/release.yml (ADR-0017, MIL-020)."""
 
 import pytest
 import yaml
@@ -55,6 +55,7 @@ class FakeGitea:
         self.default_branch = default_branch
         self.calls = []
         self.writes = []
+        self.status_reads = 0
 
     def __call__(self, url, method="GET", headers=None, body=None):
         path = url.split("?")[0]
@@ -68,9 +69,13 @@ class FakeGitea:
         if path.endswith(f"/branches/{self.default_branch}"):
             return {"commit": {"id": self.tip}}
         if path.endswith(f"/commits/{SHA}/status"):
-            if self.status is None:
+            self.status_reads += 1
+            status = self.status
+            if isinstance(status, list):
+                status = status.pop(0) if len(status) > 1 else status[0]
+            if status is None:
                 return {"statuses": []}
-            return {"statuses": [{"context": self.context, "status": self.status}]}
+            return {"statuses": [{"context": self.context, "status": status}]}
         if path.endswith("/tags"):
             return [{"name": name} for name in self.tags] if "page=1" in url else []
         raise AssertionError(f"unexpected request {method} {url}")
@@ -88,16 +93,34 @@ def env(tmp_path, monkeypatch):
         "RELEASE_SHA": SHA,
         "RELEASE_DRY_RUN": "false",
         "CHANGELOG_FILE": str(changelog),
+        "RELEASE_VALIDATION_WAIT_SECONDS": "0",
     }
     for key, value in values.items():
         monkeypatch.setenv(key, value)
     monkeypatch.delenv("RELEASE_BRANCH", raising=False)
+    monkeypatch.delenv("RELEASE_EVENT", raising=False)
     monkeypatch.delenv("VALIDATION_CONTEXT", raising=False)
     return monkeypatch
 
 
-def run(gitea):
-    return release.main(request=gitea)
+class Clock:
+    """A clock that only moves when the script sleeps, so a wait takes no real time."""
+
+    def __init__(self):
+        self.now = 0
+        self.sleeps = []
+
+    def monotonic(self):
+        return self.now
+
+    def sleep(self, seconds):
+        self.sleeps.append(seconds)
+        self.now += seconds
+
+
+def run(gitea, clock=None):
+    clock = clock or Clock()
+    return release.main(request=gitea, sleep=clock.sleep, clock=clock.monotonic)
 
 
 def test_green_commit_with_entry_creates_release_and_major_tag(env):
@@ -249,10 +272,10 @@ def test_scoped_status_has_the_source_repository_as_prefix(env):
 
 
 def test_prefixed_status_that_is_not_green_stops_the_release(env):
-    gitea = FakeGitea(context="TirSystem/git-workflows: Validate / validate (push)", status="pending")
+    gitea = FakeGitea(context="TirSystem/git-workflows: Validate / validate (push)", status="failure")
     with pytest.raises(release.WorkflowError) as error:
         run(gitea)
-    assert "pending, not success" in str(error.value)
+    assert "failure, not success" in str(error.value)
 
 
 def test_a_context_that_only_ends_alike_is_not_the_validation_status(env):
@@ -337,11 +360,12 @@ def pull_request_step():
     return next(step for step in steps if step["name"] == "Check the changelog of the pull request")
 
 
-def test_workflow_is_scoped_and_runs_on_pull_request_and_by_hand():
+def test_workflow_runs_on_pull_request_on_a_changelog_push_and_by_hand():
     data = load_workflow()
     assert data["name"] == "Release"
     triggers = data.get("on", data.get(True))
-    assert list(triggers) == ["pull_request", "workflow_dispatch"]
+    assert list(triggers) == ["pull_request", "push", "workflow_dispatch"]
+    assert triggers["push"] == {"paths": ["CHANGELOG.md"]}
     assert not (triggers["workflow_dispatch"] or {}).get("inputs")
 
 
@@ -369,9 +393,13 @@ def test_pull_request_step_uses_no_secret_and_no_release_env():
     assert "release.py" not in step["run"]
 
 
-def test_release_step_runs_only_on_dispatch_and_keeps_the_secret():
+def test_release_step_runs_by_hand_or_on_a_push_to_the_default_branch_and_keeps_the_secret():
     step = release_step()
-    assert step["if"] == "gitea.event_name == 'workflow_dispatch'"
+    condition = step["if"]
+    assert "gitea.event_name == 'workflow_dispatch'" in condition
+    assert "gitea.event_name == 'push'" in condition
+    assert "gitea.ref == format('refs/heads/{0}', gitea.event.repository.default_branch)" in condition
+    assert "pull_request" not in condition
     assert step["run"] == "python3 shared-scripts/tools/release.py"
     assert step["env"]["RELEASE_CREDENTIALS"] == "${{ secrets.TOKEN_FOR_GITEA_RELEASE }}"
     assert "changelog.py" not in step["run"]
@@ -421,6 +449,7 @@ def test_workflow_passes_the_settings_the_script_reads():
         "SOURCE_REPOSITORY": "${{ gitea.repository }}",
         "RELEASE_CREDENTIALS": "${{ secrets.TOKEN_FOR_GITEA_RELEASE }}",
         "RELEASE_DRY_RUN": "false",
+        "RELEASE_EVENT": "${{ gitea.event_name }}",
         "RELEASE_SHA": "${{ gitea.sha }}",
     }
 
@@ -442,3 +471,104 @@ def test_changelog_without_a_released_version_stops_before_any_write(env, tmp_pa
         run(gitea)
     assert error.value.category == "validation"
     assert gitea.writes == []
+
+
+def test_pending_validation_is_waited_for_and_then_releases(env):
+    env.setenv("RELEASE_VALIDATION_WAIT_SECONDS", "600")
+    gitea = FakeGitea(status=["pending", "pending", "success"])
+    clock = Clock()
+    assert run(gitea, clock) == 0
+    assert clock.sleeps == [release.VALIDATION_POLL_SECONDS] * 2
+    assert gitea.status_reads == 3
+    assert gitea.writes[0][1] == "/releases"
+
+
+def test_validation_that_is_not_reported_yet_is_waited_for(env):
+    env.setenv("RELEASE_VALIDATION_WAIT_SECONDS", "600")
+    gitea = FakeGitea(status=[None, "success"])
+    assert run(gitea) == 0
+    assert gitea.status_reads == 2
+
+
+def test_validation_that_stays_pending_stops_the_release_after_the_limit(env):
+    env.setenv("RELEASE_VALIDATION_WAIT_SECONDS", "45")
+    gitea = FakeGitea(status="pending")
+    clock = Clock()
+    with pytest.raises(release.WorkflowError) as error:
+        run(gitea, clock)
+    assert error.value.category == "validation"
+    assert "still pending after 45 seconds" in str(error.value)
+    assert sum(clock.sleeps) == 45
+    assert gitea.writes == []
+
+
+def test_validation_that_never_appears_stops_the_release_after_the_limit(env):
+    env.setenv("RELEASE_VALIDATION_WAIT_SECONDS", "30")
+    gitea = FakeGitea(status=None)
+    with pytest.raises(release.WorkflowError) as error:
+        run(gitea)
+    assert "No validation run" in str(error.value) and "after waiting 30 seconds" in str(error.value)
+    assert gitea.writes == []
+
+
+def test_validation_that_ends_red_stops_the_release_without_waiting(env):
+    env.setenv("RELEASE_VALIDATION_WAIT_SECONDS", "600")
+    gitea = FakeGitea(status=["pending", "failure"])
+    clock = Clock()
+    with pytest.raises(release.WorkflowError) as error:
+        run(gitea, clock)
+    assert "failure, not success" in str(error.value)
+    assert len(clock.sleeps) == 1
+    assert gitea.writes == []
+
+
+@pytest.mark.parametrize("value", ["soon", "-5", "1.5"])
+def test_wait_must_be_a_whole_number_of_seconds(env, value):
+    env.setenv("RELEASE_VALIDATION_WAIT_SECONDS", value)
+    with pytest.raises(release.WorkflowError) as error:
+        run(FakeGitea())
+    assert error.value.category == "configuration"
+    assert "RELEASE_VALIDATION_WAIT_SECONDS" in str(error.value)
+
+
+def test_default_wait_is_ten_minutes(env):
+    env.delenv("RELEASE_VALIDATION_WAIT_SECONDS")
+    gitea = FakeGitea(status="pending")
+    clock = Clock()
+    with pytest.raises(release.WorkflowError):
+        run(gitea, clock)
+    assert sum(clock.sleeps) >= 600
+
+
+def test_newest_entry_that_is_already_tagged_is_a_green_no_op(env, capsys):
+    env.delenv("RELEASE_VERSION")
+    gitea = FakeGitea(tags=["v1.1.0", "v1.0.0", "v1"])
+    assert run(gitea) == 0
+    assert gitea.writes == []
+    assert gitea.status_reads == 0
+    assert "Nothing to release" in capsys.readouterr().out
+
+
+def test_a_version_named_by_hand_that_is_already_tagged_is_still_refused(env):
+    gitea = FakeGitea(tags=["v1.1.0"])
+    with pytest.raises(release.WorkflowError) as error:
+        run(gitea)
+    assert "already exists" in str(error.value)
+
+
+def test_a_push_that_is_no_longer_the_tip_is_skipped_without_error(env, capsys):
+    env.delenv("RELEASE_VERSION")
+    env.setenv("RELEASE_EVENT", "push")
+    gitea = FakeGitea(tip="b" * 40)
+    assert run(gitea) == 0
+    assert gitea.writes == []
+    assert "has its own run" in capsys.readouterr().out
+
+
+def test_a_run_by_hand_from_a_commit_that_is_not_the_tip_is_refused(env):
+    env.delenv("RELEASE_VERSION")
+    env.setenv("RELEASE_EVENT", "workflow_dispatch")
+    gitea = FakeGitea(tip="b" * 40)
+    with pytest.raises(release.WorkflowError) as error:
+        run(gitea)
+    assert "not the tip" in str(error.value)
