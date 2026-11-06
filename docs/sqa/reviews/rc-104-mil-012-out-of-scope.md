@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go-with-conditions, prepared by the AI in supervised mode | pending |
+| 2026-11-06 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go-with-conditions, prepared by the AI in supervised mode | [67ffbeb] |
 
 ---
 
@@ -51,3 +51,4 @@ Go-with-conditions - the row records the product owner's decision accurately: it
 [RC-082]: ./rc-082-mil-012-results.md
 [BC-001]: ../../business-case.md
 [PP-001]: ../../project-plan.md
+[67ffbeb]: https://git.tirsystem.com/TirSystem/git-workflows/commit/67ffbeb2f61a432732ddc3b40dbe40df97bf6247
