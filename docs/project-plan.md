@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015], [MIL-016], [MIL-017], [MIL-018], [MIL-019], [MIL-020], [RC-105], [RC-096], [RC-090] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015], [MIL-016], [MIL-017], [MIL-018], [MIL-019], [MIL-020], [RC-105], [RC-108], [RC-096], [RC-090] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | MIL-016 names OpenGrep instead of Semgrep (ADR-0015); reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
-| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-020 added (release when the changelog changes); reviewed (RC-105), accepted by the author in chat as stand-in for S01, not independent | [4b2740b] |
+| 2026-11-06 | Deprecated | Jens Tirsvad Nielsen | S01 | MIL-020 added (release when the changelog changes); reviewed (RC-105), accepted by the author in chat as stand-in for S01, not independent | [4b2740b] |
+| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-018 window and decision date corrected to the dates it was delivered; reviewed (RC-108), accepted by the author in chat as stand-in for S01, not independent | pending |
 
 ---
 
@@ -29,9 +29,9 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 - MIL-015 (rename the repository references to git-workflows) runs from 2026-10-28 to its Target Date, 2026-11-06, proposed by the author because the branch protection of `main` required a check named after the old repository name; it overlaps MIL-012. Pull request 218 renamed the live files and the check was removed on 2026-10-27, so the milestone keeps the callers, the check of the old name on the instance, the 16 project documents for S01 and the release. Its documentation task follows the merge of MIL-014. The repository was called `github-action` until its rename; the milestones, ADRs and review records written under that name are not rewritten. Task 8 (added 2026-10-29) names the Gitea secrets `TOKEN_FOR_<host>_<purpose>`; it is reviewed in RC-093.
 - MIL-016 (static security scan with OpenGrep as a scoped workflow) runs from 2026-11-30 to its Target Date, 2026-12-11, proposed by the author; it follows MIL-014, whose delivery of scoped workflows it uses, and MIL-013 (release 2.3.0). It traces to objective O8 of the Business Case, added with it (RC-089).
 - MIL-017 (validate every repository with a scoped workflow) runs from 2026-12-14 to its Target Date, 2026-12-18, proposed by the author; it follows MIL-016 and uses the delivery of scoped workflows that MIL-014 verified. It traces to objective O4.
-- MIL-018 (release any repository with a scoped workflow) runs from 2026-12-21 to its Target Date, 2026-12-30, proposed by the author; it follows MIL-017, whose status it requires, and ends before MIL-007 starts on 2027-01-04. It traces to objective O4 and describes the secret `TOKEN_FOR_GITEA_RELEASE`. S01 confirmed the dates in chat on 2026-10-29, including that MIL-018 ends four days after the last decision date 2026-12-26, as for MIL-007 (RC-092).
+- MIL-018 (release any repository with a scoped workflow) runs from 2026-10-29 to its Target Date, 2026-11-05, the dates it was delivered; it traces to objective O4 and describes the secret `TOKEN_FOR_GITEA_RELEASE`. It was planned for 2026-12-21 to 2026-12-30, after MIL-017, and S01 confirmed those dates on 2026-10-29 (RC-092). The scoped release was written and released as 3.0.0 on 2026-10-29, and the trial on three repositories and release 3.1.0 were made on 2026-11-05, so the window moved ahead of MIL-017 (2026-12-14 to 2026-12-18) and its dependency on that milestone is met by the scoped validation that MIL-014 already delivered. The dates were corrected on 2026-11-07 (RC-108); the window now ends before the last decision date 2026-12-26.
 - MIL-019 (publish accepted milestones with a scoped workflow) runs from 2027-02-01 to its Target Date, 2027-02-12, proposed by the author; it follows MIL-010 (2027-01-30) because January is full, and S01 may move it ahead of MIL-016. It traces to objective O4 and depends on MIL-014 and MIL-015.
-- MIL-020 (release when the changelog changes) runs from 2026-11-06 to its Target Date, 2026-11-13, proposed by the author; it amends ADR-0017 of MIL-018, which was released as 3.0.0 on 2026-10-29, so its dependency is met ahead of the 2026-12-21 window the plan still shows for MIL-018. It traces to objective O4. The date is inside the plan window (last decision date 2026-12-26); S01 confirmed it in chat on 2026-11-06 by accepting the milestone (RC-105).
+- MIL-020 (release when the changelog changes) runs from 2026-11-06 to its Target Date, 2026-11-13, proposed by the author; it amends ADR-0017 of MIL-018, which was released as 3.0.0 on 2026-10-29, so its dependency is met (the window of MIL-018 was corrected in RC-108). It traces to objective O4. The date is inside the plan window (last decision date 2026-12-26); S01 confirmed it in chat on 2026-11-06 by accepting the milestone (RC-105).
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -56,7 +56,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Rename the repository references to git-workflows | [MIL-015] | 2026-10-28 to 2026-11-06 | 2026-11-06 | S05 | None (technical tasks) | Code, configuration and user documentation name TirSystem/git-workflows, callers updated, required checks of main producible, Gitea secrets named TOKEN_FOR_<host>_<purpose>, released | Not created yet (the sync runs after acceptance) |
 | Static security scan with OpenGrep as a scoped workflow | [MIL-016] | 2026-11-30 to 2026-12-11 | 2026-12-11 | S05 | None (technical tasks) | Scoped OpenGrep workflow with a pinned rules checkout, ADR-0015, guide, adoption row, wiki in three languages, trial on four repositories, released as the next minor | Not created yet (the sync runs after acceptance) |
 | Validate every repository with a scoped workflow | [MIL-017] | 2026-12-14 to 2026-12-18 | 2026-12-18 | S05 | None (technical tasks) | Scoped validate workflow (workflow files and shell scripts), ADR, guide, adoption row, wiki in three languages, trial on four repositories, released as the next minor | Not created yet (the sync runs after acceptance) |
-| Release any repository with a scoped workflow | [MIL-018] | 2026-12-21 to 2026-12-30 | 2026-12-30 | S05 | None (technical tasks) | Scoped release workflow, general `release.py`, `TOKEN_FOR_GITEA_RELEASE` described, old `release.yml` removed, dry runs in three repositories, released as the next major | Not created yet (the sync runs after acceptance) |
+| Release any repository with a scoped workflow | [MIL-018] | 2026-10-29 to 2026-11-05 | 2026-11-05 | S05 | None (technical tasks) | Scoped release workflow, general `release.py`, `TOKEN_FOR_GITEA_RELEASE` described, old `release.yml` removed, dry runs in three repositories, released as the next major | Not created yet (the sync runs after acceptance) |
 | Publish accepted milestones with a scoped workflow | [MIL-019] | 2027-02-01 to 2027-02-12 | 2027-02-12 | S05 | None (technical tasks) | Scoped sync-milestones workflow, ADR, guide, copies in the repositories removed, released | [Milestone MIL-019] |
 | Release when the changelog changes | [MIL-020] | 2026-11-06 to 2026-11-13 | 2026-11-13 | S05 | None (technical tasks); US-001.21 to US-001.23 | The release starts on a push that changes `CHANGELOG.md`, waits for the validation of the same commit, and is a green no-op for a version already tagged; ADR-0017 amended; released by merging | Not created yet (the sync runs after acceptance) |
 
@@ -97,8 +97,8 @@ Project starts 2026-10-05
 [MIL-016 Go/No-Go] happens 2026-12-11
 [MIL-017 Validate] starts 2026-12-14 and ends 2026-12-18
 [MIL-017 Go/No-Go] happens 2026-12-18
-[MIL-018 Release] starts 2026-12-21 and ends 2026-12-30
-[MIL-018 Go/No-Go] happens 2026-12-30
+[MIL-018 Release] starts 2026-10-29 and ends 2026-11-05
+[MIL-018 Go/No-Go] happens 2026-11-05
 [MIL-020 Changelog release] starts 2026-11-06 and ends 2026-11-13
 [MIL-020 Go/No-Go] happens 2026-11-13
 @endgantt
@@ -349,6 +349,7 @@ no tests, no release process.
 [MIL-019]: ./milestones/mil-019-scoped-milestone-sync.md
 [MIL-020]: ./milestones/mil-020-release-on-changelog-change.md
 [RC-105]: ./sqa/reviews/rc-105-mil-020-pp-001.md
+[RC-108]: ./sqa/reviews/rc-108-mil-018-window.md
 [RC-096]: ./sqa/reviews/rc-096-mil-019-pp-001.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19

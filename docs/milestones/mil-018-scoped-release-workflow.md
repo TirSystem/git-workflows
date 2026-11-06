@@ -4,12 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-018 |
-| CrossReference | [BC-001], [MIL-014], [MIL-017], [ADR-0005], [ADR-0006], [ADR-0007], [ADR-0013], [RC-092], [US-001] |
+| CrossReference | [BC-001], [MIL-014], [MIL-017], [ADR-0005], [ADR-0006], [ADR-0007], [ADR-0013], [RC-092], [RC-108], [US-001] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-092), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [1690cf7] |
+| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-092), accepted by the author in chat on 2026-10-29 as stand-in for S01, not independent | [1690cf7] |
+| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | Target Date corrected to the date of delivery, 2026-11-05; reviewed (RC-108), accepted by the author in chat as stand-in for S01, not independent | pending |
 
 ---
 
@@ -80,7 +81,7 @@ workflow.
 
 ## Target Date
 
-2026-12-30 — proposed by the author; the Business Case sets no deadline. The window (2026-12-21 to 2026-12-30) follows MIL-017 (2026-12-18) and ends before MIL-007 (2027-01-04). S01 confirmed the date, which is after the plan's last decision date 2026-12-26, in chat on 2026-10-29 (RC-092).
+2026-11-05 — the date the milestone was delivered; the Business Case sets no deadline. The window is 2026-10-29 to 2026-11-05 and lies inside the plan's window, which ends 2026-12-26. It was first set to 2026-12-21 to 2026-12-30, after MIL-017 (2026-12-18), and S01 confirmed that on 2026-10-29 (RC-092). The scoped release was written and released as 3.0.0 on 2026-10-29 and tried on three repositories, with release 3.1.0, on 2026-11-05, ahead of MIL-017; the status it requires comes from the scoped validation delivered by MIL-014. The date was corrected on 2026-11-07 (RC-108).
 
 ## Tasks
 
@@ -104,5 +105,6 @@ workflow.
 [ADR-0006]: ../adr/adr-0006-release-process-and-version-pinning.md
 [ADR-0007]: ../adr/adr-0007-release-publish-destination.md
 [ADR-0013]: ../adr/adr-0013-wiki-publishing-scoped-workflow.md
+[RC-108]: ../sqa/reviews/rc-108-mil-018-window.md
 [RC-092]: ../sqa/reviews/rc-092-mil-018-pp-001.md
 [1690cf7]: https://git.tirsystem.com/TirSystem/git-workflows/commit/1690cf749c4ffb5e0a0174fe50fceb060b6e3f1c
