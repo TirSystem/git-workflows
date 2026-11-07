@@ -32,3 +32,17 @@ jobs:
           SHELLCHECK: .venv/bin/shellcheck
           SHFMT: .venv/bin/shfmt
         run: bash tools/lint-action-scripts.sh actions
+
+  english-comments:
+    # This repository's own call of the reusable English comments workflow
+    # (MIL-013, ADR-0012). The check to mark as required in the branch
+    # protection of `main` (MIL-013 task 9, done by the repository owner).
+    if: ${{ gitea.event_name == 'pull_request' }}
+    uses: TirSystem/git-workflows/.gitea/workflows/english-comments.yml@v3
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    with:
+      # The corpus holds comments in other languages on purpose (ADR-0012).
+      exclude: "tests/fixtures/**"
