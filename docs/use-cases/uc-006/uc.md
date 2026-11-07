@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-10 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [044d8ba] |
-| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | The workflow makes the tag when the changelog entry is merged (MIL-020; action item of RC-106); accepted by the author in chat as stand-in for S01, not independent | pending |
+| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | The workflow makes the tag when the changelog entry is merged (MIL-020; action item of RC-106); accepted by the author in chat as stand-in for S01, not independent | [94e7e39] |
 
 ---
 
@@ -45,3 +45,4 @@ When a change to the workflows or their scripts is ready on the default branch, 
 [ADR-0006]: ../../adr/adr-0006-release-process-and-version-pinning.md
 [ADR-0017]: ../../adr/adr-0017-scoped-release-workflow.md
 [044d8ba]: https://git.tirsystem.com/TirSystem/github-action/commit/044d8ba21f96f4aceb807d62addc35cdcbb56051
+[94e7e39]: https://git.tirsystem.com/TirSystem/git-workflows/commit/94e7e39e0a1dcb6f0b72476ca51ae8ffd959a211
