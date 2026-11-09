@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | pending |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | [6981d08] |
 
 ---
 
@@ -65,3 +65,4 @@ Go - the amendment records the problem, the options and the measured result, and
 [MIL-016]: ../../milestones/mil-016-semgrep-scoped-workflow.md
 [QC-ADR-001]: ../../../framework/qc/artifacts/qc-adr.md
 [RC-098]: ./rc-098-adr-0015.md
+[6981d08]: https://git.tirsystem.com/TirSystem/git-workflows/commit/6981d08d82d1399b5145a22ea296725f9f5beed6

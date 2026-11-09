@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version: OpenGrep instead of Semgrep, on the owner's instruction in chat; reviewed (RC-098), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment (MIL-016 task 8): the script passes only the rule files of the languages the repository has, because a run on the runner took more than 5 minutes; reviewed (RC-110), prepared by the AI in supervised mode | pending |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment (MIL-016 task 8): the script passes only the rule files of the languages the repository has, because a run on the runner took more than 5 minutes; reviewed (RC-110), prepared by the AI in supervised mode | [6981d08] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -169,3 +169,4 @@ The rules that follow from it:
 [ADR-0013]: ./adr-0013-wiki-publishing-scoped-workflow.md
 [RC-110]: ../sqa/reviews/rc-110-adr-0015-rule-selection.md
 [d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b
+[6981d08]: https://git.tirsystem.com/TirSystem/git-workflows/commit/6981d08d82d1399b5145a22ea296725f9f5beed6
