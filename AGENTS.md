@@ -199,3 +199,23 @@ Rules that apply to every document:
    opening the PR (no amend). Supervised mode: never ask for or perform the
    merge; a reviewer merges. Autonomous mode: the AI merges, as set out in
    `Modes`.
+8. After opening a pull request, wait for its CI and fix what fails. Right
+   after opening it, or when the user gives its URL, turn on the harness's
+   auto-fix for it if it has one, so a CI failure, a merge conflict or a review
+   comment wakes the session (Claude desktop app: check `get_status`, `bind_pr`
+   the PR if it is not bound, then `set_monitor` with `auto_fix: true`); do not
+   poll the checks in a loop. A failure is fixed on the same branch with a new
+   commit, pushed, and the checks are awaited again. Auto-fix never merges, and
+   the stop rules in `Modes` (three failed rounds on the same cause, a
+   destructive action, a secret) still apply to it. Where the harness cannot
+   bind the PR, say so, read the checks from the host once the user reports the
+   run, and carry on without the monitor.
+9. Once a branch is committed, pushed, has its pull request and its CI is green,
+   delete the local branch: switch to the default branch (`git switch main`),
+   then `git branch -D <branch>`. Keep it while CI is red or pending, because
+   rule 8 fixes on it. Do it only when the working tree is clean and
+   `git rev-parse <branch>` equals `git rev-parse origin/<branch>`, so nothing
+   is lost; never delete the remote branch (the host does that on merge), a
+   branch checked out in another worktree, or a branch with unpushed commits.
+   When a fix has to be pushed later (a review comment, a conflict), recreate
+   the local branch from the remote: `git switch -c <branch> origin/<branch>`.
