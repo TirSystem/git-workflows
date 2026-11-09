@@ -285,11 +285,24 @@ def select_rules(files: list[str], rules_root: Path, work_dir: Path) -> tuple[li
     return configs, lines
 
 
+def home_exclude() -> list[str]:
+    """Return the --exclude option that keeps the scan out of the home directory when it is in the repository.
+
+    The filtered rule files are YAML files copied there; scanned as source, they give findings of their own.
+    """
+    try:
+        inside = Path(home_dir()).resolve().relative_to(Path.cwd().resolve())
+    except ValueError:
+        return []
+    return ["--exclude", inside.as_posix()] if inside.parts else []
+
+
 def scan_command(configs: list[Path]) -> list[str]:
     command = [opengrep_command(), "scan"]
     for config in configs:
         command += ["--config", str(config)]
-    command +=["--json", "--output", report_path(), "--quiet", "--disable-version-check"]
+    command += home_exclude()
+    command += ["--json", "--output", report_path(), "--quiet", "--disable-version-check"]
     return command
 
 
