@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version: OpenGrep instead of Semgrep, on the owner's instruction in chat; reviewed (RC-098), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment (MIL-016 task 8): the script passes only the rule files of the languages the repository has, because a run on the runner took more than 5 minutes; reviewed (RC-110), prepared by the AI in supervised mode | [6981d08] |
+| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version: OpenGrep instead of Semgrep, on the owner's instruction in chat; reviewed (RC-098), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Amendment (MIL-016 task 8): the script passes only the rule files of the languages the repository has, because a run on the runner took more than 5 minutes; reviewed (RC-110), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [6981d08] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
