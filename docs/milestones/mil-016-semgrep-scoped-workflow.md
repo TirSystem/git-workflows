@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-016 |
-| CrossReference | [BC-001], [MIL-013], [MIL-014], [ADR-0005], [RC-089], [RC-090], [RC-099] |
+| CrossReference | [BC-001], [MIL-013], [MIL-014], [ADR-0005], [ADR-0015], [RC-089], [RC-090], [RC-099] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Reviewed (RC-090): O8 is in the Business Case, so the text no longer calls it proposed; the ADR it writes is numbered ADR-0015 because ADR-0014 is the wiki sidebar ADR; accepted by the author in chat as stand-in for S01, not independent | [99f72c8] |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Names OpenGrep instead of Semgrep (ADR-0015, RC-098): criteria 1, 4 and 6, tasks 2, 4, 5 and 6; task 2 is done on a developer machine and still open on a runner; reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | New task 8, scan only the rule directories of the languages a repository has, because a run on a runner takes more than 5 minutes (criterion 1) with a scan of about 25 s on a developer machine; Release is now task 9; prepared by the AI in supervised mode | pending |
 
 ---
 
@@ -86,7 +86,8 @@ with the findings and the false positives counted; and a minor release.
 | 5 | Write the scoped workflow | `.gitea/scoped_workflows/opengrep.yml`: on a pull request, a push to `main` and manually; read-only permissions; installs the pinned version; runs the script fetched from this repository at the major tag; skips a repository with nothing to scan. | No | |
 | 6 | Document it | `guides/opengrep.md`, the row in `guides/adoption-rules.md`, the README section and table (the count of workflows), the wiki pages in three languages, the changelog entry. | No | |
 | 7 | Run the trial | Scan this repository and three others (one Python, one C#, one C++); count the findings and the false positives for each, silence the false positives the way the guide says, and record the decision on the blocking severity in this milestone. | No | |
-| 8 | Release | Release through the release workflow as the next minor (Added); the moving major tag moves with it. | No | |
+| 8 | Scan only the rule directories of the languages present | `tools/opengrep_scan.py` loads all twelve rule directories in every repository, so the run time is set by the rules and the cores of the runner, not by the repository: a run on a runner took more than 5 minutes (criterion 1), and 25 s on a developer machine with 20 cores. Choose the directories from the files of the repository being scanned, read from the `languages:` field of the rules; skip a directory only when no file of its languages exists, keep `generic` always, and run a directory whose languages are unknown. Print the directories chosen. Amend ADR-0015. Test that the findings of the full set and of the chosen set are equal on this repository and three others, one with C and C++. | No | [ADR-0015] |
+| 9 | Release | Release through the release workflow as the next minor (Added); the moving major tag moves with it. | No | |
 
 ---
 
@@ -94,8 +95,8 @@ with the findings and the false positives counted; and a minor release.
 [MIL-013]: ./mil-013-english-comments-check.md
 [MIL-014]: ./mil-014-wiki-publishing-scoped-again.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
+[ADR-0015]: ../adr/adr-0015-semgrep-scoped-workflow.md
 [RC-089]: ../sqa/reviews/rc-089-bc-001-o8.md
 [RC-090]: ../sqa/reviews/rc-090-mil-016.md
 [RC-099]: ../sqa/reviews/rc-099-opengrep-bc-o8-mil-016.md
-[99f72c8]: https://git.tirsystem.com/TirSystem/git-workflows/commit/99f72c8c54249ee63f124cb7752800c8ff2ade44
 [d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b
