@@ -20,6 +20,12 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [3.3.3] - 2026-11-10
+
+### Fixed
+
+- The scoped `sync-milestones.yml` failed in a repository without the framework submodule in the checkout (this one included) with exit code 141: it cloned the framework release `v0.18.0`, whose `sync-project.sh --accepted-only` fails when a milestone or review file is larger than a pipe buffer. `FRAMEWORK_TAG` in `tools/sync_milestones.py` is now `v0.20.1`, which has the fix (ADR-0018: the tag moves only in a release of this repository).
+
 ## [3.3.2] - 2026-11-09
 
 ### Fixed
