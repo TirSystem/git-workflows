@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-104 (MIL-012 out of scope for now) | [67ffbeb] |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-109 (MIL-016 task 8) | pending |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-109 (MIL-016 task 8) | [bc0157e] |
 
 ---
 
@@ -346,3 +346,4 @@ updated whenever an artifact instance is created or reviewed.
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
 [67ffbeb]: https://git.tirsystem.com/TirSystem/git-workflows/commit/67ffbeb2f61a432732ddc3b40dbe40df97bf6247
+[bc0157e]: https://git.tirsystem.com/TirSystem/git-workflows/commit/bc0157ea2a017fe8a9377e8266dfda2878467865

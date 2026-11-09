@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | pending |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | [bc0157e] |
 
 ---
 
@@ -55,3 +55,4 @@ Go - the row records the new task and its reason accurately, and claims nothing 
 [ADR-0015]: ../../adr/adr-0015-semgrep-scoped-workflow.md
 [RC-099]: ./rc-099-opengrep-bc-o8-mil-016.md
 [BC-001]: ../../business-case.md
+[bc0157e]: https://git.tirsystem.com/TirSystem/git-workflows/commit/bc0157ea2a017fe8a9377e8266dfda2878467865
