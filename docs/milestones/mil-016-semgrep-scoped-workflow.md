@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Names OpenGrep instead of Semgrep (ADR-0015, RC-098): criteria 1, 4 and 6, tasks 2, 4, 5 and 6; task 2 is done on a developer machine and still open on a runner; reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | New task 8, scan only the rule directories of the languages a repository has, because a run on a runner takes more than 5 minutes (criterion 1) with a scan of about 25 s on a developer machine; Release is now task 9; prepared by the AI in supervised mode | [bc0157e] |
+| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Names OpenGrep instead of Semgrep (ADR-0015, RC-098): criteria 1, 4 and 6, tasks 2, 4, 5 and 6; task 2 is done on a developer machine and still open on a runner; reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | New task 8, scan only the rule directories of the languages a repository has, because a run on a runner takes more than 5 minutes (criterion 1) with a scan of about 25 s on a developer machine; Release is now task 9; reviewed (RC-109), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [bc0157e] |
 
 ---
 

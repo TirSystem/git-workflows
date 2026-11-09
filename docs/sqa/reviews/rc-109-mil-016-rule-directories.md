@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | [bc0157e] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode; accepted by the author in chat on 2026-11-09 as stand-in for S01 | [bc0157e] |
 
 ---
 
@@ -20,7 +20,7 @@
 - Scope: delta re-review of the Version History row of 2026-11-09 (new task 8, Release is now task 9), after [RC-099]; the Go/No-Go criteria are unchanged
 - Language and domain: n/a (technical type)
 - Language reviewer: none
-- Mode: supervised, not independent (the author asked in chat on 2026-11-09 to add the task to MIL-016; the AI prepared the evidence and the review; S01 accepts or rejects the row in chat)
+- Mode: supervised, not independent (the author asked in chat on 2026-11-09 to add the task to MIL-016; the AI prepared the evidence and the review; the author accepted the row in chat on 2026-11-09 as stand-in for S01)
 
 ## Why the task is added
 
@@ -45,7 +45,7 @@ Go - the row records the new task and its reason accurately, and claims nothing 
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Accept the row of [MIL-016], set it to `Accepted` and the row before it to `Deprecated`, and this record to `Accepted` | S01 | On acceptance in chat |
+| Accept the row of [MIL-016], set it to `Accepted` and the row before it to `Deprecated`, and this record to `Accepted` | S01 | Done on 2026-11-09 |
 | Record in [MIL-016] the run time on the runner before and after the change (criterion 1) | S05 | With task 8 |
 
 ---
