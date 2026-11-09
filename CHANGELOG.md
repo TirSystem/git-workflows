@@ -20,6 +20,12 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [3.3.1] - 2026-11-09
+
+### Fixed
+
+- The scoped `opengrep.yml` scan is faster on a runner with few cores: `tools/opengrep_scan.py` copies only the rule files of the pinned rules that apply to a language the repository has (a rule that is generic, of an unknown language or unreadable is always kept, and the `generic` directory is used whole) and passes that copy to OpenGrep, instead of all twelve rule directories. The findings are the same on the repositories compared, and the script prints how many rule files it kept and skipped per directory (ADR-0015, MIL-016 task 8).
+
 ## [3.3.0] - 2026-11-06
 
 ### Added
