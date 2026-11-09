@@ -20,6 +20,12 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [3.3.2] - 2026-11-09
+
+### Fixed
+
+- The scoped `opengrep.yml` scan of 3.3.1 failed in every repository with findings it made itself: the filtered rule files are copied to `.opengrep/selected-rules` inside the repository, and OpenGrep scanned those YAML files as source, so the run showed about a thousand findings in them and failed on the ones of severity `ERROR`. `tools/opengrep_scan.py` now passes `--exclude` for the home directory when it is inside the repository, so only the files of the repository are scanned. 3.3.1 should not be used; the major tag `v3` points to 3.3.2.
+
 ## [3.3.1] - 2026-11-09
 
 ### Fixed

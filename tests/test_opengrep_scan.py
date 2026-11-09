@@ -481,6 +481,31 @@ def test_the_kept_and_skipped_rule_files_are_printed_summarised_and_passed_as_co
     assert "- Rule directory go: 0 rule files kept, 1 skipped" in text
 
 
+def test_the_home_directory_inside_the_repository_is_excluded_from_the_scan(
+    scan: ModuleType, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("OPENGREP_HOME", ".opengrep")
+    command = scan.scan_command([])
+    assert command[command.index("--exclude") + 1] == ".opengrep"
+
+
+def test_a_home_directory_outside_the_repository_is_not_excluded(
+    scan: ModuleType, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    (tmp_path / "repo").mkdir()
+    monkeypatch.chdir(tmp_path / "repo")
+    assert "--exclude" not in scan.scan_command([])
+
+
+def test_the_repository_itself_as_home_directory_is_not_excluded(
+    scan: ModuleType, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("OPENGREP_HOME", str(tmp_path))
+    assert "--exclude" not in scan.scan_command([])
+
+
 class TestWorkflow:
     @pytest.fixture()
     def workflow(self) -> dict[Any, Any]:
