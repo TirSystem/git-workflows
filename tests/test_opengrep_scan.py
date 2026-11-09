@@ -52,7 +52,9 @@ def fake_opengrep(
     """Replace subprocess.run: write ``report`` where --output points and return ``returncode``."""
     calls: list[list[str]] = []
 
-    def run(command: list[str], check: bool = False) -> subprocess.CompletedProcess[str]:
+    def run(command: list[str], check: bool = False, **options: Any) -> subprocess.CompletedProcess[str]:
+        if "ls-files" in command:  # the file listing of the repository, not a call of OpenGrep
+            return subprocess.CompletedProcess(command, 0, stdout="app.py\0", stderr="")
         calls.append(command)
         if "--output" in command and report is not None:
             Path(command[command.index("--output") + 1]).write_text(json.dumps(report), encoding="utf-8")
@@ -131,7 +133,7 @@ def test_an_opengrep_failure_is_a_tool_error(
 def test_a_missing_opengrep_is_a_tool_error(
     scan: ModuleType, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    def missing(command: list[str], check: bool = False) -> None:
+    def missing(command: list[str], check: bool = False, **options: Any) -> None:
         raise FileNotFoundError("no such file")
 
     monkeypatch.setattr(scan.subprocess, "run", missing)
@@ -302,6 +304,181 @@ def test_the_script_runs_main_when_executed(
         runpy.run_path(str(REPO_ROOT / "tools" / "opengrep_scan.py"), run_name="__main__")
     assert stop.value.code == 1
     assert "::error::[configuration] usage" in capsys.readouterr().out
+
+
+def write_rule(root: Path, relative: str, languages: str | None = None, top: str = "rules:") -> Path:
+    """Write a fake rule file; ``languages`` is the text after ``languages:``, None for no such line."""
+    path = root / relative
+    path.parent.mkdir(parents=True, exist_ok=True)
+    body = f"{top}\n- id: r\n" + (f"  languages: {languages}\n" if languages is not None else "")
+    path.write_text(body, encoding="utf-8")
+    return path
+
+
+def relative_files(root: Path) -> list[str]:
+    return sorted(path.relative_to(root).as_posix() for path in root.rglob("*") if path.is_file())
+
+
+def test_a_rule_file_of_a_language_missing_from_the_repository_is_skipped(scan: ModuleType, tmp_path: Path) -> None:
+    rules, work = tmp_path / "rules", tmp_path / "work"
+    write_rule(rules, "go/a.yaml", "[go]")
+    write_rule(rules, "go/sub/b.yml", "[python]")
+    configs, lines = scan.select_rules(["src/app.py", "README.md"], rules, work)
+    assert [path.relative_to(work).as_posix() for path in work.rglob("*") if path.is_file()] == ["go/sub/b.yml"]
+    assert work / "go" in configs
+    assert rules / "go" not in configs
+    assert "Rule directory go: 1 rule files kept, 1 skipped" in lines
+
+
+def test_the_file_extension_is_matched_in_lower_case_and_any_language_is_enough(
+    scan: ModuleType, tmp_path: Path
+) -> None:
+    rules, work = tmp_path / "rules", tmp_path / "work"
+    write_rule(rules, "c/a.yaml", "[c, cpp]")
+    write_rule(rules, "c/b.yaml", "\n  - 'dockerfile'  # quoted\n  - terraform")
+    write_rule(rules, "c/c.yaml", '["go"]')
+    scan.select_rules(["lib/MAIN.CPP", "infra/NET.TF"], rules, work)
+    assert relative_files(work) == ["c/a.yaml", "c/b.yaml"]
+
+
+@pytest.mark.parametrize("language", ["generic", "regex", "none", "brainfuck", "[go, generic]"])
+def test_a_rule_file_with_a_language_the_table_cannot_judge_is_kept(
+    scan: ModuleType, tmp_path: Path, language: str
+) -> None:
+    rules, work = tmp_path / "rules", tmp_path / "work"
+    write_rule(rules, "java/a.yaml", language if language.startswith("[") else f"[{language}]")
+    write_rule(rules, "java/b.yaml", "[go]")
+    _, lines = scan.select_rules(["a.py"], rules, work)
+    assert relative_files(work) == ["java/a.yaml"]
+    assert "Rule directory java: 1 rule files kept, 1 skipped" in lines
+
+
+def test_an_unreadable_rule_file_and_one_without_languages_are_kept(scan: ModuleType, tmp_path: Path) -> None:
+    rules, work = tmp_path / "rules", tmp_path / "work"
+    write_rule(rules, "java/no-languages.yaml", None)
+    (rules / "java").joinpath("broken.yaml").write_bytes(b"rules:\n\xff\xfe\x81 not utf-8")
+    write_rule(rules, "java/skipped.yaml", "[go]")
+    scan.select_rules(["a.py"], rules, work)
+    assert relative_files(work) == ["java/broken.yaml", "java/no-languages.yaml"]
+
+
+def test_yaml_without_a_top_level_rules_key_is_not_copied(scan: ModuleType, tmp_path: Path) -> None:
+    rules, work = tmp_path / "rules", tmp_path / "work"
+    write_rule(rules, "go/rule.yaml", "[python]")
+    write_rule(rules, "go/fixture.yaml", "[python]", top="apiVersion: v1")
+    write_rule(rules, "go/nested.yaml", "[python]", top="  rules:")
+    scan.select_rules(["a.py"], rules, work)
+    assert relative_files(work) == ["go/rule.yaml"]
+
+
+def test_a_directory_without_rule_files_is_used_whole(scan: ModuleType, tmp_path: Path) -> None:
+    rules, work = tmp_path / "rules", tmp_path / "work"
+    write_rule(rules, "go/fixture.yaml", "[go]", top="apiVersion: v1")
+    configs, lines = scan.select_rules(["a.py"], rules, work)
+    assert rules / "go" in configs
+    assert rules / "bash" in configs
+    assert "Rule directory go: used whole" in lines
+    assert not work.exists()
+
+
+def test_the_generic_directory_is_passed_whole_and_in_order(scan: ModuleType, tmp_path: Path) -> None:
+    rules, work = tmp_path / "rules", tmp_path / "work"
+    write_rule(rules, "generic/a.yaml", "[go]")
+    write_rule(rules, "python/a.yaml", "[python]")
+    configs, lines = scan.select_rules([], rules, work)
+    assert rules / "generic" in configs
+    assert work / "python" not in configs
+    assert "Rule directory generic: used whole" in lines
+    assert "Rule directory python: 0 rule files kept, 1 skipped" in lines
+    names = [path.name for path in configs]
+    assert names == [name for name in scan.RULE_DIRECTORIES if name != "python"]
+
+
+def test_the_work_directory_is_rebuilt_on_every_selection(scan: ModuleType, tmp_path: Path) -> None:
+    rules, work = tmp_path / "rules", tmp_path / "work"
+    write_rule(rules, "c/a.yaml", "[c]")
+    (work / "c").mkdir(parents=True)
+    (work / "c" / "stale.yaml").write_text("rules:\n", encoding="utf-8")
+    configs, _ = scan.select_rules(["x.c"], rules, work)
+    assert relative_files(work) == ["c/a.yaml"]
+    assert work / "c" in configs
+    assert (work / "c" / "a.yaml").read_text(encoding="utf-8") == (rules / "c" / "a.yaml").read_text(encoding="utf-8")
+
+
+def test_a_rule_file_that_cannot_be_copied_is_a_tool_error(
+    scan: ModuleType, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], tmp_path: Path
+) -> None:
+    rules = tmp_path / "rules"
+    write_rule(rules, "c/a.yaml", "[c]")
+
+    def refuse(source: Path, target: Path) -> None:
+        raise OSError("disk full")
+
+    monkeypatch.setattr(scan.shutil, "copy2", refuse)
+    with pytest.raises(SystemExit):
+        scan.select_rules(["x.c"], rules, tmp_path / "work")
+    out = capsys.readouterr().out
+    assert "::error::[tool] The rule file" in out
+    assert "disk full" in out
+
+
+def test_the_languages_of_a_rule_are_read_from_both_yaml_forms(scan: ModuleType) -> None:
+    assert scan.languages_in("languages: [Python, 'Go']\n") == {"python", "go"}
+    assert scan.languages_in("languages:\n  - java\n  - \"c\"\n") == {"java", "c"}
+    assert scan.languages_in("id: r\n") == set()
+
+
+def test_the_tracked_files_are_used_when_git_lists_them(
+    scan: ModuleType, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    def listing(command: list[str], **options: Any) -> subprocess.CompletedProcess[str]:
+        return subprocess.CompletedProcess(command, 0, stdout="a.py\0docs/b.md\0", stderr="")
+
+    monkeypatch.setattr(scan.subprocess, "run", listing)
+    (tmp_path / "untracked.go").write_text("", encoding="utf-8")
+    assert scan.repository_files(tmp_path) == ["a.py", "docs/b.md"]
+
+
+@pytest.mark.parametrize("failure", ["status", "missing git"])
+def test_the_tree_is_walked_when_git_cannot_list_the_files(
+    scan: ModuleType, monkeypatch: pytest.MonkeyPatch, tmp_path: Path, failure: str
+) -> None:
+    def listing(command: list[str], **options: Any) -> subprocess.CompletedProcess[str]:
+        if failure == "missing git":
+            raise FileNotFoundError("git")
+        return subprocess.CompletedProcess(command, 128, stdout="", stderr="not a repository")
+
+    monkeypatch.setattr(scan.subprocess, "run", listing)
+    (tmp_path / "pkg").mkdir()
+    (tmp_path / "pkg" / "a.py").write_text("", encoding="utf-8")
+    (tmp_path / ".git").mkdir()
+    (tmp_path / ".git" / "config.yaml").write_text("", encoding="utf-8")
+    assert [Path(name).as_posix() for name in scan.repository_files(tmp_path)] == ["pkg/a.py"]
+
+
+def test_the_kept_and_skipped_rule_files_are_printed_summarised_and_passed_as_config(
+    scan: ModuleType, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], tmp_path: Path
+) -> None:
+    rules = Path(scan.rules_dir())
+    write_rule(rules, "python/a.yaml", "[python]")
+    write_rule(rules, "go/a.yaml", "[go]")
+    summary = tmp_path / "summary.md"
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))
+    calls = fake_opengrep(monkeypatch, scan, {"paths": {"scanned": ["app.py"]}})
+    scan.run()
+    out = capsys.readouterr().out
+    assert "Rule directory python: 1 rule files kept, 0 skipped" in out
+    assert "Rule directory go: 0 rule files kept, 1 skipped" in out
+    assert out.index("Rule directory python") < out.index("OpenGrep")
+    command = calls[0]
+    configs = [Path(command[i + 1]) for i, item in enumerate(command) if item == "--config"]
+    selected = Path(scan.selected_rules_dir())
+    assert selected / "python" in configs
+    assert selected / "go" not in configs
+    assert rules / "go" not in configs
+    text = summary.read_text(encoding="utf-8")
+    assert "- Rule directory python: 1 rule files kept, 0 skipped" in text
+    assert "- Rule directory go: 0 rule files kept, 1 skipped" in text
 
 
 class TestWorkflow:

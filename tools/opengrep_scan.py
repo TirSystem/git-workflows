@@ -19,10 +19,14 @@ import hashlib
 import json
 import os
 import platform
+import re
+import shutil
 import stat
 import subprocess
 import sys
 import urllib.request
+from dataclasses import dataclass
+from pathlib import Path
 
 OPENGREP_VERSION = "v1.33.0"
 OPENGREP_SHA256 = "2545812755572e1355ea60f96288f82a26eebed7fc8b512430d49d5667214c24"
@@ -46,9 +50,47 @@ RULE_DIRECTORIES = (
     "go",
     "java",
 )
+# The rule directory that is always scanned: its rules do not depend on a language.
+ALWAYS_SCANNED_DIRECTORY = "generic"
+# OpenGrep language name -> file name endings (lower case) of the files in that language.
+# A language that is not here makes its rule directory run (fail safe).
+LANGUAGE_EXTENSIONS = {
+    "python": (".py", ".pyi"),
+    "py": (".py", ".pyi"),
+    "bash": (".sh", ".bash"),
+    "sh": (".sh", ".bash"),
+    "c": (".c", ".h"),
+    "cpp": (".cpp", ".cc", ".cxx", ".hpp", ".hh", ".hxx", ".h"),
+    "csharp": (".cs",),
+    "yaml": (".yaml", ".yml"),
+    "json": (".json",),
+    "dockerfile": ("dockerfile",),
+    "docker": ("dockerfile",),
+    "javascript": (".js", ".jsx", ".mjs", ".cjs"),
+    "js": (".js", ".jsx", ".mjs", ".cjs"),
+    "typescript": (".ts", ".tsx", ".mts", ".cts"),
+    "ts": (".ts", ".tsx", ".mts", ".cts"),
+    "terraform": (".tf", ".hcl"),
+    "hcl": (".tf", ".hcl"),
+    "go": (".go",),
+    "golang": (".go",),
+    "java": (".java",),
+}
+INLINE_LANGUAGES = re.compile(r"^\s*languages:\s*\[([^\]]*)\]", re.MULTILINE)
+BLOCK_LANGUAGES = re.compile(r"^\s*languages:[ \t]*\n((?:[ \t]*-[ \t]*\S+[^\n]*\n?)+)", re.MULTILINE)
+BLOCK_ITEM = re.compile(r"^[ \t]*-[ \t]*([^\s#]+)", re.MULTILINE)
+TOP_LEVEL_RULES = re.compile(r"^rules:", re.MULTILINE)
 BLOCKING_SEVERITY = "ERROR"
 SUMMARY_LIMIT = 50
 DOWNLOAD_TIMEOUT_SECONDS = 120
+
+
+@dataclass(frozen=True, slots=True)
+class RuleFile:
+    """A rule file and the languages it declares (empty when none could be read)."""
+
+    path: Path
+    languages: frozenset[str]
 
 
 def fail(category: str, message: str) -> None:
@@ -67,6 +109,10 @@ def binary_path() -> str:
 
 def rules_dir() -> str:
     return os.path.join(home_dir(), "rules")
+
+
+def selected_rules_dir() -> str:
+    return os.path.join(home_dir(), "selected-rules")
 
 
 def opengrep_command() -> str:
@@ -133,11 +179,117 @@ def install() -> None:
     fetch_rules()
 
 
-def scan_command() -> list[str]:
-    command = [opengrep_command(), "scan"]
+def tracked_files(root: Path) -> list[str] | None:
+    """Return the files git tracks under ``root``, or None when git cannot list them."""
+    command = ["git", "-C", str(root), "ls-files", "-z"]
+    try:
+        # The command is a list of constants and values of this script; no shell runs it.
+        completed = subprocess.run(command, check=False, capture_output=True, text=True)  # nosemgrep
+    except OSError:
+        return None
+    if completed.returncode != 0:
+        return None
+    return [name for name in completed.stdout.split("\0") if name]
+
+
+def walked_files(root: Path) -> list[str]:
+    """Return every file under ``root`` except the contents of .git directories."""
+    names = []
+    for current, directories, files in os.walk(root):
+        directories[:] = [name for name in directories if name != ".git"]
+        names += [str(Path(current, name).relative_to(root)) for name in files]
+    return names
+
+
+def repository_files(root: Path) -> list[str]:
+    """Return the files of the repository: the tracked ones, else a walk of the tree."""
+    tracked = tracked_files(root)
+    return tracked if tracked is not None else walked_files(root)
+
+
+def languages_in(text: str) -> set[str]:
+    """Return the ``languages:`` values of one rule file, lower case."""
+    names: list[str] = []
+    for match in INLINE_LANGUAGES.finditer(text):
+        names += [item.strip().strip("'\"") for item in match.group(1).split(",")]
+    for match in BLOCK_LANGUAGES.finditer(text):
+        names += [item.strip("'\"") for item in BLOCK_ITEM.findall(match.group(1))]
+    return {name.lower() for name in names if name}
+
+
+def read_rule_file(path: Path) -> RuleFile | None:
+    """Return the rule file at ``path``, or None when it is not one (no top-level ``rules:``).
+
+    A file that cannot be read is returned with no languages, so it is kept (fail safe).
+    """
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return RuleFile(path, frozenset())
+    if not TOP_LEVEL_RULES.search(text):
+        return None
+    return RuleFile(path, frozenset(languages_in(text)))
+
+
+def rule_files_in(directory: Path) -> list[RuleFile]:
+    """Return the rule files under ``directory``; other YAML (fixtures, metadata) is left out."""
+    paths = sorted([*directory.rglob("*.yaml"), *directory.rglob("*.yml")])
+    return [rule for rule in map(read_rule_file, paths) if rule is not None]
+
+
+def has_file_of(file_names: list[str], languages: frozenset[str]) -> bool:
+    endings = tuple(ending for language in languages for ending in LANGUAGE_EXTENSIONS[language])
+    return any(name.endswith(endings) for name in file_names)
+
+
+def is_needed(file_names: list[str], rule: RuleFile) -> bool:
+    """A rule is needed unless all its languages are known and the repository has no file of them."""
+    if not rule.languages or not rule.languages <= LANGUAGE_EXTENSIONS.keys():
+        return True
+    return has_file_of(file_names, rule.languages)
+
+
+def copy_rules(rules: list[RuleFile], source: Path, target: Path) -> None:
+    """Copy the rule files into ``target``, keeping their paths relative to ``source``."""
+    for rule in rules:
+        destination = target / rule.path.relative_to(source)
+        try:
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(rule.path, destination)
+        except OSError as error:
+            fail("tool", f"The rule file {rule.path} cannot be copied: {error}")
+
+
+def select_rules(files: list[str], rules_root: Path, work_dir: Path) -> tuple[list[Path], list[str]]:
+    """Return the --config directories and one line per rule directory saying what was kept.
+
+    ``work_dir`` receives a filtered copy of each directory that has rule files to skip.
+    The generic directory, and a directory without readable rule files, are used whole.
+    """
+    file_names = [name.lower() for name in files]
+    shutil.rmtree(work_dir, ignore_errors=True)
+    configs: list[Path] = []
+    lines: list[str] = []
     for directory in RULE_DIRECTORIES:
-        command += ["--config", os.path.join(rules_dir(), directory)]
-    command += ["--json", "--output", report_path(), "--quiet", "--disable-version-check"]
+        source = rules_root / directory
+        rules = [] if directory == ALWAYS_SCANNED_DIRECTORY else rule_files_in(source)
+        if not rules:
+            configs.append(source)
+            lines.append(f"Rule directory {directory}: used whole")
+            continue
+        kept = [rule for rule in rules if is_needed(file_names, rule)]
+        lines.append(f"Rule directory {directory}: {len(kept)} rule files kept, {len(rules) - len(kept)} skipped")
+        if kept:
+            copy_rules(kept, source, work_dir / directory)
+            configs.append(work_dir / directory)
+    return configs, lines
+
+
+def scan_command(configs: list[Path]) -> list[str]:
+    command = [opengrep_command(), "scan"]
+    for config in configs:
+        command += ["--config", str(config)]
+    command +=["--json", "--output", report_path(), "--quiet", "--disable-version-check"]
     return command
 
 
@@ -163,7 +315,7 @@ def print_finding(finding: dict) -> None:
     print(f"::{annotation(severity)} file={finding['path']},line={line}::[finding] {finding['check_id']}: {message}")
 
 
-def write_summary(findings: list, blocking: list) -> None:
+def write_summary(findings: list, blocking: list, selection: list[str]) -> None:
     """Append a short table to the job summary when the runner provides one."""
     target = os.environ.get("GITHUB_STEP_SUMMARY")
     if not target:
@@ -182,13 +334,16 @@ def write_summary(findings: list, blocking: list) -> None:
         lines.append(f"| {extra.get('severity', 'INFO')} | `{finding['check_id']}` | {location} |")
     if len(findings) > SUMMARY_LIMIT:
         lines.append(f"| | {len(findings) - SUMMARY_LIMIT} more in the log | |")
+    lines += ["", *(f"- {line}" for line in selection)]
     with open(target, "a", encoding="utf-8") as handle:
         handle.write("\n".join(lines) + "\n")
 
 
 def run() -> None:
     """Scan, print every finding and fail when one has the blocking severity."""
-    command = scan_command()
+    configs, selection = select_rules(repository_files(Path.cwd()), Path(rules_dir()), Path(selected_rules_dir()))
+    print("\n".join(selection))
+    command = scan_command(configs)
     try:
         # The command is a list of constants and values of this script; no shell runs it.
         completed = subprocess.run(command, check=False)  # nosemgrep
@@ -205,7 +360,7 @@ def run() -> None:
     for finding in findings:
         print_finding(finding)
     blocking = [item for item in findings if item.get("extra", {}).get("severity") == BLOCKING_SEVERITY]
-    write_summary(findings, blocking)
+    write_summary(findings, blocking, selection)
     print(f"OpenGrep {report.get('version', OPENGREP_VERSION)} scanned {len(scanned)} files: {len(findings)} findings, {len(blocking)} blocking.")
     if blocking:
         fail("finding", f"{len(blocking)} finding(s) of severity {BLOCKING_SEVERITY}; fix them or silence them with '# nosemgrep' or a .semgrepignore file.")
