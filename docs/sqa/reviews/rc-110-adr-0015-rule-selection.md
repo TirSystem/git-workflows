@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | [6981d08] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode; accepted by the author in chat on 2026-11-09 as stand-in for S01 | [6981d08] |
 
 ---
 
@@ -20,7 +20,7 @@
 - Scope: delta review of the amendment of 2026-11-09 (the script passes only the rule files of the languages the repository has; MIL-016 task 8) and of the lines of the Decision and the Consequences it changes; the earlier record is [RC-098]
 - Language and domain: n/a (technical type)
 - Language reviewer: none
-- Mode: supervised, not independent (the author, Jens Tirsvad Nielsen, asked in chat on 2026-11-09 to do task 8; the AI prepared the evidence and the review; S01 accepts or rejects the row in chat)
+- Mode: supervised, not independent (the author, Jens Tirsvad Nielsen, asked in chat on 2026-11-09 to do task 8; the AI prepared the evidence and the review; the author accepted the row in chat on 2026-11-09 as stand-in for S01)
 
 ## Checklist Results
 
@@ -56,7 +56,7 @@ Go - the amendment records the problem, the options and the measured result, and
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Accept the row of [ADR-0015], set it to `Accepted` and the row before it to `Deprecated`, and this record to `Accepted` | S01 | On acceptance in chat |
+| Accept the row of [ADR-0015], set it to `Accepted` and the row before it to `Deprecated`, and this record to `Accepted` | S01 | Done on 2026-11-09 |
 | Measure the scan step on the runner after the release and record it in [MIL-016] (criterion 1) | S05 | After the release |
 
 ---

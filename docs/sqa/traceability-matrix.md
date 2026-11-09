@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-109 (MIL-016 task 8) | [bc0157e] |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-110 (ADR-0015 amendment, rule selection) | [6981d08] |
+| 2026-11-09 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-109 (MIL-016 task 8) | [bc0157e] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-110 (ADR-0015 amendment, rule selection) | [6981d08] |
 
 ---
 
