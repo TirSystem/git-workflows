@@ -27,7 +27,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-FRAMEWORK_TAG = "v0.18.0"
+FRAMEWORK_TAG = "v0.20.1"
 FRAMEWORK_URL = "https://git.tirsystem.com/TirSystem/sqa-qc-framework.git"
 FRAMEWORK_DIR = "framework"
 PUBLISH_SCRIPT = "framework/scripts/ci-publish-milestones.sh"
