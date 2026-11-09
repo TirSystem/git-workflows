@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | MIL-016 |
-| CrossReference | [BC-001], [MIL-013], [MIL-014], [ADR-0005], [ADR-0015], [RC-089], [RC-090], [RC-099] |
+| CrossReference | [BC-001], [MIL-013], [MIL-014], [ADR-0005], [ADR-0015], [RC-089], [RC-090], [RC-099], [RC-111] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 | Deprecated | Jens Tirsvad Nielsen | S01 | Names OpenGrep instead of Semgrep (ADR-0015, RC-098): criteria 1, 4 and 6, tasks 2, 4, 5 and 6; task 2 is done on a developer machine and still open on a runner; reviewed (RC-099), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
-| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | New task 8, scan only the rule directories of the languages a repository has, because a run on a runner takes more than 5 minutes (criterion 1) with a scan of about 25 s on a developer machine; Release is now task 9; reviewed (RC-109), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [bc0157e] |
+| 2026-11-09 | Deprecated | Jens Tirsvad Nielsen | S01 | New task 8, scan only the rule directories of the languages a repository has, because a run on a runner takes more than 5 minutes (criterion 1) with a scan of about 25 s on a developer machine; Release is now task 9; reviewed (RC-109), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [bc0157e] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Records the run time on the runner after task 8 (scan step 4 min 21 s, run 5 min 1 s against 8 min 0 s before, one run); reviewed (RC-111), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [e9b782d] |
 
 ---
 
@@ -86,7 +86,7 @@ with the findings and the false positives counted; and a minor release.
 | 5 | Write the scoped workflow | `.gitea/scoped_workflows/opengrep.yml`: on a pull request, a push to `main` and manually; read-only permissions; installs the pinned version; runs the script fetched from this repository at the major tag; skips a repository with nothing to scan. | No | |
 | 6 | Document it | `guides/opengrep.md`, the row in `guides/adoption-rules.md`, the README section and table (the count of workflows), the wiki pages in three languages, the changelog entry. | No | |
 | 7 | Run the trial | Scan this repository and three others (one Python, one C#, one C++); count the findings and the false positives for each, silence the false positives the way the guide says, and record the decision on the blocking severity in this milestone. | No | |
-| 8 | Scan only the rule directories of the languages present | `tools/opengrep_scan.py` loads all twelve rule directories in every repository, so the run time is set by the rules and the cores of the runner, not by the repository: a run on a runner took more than 5 minutes (criterion 1), and 25 s on a developer machine with 20 cores. Choose the directories from the files of the repository being scanned, read from the `languages:` field of the rules; skip a directory only when no file of its languages exists, keep `generic` always, and run a directory whose languages are unknown. Print the directories chosen. Amend ADR-0015. Test that the findings of the full set and of the chosen set are equal on this repository and three others, one with C and C++. | No | [ADR-0015] |
+| 8 | Scan only the rule directories of the languages present | `tools/opengrep_scan.py` loads all twelve rule directories in every repository, so the run time is set by the rules and the cores of the runner, not by the repository: a run on a runner took more than 5 minutes (criterion 1), and 25 s on a developer machine with 20 cores. Choose the directories from the files of the repository being scanned, read from the `languages:` field of the rules; skip a directory only when no file of its languages exists, keep `generic` always, and run a directory whose languages are unknown. Print the directories chosen. Amend ADR-0015. Test that the findings of the full set and of the chosen set are equal on this repository and three others, one with C and C++. Result, 2026-11-09, release 3.3.1: the run of `opengrep.yml` on this repository took 8 min 0 s with the old script (run 767, commit 0861897) and 5 min 1 s with the new one (run 771, commit c8beb0c, after `v3` moved). In run 771 the scan step took 4 min 21 s and the other steps 38 s together, so criterion 1 (at most 5 minutes) is met for the scan with 39 s to spare. One run on one repository; repositories with more languages load more rule files and are not measured. | No | [ADR-0015], [RC-111] |
 | 9 | Release | Release through the release workflow as the next minor (Added); the moving major tag moves with it. | No | |
 
 ---
@@ -99,5 +99,6 @@ with the findings and the false positives counted; and a minor release.
 [RC-089]: ../sqa/reviews/rc-089-bc-001-o8.md
 [RC-090]: ../sqa/reviews/rc-090-mil-016.md
 [RC-099]: ../sqa/reviews/rc-099-opengrep-bc-o8-mil-016.md
-[d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b
+[RC-111]: ../sqa/reviews/rc-111-mil-016-run-time.md
 [bc0157e]: https://git.tirsystem.com/TirSystem/git-workflows/commit/bc0157ea2a017fe8a9377e8266dfda2878467865
+[e9b782d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e9b782dc0bc3984c66629047e00012024fd6ff93
