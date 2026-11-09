@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | New task 8, scan only the rule directories of the languages a repository has, because a run on a runner takes more than 5 minutes (criterion 1) with a scan of about 25 s on a developer machine; Release is now task 9; reviewed (RC-109), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [bc0157e] |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Records the run time on the runner after task 8 (scan step 3 min 18 s and 3 min 5 s in two runs of release 3.3.2, 4 min 21 s with the old script, one repository); reviewed (RC-111) | [59347d5] |
+| 2026-11-09 | Deprecated | Jens Tirsvad Nielsen | S01 | New task 8, scan only the rule directories of the languages a repository has, because a run on a runner takes more than 5 minutes (criterion 1) with a scan of about 25 s on a developer machine; Release is now task 9; reviewed (RC-109), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [bc0157e] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Records the run time on the runner after task 8 (scan step 3 min 18 s and 3 min 5 s in two runs of release 3.3.2, 4 min 21 s with the old script, one repository); reviewed (RC-111), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [59347d5] |
 
 ---
 

@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-110 (ADR-0015 amendment, rule selection) | [6981d08] |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-111 (MIL-016 task 8, run time on the runner) | [59347d5] |
+| 2026-11-09 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-110 (ADR-0015 amendment, rule selection) | [6981d08] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-111 (MIL-016 task 8, run time on the runner) | [59347d5] |
 
 ---
 

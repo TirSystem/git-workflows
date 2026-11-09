@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | [59347d5] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode; accepted by the author in chat on 2026-11-09 as stand-in for S01 | [59347d5] |
 
 ---
 
@@ -20,7 +20,7 @@
 - Scope: delta re-review of the Version History row of 2026-11-09 that records the run time on the runner in task 8, after [RC-109]; the Go/No-Go criteria and the target date are unchanged
 - Language and domain: n/a (technical type)
 - Language reviewer: none
-- Mode: supervised, not independent (the author asked in chat on 2026-11-09 to record the measurement; the AI prepared the evidence and the review; the row stays `Proposed` until the author accepts it in chat as stand-in for S01)
+- Mode: supervised, not independent (the author asked in chat on 2026-11-09 to record the measurement; the AI prepared the evidence and the review; the author accepted the row in chat on 2026-11-09 as stand-in for S01)
 
 ## Measurement
 
@@ -55,7 +55,7 @@ Go - the row records what was measured and its limits: two runs of one repositor
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Accept the row of [MIL-016], set it to `Accepted` and the row before it to `Deprecated`, and this record to `Accepted` | S01 | When the author accepts in chat |
+| Accept the row of [MIL-016], set it to `Accepted` and the row before it to `Deprecated`, and this record to `Accepted` | S01 | Done on 2026-11-09 |
 | Closes the action "record in [MIL-016] the run time on the runner" of [RC-109] and the action "measure the scan step on the runner after the release" of [RC-110]; those records are accepted and are not edited | S05 | With this record |
 | Measure the scan step in a repository with several languages, and again when the margin of about 1 min 40 s is used up by a slower run; if the scan step passes 5 minutes, open a decision on the other options of [ADR-0015] | S05 | When a run is seen over 5 minutes |
 
