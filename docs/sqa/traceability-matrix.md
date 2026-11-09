@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-06 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-104 (MIL-012 out of scope for now) | [67ffbeb] |
 | 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-109 (MIL-016 task 8) | [bc0157e] |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-110 (ADR-0015 amendment, rule selection) | [6981d08] |
 
 ---
 
@@ -36,7 +36,7 @@ updated whenever an artifact instance is created or reviewed.
 | [ADR-0012] | ADR | [MIL-013], [ADR-0005], [ADR-0010] | - | - |
 | [ADR-0013] | ADR | [MIL-014], [ADR-0009], [ADR-0004] | [ADR-0009] | [RC-086] |
 | [ADR-0014] | ADR | [MIL-014], [ADR-0001] | - | [RC-095] |
-| [ADR-0015] | ADR | [MIL-016], [ADR-0005], [ADR-0013] | - | [RC-098] |
+| [ADR-0015] | ADR | [MIL-016], [ADR-0005], [ADR-0013] | - | [RC-098], [RC-110] |
 | [ADR-0016] | ADR | [MIL-017], [MIL-018], [ADR-0005], [ADR-0015] | - | [RC-100] |
 | [ADR-0017] | ADR | [MIL-018], [MIL-017], [ADR-0006], [ADR-0007], [ADR-0016] | - | [RC-101] |
 | [ADR-0018] | ADR | [MIL-019], [ADR-0013], [ADR-0005], [MIL-015] | - | [RC-102] |
@@ -179,6 +179,7 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-103] | RC | [ADR-0009], [ADR-0013], [RC-063], [RC-086] | - | - |
 | [RC-104] | RC | [MIL-012], [BC-001], [PP-001], [RC-082] | - | - |
 | [RC-109] | RC | [MIL-016], [ADR-0015], [RC-099] | - | - |
+| [RC-110] | RC | [ADR-0015], [MIL-016], [RC-098] | - | - |
 
 ## Coverage Notes
 
@@ -240,6 +241,7 @@ updated whenever an artifact instance is created or reviewed.
 [RC-103]: ./reviews/rc-103-adr-0009-superseded.md
 [RC-104]: ./reviews/rc-104-mil-012-out-of-scope.md
 [RC-109]: ./reviews/rc-109-mil-016-rule-directories.md
+[RC-110]: ./reviews/rc-110-adr-0015-rule-selection.md
 [RC-001]: ./reviews/rc-001-business-case.md
 [RC-002]: ./reviews/rc-002-project-plan.md
 [RC-003]: ./reviews/rc-003-mil-001.md
@@ -345,5 +347,5 @@ updated whenever an artifact instance is created or reviewed.
 [UC-005]: ../use-cases/uc-005/uc.md
 [ADR-0005]: ../adr/adr-0005-quality-check-contract.md
 [3d7a9df]: https://git.tirsystem.com/TirSystem/github-action/commit/3d7a9df3a3a4712dcc5214a71b0569d90122bf4e
-[67ffbeb]: https://git.tirsystem.com/TirSystem/git-workflows/commit/67ffbeb2f61a432732ddc3b40dbe40df97bf6247
 [bc0157e]: https://git.tirsystem.com/TirSystem/git-workflows/commit/bc0157ea2a017fe8a9377e8266dfda2878467865
+[6981d08]: https://git.tirsystem.com/TirSystem/git-workflows/commit/6981d08d82d1399b5145a22ea296725f9f5beed6
