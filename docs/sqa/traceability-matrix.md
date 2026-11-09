@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-109 (MIL-016 task 8) | [bc0157e] |
-| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-110 (ADR-0015 amendment, rule selection) | [6981d08] |
+| 2026-11-09 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-110 (ADR-0015 amendment, rule selection) | [6981d08] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-111 (MIL-016 task 8, run time on the runner) | pending |
 
 ---
 
@@ -57,7 +57,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-013] | MIL | [BC-001], [PP-001], [MIL-004], [MIL-010], [MIL-011], [ADR-0005], [ADR-0006], [ADR-0010] | - | [RC-083], [RC-085] |
 | [MIL-014] | MIL | [BC-001], [PP-001], [MIL-009], [MIL-013], [ADR-0004], [ADR-0009], [ADR-0013], [ADR-0014] | - | [RC-086], [RC-095], [RC-097] |
 | [MIL-015] | MIL | [BC-001], [PP-001], [MIL-014], [ADR-0006] | - | [RC-087], [RC-088], [RC-093], [RC-094] |
-| [MIL-016] | MIL | [BC-001], [PP-001], [MIL-013], [MIL-014], [ADR-0005], [ADR-0015] | [MIL-017] | [RC-090], [RC-099], [RC-109] |
+| [MIL-016] | MIL | [BC-001], [PP-001], [MIL-013], [MIL-014], [ADR-0005], [ADR-0015] | [MIL-017] | [RC-090], [RC-099], [RC-109], [RC-111] |
 | [MIL-017] | MIL | [BC-001], [PP-001], [MIL-014], [MIL-016], [ADR-0005] | [MIL-018] | [RC-091] |
 | [MIL-018] | MIL | [BC-001], [PP-001], [MIL-014], [MIL-017], [ADR-0006], [ADR-0007] | - | [RC-092] |
 | [MIL-019] | MIL | [BC-001], [PP-001], [MIL-014], [MIL-015], [ADR-0013] | - [RC-096] |
@@ -180,6 +180,7 @@ updated whenever an artifact instance is created or reviewed.
 | [RC-104] | RC | [MIL-012], [BC-001], [PP-001], [RC-082] | - | - |
 | [RC-109] | RC | [MIL-016], [ADR-0015], [RC-099] | - | - |
 | [RC-110] | RC | [ADR-0015], [MIL-016], [RC-098] | - | - |
+| [RC-111] | RC | [MIL-016], [ADR-0015], [RC-109], [RC-110] | - | - |
 
 ## Coverage Notes
 
@@ -242,6 +243,7 @@ updated whenever an artifact instance is created or reviewed.
 [RC-104]: ./reviews/rc-104-mil-012-out-of-scope.md
 [RC-109]: ./reviews/rc-109-mil-016-rule-directories.md
 [RC-110]: ./reviews/rc-110-adr-0015-rule-selection.md
+[RC-111]: ./reviews/rc-111-mil-016-run-time.md
 [RC-001]: ./reviews/rc-001-business-case.md
 [RC-002]: ./reviews/rc-002-project-plan.md
 [RC-003]: ./reviews/rc-003-mil-001.md
