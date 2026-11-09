@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode; accepted by the author in chat on 2026-11-09 as stand-in for S01 | [e9b782d] |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | pending |
 
 ---
 
@@ -20,18 +20,19 @@
 - Scope: delta re-review of the Version History row of 2026-11-09 that records the run time on the runner in task 8, after [RC-109]; the Go/No-Go criteria and the target date are unchanged
 - Language and domain: n/a (technical type)
 - Language reviewer: none
-- Mode: supervised, not independent (the author asked in chat on 2026-11-09 to record the measurement; the AI prepared the evidence and the review; the author accepted the row in chat on 2026-11-09 as stand-in for S01)
+- Mode: supervised, not independent (the author asked in chat on 2026-11-09 to record the measurement; the AI prepared the evidence and the review; the row stays `Proposed` until the author accepts it in chat as stand-in for S01)
 
 ## Measurement
 
-Read by the author from the run pages of `opengrep.yml` on this repository and given to the AI as screenshots on 2026-11-09. The AI did not read the logs.
+Read from the job and step times of the runs of `opengrep.yml` on this repository, through the Actions API on 2026-11-09. Run numbers are the ids in the run addresses (`/actions/runs/<id>`).
 
-| Run | Commit | Script | Time |
+| Run | Script | Scan step | Whole job |
 | --- | --- | --- | --- |
-| 767 | 0861897, the release preparation, before `v3` moved | old, all twelve rule directories | 8 min 0 s for the run |
-| 771 | c8beb0c, the merge of the release, after `v3` moved to 3.3.1 | new, rule files of the languages present | 5 min 1 s for the run |
+| 4628 (push, 3.3.0 at `v3`) | old, all twelve rule directories | 4 min 21 s | 5 min 1 s |
+| 4644 (re-run of the push of the fix, `v3` = 3.3.2) | new, rule files of the languages present | 3 min 18 s | 3 min 52 s |
+| 4652 (pull request 319, `v3` = 3.3.2) | new | 3 min 5 s | 3 min 30 s |
 
-Steps of run 771: set up job 10 s, check out 8 s, fetch the shared script 10 s, install OpenGrep and its rules 7 s, **scan 4 min 21 s**, complete job 3 s. The run is 37% shorter than run 767. Criterion 1 of [MIL-016] (at most 5 minutes) is met for the scan step with 39 s to spare; the whole run is 1 s over.
+The scan step is about 25% shorter, and criterion 1 of [MIL-016] (at most 5 minutes) is met with about 1 min 40 s to spare. Release 3.3.1 is not in the table: its scan read the copy of the rules inside the repository as source, failed with 41 findings of severity `ERROR` in those files, and was fixed by 3.3.2 (`CHANGELOG.md`). A first version of this record took the old script's run 4628 for a run of 3.3.1 and was withdrawn.
 
 The 5 min 28 s of [RC-109] and [RC-110] was the scan step of another repository (81 tracked files) before the change; it is not the baseline of this table, because the two repositories differ.
 
@@ -39,8 +40,8 @@ The 5 min 28 s of [RC-109] and [RC-110] was the scan step of another repository 
 
 | # | Criterion | Status | Evidence/Notes |
 | --- | --- | --- | --- |
-| 1 | A concrete deliverable is defined for every gate | Pass | Task 8 now carries its result: the two run times, the steps, and the repository. |
-| 2 | Explicit Go/No-Go criteria are stated for each gate | Pass | Unchanged, ten criteria. Criterion 1 is met by the scan step; the whole run takes 1 s more than the limit, and the row says so. |
+| 1 | A concrete deliverable is defined for every gate | Pass | Task 8 now carries its result: the three run times, the steps, and the repository. |
+| 2 | Explicit Go/No-Go criteria are stated for each gate | Pass | Unchanged, ten criteria. Criterion 1 is met by the scan step and by the whole job. |
 | 3 | Dependencies on other milestones are explicitly mapped | Pass | Unchanged. |
 | 4 | Each milestone is traceable to a Business Case objective or KPI | Pass | Unchanged: objective O8 of [BC-001]. |
 | 5 | Milestone owner and approving reviewer are identified | Pass | Owner S05, approving reviewer S01. |
@@ -48,15 +49,15 @@ The 5 min 28 s of [RC-109] and [RC-110] was the scan step of another repository 
 
 ## Overall Verdict
 
-Go - the row records what was measured and its limits: one run, one repository, read from the run pages, a margin of 39 s. It does not claim a figure for repositories with more languages.
+Go - the row records what was measured and its limits: two runs of one repository, read from the step times of the runs, a margin of about 1 min 40 s. It does not claim a figure for repositories with more languages.
 
 ## Action Items
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Accept the row of [MIL-016], set it to `Accepted` and the row before it to `Deprecated`, and this record to `Accepted` | S01 | Done on 2026-11-09 |
+| Accept the row of [MIL-016], set it to `Accepted` and the row before it to `Deprecated`, and this record to `Accepted` | S01 | When the author accepts in chat |
 | Closes the action "record in [MIL-016] the run time on the runner" of [RC-109] and the action "measure the scan step on the runner after the release" of [RC-110]; those records are accepted and are not edited | S05 | With this record |
-| Measure the scan step in a repository with several languages, and again when the margin of 39 s is used up by a slower run; if the scan step passes 5 minutes, open a decision on the other options of [ADR-0015] | S05 | When a run is seen over 5 minutes |
+| Measure the scan step in a repository with several languages, and again when the margin of about 1 min 40 s is used up by a slower run; if the scan step passes 5 minutes, open a decision on the other options of [ADR-0015] | S05 | When a run is seen over 5 minutes |
 
 ---
 
