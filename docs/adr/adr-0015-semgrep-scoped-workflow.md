@@ -4,12 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | ADR-0015 |
-| CrossReference | [MIL-016], [ADR-0005], [ADR-0013] |
+| CrossReference | [MIL-016], [ADR-0005], [ADR-0013], [RC-110] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-29 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version: OpenGrep instead of Semgrep, on the owner's instruction in chat; reviewed (RC-098), accepted by the author in chat as stand-in for S01, not independent | [d4901e0] |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Amendment (MIL-016 task 8): the script passes only the rule files of the languages the repository has, because a run on the runner took more than 5 minutes; reviewed (RC-110), prepared by the AI in supervised mode | pending |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -40,6 +41,27 @@ Pointing `--config` at the whole rules checkout fails with
 `InvalidRuleSchemaError` (it holds non-rule YAML), so the rule directories are
 named one by one.
 
+**Amendment of 2026-11-09 (MIL-016 task 8).** The first runs on the runner of
+the instance were slow. The scan step of a repository with 81 tracked files was
+still running after 5 minutes 28 seconds (the install step took 4 seconds),
+which breaks criterion 1 of [MIL-016] (a run ends in at most 5 minutes). The
+same scan took 23 seconds on a developer machine with 20 cores, and 2 minutes
+39 seconds with one job. The time is set by the number of rules (about 1,700 in
+the twelve directories) and the cores of the runner, not by the repository.
+Excluding `docs/` with a `.semgrepignore` was measured and changed nothing (no
+finding there; 24.9 seconds against 25.5). Choosing whole rule directories by
+the languages present saved about 15 percent, because `csharp`, `go`, `java` and
+`javascript` each hold a few rules with `languages: [generic]`, which apply to
+any file. Options for the amendment:
+
+1. **Keep all rules.** The run stays slow on a runner with few cores.
+2. **Skip whole rule directories** of languages the repository does not have.
+   Safe, but it skipped only `c`, `typescript` and `terraform` here.
+3. **Skip rule files** whose languages the repository does not have, and keep
+   every rule that is generic, of an unknown language or unreadable.
+4. **Fewer rule directories for every repository.** A smaller scan for all,
+   decided by the organisation, with a loss of coverage.
+
 Options:
 
 1. **A reusable workflow that each repository calls.** A caller file per
@@ -67,7 +89,14 @@ The rules that follow from it:
   `python`, `bash`, `c`, `csharp`, `yaml`, `generic`, `dockerfile`, `javascript`,
   `typescript`, `terraform`, `go` and `java`. Version, hash, commit and
   directories are constants of `tools/opengrep_scan.py`, moved only in a release
-  of this repository; a repository cannot choose others. Other platforms than
+  of this repository; a repository cannot choose others. Of these directories
+  the script passes only the rule files that apply (option 3 of the amendment of
+  2026-11-09): a rule file is kept when any of its languages has a file in the
+  repository, or when its language is `generic`, `regex`, `none`, not in the
+  script's table of file extensions, or cannot be read; the `generic` directory
+  is used whole. The kept files are copied to a work directory under the OpenGrep
+  home, which is passed as `--config`, and the script prints the kept and skipped
+  counts per directory and adds them to the job summary. Other platforms than
   Linux x86_64 fail as `[configuration]`.
 - The script reads the JSON report. A finding of severity `ERROR` fails the run;
   `WARNING` and `INFO` are printed as warnings and notices with file and line
@@ -85,6 +114,12 @@ The rules that follow from it:
 - The script is a file of this repository, fetched at the current major tag
   ([ADR-0005]), and prints `::error::[category] message` for a failure, with the
   categories `configuration`, `tool` and `finding`.
+- A rule file is never dropped on a doubt: a language the script does not know,
+  a missing `languages:` or an unreadable file keeps the rule. Measured with
+  OpenGrep 1.33.1 and the pinned rules, the findings equal those of all twelve
+  directories on this repository (34) and on a second one (12), and the run takes
+  18.5 and 14.8 seconds instead of 25.5 and 23.2; with one job the second
+  repository takes 1 minute 15 seconds instead of 2 minutes 39.
 - The licence of the rules allows internal use and forbids selling the software;
   the scan is the organisation's own quality check, which S01 confirms when
   accepting this record.
@@ -110,6 +145,10 @@ The rules that follow from it:
 - `github.com` must be reachable at run time (binary and rules), and a scan
   costs about two minutes of runner time per push and pull request in every
   repository.
+- The filter reads the structure of the rule files (a top-level `rules:` and
+  `languages:`) and keeps a table of file extensions; moving the rules commit
+  needs the comparison of findings to be repeated, and a language missing from
+  the table keeps its rules, which costs time but never coverage.
 - The community rules report patterns, not proven vulnerabilities; false
   positives are silenced by hand, per repository.
 - The README of the rules says they are for research, testing and benchmarking,
@@ -128,4 +167,5 @@ The rules that follow from it:
 [MIL-016]: ../milestones/mil-016-semgrep-scoped-workflow.md
 [ADR-0005]: ./adr-0005-quality-check-contract.md
 [ADR-0013]: ./adr-0013-wiki-publishing-scoped-workflow.md
+[RC-110]: ../sqa/reviews/rc-110-adr-0015-rule-selection.md
 [d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b
