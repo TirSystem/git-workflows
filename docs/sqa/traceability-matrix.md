@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-110 (ADR-0015 amendment, rule selection) | [6981d08] |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-111 (MIL-016 task 8, run time on the runner) | pending |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-111 (MIL-016 task 8, run time on the runner) | [59347d5] |
 
 ---
 
@@ -352,3 +352,4 @@ updated whenever an artifact instance is created or reviewed.
 [bc0157e]: https://git.tirsystem.com/TirSystem/git-workflows/commit/bc0157ea2a017fe8a9377e8266dfda2878467865
 [6981d08]: https://git.tirsystem.com/TirSystem/git-workflows/commit/6981d08d82d1399b5145a22ea296725f9f5beed6
 [e9b782d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e9b782dc0bc3984c66629047e00012024fd6ff93
+[59347d5]: https://git.tirsystem.com/TirSystem/git-workflows/commit/59347d5f35fd33b9560c2d817276f9c0401a8bc4

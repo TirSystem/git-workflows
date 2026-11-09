@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | pending |
+| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode | [59347d5] |
 
 ---
 
@@ -68,3 +68,4 @@ Go - the row records what was measured and its limits: two runs of one repositor
 [RC-110]: ./rc-110-adr-0015-rule-selection.md
 [BC-001]: ../../business-case.md
 [e9b782d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e9b782dc0bc3984c66629047e00012024fd6ff93
+[59347d5]: https://git.tirsystem.com/TirSystem/git-workflows/commit/59347d5f35fd33b9560c2d817276f9c0401a8bc4
