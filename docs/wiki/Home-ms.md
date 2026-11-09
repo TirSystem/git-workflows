@@ -1,4 +1,4 @@
-<!-- translation of Home.md, source sha256 5cb5db41fa33 -->
+<!-- translation of Home.md, source sha256 8d047b7785f6 -->
 
 > Ini ialah terjemahan [`Home`](Home). Halaman bahasa Inggeris ialah teks yang sah, dan perubahan di sini akan ditimpa pada penerbitan wiki yang seterusnya.
 
@@ -330,10 +330,8 @@ title OpenGrep scan (scoped workflow)
 
 autonumber
 
-actor "Pull request or push
-to main" as Event
-participant "Gitea Actions
-opengrep" as Workflow
+actor "Pull request or push\nto main" as Event
+participant "Gitea Actions\nopengrep" as Workflow
 participant "github.com" as Registry
 
 Event -> Workflow: Start in every repository
@@ -368,10 +366,8 @@ title Validate (scoped workflow)
 
 autonumber
 
-actor "Pull request or push
-to main" as Event
-participant "Gitea Actions
-validate" as Workflow
+actor "Pull request or push\nto main" as Event
+participant "Gitea Actions\nvalidate" as Workflow
 participant "PyPI" as Registry
 
 Event -> Workflow: Start in every repository
@@ -406,16 +402,13 @@ title Release a repository
 autonumber
 
 actor "Merge of a change to CHANGELOG.md\n(push to the default branch),\nor a start by hand" as Trigger
-participant "Gitea Actions
-release (scoped)" as Workflow
+participant "Gitea Actions\nrelease (scoped)" as Workflow
 participant "Gitea REST API" as Gitea
 
 Trigger -> Workflow: Push or start by hand, no form
 activate Workflow
 
-Workflow -> Workflow: Check the secret TOKEN_FOR_GITEA_RELEASE,
-read CHANGELOG.md and take its newest numbered entry
-as the version
+Workflow -> Workflow: Check the secret TOKEN_FOR_GITEA_RELEASE,\nread CHANGELOG.md and take its newest numbered entry\nas the version
 alt secret missing or no changelog entry
   Workflow --> Trigger: Fail with [configuration] or [validation]
 end
@@ -426,12 +419,10 @@ alt tag of the newest entry exists
   Workflow --> Trigger: Nothing to release, the run is green
 end
 
-Workflow -> Gitea: GET repository (default branch)
-and GET branch
+Workflow -> Gitea: GET repository (default branch)\nand GET branch
 Gitea --> Workflow: Tip of the default branch
 alt push and the commit is no longer the tip
-  Workflow --> Trigger: Skipped, green
-(the newer commit has its own run)
+  Workflow --> Trigger: Skipped, green\n(the newer commit has its own run)
 else start by hand and the commit is not the tip
   Workflow --> Trigger: Fail with [validation]
 end
@@ -441,12 +432,10 @@ loop until green, red or the limit of 10 minutes
   Gitea --> Workflow: Validate / validate (push)
 end
 alt red, or still pending or missing after the limit
-  Workflow --> Trigger: Fail with [validation]
-(no tag is created)
+  Workflow --> Trigger: Fail with [validation]\n(no tag is created)
 end
 
-Workflow -> Gitea: POST release (creates the version tag,
-body is the changelog entry)
+Workflow -> Gitea: POST release (creates the version tag,\nbody is the changelog entry)
 opt version 1.0.0 or later and the highest version of its major
   Workflow -> Gitea: DELETE and POST the major tag vMAJOR
 end
