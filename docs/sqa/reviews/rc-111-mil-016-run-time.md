@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode; accepted by the author in chat on 2026-11-09 as stand-in for S01 | pending |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; verdict Go, prepared by the AI in supervised mode; accepted by the author in chat on 2026-11-09 as stand-in for S01 | [e9b782d] |
 
 ---
 
@@ -66,3 +66,4 @@ Go - the row records what was measured and its limits: one run, one repository, 
 [RC-109]: ./rc-109-mil-016-rule-directories.md
 [RC-110]: ./rc-110-adr-0015-rule-selection.md
 [BC-001]: ../../business-case.md
+[e9b782d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e9b782dc0bc3984c66629047e00012024fd6ff93

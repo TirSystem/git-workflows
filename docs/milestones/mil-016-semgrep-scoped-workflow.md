@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-09 | Deprecated | Jens Tirsvad Nielsen | S01 | New task 8, scan only the rule directories of the languages a repository has, because a run on a runner takes more than 5 minutes (criterion 1) with a scan of about 25 s on a developer machine; Release is now task 9; reviewed (RC-109), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [bc0157e] |
-| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Records the run time on the runner after task 8 (scan step 4 min 21 s, run 5 min 1 s against 8 min 0 s before, one run); reviewed (RC-111), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | pending |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Records the run time on the runner after task 8 (scan step 4 min 21 s, run 5 min 1 s against 8 min 0 s before, one run); reviewed (RC-111), accepted by the author in chat on 2026-11-09 as stand-in for S01, not independent | [e9b782d] |
 
 ---
 
@@ -101,3 +101,4 @@ with the findings and the false positives counted; and a minor release.
 [RC-099]: ../sqa/reviews/rc-099-opengrep-bc-o8-mil-016.md
 [RC-111]: ../sqa/reviews/rc-111-mil-016-run-time.md
 [bc0157e]: https://git.tirsystem.com/TirSystem/git-workflows/commit/bc0157ea2a017fe8a9377e8266dfda2878467865
+[e9b782d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e9b782dc0bc3984c66629047e00012024fd6ff93
