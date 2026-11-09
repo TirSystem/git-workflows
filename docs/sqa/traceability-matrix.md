@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-06 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-104 (MIL-012 out of scope for now) | [67ffbeb] |
-| 2026-11-09 | Proposed | Jens Tirsvad Nielsen | S01 | Added RC-109 (MIL-016 task 8) | [bc0157e] |
+| 2026-11-06 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-104 (MIL-012 out of scope for now) | [67ffbeb] |
+| 2026-11-09 | Accepted | Jens Tirsvad Nielsen | S01 | Added RC-109 (MIL-016 task 8) | [bc0157e] |
 
 ---
 
