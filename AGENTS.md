@@ -219,3 +219,6 @@ Rules that apply to every document:
    branch checked out in another worktree, or a branch with unpushed commits.
    When a fix has to be pushed later (a review comment, a conflict), recreate
    the local branch from the remote: `git switch -c <branch> origin/<branch>`.
+10. Every code project has a root `.editorconfig` made from the framework's
+    `templates/editorconfig/baseline.editorconfig` (plus `csharp.editorconfig`
+    for C#); `bash framework/scripts/check-editorconfig.sh` checks it.
