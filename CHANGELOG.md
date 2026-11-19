@@ -20,6 +20,12 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [3.3.5] - 2026-11-20
+
+### Fixed
+
+- The scoped `sync-milestones.yml` brought the runner down with `fork: retry: Resource temporarily unavailable`: the framework release it cloned (`v0.20.1`) started two processes for every review record for every milestone, about 4,700 in this repository. `FRAMEWORK_TAG` in `tools/sync_milestones.py` is now `v0.24.4`, whose `milestone-state.sh` makes one `grep` per milestone (ADR-0018: the tag moves only in a release of this repository).
+
 ## [3.3.4] - 2026-11-19
 
 ### Fixed
