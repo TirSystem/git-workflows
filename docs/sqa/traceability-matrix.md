@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-09 | Deprecated | Jens Tirsvad Nielsen | S01 | Added RC-111 (MIL-016 task 8, run time on the runner) | [59347d5] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-021 and RC-112 (CI and CD as two scoped workflows); accepted by the author in chat on 2026-11-19 as stand-in for S01, not independent | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-021 and RC-112 (CI and CD as two scoped workflows); accepted by the author in chat on 2026-11-19 as stand-in for S01, not independent | [019d1ca] |
 
 ---
 
@@ -359,3 +359,4 @@ updated whenever an artifact instance is created or reviewed.
 [6981d08]: https://git.tirsystem.com/TirSystem/git-workflows/commit/6981d08d82d1399b5145a22ea296725f9f5beed6
 [e9b782d]: https://git.tirsystem.com/TirSystem/git-workflows/commit/e9b782dc0bc3984c66629047e00012024fd6ff93
 [59347d5]: https://git.tirsystem.com/TirSystem/git-workflows/commit/59347d5f35fd33b9560c2d817276f9c0401a8bc4
+[019d1ca]: https://git.tirsystem.com/TirSystem/git-workflows/commit/019d1ca6476726b42f16b8a07918d2f791d37cf5

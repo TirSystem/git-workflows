@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-07 | Deprecated | Jens Tirsvad Nielsen | S01 | MIL-018 window and decision date corrected to the dates it was delivered; reviewed (RC-108), accepted by the author in chat as stand-in for S01, not independent | [f4268c2] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-021 added (CI and CD as two scoped workflows, with a credential scan first); reviewed (RC-112), accepted by the author in chat on 2026-11-19 as stand-in for S01, not independent | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-021 added (CI and CD as two scoped workflows, with a credential scan first); reviewed (RC-112), accepted by the author in chat on 2026-11-19 as stand-in for S01, not independent | [019d1ca] |
 
 ---
 
@@ -374,3 +374,4 @@ no tests, no release process.
 [d4901e0]: https://git.tirsystem.com/TirSystem/git-workflows/commit/d4901e026d9fdf0c3a9fb86f46a59bf1f73dc53b
 [4b2740b]: https://git.tirsystem.com/TirSystem/git-workflows/commit/4b2740be3c5e85626bda44e1dd1e66d390133c01
 [f4268c2]: https://git.tirsystem.com/TirSystem/git-workflows/commit/f4268c29982e3886901f58186947f64bdb354064
+[019d1ca]: https://git.tirsystem.com/TirSystem/git-workflows/commit/019d1ca6476726b42f16b8a07918d2f791d37cf5

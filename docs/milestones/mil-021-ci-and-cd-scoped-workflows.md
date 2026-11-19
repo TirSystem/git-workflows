@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-112), accepted by the author in chat on 2026-11-19 as stand-in for S01, not independent | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; reviewed (RC-112), accepted by the author in chat on 2026-11-19 as stand-in for S01, not independent | [019d1ca] |
 
 ---
 
@@ -122,3 +122,4 @@ repositories and in a report-only scan first. S01 confirms or moves the date.
 [ADR-0017]: ../adr/adr-0017-scoped-release-workflow.md
 [ADR-0018]: ../adr/adr-0018-scoped-milestone-sync.md
 [RC-112]: ../sqa/reviews/rc-112-mil-021-pp-001.md
+[019d1ca]: https://git.tirsystem.com/TirSystem/git-workflows/commit/019d1ca6476726b42f16b8a07918d2f791d37cf5
