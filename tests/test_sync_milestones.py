@@ -24,6 +24,7 @@ def sync(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Any:  # the loaded 
     monkeypatch.setenv("TOKEN_FOR_GITEA_REPO", REPO_TOKEN)
     monkeypatch.setenv("TOKEN_FOR_GITEA_ISSUES", ISSUES_TOKEN)
     monkeypatch.delenv("DRY_RUN", raising=False)
+    monkeypatch.delenv("GITHUB_SERVER_URL", raising=False)
     return load_script(SCRIPT, "sync_milestones")
 
 
@@ -158,6 +159,14 @@ def test_framework_clones_the_pinned_release_without_a_submodule(
     assert "Framework source: release v0.20.1" in out
     assert_no_token(fake, out)
     assert fake.calls[0][1]["GIT_CONFIG_VALUE_1"] == f"Authorization: token {REPO_TOKEN}"
+
+
+def test_framework_clones_from_the_address_the_runner_uses(sync: Any, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("GITHUB_SERVER_URL", "http://gitea:3000/")
+    fake = patch_run(monkeypatch, sync, FakeRuns())
+    sync.framework()
+    assert fake.commands()[0][-2] == "http://gitea:3000/TirSystem/sqa-qc-framework.git"
+    assert fake.calls[0][1]["GIT_CONFIG_KEY_0"] == "url.http://gitea:3000/.insteadOf"
 
 
 def test_framework_fails_without_the_repository_token(

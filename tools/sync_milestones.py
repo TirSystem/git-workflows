@@ -28,14 +28,14 @@ import sys
 from pathlib import Path
 
 FRAMEWORK_TAG = "v0.20.1"
-FRAMEWORK_URL = "https://git.tirsystem.com/TirSystem/sqa-qc-framework.git"
+FRAMEWORK_PATH = "TirSystem/sqa-qc-framework.git"
 FRAMEWORK_DIR = "framework"
 PUBLISH_SCRIPT = "framework/scripts/ci-publish-milestones.sh"
 MILESTONES_DIR = "docs/milestones"
 REPO_TOKEN = "TOKEN_FOR_GITEA_REPO"
 ISSUES_TOKEN = "TOKEN_FOR_GITEA_ISSUES"
 SSH_PREFIX = "ssh://git@git.tirsystem.com:10022/"
-HTTPS_PREFIX = "https://git.tirsystem.com/"
+DEFAULT_SERVER = "https://git.tirsystem.com"
 
 
 def fail(category: str, message: str) -> None:
@@ -72,13 +72,22 @@ def check() -> None:
     require_secret(ISSUES_TOKEN)
 
 
+def https_prefix() -> str:
+    """Return the base URL of the git host with a trailing slash.
+
+    The runner sets GITHUB_SERVER_URL to the address it reaches the instance on (the internal
+    one); the public name is not reachable from a job container, so it is only the fallback.
+    """
+    return (os.environ.get("GITHUB_SERVER_URL", "").rstrip("/") or DEFAULT_SERVER) + "/"
+
+
 def git_environment(token: str) -> dict[str, str]:
     """Return the environment that lets git use HTTPS with ``token``; the token stays out of the command line."""
     environment = dict(os.environ)
     environment.update(
         {
             "GIT_CONFIG_COUNT": "2",
-            "GIT_CONFIG_KEY_0": f"url.{HTTPS_PREFIX}.insteadOf",
+            "GIT_CONFIG_KEY_0": f"url.{https_prefix()}.insteadOf",
             "GIT_CONFIG_VALUE_0": SSH_PREFIX,
             "GIT_CONFIG_KEY_1": "http.extraheader",
             "GIT_CONFIG_VALUE_1": f"Authorization: token {token}",
@@ -128,7 +137,7 @@ def framework() -> None:
         print(f"Framework source: project submodule at {describe_framework(environment)}")
         return
     run_git(
-        ["git", "clone", "--depth", "1", "--branch", FRAMEWORK_TAG, FRAMEWORK_URL, FRAMEWORK_DIR],
+        ["git", "clone", "--depth", "1", "--branch", FRAMEWORK_TAG, https_prefix() + FRAMEWORK_PATH, FRAMEWORK_DIR],
         environment,
         f"The clone of the framework release {FRAMEWORK_TAG}",
     )
