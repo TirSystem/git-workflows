@@ -4,13 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015], [MIL-016], [MIL-017], [MIL-018], [MIL-019], [MIL-020], [RC-105], [RC-108], [RC-096], [RC-090] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013], [MIL-014], [MIL-015], [MIL-016], [MIL-017], [MIL-018], [MIL-019], [MIL-020], [MIL-021], [RC-105], [RC-112], [RC-108], [RC-096], [RC-090] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-06 | Deprecated | Jens Tirsvad Nielsen | S01 | MIL-020 added (release when the changelog changes); reviewed (RC-105), accepted by the author in chat as stand-in for S01, not independent | [4b2740b] |
-| 2026-11-07 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-018 window and decision date corrected to the dates it was delivered; reviewed (RC-108), accepted by the author in chat as stand-in for S01, not independent | [f4268c2] |
+| 2026-11-07 | Deprecated | Jens Tirsvad Nielsen | S01 | MIL-018 window and decision date corrected to the dates it was delivered; reviewed (RC-108), accepted by the author in chat as stand-in for S01, not independent | [f4268c2] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | S01 | MIL-021 added (CI and CD as two scoped workflows, with a credential scan first); reviewed (RC-112), accepted by the author in chat on 2026-11-19 as stand-in for S01, not independent | pending |
 
 ---
 
@@ -32,6 +32,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 - MIL-018 (release any repository with a scoped workflow) runs from 2026-10-29 to its Target Date, 2026-11-05, the dates it was delivered; it traces to objective O4 and describes the secret `TOKEN_FOR_GITEA_RELEASE`. It was planned for 2026-12-21 to 2026-12-30, after MIL-017, and S01 confirmed those dates on 2026-10-29 (RC-092). The scoped release was written and released as 3.0.0 on 2026-10-29, and the trial on three repositories and release 3.1.0 were made on 2026-11-05, so the window moved ahead of MIL-017 (2026-12-14 to 2026-12-18) and its dependency on that milestone is met by the scoped validation that MIL-014 already delivered. The dates were corrected on 2026-11-07 (RC-108); the window now ends before the last decision date 2026-12-26.
 - MIL-019 (publish accepted milestones with a scoped workflow) runs from 2027-02-01 to its Target Date, 2027-02-12, proposed by the author; it follows MIL-010 (2027-01-30) because January is full, and S01 may move it ahead of MIL-016. It traces to objective O4 and depends on MIL-014 and MIL-015.
 - MIL-020 (release when the changelog changes) runs from 2026-11-06 to its Target Date, 2026-11-13, proposed by the author; it amends ADR-0017 of MIL-018, which was released as 3.0.0 on 2026-10-29, so its dependency is met (the window of MIL-018 was corrected in RC-108). It traces to objective O4. The date is inside the plan window (last decision date 2026-12-26); S01 confirmed it in chat on 2026-11-06 by accepting the milestone (RC-105).
+- MIL-021 (CI and CD as two scoped workflows, with a credential scan first) runs from 2026-11-19 to its Target Date, 2026-12-11, proposed by the author; it needs MIL-016 to MIL-020, which are delivered, and renames every required status check, so it is released as 4.0.0 with a migration of the branch rules. It traces to objectives O4 and O8 and to a new objective O9 (a leaked credential stops the pipeline), added by its task 1. The date is inside the plan window (last decision date 2026-12-26); S01 confirms or moves it.
 - Work on a milestone starts only after its `MIL-*` document is `Accepted`.
 - Dates were confirmed on 2026-10-10 by S01, standing in for S05 (ADR-0002).
 
@@ -59,6 +60,7 @@ workflows. The Business Case sets no deadline, so the dates are the plan's own; 
 | Release any repository with a scoped workflow | [MIL-018] | 2026-10-29 to 2026-11-05 | 2026-11-05 | S05 | None (technical tasks) | Scoped release workflow, general `release.py`, `TOKEN_FOR_GITEA_RELEASE` described, old `release.yml` removed, dry runs in three repositories, released as the next major | Not created yet (the sync runs after acceptance) |
 | Publish accepted milestones with a scoped workflow | [MIL-019] | 2027-02-01 to 2027-02-12 | 2027-02-12 | S05 | None (technical tasks) | Scoped sync-milestones workflow, ADR, guide, copies in the repositories removed, released | [Milestone MIL-019] |
 | Release when the changelog changes | [MIL-020] | 2026-11-06 to 2026-11-13 | 2026-11-13 | S05 | None (technical tasks); US-001.21 to US-001.23 | The release starts on a push that changes `CHANGELOG.md`, waits for the validation of the same commit, and is a green no-op for a version already tagged; ADR-0017 amended; released by merging | Not created yet (the sync runs after acceptance) |
+| CI and CD as two scoped workflows, with a credential scan first | [MIL-021] | 2026-11-19 to 2026-12-11 | 2026-12-11 | S05 | None (technical tasks) | `ci.yml` (credential scan first, then validate, scan and release check) and `cd.yml` (release, milestones, wiki, metadata); the six scoped files removed; ADR-0019; branch rules migrated; released as 4.0.0 | Not created yet (the sync runs after acceptance) |
 
 ```plantuml
 @startgantt
@@ -101,6 +103,8 @@ Project starts 2026-10-05
 [MIL-018 Go/No-Go] happens 2026-11-05
 [MIL-020 Changelog release] starts 2026-11-06 and ends 2026-11-13
 [MIL-020 Go/No-Go] happens 2026-11-13
+[MIL-021 CI and CD] starts 2026-11-19 and ends 2026-12-11
+[MIL-021 Go/No-Go] happens 2026-12-11
 @endgantt
 ```
 
@@ -127,6 +131,7 @@ Project starts 2026-10-05
 | Any repository is released by one scoped workflow with a described token | [MIL-018] |
 | Accepted milestones are published by one scoped workflow, with no copy per repository | [MIL-019] |
 | A release is made when the changelog of a repository changes, with no run started by hand | [MIL-020] |
+| The scoped checks run as one CI and one CD pipeline, and a credential stops the CI before its other checks | [MIL-021] |
 
 ## Dependencies
 
@@ -143,6 +148,7 @@ MIL-001 → MIL-002 → MIL-003 → MIL-004
                  MIL-016 + MIL-014 → MIL-017 → MIL-018
                  MIL-014 + MIL-015 + MIL-010 → MIL-019
                                   MIL-018 → MIL-020
+                    MIL-019 + MIL-020 → MIL-021
 ```
 
 A No-Go moves every later window by the rework time of the failed milestone.
@@ -164,6 +170,7 @@ A No-Go moves every later window by the rework time of the failed milestone.
 | The token `TOKEN_FOR_GITEA_RELEASE` can write more than tags and release pages, or its absence stops every release (MIL-018) | A leaked token changes code, or releases stop | MIL-018 tasks 1 and 5 measure what the token needs, describe the scope for a dedicated user and the rotation, and the dry runs of task 6 fail early with a message that names the secret |
 | Security review by S05 is a bottleneck | Milestone decisions slip | Keep milestones small and plan review time before each decision date. |
 | A release started by a push races with the validation of the same commit, or releases an entry nobody meant to publish (MIL-020) | A release from an unchecked commit, or a tag made by a changelog edit | The release waits for `Validate / validate (push)` of the commit and refuses on red or timeout; only a new numbered entry without a tag releases; the pull request check keeps the changelog valid. |
+| Renaming the status checks blocks pull requests in every repository, or the credential scan blocks work on a finding nobody knew about (MIL-021) | Nobody can merge, or a repository is red on the day of the release | MIL-021 tasks 3 and 4 find out how the instance loads the scoped files and stage the switch-over; task 6 counts the findings of every repository before the scan fails anything; task 11 changes the branch rules after a dry run and the user's go-ahead |
 
 ## Open Issues
 
@@ -348,8 +355,10 @@ no tests, no release process.
 [MIL-018]: ./milestones/mil-018-scoped-release-workflow.md
 [MIL-019]: ./milestones/mil-019-scoped-milestone-sync.md
 [MIL-020]: ./milestones/mil-020-release-on-changelog-change.md
+[MIL-021]: ./milestones/mil-021-ci-and-cd-scoped-workflows.md
 [RC-105]: ./sqa/reviews/rc-105-mil-020-pp-001.md
 [RC-108]: ./sqa/reviews/rc-108-mil-018-window.md
+[RC-112]: ./sqa/reviews/rc-112-mil-021-pp-001.md
 [RC-096]: ./sqa/reviews/rc-096-mil-019-pp-001.md
 [Milestone MIL-001]: https://git.tirsystem.com/TirSystem/github-action/milestone/18
 [Milestone MIL-002]: https://git.tirsystem.com/TirSystem/github-action/milestone/19
