@@ -20,6 +20,8 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [3.3.4] - 2026-11-19
+
 ### Fixed
 
 - The scoped `sync-milestones.yml` failed at the framework clone with a connection timeout to `git.tirsystem.com:443`, because a job container cannot reach the public host name. `tools/sync_milestones.py` now clones the framework (and rewrites the SSH submodule address) from `GITHUB_SERVER_URL`, the address the runner itself uses, and falls back to the public name when it is not set.
