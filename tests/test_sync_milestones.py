@@ -142,7 +142,7 @@ def test_framework_clones_the_pinned_release_without_a_submodule(
 ) -> None:
     fake = patch_run(monkeypatch, sync, FakeRuns())
     sync.framework()
-    assert sync.FRAMEWORK_TAG == "v0.24.4"
+    assert sync.FRAMEWORK_TAG == "v0.24.5"
     assert fake.commands() == [
         [
             "git",
@@ -150,13 +150,13 @@ def test_framework_clones_the_pinned_release_without_a_submodule(
             "--depth",
             "1",
             "--branch",
-            "v0.24.4",
+            "v0.24.5",
             "https://git.tirsystem.com/TirSystem/sqa-qc-framework.git",
             "framework",
         ]
     ]
     out = capsys.readouterr().out
-    assert "Framework source: release v0.24.4" in out
+    assert "Framework source: release v0.24.5" in out
     assert_no_token(fake, out)
     assert fake.calls[0][1]["GIT_CONFIG_VALUE_1"] == f"Authorization: token {REPO_TOKEN}"
 
