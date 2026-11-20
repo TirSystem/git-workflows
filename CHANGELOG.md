@@ -20,6 +20,12 @@ Each release lists its changes in these groups, in this order:
 
 ## [Unreleased]
 
+## [3.3.6] - 2026-11-20
+
+### Fixed
+
+- The publish step of the scoped `sync-milestones.yml` failed with `SSL routines::wrong version number` on a runner that reaches the instance over plain `http` (`http://gitea:3000`): `sync-project.sh` of the framework built the API base as `https://<host>/api/v1`. `FRAMEWORK_TAG` in `tools/sync_milestones.py` is now `v0.24.5`, whose `sync-project.sh` takes the API base from `GITHUB_SERVER_URL` (ADR-0018: the tag moves only in a release of this repository).
+
 ## [3.3.5] - 2026-11-20
 
 ### Fixed
